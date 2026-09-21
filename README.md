@@ -1,24 +1,28 @@
 # Vault Reader
 
-Read an Obsidian vault that lives in a (private) GitHub repository from your phone.
+Read an Obsidian vault that lives in a (private) GitHub repository on your iPhone.
 
-A single-page, read-only PWA. No server, no build step, no account system: the app talks to the GitHub REST API directly with a fine-grained personal access token that never leaves your device. Files are cached locally by blob SHA, so anything you have opened once is available offline.
+A native, read-only iOS app. No server, no account system: the app talks to the GitHub REST API directly with a fine-grained personal access token stored in the Keychain. Files are cached on disk by blob SHA, so anything you have opened once is available offline.
 
-**Status: design stage (M0).** Nothing to run yet. The design document currently lives in the author's private notes; the implementation-side architecture notes will land in `docs/ARCHITECTURE.md` together with the code.
+**Status: design stage (M0).** Nothing to build yet. Implementation-side architecture notes will land in `docs/ARCHITECTURE.md` together with the code.
 
 ## What it will do
 
-- Home page = your vault's `README.md`; follow `[[wikilinks]]` and relative links from there.
+- Home page = your vault's `README.md`; follow `[[wikilinks]]` and relative links from there, with native navigation.
 - "Recent" = the repository's commit log, expandable, with links to the changed files.
-- Search file names instantly; full-text search runs on-device over all markdown.
-- Renders markdown (Obsidian flavour: wikilinks, embeds, callouts, block anchors, highlights, frontmatter tags), images, self-contained HTML files (sandboxed, with a localStorage shim), PDFs and videos.
-- Installs to the iOS home screen as a standalone web app.
+- Search file names instantly; full-text search runs on-device. Spotlight integration planned.
+- Renders markdown in a WKWebView (Obsidian flavour: wikilinks, embeds, callouts, block anchors, highlights, frontmatter tags). Images, PDFs, videos and spreadsheets open in Quick Look. Self-contained HTML files run in their own isolated origin with working `localStorage`.
+- Face ID lock planned.
 
 ## What it will not do
 
 - Edit, write or push.
-- Sync files to your phone's file system.
-- Store anything anywhere except your browser.
+- Act as a git client.
+- Store anything anywhere except on your device.
+
+## Stack
+
+SwiftUI, iOS 18+, Swift 6, zero third-party Swift dependencies. Markdown rendering uses markdown-it and DOMPurify (vendored) inside a WKWebView, fed through a custom `vault://` URL scheme. The Xcode project is generated with [XcodeGen](https://github.com/yonaskolb/XcodeGen) from `project.yml`.
 
 ## Token
 
