@@ -1,6 +1,6 @@
 # Vault Reader architecture
 
-Status: M1a implementation candidate, 2026-09-22. Product baseline: Vault Reader design v1. Platform order confirmed by the owner: **iOS first, Android second**.
+Status: M1b implementation candidate, 2026-09-22. Product baseline: Vault Reader design v1. Platform order confirmed by the owner: **iOS first, Android second**.
 
 ## Three boundaries
 
@@ -16,7 +16,7 @@ Status: M1a implementation candidate, 2026-09-22. Product baseline: Vault Reader
      URLSession / disk / Keychain        HTTP / disk / Keystore
 ```
 
-`packages/reader-web` has no UIKit, WebKit, Swift or Android dependency. It receives raw Markdown and a tree; it returns rendered content and three messages (`open`, `preview`, `height`). It does not fetch GitHub, persist app settings, navigate native screens, access tokens or manage downloads. The same bundled JS/CSS will ship in both apps. No CDN at runtime.
+`packages/reader-web` has no UIKit, WebKit, Swift or Android dependency. It receives raw Markdown and a tree; it returns rendered content and three messages (`open`, `preview`, `height`). It does not fetch GitHub, persist app settings, navigate native screens, access tokens or manage downloads. The same bundled JS/CSS will ship in both apps. No CDN at runtime. The owner subsequently requested saved repositories and GitLab support during M1b; these extensions do not change the shared bridge.
 
 `packages/contracts` is the platform contract. Local files are repository-relative UTF-8 paths, not platform filesystem URLs. SHA identifies content; path identifies a note. The native host supplies resource URLs: `vault://file/` on iOS; Android should use [WebViewAssetLoader](https://developer.android.com/develop/ui/views/layout/webapps/load-local-content) and an origin-scoped [message listener](https://developer.android.com/develop/ui/views/layout/webapps/native-api-access-jsbridge), after its own storage/origin probe. Navigation links stay `vault://f/<encoded-path>#<anchor>` as a logical route; the native host interprets them. The native bridge adapter lives in `RendererWebView.swift`; the shared renderer never calls `window.webkit` directly.
 
@@ -24,32 +24,44 @@ Status: M1a implementation candidate, 2026-09-22. Product baseline: Vault Reader
 
 ## Data invariants for both apps
 
-- Read-only GitHub REST requests; four concurrent requests globally, cancellable, explicit ETag/304 handling. Never send credentials to a renderer or external host.
-- Branch head → complete recursive tree → immutable blob SHA. Reject truncated trees and keep the previous complete metadata.
+- Read-only GitHub/GitLab REST requests; four concurrent requests globally, cancellable, explicit ETag/304 handling. Never send credentials to a renderer or external host.
+- Branch head → complete recursive tree → immutable blob SHA. GitLab uses the pinned head commit as the tree revision, because its branch API does not expose a root-tree SHA. Reject truncated trees and keep the previous complete metadata.
 - Verify Git blob SHA-1 (`blob <byte length>\0` + bytes) before writing. Refuse files over 100 MiB.
 - Per-repository blobs; per-branch metadata. On iOS these directories use SHA-256 of the repository identity / branch, avoiding unsafe filenames and cross-repository collisions.
-- Atomic writes; exclude renewable blobs from backup; device file protection on iOS. Native credential store keyed by repository; Android must use Keystore-backed credential encryption.
-- Access-time eviction, default 500 MiB. Downloaded Markdown/SVG remain pinned even when over the limit. QuickLook copies are transient and cleared during eviction.
+- Atomic writes; exclude renewable blobs from backup; device file protection on iOS. Native credential store keyed by service and repository; Android must use Keystore-backed credential encryption.
+- Access-time eviction, default 500 MiB. Downloaded Markdown/SVG remain pinned even when over the limit. QuickLook copies survive automatic eviction while they may be in use; closing the preview removes its copy, and explicit attachment cleanup removes any leftovers. The just-requested blob is retained through preview preparation even if pinned Markdown already exceeds the cache limit.
 - Network failure keeps cache readable. 401 clears the active credential and opens settings; 403 permission denied is distinct from quota exhaustion. Editing settings validates the new credentials/tree before replacing the active repository.
 - Path traversal cannot escape the vault; there is no `file://` path crossing the JS bridge.
 
 ## Current iOS implementation
 
-`AppState` coordinates startup, refresh, repository changes and visible status. `VaultCore` owns transport/cache/index operations; `SchemeHandler` supplies bundled assets and cached/downloaded files. `RendererWebView` handles bridge validation, native pull-to-refresh, Dynamic Type and scroll restoration. `NoteView`/`DirView` own navigation and preview presentation. `SettingsView` uses Keychain through the iOS-only credential adapter.
+`AppState` coordinates startup, refresh, repository changes and visible status. `RepositoryLibrary` saves credential-free profiles and migrates the old active GitHub configuration without changing its cache/Keychain key. The Home menu and Settings switch profiles, reset all navigation stacks, rebuild search state and retain each repository’s disk cache. Requests capture their original client before suspending so a rapid switch cannot send them through another repository’s credentials. `VaultCore` owns transport/cache/index operations; `SchemeHandler` supplies bundled assets and cached/downloaded files. `RendererWebView` handles bridge validation, native pull-to-refresh, Dynamic Type and scroll restoration. `NoteView`/`DirView` own navigation and preview presentation. `SettingsView` uses Keychain through the iOS-only credential adapter.
 
 The bundled renderer uses markdown-it, DOMPurify, footnotes and task lists. Noto Sans SC Variable (OFL, approximately 4.5 MiB) is bundled with Unicode-range font subsets for offline Chinese rendering on both platforms. The iOS simulator exhibited missing CJK glyphs with system-only CSS; a local font fixed the verified screenshot without depending on system font downloads. Source is in `packages/reader-web/src`; generated bundle and license notices are committed under `VaultReader/Resources/renderer`. Run `npm ci && npm run build:renderer` after source changes. The bundle is reusable by Android; packaging into Android assets is deferred until that app exists.
 
-The M1a UI has Home and Directory. Recent/Search tabs, full Markdown prefetch, independent HTML reader views, bounded WebView pooling and device delivery remain M1b work. There are no empty placeholder tabs advertised as complete features. Image preview is already wired to QuickLook to validate the M1a image flow.
+The M1b UI has four independent navigation stacks: Home, Recent, Search and Directory. Recent loads 30 commits with branch-scoped ETag caching. Expanded commit files are fetched lazily and paginated to GitHub's 3,000-file endpoint cap; capped results are marked incomplete. File links open the current branch version; deleted/missing paths are disabled. Rename metadata and complete commit messages remain visible. See the [GitHub commit API](https://docs.github.com/en/rest/commits/commits#get-a-commit).
+
+Search runs on a VaultCore actor. Filename matches cover every indexed file; submitting the query adds cached Markdown body matches and snippets. Case/diacritic folding happens at ingestion, with UTF-8 byte scans per query. Exact excerpts preserve original spelling; case/diacritic-only hits may use folded excerpts. Tree changes invalidate text by SHA, including deletion. The UI shows completed/total Markdown counts. A cancellable foreground task first hydrates every available cached Markdown, then downloads missing documents serially, leaving permits for foreground requests. Automatic completion starts after the first home render; opening Search can start it immediately. It pauses when the app enters the background and supports explicit pause/resume. This is not M2 OS background refresh.
+
+A `WebViewContainer` can discard its actual WKWebView while SwiftUI retains the navigation shell. Each note visit keeps its own scroll offset; outgoing pages release WebKit and returning pages rerender. This uses less memory than retaining eight live pages. Font readiness waits are bounded and cancellable: an offscreen animation-frame promise would otherwise keep a WebView alive indefinitely. Hosted tests traverse twelve levels and measure live weak WebView references and restored offsets; physical-device limitations remain in ACCEPTANCE.md.
+
+Attachments share a native preview destination across Directory/Search/Recent and an image-preview sheet from Markdown. Raw downloads report byte progress, can be cancelled, are size-limited, then hash-verified before caching. Files above 100 MiB offer a GitHub link. HTTP(S) links ending in mp4/mov/m4v use a native AVPlayer; other web links use Safari. Long real-vault video/PDF transfer acceptance is separate from synthetic QuickLook tests.
 
 ## Security and host integration
 
-Native code injects `VaultHost` at document start. It only exposes a resource URL prefix and the three message methods. Messages are accepted only from the renderer main frame at `vault://app`; their URLs/paths are checked against the current index. Navigation outside initial renderer loading is canceled and routed natively. Raw HTML documents must use a separate WebView **without this bridge** in M1b.
+Native code injects `VaultHost` at document start. It only exposes a resource URL prefix and the three message methods. Messages are accepted only from the renderer main frame at `vault://app`; their URLs/paths are checked against the current index. Navigation outside initial renderer loading is canceled and routed natively. Raw HTML documents use a separate WebView **without this bridge**. `HTMLLocation` hashes repository identity, branch and file path into a stable origin; a content update does not reset progress. A dedicated [persistent WKWebsiteDataStore](https://developer.apple.com/documentation/webkit/wkwebsitedatastore/init(foridentifier:)) keeps HTML storage apart from ephemeral Markdown views. The HTML scheme handler only accepts its own origin and canonical indexed paths, supplies relative resources, and rejects renderer/file hosts. It registers no scripts or message handlers. Explicit links to another vault file route natively, giving another HTML file its own origin.
 
 DOMPurify removes executable markup and event attributes. Images allow only vault resources and HTTPS; style attributes are restricted to generated image widths, and SVG is never injected into the Markdown DOM. Code fences do not execute. Tree/Markdown are passed with `callAsyncJavaScript(arguments:)`, not interpolated into source code.
 
-iOS 26.3 simulator probe passed: `localStorage` works at `vault://html-probe-a`, is invisible to host B, and survives recreation of a WebView at host A. App termination/relaunch and Android origin behavior are separate acceptance checks, still pending. No inference of Android storage compatibility from this iOS result.
+iOS 26.3 simulator probe passed: `localStorage` works at `vault://html-probe-a`, is invisible to host B, and survives recreation of a WebView at host A. M1b additionally verifies file/repository isolation with the production HTML configuration, and synthetic localStorage survives app termination/relaunch on both the simulator and iPhone. Android origin behavior remains untested. No inference of Android storage compatibility from this iOS result.
 
 Reference: Apple's [custom scheme handler](https://developer.apple.com/documentation/webkit/wkurlschemehandler) and WebKit's [persistent data store profiles](https://webkit.org/blog/14423/building-profiles-with-new-webkit-api/). GitHub protocol follows its [Git blobs API](https://docs.github.com/en/rest/git/blobs).
+
+## GitHub and GitLab adapters
+
+`RepositorySource` is implemented by `GitHubClient` and `GitLabClient`. Their shared `RepositoryHTTP` sends only GET requests, bounds raw downloads, reports progress, refuses redirects to keep credentials on the configured endpoint, and provides one four-permit request gate across providers. GitLab sends `PRIVATE-TOKEN`; the UI recommends [read_api permissions](https://docs.gitlab.com/security/tokens/access_token_scopes/) with a project-scoped token where available. GitHub continues using its repository-scoped fine-grained token.
+
+GitLab supports GitLab.com and HTTPS self-managed instances, including a URL subpath and nested namespaces. URLs with embedded credentials, query strings or fragments are rejected. Its [repository tree](https://docs.gitlab.com/api/repositories/) is read page by page at the immutable head; a 100,000-entry safety cap rejects the entire refresh, retaining previous complete metadata. Raw blobs are downloaded by SHA and verified with the same Git blob hash as GitHub. GitLab trees omit sizes, so size can be unknown until download. [Commit diffs](https://docs.gitlab.com/api/commits/#retrieve-commit-diff) may be limited by server configuration; the UI always discloses that limit and links to the commit rather than claiming completeness. Cross-vault `obsidian://` routing is still separate from saved repository switching.
 
 ## Android entry criteria
 

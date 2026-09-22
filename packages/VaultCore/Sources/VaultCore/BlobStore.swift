@@ -45,6 +45,11 @@ public actor BlobStore {
         if !FileManager.default.fileExists(atPath: url.path) { try data.writeProtected(to: url) }
         return url
     }
+    public func releasePreview(_ url: URL) throws {
+        let previews = root.deletingLastPathComponent().appendingPathComponent("previews").standardizedFileURL
+        guard url.standardizedFileURL.path.hasPrefix(previews.path + "/") else { throw VaultError.missing }
+        if FileManager.default.fileExists(atPath: url.path) { try FileManager.default.removeItem(at: url) }
+    }
     public func usage() throws -> Int { try cachedFiles().reduce(0) { $0 + $1.bytes } }
     private func cachedFiles() throws -> [(url: URL, bytes: Int, date: Date)] {
         try FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: [.fileSizeKey, .contentModificationDateKey]).filter { $0.lastPathComponent.count == 40 }.map {
@@ -52,13 +57,13 @@ public actor BlobStore {
             return ($0, values.fileSize ?? 0, values.contentModificationDate ?? .distantPast)
         }
     }
-    public func evict(to bytes: Int) throws {
+    public func evict(to bytes: Int, keeping: Set<String> = [], clearPreviews: Bool = true) throws {
         let files = try cachedFiles().sorted { $0.date < $1.date }
         var total = files.reduce(0) { $0 + $1.bytes }
-        for file in files where total > max(0, bytes) && !pinned.contains(file.url.lastPathComponent) {
+        for file in files where total > max(0, bytes) && !pinned.contains(file.url.lastPathComponent) && !keeping.contains(file.url.lastPathComponent) {
             try FileManager.default.removeItem(at: file.url); total -= file.bytes
         }
         let previews = root.deletingLastPathComponent().appendingPathComponent("previews")
-        if FileManager.default.fileExists(atPath: previews.path) { try FileManager.default.removeItem(at: previews) }
+        if clearPreviews && FileManager.default.fileExists(atPath: previews.path) { try FileManager.default.removeItem(at: previews) }
     }
 }

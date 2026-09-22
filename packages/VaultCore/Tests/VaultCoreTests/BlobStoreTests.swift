@@ -29,4 +29,22 @@ import XCTest
         let store = try BlobStore(root: root)
         do { _ = try await store.data(for: "../outside"); XCTFail("Traversal accepted") } catch { XCTAssertEqual(error as? VaultError, .corruptBlob) }
     }
+    func testActivePreviewSurvivesAutomaticEvictionAbovePinnedLimit() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString).appendingPathComponent("blobs")
+        defer { try? FileManager.default.removeItem(at: root.deletingLastPathComponent()) }
+        let store = try BlobStore(root: root)
+        let md = Data("long pinned text".utf8), pdf = Data("pdf".utf8)
+        try await store.put(md, entry: TreeEntry(path: "a.md", sha: BlobStore.hash(md), size: md.count))
+        let entry = TreeEntry(path: "a.pdf", sha: BlobStore.hash(pdf), size: pdf.count)
+        try await store.put(pdf, entry: entry)
+        try await store.evict(to: 1, keeping: [entry.sha], clearPreviews: false)
+        let url = try await store.previewURL(sha: entry.sha, filename: entry.name)
+        try await store.evict(to: 1, clearPreviews: false)
+        XCTAssertEqual(try Data(contentsOf: url), pdf)
+        try await store.releasePreview(url)
+        XCTAssertFalse(FileManager.default.fileExists(atPath: url.path))
+        try await store.evict(to: 0)
+        XCTAssertFalse(FileManager.default.fileExists(atPath: url.path))
+    }
+
 }

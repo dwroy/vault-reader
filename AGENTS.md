@@ -1,6 +1,6 @@
 # Vault Reader development
 
-- Product: native read-only vault reader; iOS first, Android second. Current scope is M1a. Follow `docs/ARCHITECTURE.md` and record acceptance limits honestly in `docs/ACCEPTANCE.md`.
+- Product: native read-only vault reader; iOS first, Android second. Current scope is M1b; M2/M3 remain out of scope. Follow `docs/ARCHITECTURE.md` and record acceptance limits honestly in `docs/ACCEPTANCE.md`.
 - Keep feature work in the project root's `.worktrees/<task>/`. Main checkout is for integration and final builds. Do not push without explicit authorization.
 - Shared rendering lives in `packages/reader-web`; do not add WebKit/Android APIs there. Adapt hosts through `packages/contracts/reader-v1.d.ts`. Credentials never cross that bridge.
 - `packages/VaultCore` has no UI or Keychain dependencies. Swift 6, zero third-party Swift libraries. Android native data adapters are future work; this package is not a promise of Android code sharing.

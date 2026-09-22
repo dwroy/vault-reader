@@ -31,13 +31,63 @@ final class ReadingFlowTests: XCTestCase {
     @MainActor func testInvalidTokenShowsRecoverableError() throws {
         let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
         XCTAssertTrue(app.buttons["设置"].waitForExistence(timeout: 10)); app.buttons["设置"].tap()
-        let token = app.secureTextFields["token"]
+        let token = app.secureTextFields["token"].firstMatch
         XCTAssertTrue(token.waitForExistence(timeout: 5)); token.tap(); token.typeText("invalid-vault-reader-test-token")
         app.buttons["saveConnection"].tap()
         let error = app.staticTexts["connectionError"]
         XCTAssertTrue(error.waitForExistence(timeout: 35))
-        XCTAssertTrue(error.label.contains("Token 无效或已过期"))
+        XCTAssertTrue(error.label.contains("Token 无效或已过期"), error.label)
         let shot = XCTAttachment(screenshot: app.screenshot()); shot.name = "invalid-token"; shot.lifetime = .keepAlways; add(shot)
+    }
+
+    @MainActor func testSearchAndRecentFiles() throws {
+        let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
+        XCTAssertTrue(app.tabBars.buttons["搜索"].waitForExistence(timeout: 15)); app.tabBars.buttons["搜索"].tap()
+        let field = app.searchFields.firstMatch
+        XCTAssertTrue(field.waitForExistence(timeout: 5)); field.tap(); field.typeText("银杏")
+        app.buttons["搜索正文"].tap()
+        XCTAssertTrue(app.staticTexts["长文.md"].waitForExistence(timeout: 5)); app.staticTexts["长文.md"].firstMatch.tap()
+        XCTAssertTrue(app.webViews.staticTexts["长文"].waitForExistence(timeout: 5))
+        app.tabBars.buttons["最近"].tap()
+        XCTAssertTrue(app.staticTexts["记录第 1 天"].waitForExistence(timeout: 5)); app.staticTexts["记录第 1 天"].tap()
+        XCTAssertTrue(app.staticTexts["生活/公园的一天.md"].waitForExistence(timeout: 5)); app.staticTexts["生活/公园的一天.md"].tap()
+        XCTAssertTrue(app.webViews.staticTexts["公园的一天"].waitForExistence(timeout: 5))
+    }
+    @MainActor func testHTMLPersistsAfterTerminationAndIsolatesFiles() throws {
+        let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
+        func open(_ name: String) {
+            XCTAssertTrue(app.tabBars.buttons["目录"].waitForExistence(timeout: 15)); app.tabBars.buttons["目录"].tap()
+            XCTAssertTrue(app.staticTexts[name].waitForExistence(timeout: 5)); app.staticTexts[name].tap()
+            XCTAssertTrue(app.webViews.buttons["Next page"].waitForExistence(timeout: 10))
+        }
+        open("阅读器.html")
+        app.webViews.buttons["Reset"].tap(); app.webViews.buttons["Next page"].tap(); app.webViews.buttons["Next page"].tap()
+        XCTAssertTrue(app.webViews.staticTexts["Page 3"].waitForExistence(timeout: 5))
+        // Leave enough time for WebKit's persistent storage flush before a process kill.
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        open("独立阅读器.html"); app.webViews.buttons["Reset"].tap()
+        XCTAssertTrue(app.webViews.staticTexts["Page 1"].waitForExistence(timeout: 5))
+        app.terminate(); app.launch(); open("阅读器.html")
+        XCTAssertTrue(app.webViews.staticTexts["Page 3"].waitForExistence(timeout: 5))
+        let shot = XCTAttachment(screenshot: app.screenshot()); shot.name = "html-restored"; shot.lifetime = .keepAlways; add(shot)
+    }
+
+    @MainActor func testSavedVaultMenuSwitchesAndReturnsOffline() throws {
+        let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
+        XCTAssertTrue(app.buttons["切换知识库"].waitForExistence(timeout: 15)); app.buttons["切换知识库"].tap()
+        app.buttons["example/synthetic-other · main"].tap()
+        XCTAssertTrue(app.webViews.staticTexts["第二个知识库"].waitForExistence(timeout: 10))
+        app.buttons["切换知识库"].tap(); app.buttons["example/synthetic-vault · main"].tap()
+        XCTAssertTrue(app.webViews.staticTexts["我的知识库"].waitForExistence(timeout: 10))
+    }
+
+    @MainActor func testGitLabSetupOffersServerAndNamespace() throws {
+        let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
+        XCTAssertTrue(app.buttons["设置"].waitForExistence(timeout: 15)); app.buttons["设置"].tap()
+        app.buttons["添加知识库"].tap()
+        app.buttons["providerPicker"].tap(); app.buttons["GitLab"].tap()
+        XCTAssertTrue(app.textFields["GitLab 地址"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.textFields["命名空间"].exists)
     }
 
 }

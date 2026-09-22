@@ -7,6 +7,7 @@ final class MockProtocol: URLProtocol, @unchecked Sendable {
     override func startLoading() {
         let token = request.value(forHTTPHeaderField: "Authorization") ?? ""
         var status = 200, headers = [String: String](), data = Data()
+        if token == "Bearer offline" { client?.urlProtocol(self, didFailWithError: URLError(.notConnectedToInternet)); return }
         if token == "Bearer invalid" { status = 401 }
         else if token == "Bearer limited" { status = 403; headers = ["x-ratelimit-remaining":"0", "x-ratelimit-reset":"1800000000"] }
         else if request.url!.path.contains("trees") { data = Data("{\"sha\":\"abc\",\"tree\":[],\"truncated\":true}".utf8) }
@@ -37,4 +38,12 @@ final class MockProtocol: URLProtocol, @unchecked Sendable {
     func testTruncatedTreeIsNeverAccepted() async throws {
         do { _ = try await client().tree(sha: "tree"); XCTFail() } catch { XCTAssertEqual(error as? VaultError, .invalidTree) }
     }
+    func testOfflineTransportHasActionableChineseMessage() async throws {
+        do { _ = try await client("offline").branch(etag: nil); XCTFail() }
+        catch {
+            XCTAssertEqual(error as? VaultError, .network(URLError.notConnectedToInternet.rawValue))
+            XCTAssertTrue(error.localizedDescription.contains("已缓存内容仍可阅读"))
+        }
+    }
+
 }

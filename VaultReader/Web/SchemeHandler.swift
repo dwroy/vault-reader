@@ -42,7 +42,7 @@ final class SchemeHandler: NSObject, WKURLSchemeHandler {
         switch (path as NSString).pathExtension.lowercased() {
         case "js": "application/javascript"
         case "css": "text/css"
-        case "html": "text/html"
+        case "html", "htm": "text/html"
         case "svg": "image/svg+xml"
         case "md": "text/plain"
         default: UTType(filenameExtension: (path as NSString).pathExtension)?.preferredMIMEType ?? "application/octet-stream"

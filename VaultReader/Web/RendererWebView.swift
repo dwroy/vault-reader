@@ -3,6 +3,7 @@ import WebKit
 
 struct RendererWebView: UIViewRepresentable {
     let state: AppState
+    let session: ReaderSession
     let markdown: String
     let path: String
     let anchor: String
@@ -12,40 +13,55 @@ struct RendererWebView: UIViewRepresentable {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     func makeCoordinator() -> Coordinator { Coordinator(self) }
-    func makeUIView(context: Context) -> WKWebView {
-        let config = WKWebViewConfiguration()
-        config.setURLSchemeHandler(SchemeHandler { try await state.file($0) }, forURLScheme: "vault")
-        config.websiteDataStore = .nonPersistent()
-        let adapter = """
-        window.VaultHost = Object.freeze({
-          resourceBaseURL: 'vault://file/',
-          postMessage: (name, body) => {
-            if (['open','preview','height'].includes(name)) window.webkit.messageHandlers[name].postMessage(body);
-          }
-        });
-        """
-        config.userContentController.addUserScript(WKUserScript(source: adapter, injectionTime: .atDocumentStart, forMainFrameOnly: true))
-        for name in ["open", "preview", "height"] { config.userContentController.add(context.coordinator, name: name) }
-        let web = WKWebView(frame: .zero, configuration: config)
-        web.isOpaque = false; web.backgroundColor = .clear
-        web.navigationDelegate = context.coordinator
-        web.scrollView.delegate = context.coordinator
-        let refresh = UIRefreshControl()
-        refresh.addTarget(context.coordinator, action: #selector(Coordinator.refresh(_:)), for: .valueChanged)
-        web.scrollView.refreshControl = refresh
-        web.load(URLRequest(url: URL(string: "vault://app/index.html")!))
-        context.coordinator.web = web
-        return web
+    func makeUIView(context: Context) -> WebViewContainer {
+        let container = WebViewContainer(), coordinator = context.coordinator
+        session.container = container
+        container.create = { [weak coordinator] in
+            guard let coordinator else { return nil }
+            coordinator.loaded = false; coordinator.lastTree = ""; coordinator.lastRenderKey = ""; coordinator.renderedOnce = false
+
+            let config = WKWebViewConfiguration()
+            config.setURLSchemeHandler(SchemeHandler { try await state.file($0) }, forURLScheme: "vault")
+            config.websiteDataStore = .nonPersistent()
+            let adapter = """
+            window.VaultHost = Object.freeze({
+              resourceBaseURL: 'vault://file/',
+              postMessage: (name, body) => {
+                if (['open','preview','height'].includes(name)) window.webkit.messageHandlers[name].postMessage(body);
+              }
+            });
+            """
+            config.userContentController.addUserScript(WKUserScript(source: adapter, injectionTime: .atDocumentStart, forMainFrameOnly: true))
+            for name in ["open", "preview", "height"] { config.userContentController.add(coordinator, name: name) }
+            let web = WKWebView(frame: .zero, configuration: config)
+            web.isOpaque = false; web.backgroundColor = .clear
+            web.navigationDelegate = coordinator
+            web.scrollView.delegate = coordinator
+            let refresh = UIRefreshControl()
+            refresh.addTarget(coordinator, action: #selector(Coordinator.refresh(_:)), for: .valueChanged)
+            web.scrollView.refreshControl = refresh
+            web.load(URLRequest(url: URL(string: "vault://app/index.html")!))
+            coordinator.web = web
+            #if DEBUG
+            ReaderWebViewRegistry.views.add(web)
+            #endif
+            return web
+        }
+        container.beforeRelease = { [weak coordinator] web in
+            guard let coordinator else { return }
+            if coordinator.renderedOnce { coordinator.parent.session.scrollY = web.scrollView.contentOffset.y }
+            coordinator.renderTask?.cancel(); coordinator.renderTask = nil
+            coordinator.generation = UUID(); coordinator.updating = false
+            coordinator.loaded = false; coordinator.web = nil
+        }
+        container.mount(); return container
     }
-    func updateUIView(_ web: WKWebView, context: Context) {
+    func updateUIView(_ container: WebViewContainer, context: Context) {
         context.coordinator.parent = self
         context.coordinator.update()
     }
-    static func dismantleUIView(_ web: WKWebView, coordinator: Coordinator) {
-        coordinator.parent.state.scrollPositions[coordinator.parent.path] = web.scrollView.contentOffset.y
-        web.stopLoading()
-        web.configuration.userContentController.removeAllScriptMessageHandlers()
-        web.navigationDelegate = nil; web.scrollView.delegate = nil
+    static func dismantleUIView(_ container: WebViewContainer, coordinator: Coordinator) {
+        container.releaseWebView(); container.create = nil; container.beforeRelease = nil
     }
     @MainActor final class Coordinator: NSObject, WKNavigationDelegate, WKScriptMessageHandler, UIScrollViewDelegate {
         var parent: RendererWebView
@@ -55,6 +71,8 @@ struct RendererWebView: UIViewRepresentable {
         var lastTree = ""
         var renderedOnce = false
         var updating = false
+        var generation = UUID()
+        var renderTask: Task<Void, Never>?
         init(_ parent: RendererWebView) { self.parent = parent }
         func update() {
             guard loaded, let web, !updating else { return }
@@ -63,26 +81,40 @@ struct RendererWebView: UIViewRepresentable {
             let key = "\(parent.path)|\(parent.markdown)|\(parent.state.treeSHA)|\(scale)|\(theme)|\(parent.anchor)"
             guard key != lastRenderKey else { return }
             updating = true
-            Task {
-                defer { updating = false; if lastRenderKey == key { update() } }
+            let currentGeneration = generation, tree = parent.state.treeSHA, entriesToRender = parent.state.index.entries
+            renderTask = Task {
+                defer { if generation == currentGeneration { updating = false; if lastRenderKey == key { update() } } }
                 do {
-                    if lastTree != parent.state.treeSHA {
-                        let data = try JSONEncoder().encode(parent.state.index.entries)
+                    if lastTree != tree {
+                        let data = try JSONEncoder().encode(entriesToRender)
                         let entries = try JSONSerialization.jsonObject(with: data)
                         _ = try await web.callAsyncJavaScript("if (VaultReader.version !== 1) throw new Error('Unsupported reader contract'); VaultReader.setTree(entries)", arguments: ["entries": entries], in: nil, contentWorld: .page)
-                        lastTree = parent.state.treeSHA
+                        try Task.checkCancellation()
+                        lastTree = tree
                     }
                     _ = try await web.callAsyncJavaScript("return VaultReader.render(markdown, path, scale, theme)", arguments: ["markdown": parent.markdown, "path": parent.path, "scale": scale, "theme": theme], in: nil, contentWorld: .page)
                     if !renderedOnce {
-                        if !parent.anchor.isEmpty {
+                        // Offscreen requestAnimationFrame promises can never settle and retain WebKit.
+                        // Poll font readiness with cancellable native waits instead.
+                        for _ in 0..<100 {
+                            try Task.checkCancellation()
+                            if (try await web.evaluateJavaScript("document.fonts.status")) as? String == "loaded" { break }
+                            try await Task.sleep(for: .milliseconds(50))
+                        }
+                        try await Task.sleep(for: .milliseconds(35))
+                        try Task.checkCancellation()
+                        if let y = parent.session.scrollY {
+                            _ = try await web.callAsyncJavaScript("window.scrollTo(0, y)", arguments: ["y": y], in: nil, contentWorld: .page)
+                            try await Task.sleep(for: .milliseconds(35))
+                        } else if !parent.anchor.isEmpty {
                             _ = try await web.callAsyncJavaScript("VaultReader.scrollToAnchor(anchor)", arguments: ["anchor": parent.anchor], in: nil, contentWorld: .page)
-                        } else if let y = parent.state.scrollPositions[parent.path] {
-                            web.scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: false)
                         }
                         renderedOnce = true
+                        web.accessibilityIdentifier = "reader-ready"
+                        parent.state.recordHomeRendered(parent.path)
                     }
                     lastRenderKey = key
-                } catch { parent.onError("排版加载失败：\(error.localizedDescription)") }
+                } catch is CancellationError {} catch { if !Task.isCancelled { parent.onError("排版加载失败：\(error.localizedDescription)") } }
             }
         }
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) { loaded = true; update() }
@@ -101,9 +133,15 @@ struct RendererWebView: UIViewRepresentable {
             if action.navigationType == .other, action.request.url?.absoluteString == "vault://app/index.html", !loaded { decisionHandler(.allow) }
             else { decisionHandler(.cancel); if action.navigationType == .linkActivated, let url = action.request.url { parent.onOpen(url) } }
         }
-        func scrollViewDidScroll(_ scrollView: UIScrollView) { if renderedOnce { parent.state.scrollPositions[parent.path] = scrollView.contentOffset.y } }
+        func scrollViewDidScroll(_ scrollView: UIScrollView) { if renderedOnce && scrollView.window != nil { parent.session.scrollY = scrollView.contentOffset.y } }
         @objc func refresh(_ sender: UIRefreshControl) {
             Task { await parent.state.refresh(); sender.endRefreshing() }
         }
     }
 }
+
+#if DEBUG
+@MainActor enum ReaderWebViewRegistry {
+    static let views = NSHashTable<WKWebView>.weakObjects()
+}
+#endif
