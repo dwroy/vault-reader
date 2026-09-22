@@ -46,6 +46,7 @@ struct HTMLFileWebView: UIViewRepresentable {
     let onExternal: (URL) -> Void
     let onFile: (String) -> Void
     let onError: (String) -> Void
+    var book: BookSession? = nil
     // Dedicated persistent store; Markdown always uses an ephemeral store.
     static let storeID = UUID(uuidString: "909762B0-8740-4B06-A86A-119DFAD84737")!
     @MainActor static func configuration(location: HTMLLocation, read: @escaping @MainActor (String) async throws -> Data) -> WKWebViewConfiguration {
@@ -63,17 +64,20 @@ struct HTMLFileWebView: UIViewRepresentable {
             guard let coordinator else { return nil }
             let location = HTMLLocation(config: state.config, path: path)
             let web = WKWebView(frame: .zero, configuration: Self.configuration(location: location, read: { try await state.file($0) }))
-            web.navigationDelegate = coordinator; web.uiDelegate = coordinator
+            coordinator.restoring = true
+            web.navigationDelegate = coordinator; web.uiDelegate = coordinator; web.scrollView.delegate = coordinator
             #if DEBUG
             ReaderWebViewRegistry.views.add(web)
             #endif
             web.load(URLRequest(url: location.url)); return web
         }
+        container.beforeRelease = { [weak coordinator] web in coordinator?.capture(web.scrollView); coordinator?.parent.book?.store.flush() }
         container.mount(); return container
     }
     func updateUIView(_ container: WebViewContainer, context: Context) { context.coordinator.parent = self }
-    static func dismantleUIView(_ container: WebViewContainer, coordinator: Coordinator) { container.releaseWebView(); container.create = nil }
-    @MainActor final class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
+    static func dismantleUIView(_ container: WebViewContainer, coordinator: Coordinator) { container.releaseWebView(); container.create = nil; container.beforeRelease = nil }
+    @MainActor final class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate, UIScrollViewDelegate {
+        var restoring = true
         var parent: HTMLFileWebView
         init(_ parent: HTMLFileWebView) { self.parent = parent }
         func webView(_ webView: WKWebView, decidePolicyFor action: WKNavigationAction, decisionHandler: @escaping @MainActor @Sendable (WKNavigationActionPolicy) -> Void) {
@@ -91,6 +95,24 @@ struct HTMLFileWebView: UIViewRepresentable {
             }
         }
         func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for action: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? { nil }
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+            parent.book?.opened()
+            let fraction = parent.book?.record.location.fraction ?? 0
+            Task { [weak self, weak webView] in
+                try? await Task.sleep(for: .milliseconds(180))
+                guard let self, let webView, webView.window != nil else { return }
+                webView.layoutIfNeeded()
+                let maximum = max(0, webView.scrollView.contentSize.height - webView.scrollView.bounds.height)
+                webView.scrollView.setContentOffset(CGPoint(x: 0, y: maximum * fraction), animated: false)
+                self.restoring = false
+            }
+        }
+        func capture(_ scroll: UIScrollView) {
+            guard !restoring, let book = parent.book else { return }
+            let maximum = max(1, scroll.contentSize.height - scroll.bounds.height)
+            book.save(ReadingLocation(fraction: scroll.contentOffset.y / maximum))
+        }
+        func scrollViewDidScroll(_ scrollView: UIScrollView) { capture(scrollView) }
         func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: any Error) { parent.onError(error.localizedDescription) }
         func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: any Error) { parent.onError(error.localizedDescription) }
         func webViewWebContentProcessDidTerminate(_ webView: WKWebView) { webView.reload() }
@@ -100,7 +122,8 @@ struct HTMLReaderView: View {
     let state: AppState
     let path: String
     let navigate: (String) -> Void
-    @State private var readerSession = ReaderSession()
+    @State private var book: BookSession?
+    @Environment(\.scenePhase) private var scenePhase
     @State private var external: PreviewItem?
     @State private var error: String?
     @State private var attempt = 0
@@ -108,12 +131,15 @@ struct HTMLReaderView: View {
         Group {
             if let error {
                 ContentUnavailableView { Label("无法打开阅读器", systemImage: "doc") } description: { Text(error) } actions: { Button("重试") { self.error = nil; attempt += 1 } }
-            } else {
-                HTMLFileWebView(state: state, session: readerSession, path: path, onExternal: { external = PreviewItem(url: $0) }, onFile: navigate, onError: { error = $0 }).id(attempt)
-            }
+            } else if let book {
+                HTMLFileWebView(state: state, session: book.viewport, path: path, onExternal: { external = PreviewItem(url: $0) }, onFile: navigate, onError: { error = $0 }, book: book).id(attempt)
+            } else { ProgressView("正在打开阅读器…") }
         }
         .navigationTitle((path as NSString).lastPathComponent).navigationBarTitleDisplayMode(.inline)
         .sheet(item: $external) { SafariView(url: $0.url) }
-        .onAppear { readerSession.resume() }.onDisappear { readerSession.suspend() }
+        .toolbar(.hidden, for: .tabBar)
+        .task { if book == nil { book = BookSession(path: path, kind: .html, store: state.reading) } }
+        .onAppear { book?.viewport.resume() }.onDisappear { book?.viewport.suspend(); book?.store.flush() }
+        .onChange(of: scenePhase) { _, phase in if phase == .background { book?.store.flush() } }
     }
 }

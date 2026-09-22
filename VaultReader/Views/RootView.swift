@@ -1,11 +1,14 @@
 import SwiftUI
+import VaultCore
 
-struct NoteRoute: Hashable { let path: String; var anchor = "" }
-enum ReaderRoute: Hashable { case note(NoteRoute), directory(String), file(String) }
-private enum ReaderTab: Hashable { case directory, recent, search, settings }
+struct NoteRoute: Hashable { let path: String; var anchor = ""; var reading = false }
+enum ReaderRoute: Hashable { case note(NoteRoute), directory(String), file(String), readingLibrary }
+private enum ReaderTab: Hashable { case directory, reading, recent, search, settings }
 struct RootView: View {
     @Bindable var state: AppState
     @State private var selectedTab: ReaderTab = .directory
+    @State private var readingPath: [ReaderRoute] = []
+    @State private var readingProject: String?
     @State private var recentPath: [ReaderRoute] = []
     @State private var searchPath: [ReaderRoute] = []
     @State private var directoryPath: [ReaderRoute] = []
@@ -13,7 +16,7 @@ struct RootView: View {
     var body: some View {
         Group {
             if !state.ready { ProgressView("打开知识库…") }
-            else if state.needsSetup && state.index.entries.isEmpty {
+            else if state.needsSetup && state.index.entries.isEmpty && state.library.repositories.isEmpty {
                 WelcomeView(state: state)
             } else {
                 TabView(selection: $selectedTab) {
@@ -35,6 +38,20 @@ struct RootView: View {
                             }
                             .navigationDestination(for: ReaderRoute.self) { route in destination(route, path: $directoryPath) }
                     }.tabItem { Label("目录", systemImage: "folder") }.tag(ReaderTab.directory)
+                    NavigationStack(path: $readingPath) {
+                        ReadingProjectsView(state: state) { config, resumePath in
+                            readingProject = config.storageKey
+                            Task {
+                                await state.selectRepository(config)
+                                guard state.config.storageKey == config.storageKey else { readingProject = nil; return }
+                                selectedTab = .reading
+                                readingPath = [.readingLibrary]
+                                if let resumePath { readingPath.append(readingRoute(resumePath, index: state.index)) }
+                                readingProject = nil
+                            }
+                        }
+                        .navigationDestination(for: ReaderRoute.self) { route in destination(route, path: $readingPath) }
+                    }.tabItem { Label("阅读", systemImage: "book") }.tag(ReaderTab.reading)
                     NavigationStack(path: $recentPath) {
                         RecentView(state: state)
                             .navigationDestination(for: ReaderRoute.self) { route in destination(route, path: $recentPath) }
@@ -51,20 +68,31 @@ struct RootView: View {
         }
         .tint(Color(red: 0.14, green: 0.46, blue: 0.35))
         .sheet(isPresented: $state.showSettings) { SettingsView(state: state) }
-        .task { await state.start(); if !state.needsSetup { state.startPrefetch() } }
-        .onChange(of: scenePhase) { _, phase in if phase == .active && state.ready { if !state.needsSetup { state.startPrefetch() }; Task { await state.refresh() } } else if phase == .background { state.stopPrefetch() } }
-        .onChange(of: state.config) { _, _ in directoryPath = []; recentPath = []; searchPath = []; selectedTab = .directory }
+        .task {
+            await state.start(); if !state.needsSetup { state.startPrefetch() }
+            #if DEBUG
+            let args = ProcessInfo.processInfo.arguments
+            if let flag = args.firstIndex(of: "--read-file"), args.indices.contains(flag + 1), state.index.files[args[flag + 1]] != nil {
+                selectedTab = .reading
+                readingPath = [.readingLibrary, readingRoute(args[flag + 1], index: state.index)]
+            }
+            #endif
+        }
+        .onChange(of: scenePhase) { _, phase in if phase == .active && state.ready { if !state.needsSetup { state.startPrefetch() }; Task { await state.refresh() } } else if phase == .background { state.stopPrefetch(); state.reading.flush() } }
+        .onChange(of: state.config) { _, _ in directoryPath = []; recentPath = []; searchPath = []; readingPath = []; selectedTab = readingProject == state.config.storageKey ? .reading : .directory }
     }
     @ViewBuilder private func destination(_ route: ReaderRoute, path: Binding<[ReaderRoute]>) -> some View {
         switch route {
-        case .note(let note): NoteView(state: state, route: note, navigate: { path.wrappedValue.append($0) })
+        case .note(let note): NoteView(state: state, route: note, navigate: { path.wrappedValue.append($0) }, readingBook: note.reading || BookCatalog.root(for: note.path) != nil)
         case .file(let file):
             if state.index.files[file]?.isMarkdown == true {
-                NoteView(state: state, route: NoteRoute(path: file), navigate: { path.wrappedValue.append($0) })
+                NoteView(state: state, route: NoteRoute(path: file), navigate: { path.wrappedValue.append($0) }, readingBook: BookCatalog.root(for: file) != nil)
             } else if state.index.files[file]?.isHTML == true {
                 HTMLReaderView(state: state, path: file, navigate: { path.wrappedValue.append(.file($0)) })
-            } else { AttachmentView(state: state, path: file) }
+            } else if state.index.files[file]?.ext == "pdf" { PDFReaderView(state: state, path: file) }
+            else { AttachmentView(state: state, path: file) }
         case .directory(let directory): DirView(state: state, path: directory)
+        case .readingLibrary: ReadingLibraryView(state: state)
         }
     }
 

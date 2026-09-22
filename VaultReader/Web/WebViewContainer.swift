@@ -1,9 +1,20 @@
 import UIKit
 import WebKit
+import VaultCore
 
 /// SwiftUI can retain offscreen navigation views. Retain only this empty shell, not WebKit.
 @MainActor final class ReaderSession {
     var scrollY: Double?
+    var position: ReadingLocation?
+    var onPosition: ((ReadingLocation) -> Void)?
+    var onOutline: (([ReadingOutline]) -> Void)?
+    var onSave: (() -> Void)?
+    var sectionRequest: String?
+    func go(to section: String) {
+        guard let web = container?.web else { sectionRequest = section; return }
+        sectionRequest = nil
+        Task { _ = try? await web.callAsyncJavaScript("VaultReader.scrollToSection(id)", arguments: ["id": section], in: nil, contentWorld: .page) }
+    }
     weak var container: WebViewContainer?
     func resume() { container?.mount() }
     func suspend() { container?.releaseWebView() }

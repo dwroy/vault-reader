@@ -1,11 +1,15 @@
 import SwiftUI
 import SafariServices
+import VaultCore
 
 struct PreviewItem: Identifiable { let url: URL; var id: URL { url } }
 struct NoteView: View {
     let state: AppState
     let route: NoteRoute
     let navigate: (ReaderRoute) -> Void
+    var readingBook = false
+    @State private var book: BookSession?
+    @Environment(\.scenePhase) private var scenePhase
     @State private var markdown: String?
     @State private var loadError: String?
     @State private var actionError: String?
@@ -16,7 +20,7 @@ struct NoteView: View {
     var body: some View {
         Group {
             if let markdown {
-                RendererWebView(state: state, session: readerSession, markdown: markdown, path: route.path, anchor: route.anchor, onOpen: open, onPreview: showPreview, onError: { actionError = $0 })
+                RendererWebView(state: state, session: book?.viewport ?? readerSession, markdown: markdown, path: route.path, anchor: route.anchor, onOpen: open, onPreview: showPreview, onError: { actionError = $0 }, readingOptions: book?.record)
             } else if let loadError {
                 ContentUnavailableView {
                     Label("暂时无法打开", systemImage: "doc.text.magnifyingglass")
@@ -26,7 +30,10 @@ struct NoteView: View {
                 }
             } else { ProgressView("正在读取…") }
         }
-        .safeAreaInset(edge: .top, spacing: 0) { StatusBanner(state: state) }
+        .safeAreaInset(edge: .top, spacing: 0) { if !readingBook { StatusBanner(state: state) } }
+        .safeAreaInset(edge: .bottom, spacing: 0) { if let book { ReadingControls(book: book) } }
+        .toolbar(readingBook ? .hidden : .automatic, for: .tabBar)
+        .preferredColorScheme(book?.record.theme == .dark ? .dark : (book?.record.theme == .light || book?.record.theme == .sepia ? .light : nil))
         .navigationTitle((route.path as NSString).lastPathComponent.replacingOccurrences(of: ".md", with: ""))
         .navigationBarTitleDisplayMode(.inline)
         .task(id: state.config.identity + state.config.branch + (state.index.files[route.path]?.sha ?? "missing")) { await load() }
@@ -39,30 +46,34 @@ struct NoteView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
+                    if !readingBook { Button("用阅读器打开", systemImage: "book") { navigate(.note(NoteRoute(path: route.path, anchor: route.anchor, reading: true))) } }
                     Button("复制路径", systemImage: "doc.on.doc") { UIPasteboard.general.string = route.path }
                     Button("在 \(state.config.provider.title) 打开", systemImage: "safari") { external = PreviewItem(url: state.config.fileURL(path: route.path)) }
                     Button("刷新", systemImage: "arrow.clockwise") { Task { await state.refresh(); await load() } }
                 } label: { Image(systemName: "ellipsis.circle") }.accessibilityLabel("笔记操作")
             }
         }
-        .onAppear { readerSession.resume() }
-        .onDisappear { readerSession.suspend() }
+        .onAppear { (book?.viewport ?? readerSession).resume() }
+        .onDisappear { (book?.viewport ?? readerSession).suspend(); book?.store.flush() }
+        .onChange(of: scenePhase) { _, phase in if phase == .background { book?.store.flush() } }
     }
     private func load() async {
         loadError = nil
+        if readingBook, book == nil { book = BookSession(path: route.path, kind: .markdown, store: state.reading) }
         do {
             let data = try await state.file(route.path)
             try Task.checkCancellation()
             guard let text = String(data: data, encoding: .utf8) else { throw CocoaError(.fileReadInapplicableStringEncoding) }
             markdown = text
+            book?.opened()
         } catch is CancellationError {} catch { loadError = error.localizedDescription }
     }
     private func open(_ url: URL) {
         if url.scheme == "vault", url.host == "f" {
             let path = String(url.path.dropFirst())
             guard let entry = state.index.files[path] else { actionError = "未找到这篇笔记。"; return }
-            if entry.isMarkdown { navigate(.note(NoteRoute(path: path, anchor: url.fragment?.removingPercentEncoding ?? ""))) }
-            else if entry.isHTML { navigate(.file(path)) }
+            if entry.isMarkdown { navigate(.note(NoteRoute(path: path, anchor: url.fragment?.removingPercentEncoding ?? "", reading: readingBook))) }
+            else if entry.isHTML || entry.ext == "pdf" { navigate(.file(path)) }
             else { showPreview(path) }
         } else if ["https", "http"].contains(url.scheme ?? "") {
             if ["mp4", "mov", "m4v"].contains(url.pathExtension.lowercased()) { video = PreviewItem(url: url) }
@@ -73,7 +84,7 @@ struct NoteView: View {
     }
     private func showPreview(_ path: String) {
         guard state.index.files[path] != nil else { return }
-        if state.index.files[path]?.isHTML == true { navigate(.file(path)) }
+        if state.index.files[path]?.isHTML == true || state.index.files[path]?.ext == "pdf" { navigate(.file(path)) }
         else { previewPath = path }
     }
 }

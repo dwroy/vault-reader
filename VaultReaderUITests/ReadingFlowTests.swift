@@ -20,7 +20,7 @@ final class ReadingFlowTests: XCTestCase {
         let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
         XCTAssertTrue(app.tabBars.buttons["目录"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.tabBars.buttons["目录"].isSelected)
-        XCTAssertEqual(app.tabBars.buttons.allElementsBoundByIndex.map(\.label), ["目录", "最近", "搜索", "设置"])
+        XCTAssertEqual(app.tabBars.buttons.allElementsBoundByIndex.map(\.label), ["目录", "阅读", "最近", "搜索", "设置"])
         XCTAssertFalse(app.tabBars.buttons["首页"].exists)
         XCTAssertTrue(app.staticTexts["生活"].waitForExistence(timeout: 5))
         app.staticTexts["生活"].tap()
@@ -64,7 +64,9 @@ final class ReadingFlowTests: XCTestCase {
         let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
         func open(_ name: String) {
             XCTAssertTrue(app.tabBars.buttons["目录"].waitForExistence(timeout: 15)); app.tabBars.buttons["目录"].tap()
-            XCTAssertTrue(app.staticTexts[name].waitForExistence(timeout: 5)); app.staticTexts[name].tap()
+            let file = app.staticTexts[name]
+            for _ in 0..<5 { if file.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(file.waitForExistence(timeout: 5)); file.tap()
             XCTAssertTrue(app.webViews.buttons["Next page"].waitForExistence(timeout: 10))
         }
         open("阅读器.html")

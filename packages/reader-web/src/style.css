@@ -29,3 +29,10 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2em 0; }
 .properties { color: var(--muted); font-size: .75em; margin: 12px 0 22px; }
 .properties summary { cursor: pointer; } .properties pre { white-space: pre-wrap; }
 .task-list-item { list-style: none; } input[type=checkbox] { accent-color: var(--accent); }
+
+:root[data-theme="light"] { color-scheme: light; --ink: #26362f; --muted: #76837b; --paper: #fffefb; --accent: #23765b; --line: #e4e8e2; --wash: #f0f4ee; }
+:root[data-theme="dark"] { color-scheme: dark; --ink: #dbe6df; --muted: #9bafa2; --paper: #171e1a; --accent: #8bceb0; --line: #34423a; --wash: #25332a; }
+:root[data-theme="sepia"] { color-scheme: light; --ink: #40392c; --muted: #85765e; --paper: #f6eedc; --accent: #566d48; --line: #ded3bb; --wash: #ede2c9; }
+:root[data-reading="book"] { line-height: 1.95; }
+:root[data-reading="book"] body { padding: 24px 22px 64px; }
+:root[data-reading="book"] main { max-width: 38em; }

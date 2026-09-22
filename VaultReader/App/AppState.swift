@@ -9,6 +9,7 @@ final class AppState {
     var firstHomeRenderSeconds: Double?
     var config: RepositoryConfig
     var library: RepositoryLibrary
+    var reading: ReadingStore
     var addingRepository = false
     var switchingRepository = false
     var index = VaultIndex()
@@ -45,6 +46,7 @@ final class AppState {
     init() {
         let saved = UserDefaults.standard.data(forKey: "repository").flatMap { try? JSONDecoder().decode(RepositoryConfig.self, from: $0) }
         config = saved ?? RepositoryConfig()
+        reading = ReadingStore(config: saved ?? RepositoryConfig())
         library = UserDefaults.standard.data(forKey: "repositoryLibrary").flatMap { try? JSONDecoder().decode(RepositoryLibrary.self, from: $0) } ?? RepositoryLibrary()
         if let saved { library.remember(saved) }
         storedLibrary = library
@@ -58,9 +60,11 @@ final class AppState {
             try await prepare()
             #if DEBUG
             if ProcessInfo.processInfo.arguments.contains("--demo") {
+                if ProcessInfo.processInfo.arguments.contains("--reset-reading") { reading.clearDemoProgress() }
                 try await loadDemo(); ready = true; return
             }
             if ProcessInfo.processInfo.arguments.contains("--cached-vault") {
+                library.remember(config)
                 needsSetup = false; demo = true; notice = "本机缓存验收 · 未连接服务器"; ready = true; return
             }
             if let token = ProcessInfo.processInfo.environment["VR_TOKEN"], !token.isEmpty, try Keychain.read(config.identity) == nil {
@@ -76,6 +80,8 @@ final class AppState {
         } catch { self.error = error.localizedDescription; ready = true }
     }
     private func prepare() async throws {
+        reading.flush()
+        if reading.key != config.storageKey { reading = ReadingStore(config: config) }
         stopPrefetch()
         epoch = UUID(); isRefreshing = false
         index = VaultIndex(); treeSHA = ""; blobs = nil; meta = nil; snapshot = nil
@@ -318,6 +324,7 @@ final class AppState {
             ("阅读器.html", Self.demoHTML), ("独立阅读器.html", Self.demoHTML),
             ("长文.md", "# 长文\n\n" + (1...80).map { "## 第 \($0) 段\n\n正文检索词：银杏。慢慢读，记得回来的位置。\n\n[[长文|继续长文]]\n\n" }.joined())
         ]
+        samples += BookDemoFixtures.markdown
         for n in 1...12 {
             samples.append(("深读/第 \(n) 页.md", "# 第 \(n) 页\n\n" + String(repeating: "保留每次阅读的位置。\n\n", count: 100)))
         }
@@ -326,6 +333,9 @@ final class AppState {
             let data = Data(value.utf8), entry = TreeEntry(path: path, sha: BlobStore.hash(Data(value.utf8)), size: Data(value.utf8).count, type: "blob")
             try await blobs?.put(data, entry: entry); entries.append(entry)
         }
+        let pdf = BookDemoFixtures.pdf
+        let pdfEntry = TreeEntry(path: "files/夜航手记.pdf", sha: BlobStore.hash(pdf), size: pdf.count)
+        try await blobs?.put(pdf, entry: pdfEntry); entries.append(pdfEntry)
         index = VaultIndex(entries); treeSHA = "demo"; needsSetup = false; demo = true
         try await meta?.write(GitTree(sha: treeSHA, tree: entries), name: "tree")
         var second = config; second.repo = "synthetic-other"

@@ -6,6 +6,7 @@ import { createTree, encodePath, headingID } from './tree.js';
 
 const resourceURL = path => (window.VaultHost?.resourceBaseURL || 'vault://file/') + encodePath(path);
 let tree = createTree([]), currentPath = '', lastContent = '', lastPath = '';
+let readingHeadings = [];
 const md = new MarkdownIt({ html: true, linkify: false, typographer: false }).use(footnote).use(taskLists, { enabled: false });
 const escape = md.utils.escapeHtml;
 function fileURL(path, anchor = '') { return `vault://f/${encodePath(path)}${anchor ? '#' + encodeURIComponent(headingID(anchor)) : ''}`; }
@@ -99,7 +100,7 @@ const render = (source, path, fontScale = 1, colorScheme = 'light') => {
   const scroll = lastPath === path ? window.scrollY : 0;
   currentPath = path;
   const { content, properties, tags } = frontmatter(source);
-  document.documentElement.style.setProperty('--font-scale', String(fontScale));
+  document.documentElement.style.setProperty('--font-scale', String(Number.isFinite(fontScale) ? Math.min(4, Math.max(0.8, fontScale)) : 1));
   document.documentElement.dataset.theme = colorScheme;
   if (source !== lastContent || path !== lastPath) {
     const metadata = tags.length ? `<div class="tags">${tags.map(t => `<span>${escape(t)}</span>`).join('')}</div>` : '';
@@ -110,8 +111,15 @@ const render = (source, path, fontScale = 1, colorScheme = 'light') => {
       FORBID_TAGS: ['script', 'style', 'iframe', 'object', 'embed', 'form', 'video', 'audio'],
       FORBID_ATTR: ['srcset']
     });
+    const occurrences = new Map();
+    readingHeadings = [...document.querySelectorAll('#content h1,#content h2,#content h3,#content h4,#content h5,#content h6')].map(element => {
+      const base = element.id || headingID(element.textContent), occurrence = occurrences.get(base) || 0;
+      occurrences.set(base, occurrence + 1);
+      return { element, id: `${base}::${occurrence}`, title: element.textContent.trim(), level: Number(element.tagName[1]) };
+    });
     lastContent = source; lastPath = path;
-    requestAnimationFrame(() => window.scrollTo(0, scroll));
+    // Native book restoration owns the initial position; a delayed frame must not reset it.
+    if (document.documentElement.dataset.reading !== "book") requestAnimationFrame(() => window.scrollTo(0, scroll));
   }
   emit('height', { px: document.documentElement.scrollHeight });
   return true;
@@ -132,4 +140,28 @@ document.addEventListener('error', event => {
   if (event.target.tagName === 'IMG') { event.target.alt = '图片暂不可用，联网后刷新重试'; event.target.classList.add('image-error'); }
 }, true);
 
-window.VaultReader = Object.freeze({ version: 1, setTree, render, scrollToAnchor });
+const unit = n => Number.isFinite(n) ? Math.max(0, Math.min(1, n)) : 0;
+const maximumScroll = () => Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+const topOf = item => item.element.getBoundingClientRect().top + window.scrollY;
+const outline = () => readingHeadings.map(({id,title,level}) => ({id,title,level}));
+const capturePosition = () => {
+  const y = Math.max(0, window.scrollY), maximum = maximumScroll(), fraction = maximum > 0 ? unit(y / maximum) : 1;
+  let index = -1;
+  for (let i = 0; i < readingHeadings.length; i++) { if (topOf(readingHeadings[i]) <= y + 20) index = i; else break; }
+  if (index < 0) return { heading: null, withinHeading: 0, fraction };
+  const start = topOf(readingHeadings[index]), end = index + 1 < readingHeadings.length ? topOf(readingHeadings[index+1]) : document.documentElement.scrollHeight;
+  return { heading: readingHeadings[index].id, withinHeading: unit((y-start)/Math.max(1,end-start)), fraction };
+};
+const restorePosition = position => {
+  const max = maximumScroll();
+  let y = unit(position?.fraction) * max;
+  const index = readingHeadings.findIndex(item => item.id === position?.heading);
+  if (index >= 0) {
+    const start = topOf(readingHeadings[index]), end = index + 1 < readingHeadings.length ? topOf(readingHeadings[index+1]) : document.documentElement.scrollHeight;
+    y = start + unit(position.withinHeading) * Math.max(1,end-start);
+  }
+  window.scrollTo(0, Math.min(max, Math.max(0,y)));
+};
+const scrollToSection = id => { const item = readingHeadings.find(item => item.id === id); if (item) window.scrollTo(0, Math.max(0,topOf(item))); };
+const setReadingMode = enabled => { document.documentElement.dataset.reading = enabled ? 'book' : ''; };
+window.VaultReader = Object.freeze({ version: 2, setTree, render, scrollToAnchor, outline, capturePosition, restorePosition, scrollToSection, setReadingMode });

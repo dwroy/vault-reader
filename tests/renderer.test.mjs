@@ -35,3 +35,48 @@ test('sanitize untrusted HTML, keep code literal, and resolve new tree entries',
   assert.equal(document.querySelector('a').getAttribute('href'),'vault://f/new.md');
   dom.window.close();
 });
+
+test('reading v2 resumes within a heading after reflow and distinguishes duplicate headings',()=>{
+  const {dom,api,document}=page();
+  let y=0, height=2000, positions=[100,600,1200];
+  Object.defineProperty(dom.window,'scrollY',{get:()=>y,configurable:true});
+  Object.defineProperty(dom.window,'innerHeight',{value:500,configurable:true});
+  Object.defineProperty(document.documentElement,'scrollHeight',{get:()=>height,configurable:true});
+  dom.window.scrollTo=(_x,next)=>{y=next};
+  api.render('# Book\n\n## Repeated\n\nText\n\n## Repeated\n\nEnd','read/book.md');
+  [...document.querySelectorAll('h1,h2')].forEach((element,i)=>element.getBoundingClientRect=()=>({top:positions[i]-y}));
+  assert.equal(api.version,2);
+  assert.deepEqual(Array.from(api.outline(),x=>x.id),['book::0','repeated::0','repeated::1']);
+  y=900;
+  const position=api.capturePosition();
+  assert.equal(position.heading,'repeated::0');assert.equal(position.withinHeading,0.5);
+  positions=[100,800,1600];height=2500;
+  api.restorePosition(position);assert.equal(y,1200);
+  api.scrollToSection('repeated::1');assert.equal(y,1600);
+  api.restorePosition({heading:'removed',fraction:0.5});assert.equal(y,1000);
+  api.restorePosition({fraction:Infinity,withinHeading:NaN});assert.equal(y,0);
+  dom.window.close();
+});
+test('reading outline ignores fenced code and uses the shared sanitizer',()=>{
+  const {dom,api,document}=page();
+  api.render('# A\n\n```md\n## fake\n```\n\n## **Real**\n\n<script>bad()</script>','read/a.md',1,'sepia');
+  api.setReadingMode(true);
+  assert.deepEqual(Array.from(api.outline(),x=>x.title),['A','Real']);
+  assert.equal(document.documentElement.dataset.theme,'sepia');
+  assert.equal(document.documentElement.dataset.reading,'book');
+  assert.equal(document.querySelectorAll('#content script').length,0);
+  dom.window.close();
+});
+test('book restoration is not overwritten by a delayed first animation frame',async()=>{
+  const {dom,api,document}=page(); let y=0;
+  Object.defineProperty(dom.window,'scrollY',{get:()=>y,configurable:true});
+  Object.defineProperty(dom.window,'innerHeight',{value:500,configurable:true});
+  Object.defineProperty(document.documentElement,'scrollHeight',{value:2000,configurable:true});
+  dom.window.scrollTo=(_x,next)=>{y=next};
+  api.setReadingMode(true);api.render('# Book\n\n## Next','read/book.md');
+  [...document.querySelectorAll('h1,h2')].forEach((element,i)=>element.getBoundingClientRect=()=>({top:[100,700][i]-y}));
+  api.restorePosition({heading:'next::0',withinHeading:0,fraction:0.5});
+  await new Promise(resolve=>setTimeout(resolve,60));
+  assert.equal(y,700);
+  dom.window.close();
+});

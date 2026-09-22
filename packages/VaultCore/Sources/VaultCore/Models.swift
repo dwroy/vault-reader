@@ -108,7 +108,7 @@ public enum VaultError: LocalizedError, Equatable {
         case .tooLarge: "文件超过 100 MB，请在仓库网页打开。"
         case .invalidTree: "仓库目录未完整返回，已保留上次完整缓存。"
         case .corruptBlob: "文件校验失败，未写入缓存。请重试。"
-        case .invalidConfiguration: "请填写有效的 owner、repo、branch 和仓库内首页路径。"
+        case .invalidConfiguration: "请填写有效的平台地址、Owner、仓库和分支。"
         case .noToken: "请先在设置中录入只读 Token。"
         case .rateLimited(let date): date.map { "仓库服务请求额度已用完，\($0.formatted(date: .omitted, time: .shortened)) 后可重试。" } ?? "仓库服务暂时限制请求，请稍后重试。"
         case .network(let code):

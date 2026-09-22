@@ -2,7 +2,7 @@
 
 A native, read-only reader for an Obsidian vault stored in GitHub or GitLab. **iOS first, Android next.** No server or account system; a repository-scoped, read-only token stays in the device credential store.
 
-M1b implementation candidate: saved repositories with quick switching (GitHub, GitLab.com and HTTPS self-managed GitLab), Directory first, Recent commits, local filename/full-text Search, Directory, Markdown completion, independent HTML readers, images/QuickLook and content-addressed cache. A personal-team build has been installed and exercised on iPhone. Private-repository online sync and the remaining device acceptance limits are recorded in docs/ACCEPTANCE.md. Android is architecturally prepared, not yet implemented.
+M1b implementation candidate: saved repositories with quick switching (GitHub, GitLab.com and HTTPS self-managed GitLab), Directory first, a project-based Reading tab, Recent commits, local filename/full-text Search, Settings, Markdown completion, independent HTML readers, images/QuickLook and content-addressed cache. A personal-team build has been installed and exercised on iPhone. Private-repository online sync and the remaining device acceptance limits are recorded in docs/ACCEPTANCE.md. Android is architecturally prepared, not yet implemented.
 
 ## Architecture
 
@@ -57,3 +57,11 @@ Debug launch argument `--demo` uses synthetic sample notes, commit records and H
 ## License
 
 MIT. Vendored dependency license notices ship in `VaultReader/Resources/renderer/vendor/THIRD-PARTY-NOTICES.txt`.
+
+## Reading books, papers and articles
+
+The tabs are **Directory → Reading → Recent → Search → Settings**. Reading first lists saved repository/branch projects; selecting one opens its books and articles. Files under `read`, `reading`, `books`, `papers` or `articles` are discovered automatically. Book folders keep original text, summaries, review notes and HTML editions together. Indexed local PDFs linked from top-level reading lists also appear; external links are not imported. Other Markdown files offer **Open in reader** in their action menu.
+
+Markdown reading provides a heading directory, adjustable font size, system/light/sepia/dark paper and automatic position recovery. Position is stored relative to its heading so font changes and many content updates can retain the place. PDFKit remembers the PDF page and supports its existing outline or manual page entry. HTML retains its own chapter/theme state in its isolated persistent WebKit origin; the native host additionally remembers document scroll position without injecting scripts.
+
+Reading history and preferences stay on the device, independently keyed by repository, branch and file. Different editions never share a bookmark. The latest opened document is available through **Continue reading**. Cached content remains readable offline subject to the existing cache policy. The app does not write progress back to Git, import external websites, decrypt protected PDFs or add EPUB support in this change.
