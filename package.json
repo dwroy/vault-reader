@@ -1,0 +1,26 @@
+{
+  "name": "vault-reader",
+  "version": "0.1.0",
+  "description": "Read an Obsidian vault that lives in a (private) GitHub repository on your iPhone.",
+  "scripts": {
+    "build:renderer": "node scripts/build-renderer.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "test:links": "node tests/resolve-links.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@fontsource-variable/noto-sans-sc": "5.3.0",
+    "dompurify": "3.4.15",
+    "esbuild": "0.28.2",
+    "markdown-it": "15.0.2",
+    "markdown-it-footnote": "4.0.0",
+    "markdown-it-task-lists": "2.1.1"
+  },
+  "private": true,
+  "devDependencies": {
+    "jsdom": "29.1.1"
+  }
+}

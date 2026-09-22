@@ -1,0 +1,60 @@
+name: VaultReader
+options:
+  deploymentTarget:
+    iOS: '18.0'
+settings:
+  base:
+    SWIFT_VERSION: '6.0'
+    TARGETED_DEVICE_FAMILY: '1,2'
+    CODE_SIGN_STYLE: Automatic
+    PRODUCT_BUNDLE_IDENTIFIER: com.dwroy.vaultreader
+    GENERATE_INFOPLIST_FILE: YES
+    INFOPLIST_KEY_UILaunchScreen_Generation: YES
+    INFOPLIST_KEY_CFBundleDisplayName: Vault Reader
+    INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+    MARKETING_VERSION: 0.1.0
+    CURRENT_PROJECT_VERSION: 1
+packages:
+  VaultCore:
+    path: packages/VaultCore
+targets:
+  VaultReader:
+    dependencies:
+      - package: VaultCore
+    type: application
+    platform: iOS
+    sources:
+      - path: VaultReader
+        excludes: [Resources]
+      - path: VaultReader/Resources/renderer
+        type: folder
+        buildPhase: resources
+    settings:
+      base:
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight
+  VaultReaderTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [VaultReaderTests]
+    dependencies:
+      - target: VaultReader
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dwroy.vaultreader.tests
+  VaultReaderUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [VaultReaderUITests]
+    dependencies:
+      - target: VaultReader
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dwroy.vaultreader.uitests
+schemes:
+  VaultReader:
+    build:
+      targets:
+        VaultReader: all
+    test:
+      targets: [VaultReaderTests, VaultReaderUITests]

@@ -1,2 +1,11 @@
 .DS_Store
 node_modules/
+.worktrees/
+build/
+*.xcodeproj/
+*.xcuserstate
+.env*
+Config/Local.xcconfig
+*.log
+.build/
+.swiftpm/
