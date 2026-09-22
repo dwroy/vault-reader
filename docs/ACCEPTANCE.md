@@ -67,3 +67,10 @@ The owner requested an independent Reading tab for books, papers and articles, t
 The integrated main-checkout **0.2.0 (5)** device app built successfully with the confirmed Wei Dong personal team (DPK7SSB889) and passed `codesign --verify --deep --strict`. Its source commit is `561291a`; build evidence is in main's ignored `build/acceptance/reading-device-build.log`, and the app is `build/M1bDevice/Build/Products/Debug-iphoneos/VaultReader.app`.
 
 Mac locking prevented additional manual desktop interaction. A fresh CoreDevice check after the build still listed the iPhone as unavailable, so build 5 was **not installed** and build 4 remains the last confirmed phone version. Installation and physical-device reading/touch acceptance are pending USB reconnection. Synthetic simulator resume tests and real-file initial rendering do not claim a completed physical-device reading/touch pass or the full private-network/performance gates.
+
+
+## Directory toolbar follow-up
+
+At the owner's request, the project switcher is back on Directory's leading side and the trailing ellipsis menu exposes Refresh. Nested directories retain their native back button and Refresh menu; the existing note action menu is unchanged. Both existing simulator flows for Directory/Settings navigation and saved-project switching passed (2 checks, zero failures). A synthetic simulator screenshot visually confirms the final leading logo switcher and trailing ellipsis button. Evidence: the book-reader worktree's ignored `build/acceptance/directory-toolbar-tests.log` and `directory-toolbar.png`. Mac locking prevented an additional manual menu interaction; these checks do not claim a fresh online-sync test.
+
+Main's **0.2.0 (6)** app, source commit `e952b47`, built with the Wei Dong personal team and passed strict signature verification (`build/acceptance/toolbar-device-build.log`). A fresh CoreDevice query still reports the iPhone as unavailable; no device installation was attempted and build 4 remains the last confirmed installed phone version. This build includes the Reading extension as well as the toolbar correction.
