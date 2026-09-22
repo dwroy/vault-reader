@@ -19,6 +19,7 @@ struct DirView: View {
         }
         .safeAreaInset(edge: .top, spacing: 0) { StatusBanner(state: state) }
         .navigationTitle(path.isEmpty ? "目录" : (path as NSString).lastPathComponent)
+        .navigationBarTitleDisplayMode(.inline)
         .refreshable { await state.refresh() }
 
     }
