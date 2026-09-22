@@ -7,9 +7,9 @@ struct DirView: View {
     var body: some View {
         List {
             if path.isEmpty {
-                Section { Text("\(state.config.owner) / \(state.config.repo)").font(.subheadline).foregroundStyle(.secondary) } footer: { Text("\(state.index.entries.count) 个文件 · \(state.config.branch)") }
+                Section { Text("\(state.config.owner) / \(state.config.repo)").font(.subheadline).foregroundStyle(.secondary) } footer: { Text("\(state.visibleEntries.count) 个文件 · \(state.config.branch)") }
             }
-            ForEach(state.index.children(of: path)) { item in
+            ForEach(state.index.children(of: path).filter { state.fileDisplay.includes($0.path) }) { item in
                 if item.isDirectory { NavigationLink(value: ReaderRoute.directory(item.path)) { row(item) } }
                 else if item.entry?.isMarkdown == true { NavigationLink(value: ReaderRoute.note(NoteRoute(path: item.path))) { row(item) } }
                 else {

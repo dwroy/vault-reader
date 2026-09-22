@@ -7,6 +7,7 @@ struct SearchView: View {
     @State private var fullText = false
     @State private var hits: [SearchHit] = []
     @State private var searching = false
+    private var visibleHits: [SearchHit] { hits.filter { state.fileDisplay.includes($0.path) } }
     var body: some View {
         List {
             Section {
@@ -23,7 +24,7 @@ struct SearchView: View {
                     Button(fullText ? "正在搜索文件名与正文" : "搜索正文") { fullText = true }.disabled(fullText)
                 }
             }
-            ForEach(hits) { hit in
+            ForEach(visibleHits) { hit in
                 NavigationLink(value: ReaderRoute.file(hit.path)) {
                     VStack(alignment: .leading, spacing: 5) {
                         Text((hit.path as NSString).lastPathComponent)
@@ -32,7 +33,7 @@ struct SearchView: View {
                     }.padding(.vertical, 3)
                 }
             }
-            if !query.isEmpty && hits.isEmpty && !searching { Text("没有匹配的结果").foregroundStyle(.secondary) }
+            if !query.isEmpty && visibleHits.isEmpty && !searching { Text("没有匹配的结果").foregroundStyle(.secondary) }
         }
         .navigationTitle("搜索")
         .task { state.startPrefetch() }

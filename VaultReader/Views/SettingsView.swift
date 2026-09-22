@@ -11,8 +11,15 @@ struct SettingsView: View {
     @State private var error: String?
     @State private var saving = false
     var body: some View {
+        @Bindable var fileDisplay = state.fileDisplay
         NavigationStack {
             Form {
+                Section {
+                    Toggle("隐藏以点开头的文件", isOn: $fileDisplay.hideDotFiles)
+                        .accessibilityIdentifier("hideDotFiles")
+                } header: { Text("文件显示") } footer: {
+                    Text("同时隐藏 .obsidian 等以点开头的文件夹及其内容。适用于所有仓库的目录、阅读、搜索和最近文件列表，修改立即生效。")
+                }
                 if !state.library.repositories.isEmpty {
                     Section("已保存知识库") {
                         ForEach(state.library.repositories, id: \.storageKey) { saved in

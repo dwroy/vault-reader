@@ -41,10 +41,13 @@ private struct CommitRow: View {
         DisclosureGroup(isExpanded: $expanded) {
             Text(commit.commit.message).font(.system(.callout, design: .monospaced)).textSelection(.enabled)
             if let details {
-                ForEach(details.files) { file in
+                ForEach(details.files.filter { state.fileDisplay.includes($0.filename) }) { file in
                     if file.status != "removed", state.index.files[file.filename] != nil {
                         NavigationLink(value: ReaderRoute.file(file.filename)) { fileLabel(file) }
                     } else { fileLabel(file).foregroundStyle(.secondary) }
+                }
+                if !details.files.isEmpty && details.files.allSatisfy({ !state.fileDisplay.includes($0.filename) }) {
+                    Text("此提交中的文件已按显示设置隐藏。").font(.caption).foregroundStyle(.secondary)
                 }
                 Text("文件打开当前分支版本；已删除或不在当前目录树中的文件不可打开。").font(.caption).foregroundStyle(.secondary)
                 if details.truncated || details.limitsMayApply == true {

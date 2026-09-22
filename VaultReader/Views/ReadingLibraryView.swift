@@ -10,7 +10,7 @@ struct ReadingProjectsView: View {
     let openProject: (RepositoryConfig, String?) -> Void
     var body: some View {
         List {
-            if let record = state.reading.history.recent.first(where: { state.index.files[$0.path] != nil }) {
+            if let record = state.reading.history.recent.first(where: { state.index.files[$0.path] != nil && state.fileDisplay.includes($0.path) }) {
                 Section("继续阅读") {
                     Button { openProject(state.config, record.path) } label: {
                         ReadingRow(title: record.title, format: "\(state.config.owner)/\(state.config.repo)", record: record)
@@ -41,8 +41,8 @@ struct ReadingLibraryView: View {
     @State private var linkedPDFs = Set<String>()
     @State private var query = ""
     @State private var indexError: String?
-    private var catalog: BookCatalog { BookCatalog(index: state.index, linkedPDFs: linkedPDFs) }
-    private var recent: [ReadingRecord] { state.reading.history.recent.filter { state.index.files[$0.path] != nil && matches($0.title) } }
+    private var catalog: BookCatalog { BookCatalog(index: VaultIndex(state.visibleEntries), linkedPDFs: linkedPDFs) }
+    private var recent: [ReadingRecord] { state.reading.history.recent.filter { state.index.files[$0.path] != nil && state.fileDisplay.includes($0.path) && matches($0.title) } }
     var body: some View {
         List {
             Section {
@@ -91,12 +91,12 @@ struct ReadingLibraryView: View {
         }
         .navigationTitle("书籍与文章").navigationBarTitleDisplayMode(.inline)
         .searchable(text: $query, prompt: "查找书籍、论文、文章")
-        .task(id: state.config.storageKey + state.treeSHA) { await discoverAttachments() }
+        .task(id: state.config.storageKey + state.treeSHA + String(state.fileDisplay.hideDotFiles)) { await discoverAttachments() }
     }
     private func matches(_ text: String) -> Bool { query.isEmpty || text.localizedCaseInsensitiveContains(query) }
     private func discoverAttachments() async {
         linkedPDFs = []; indexError = nil
-        let key = state.config.storageKey, index = state.index
+        let key = state.config.storageKey, index = VaultIndex(state.visibleEntries)
         for entry in BookCatalog(index: index).indexes where (entry.size ?? 0) < 256 * 1024 {
             do {
                 let data = try await state.file(entry.path)

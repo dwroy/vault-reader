@@ -10,6 +10,8 @@ final class AppState {
     var config: RepositoryConfig
     var library: RepositoryLibrary
     var reading: ReadingStore
+    let fileDisplay = FileDisplayPreferences()
+    var visibleEntries: [TreeEntry] { index.entries.filter { fileDisplay.includes($0.path) } }
     var addingRepository = false
     var switchingRepository = false
     var index = VaultIndex()
