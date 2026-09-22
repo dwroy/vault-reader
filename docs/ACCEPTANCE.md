@@ -28,6 +28,18 @@ The initial network check reported the phone as offline. After the user confirme
 
 USB was unplugged during follow-up work. Xcode’s explicit Wi-Fi Connect remained unavailable; a re-pair attempt was initially blocked by automatic approval review, then explicitly authorized by the user, but returned CoreDevice error 4000. The user later reconnected successfully via **USB**, confirmed by `transportType: wired`. Wireless debugging is not claimed. The final source is integrated and built locally; installation status is recorded in the handoff.
 
+## Branding and navigation follow-up
+
+The original open-book/bookmark identity is now packaged as default, dark and tinted 1024 px app icons and scalable native light/dark logos. All app-icon PNGs are opaque. Xcode compiled the catalog and generated iPhone/iPad icon metadata. The clean simulator's Home Screen icon was visually checked and tapped to launch; welcome and Settings logos were inspected in light/dark UI.
+
+At the owner's request, the tab order is now **Directory → Recent → Search → Settings**, with Directory selected initially and no Home tab. The vault menu moved to Directory. Settings retains the reading stack when changing tabs, and choosing a saved vault returns to Directory. The obsolete home-file input and connection requirement were removed; foreground Markdown completion no longer waits for home rendering. The directory uses an inline title after visual inspection exposed an empty large-title area.
+
+All seven updated simulator UI flows and the hosted cached-Markdown completion regression passed (8 checks): tab order/default selection, opening notes/wikilinks/images from Directory, Settings and returning to the same note, GitLab setup, HTML termination/relaunch persistence, invalid-token recovery, saved-vault switching, and Search/Recent. A subsequent simulator build and visual check verified the inline-title adjustment. Manual simulator interaction additionally verified that selecting a saved profile in the Settings tab returns to Directory. Evidence is in `.worktrees/brand-assets/build/acceptance/` (ignored).
+
+The main-checkout **0.2.0 (4)** build was signed with the Wei Dong personal team, passed strict code-signature verification, and was installed and launched on the iPhone through USB. Fresh physical-device screenshots verified the new Home Screen icon and final Directory screen with the four requested tabs; the existing 984-file vault remained available after the update. The owner reported the Token connection working after correcting Contents read permission. This does not independently close the full private-sync/performance gates below. This navigation follow-up used simulator interaction tests plus real-device installation/launch/screenshots, not a new physical touch suite.
+
+At the owner's request, `com.dwroy.vaultreader.uitests.xctrunner` was uninstalled from the phone. A final exact bundle-ID query returned no matching app. The reader and its credentials were retained. Main evidence: ignored `build/acceptance/directory-tabs-device-build.log`, `directory-tabs-usb-install.json`, `directory-tabs-usb-launch.json`, `directory-tabs-final.private.png`, and `final-test-runner-check.json`.
+
 ## Real local vault
 
 Read-only audit snapshot (11:04): 984 git-tracked files, 393 Markdown files, 1,766 prose wikilinks, 1,748 resolved, 18 unresolved, one duplicate Markdown basename group and zero ambiguous link occurrences. Code/frontmatter/comments are excluded. The only tracked duplicate group is five README files; Obsidian's quick switcher was checked for that group. This is not a complete resolver-parity or unresolved-link-baseline comparison. Obsidian can also see files outside the tracked-file scope, so its total cannot be substituted directly.
@@ -37,7 +49,7 @@ Read-only audit snapshot (11:04): 984 git-tracked files, 393 Markdown files, 1,7
 ## Remaining gates
 
 - Valid fine-grained read-only token entered through the app's secure Settings UI: initial private-repository sync, refresh, 30 real commits and valid-token offline recovery. Never request the token in chat.
-- Verify the README 2-second target for a full physical-device launch with a documented connection/cache state; measure full-text search on the real phone/corpus.
+- Rebaseline first-screen timing for the new Directory entry with a documented connection/cache state; the earlier README render timing is historical and is not the current startup measurement. Measure full-text search on the real phone/corpus.
 - Complete Obsidian parity checks with matching tracked-file scope; no unresolved-link threshold has passed yet.
 - Open the user's actual large HTML reader, PDF/video attachments and exercise real download progress/cancel/large-file handling. Synthetic HTML and SVG QuickLook do not replace these checks.
 
