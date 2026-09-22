@@ -2,7 +2,7 @@
 
 A native, read-only reader for an Obsidian vault stored in GitHub or GitLab. **iOS first, Android next.** No server or account system; a repository-scoped, read-only token stays in the device credential store.
 
-M1b implementation candidate: saved repositories with quick switching (GitHub, GitLab.com and HTTPS self-managed GitLab), Home, Recent commits, local filename/full-text Search, Directory, Markdown completion, independent HTML readers, images/QuickLook and content-addressed cache. A personal-team build has been installed and exercised on iPhone. Private-repository online sync and the remaining device acceptance limits are recorded in docs/ACCEPTANCE.md. Android is architecturally prepared, not yet implemented.
+M1b implementation candidate: saved repositories with quick switching (GitHub, GitLab.com and HTTPS self-managed GitLab), Directory first, Recent commits, local filename/full-text Search, Directory, Markdown completion, independent HTML readers, images/QuickLook and content-addressed cache. A personal-team build has been installed and exercised on iPhone. Private-repository online sync and the remaining device acceptance limits are recorded in docs/ACCEPTANCE.md. Android is architecturally prepared, not yet implemented.
 
 ## Architecture
 
@@ -37,7 +37,7 @@ For device builds, select your **personal** developer team in Xcode's Signing & 
 
 ## Connect
 
-Use Home’s **Switch vault** menu or Settings → **Add vault** to save multiple connections. GitHub uses a fine-grained token with **Contents: Read-only**. GitLab uses **read_api**; prefer a project-scoped access token when available. Select the platform, enter the GitLab base HTTPS address if applicable, owner or group/subgroup, repository, branch and home path, then paste the corresponding token. Blank token input preserves an existing credential; the app validates the proposed repository before switching. Tokens are never stored in UserDefaults, logs or web content. Profiles and last selection persist; tokens, blobs, metadata, HTML origins and search data stay isolated by service/repository. Changing the platform or repository clears any unsaved token draft.
+Use Directory’s **Switch vault** menu or Settings → **Add vault** to save multiple connections. GitHub uses a fine-grained token with **Contents: Read-only**. GitLab uses **read_api**; prefer a project-scoped access token when available. Select the platform, enter the GitLab base HTTPS address if applicable, owner or group/subgroup, repository and branch, then paste the corresponding token. Blank token input preserves an existing credential; the app validates the proposed repository before switching. Tokens are never stored in UserDefaults, logs or web content. Profiles and last selection persist; tokens, blobs, metadata, HTML origins and search data stay isolated by service/repository. Changing the platform or repository clears any unsaved token draft.
 
 Debug builds optionally accept `VR_TOKEN` on first launch. Use Xcode's launch environment or an existing secure local environment; never put a token in scripts, launch arguments, screenshots, source or commits. Release builds do not contain this injection path.
 

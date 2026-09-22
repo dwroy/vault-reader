@@ -3,6 +3,8 @@ import SwiftUI
 
 struct SettingsView: View {
     let state: AppState
+    var isTab = false
+    var didConnect: (() -> Void)? = nil
     @Environment(\.dismiss) private var dismiss
     @State private var config = RepositoryConfig()
     @State private var token = ""
@@ -15,7 +17,7 @@ struct SettingsView: View {
                     Section("已保存知识库") {
                         ForEach(state.library.repositories, id: \.storageKey) { saved in
                             Button {
-                                Task { await state.selectRepository(saved); dismiss() }
+                                Task { await state.selectRepository(saved); finishConnecting() }
                             } label: {
                                 HStack { Text(saved.displayName); Spacer(); if saved.storageKey == state.config.storageKey { Image(systemName: "checkmark") } }
                             }.disabled(state.switchingRepository)
@@ -31,7 +33,6 @@ struct SettingsView: View {
                     field(config.provider == .gitlab ? "命名空间" : "Owner", value: $config.owner)
                     field("Repository", value: $config.repo)
                     field("分支", value: $config.branch)
-                    field("首页", value: $config.home)
                 }
                 Section {
                     SecureField("粘贴只读 Token", text: $token).textInputAutocapitalization(.never).autocorrectionDisabled().privacySensitive().accessibilityIdentifier("token")
@@ -53,7 +54,7 @@ struct SettingsView: View {
                         saving = true; error = nil
                         Task {
                             defer { saving = false }
-                            do { try await state.connect(config, token: token); token = ""; dismiss() }
+                            do { try await state.connect(config, token: token); token = ""; finishConnecting() }
                             catch { self.error = error.localizedDescription }
                         }
                     } label: { HStack { Text("保存并校验"); Spacer(); if saving { ProgressView() } } }.disabled(saving || !config.isValid).accessibilityIdentifier("saveConnection")
@@ -73,12 +74,17 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("设置").navigationBarTitleDisplayMode(.inline)
-            .toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { dismiss() }.disabled(saving) } }
+            .toolbar {
+                if !isTab { ToolbarItem(placement: .confirmationAction) { Button("完成") { dismiss() }.disabled(saving) } }
+            }
             .disabled(saving)
             .interactiveDismissDisabled(saving)
             .onChange(of: config.identity) { _, _ in token = "" }
             .onAppear { if state.addingRepository { newRepository() } else { config = state.config }; Task { await state.updateUsage() } }
         }
+    }
+    private func finishConnecting() {
+        if isTab { didConnect?() } else { dismiss() }
     }
     private func newRepository() {
         config = RepositoryConfig(); config.provider = state.config.provider; config.server = state.config.server

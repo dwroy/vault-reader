@@ -108,7 +108,6 @@ final class AppState {
         // Validate both repo access and complete tree before changing the active repository.
         guard let branch = try await newClient.branch(etag: nil) else { throw VaultError.missing }
         let tree = try await newClient.tree(sha: branch.tree)
-        guard VaultIndex(tree.tree).files[candidate.home] != nil else { throw VaultError.missing }
         try Keychain.save(credential, account: candidate.identity)
         if !token.isEmpty { UserDefaults.standard.set(Date(), forKey: "entered.\(candidate.identity)") }
         UserDefaults.standard.set(Date(), forKey: "validated.\(candidate.identity)")
@@ -167,7 +166,7 @@ final class AppState {
             }
             guard generation == epoch else { return }
             isOffline = false; error = nil
-            if firstHomeRenderSeconds != nil && !isPrefetching { startPrefetch() }
+            if !isPrefetching { startPrefetch() }
             UserDefaults.standard.set(Date(), forKey: "validated.\(config.identity)")
             await updateUsage()
         } catch is CancellationError {} catch {
