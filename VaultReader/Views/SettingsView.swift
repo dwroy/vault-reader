@@ -66,7 +66,11 @@ struct SettingsView: View {
                     Button("清理附件缓存") { Task { await state.clearAttachments() } }
                     Text("Markdown 与 SVG 保留，其他附件按最近访问时间淘汰。Markdown 在前台自动补全，可离线搜索正文。").font(.caption).foregroundStyle(.secondary)
                 }
-                Section { LabeledContent("版本", value: "0.2.0 · M1b"); Text("只读 · 无服务器").foregroundStyle(.secondary) }
+                Section {
+                    BrandIdentity(markSize: 44).padding(.vertical, 6)
+                    LabeledContent("版本", value: "0.2.0 · M1b")
+                    Text("只读 · 无服务器").foregroundStyle(.secondary)
+                }
             }
             .navigationTitle("设置").navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { dismiss() }.disabled(saving) } }

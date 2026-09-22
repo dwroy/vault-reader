@@ -33,7 +33,7 @@ struct RootView: View {
                                         }
                                         Divider()
                                         Button("添加知识库", systemImage: "plus") { state.addingRepository = true; state.showSettings = true }
-                                    } label: { Image(systemName: "books.vertical") }.accessibilityLabel("切换知识库")
+                                    } label: { BrandMark(size: 28) }.accessibilityLabel("切换知识库")
                                 }
                             }
                             .navigationDestination(for: ReaderRoute.self) { route in destination(route, path: $homePath) }
@@ -81,7 +81,7 @@ struct WelcomeView: View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 24) {
                 Spacer()
-                Image(systemName: "books.vertical").font(.system(size: 48, weight: .light)).foregroundStyle(.tint)
+                BrandIdentity(markSize: 68)
                 Text("让笔记，\n随身可读。").font(.system(size: 38, weight: .semibold, design: .serif)).lineSpacing(6)
                 Text("连接你的 GitHub 或 GitLab 知识库。\n从首页出发，沿着双链慢慢读。").font(.body).foregroundStyle(.secondary).lineSpacing(6)
                 if let error = state.error { Text(error).font(.callout).foregroundStyle(.red) }
