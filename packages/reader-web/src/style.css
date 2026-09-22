@@ -14,7 +14,7 @@ a { color: var(--accent); text-decoration: underline; text-decoration-color: col
 .dead-link { color: var(--muted); text-decoration: underline dotted; }
 img { max-width: 100%; height: auto; border-radius: 10px; display: block; margin: 1em auto; }
 .image-error { min-height: 48px; color: var(--muted); }
-pre,code { font-family: ui-monospace, SFMono-Regular, 'Noto Sans SC Variable', monospace; font-size: .88em; }
+pre,code { font-family: 'Vault CJK', ui-monospace, SFMono-Regular, monospace; font-size: .88em; }
 pre { overflow-x: auto; white-space: pre; background: var(--wash); padding: 14px; border-radius: 10px; }
 :not(pre)>code { padding: .15em .35em; border-radius: 4px; background: var(--wash); }
 table { display: block; overflow-x: auto; border-collapse: collapse; font-size: .92em; margin: 1em 0; }
