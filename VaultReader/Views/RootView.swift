@@ -23,7 +23,7 @@ struct RootView: View {
                     NavigationStack(path: $directoryPath) {
                         DirView(state: state, path: "")
                             .toolbar {
-                                ToolbarItem(placement: .topBarTrailing) {
+                                ToolbarItem(placement: .topBarLeading) {
                                     Menu {
                                         ForEach(state.library.repositories, id: \.storageKey) { saved in
                                             Button { Task { await state.selectRepository(saved) } } label: {

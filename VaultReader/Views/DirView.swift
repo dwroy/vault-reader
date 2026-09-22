@@ -21,7 +21,14 @@ struct DirView: View {
         .navigationTitle(path.isEmpty ? "目录" : (path as NSString).lastPathComponent)
         .navigationBarTitleDisplayMode(.inline)
         .refreshable { await state.refresh() }
-
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    Button("刷新", systemImage: "arrow.clockwise") { Task { await state.refresh() } }
+                        .disabled(state.isRefreshing || state.switchingRepository)
+                } label: { Image(systemName: "ellipsis.circle") }.accessibilityLabel("目录操作")
+            }
+        }
     }
     private func row(_ item: DirectoryItem) -> some View {
         HStack(spacing: 14) {
