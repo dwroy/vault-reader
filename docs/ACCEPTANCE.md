@@ -105,3 +105,14 @@ Main source `a6db3ce` produced **0.2.0 (8)** with the Wei Dong personal team (DP
 At the owner's follow-up request, Continue reading on the Reading project page also lists the three most recently read Markdown documents instead of one. The Markdown resume flow now returns to the project page after reading the original and the condensed edition, and checks that both appear newest first with no third entry. Both book UI flows passed (`continue-three-tests.log` in the book-list worktree's ignored `build/acceptance/`). This change is limited to that page, so the rest of the suite was not rerun.
 
 Main source `b8ee8b2` produced **0.2.0 (9)** with the Wei Dong personal team; strict signature verification passed (`build/acceptance/continue-three-device-build.log`). USB installation succeeded and the device reports 0.2.0 (9) (`reader-v9-usb-install.json`, `reader-v9-installed-app.json`). The remote launch was refused because the phone was locked again (`reader-v9-usb-launch.json`), so build 9 has no confirmed device launch yet.
+
+## Reflow error follow-up
+
+The owner reported an alert while changing font size in the QED full text on the iPhone (iOS 26.6.1): "排版加载失败：JavaScript execution returned a result of an unsupported type", over a blank page. Simulator attempts on iOS 26.3 with the real cached books did not reproduce it. A temporary diagnostic run on the iPhone showed that every bridge call succeeds on a healthy page. A call in flight while the page's WebContent process dies returns exactly that error (WKErrorDomain 5), and later calls raise a ReferenceError until the page is reloaded. The diagnostic test was not committed. The phone's crash logs contained no Vault Reader crash.
+
+Fix: reading values now cross the bridge as JSON strings, and preference changes capture, reflow and restore inside one call. A failed render step or lost page process reloads the renderer once and restores the last saved position; only a repeated failure shows an alert that names the step and error code. An earlier hypothesis that the navigation policy blocked `reload()` after process termination was tested and was wrong; the old reload path already recovered.
+
+- New hosted test: a failed reflow (renderer removed from the page) and a killed WebContent process both reload and restore the reading position within 120 points. Without the recovery the test fails. It passed on the simulator and on the iPhone.
+- 8 Node, 23 Swift package and 19 simulator tests (10 hosted, 9 UI) pass. One earlier full run had a single UI flow (`testDirectoryNoteWikiAndImage`) time out waiting 5 seconds for the next note. It passed in two isolated reruns and in the following full run.
+- These checks do not claim a manual on-device font-change pass after the fix.
+

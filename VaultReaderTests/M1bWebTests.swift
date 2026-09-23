@@ -33,7 +33,57 @@ private struct ProbeStack: View {
         }
     }
 }
+private struct BookProbe: View {
+    let state: AppState
+    var body: some View {
+        NavigationStack { NoteView(state: state, route: NoteRoute(path: "长文.md", reading: true), navigate: { _ in }, readingBook: true) }
+    }
+}
 final class M1bWebTests: XCTestCase {
+    @MainActor func testFailedReflowReloadsAndRestoresReadingPosition() async throws {
+        let state = AppState(); try await state.startDemoForTesting()
+        state.reading.clearDemoProgress()
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.first as? UIWindowScene)
+        let window = UIWindow(windowScene: scene)
+        window.rootViewController = UIHostingController(rootView: BookProbe(state: state)); window.makeKeyAndVisible()
+        defer { window.isHidden = true; window.rootViewController = nil; state.stopPrefetch() }
+        func reader() -> WKWebView? { ReaderWebViewRegistry.views.allObjects.first { $0.window === window } }
+        func settle() async throws -> WKWebView {
+            for _ in 0..<100 {
+                if let web = reader(), web.accessibilityIdentifier == "reader-ready", web.scrollView.contentSize.height > 3000,
+                   (try? await web.evaluateJavaScript("typeof VaultReader === 'object' && document.querySelector('h2') !== null")) as? Bool == true { return web }
+                try await Task.sleep(for: .milliseconds(100))
+            }
+            throw XCTSkip("Reader failed to appear")
+        }
+        func waitForReload(_ web: WKWebView) async throws {
+            for _ in 0..<50 where web.accessibilityIdentifier == "reader-ready" { try await Task.sleep(for: .milliseconds(100)) }
+            XCTAssertNotEqual(web.accessibilityIdentifier, "reader-ready", "the page was reloaded")
+        }
+        var web = try await settle()
+        web.scrollView.setContentOffset(CGPoint(x: 0, y: 2400), animated: false)
+        try await Task.sleep(for: .milliseconds(600))
+        let saved = try XCTUnwrap(state.reading.history.records["长文.md"]?.location)
+        XCTAssertGreaterThan(saved.fraction, 0.05)
+        // A reflow that throws (as iOS 26.6 did) must not leave a broken page behind an alert.
+        let coordinator = try XCTUnwrap(web.navigationDelegate as? RendererWebView.Coordinator)
+        _ = try await web.evaluateJavaScript("delete window.VaultReader; true")
+        coordinator.lastRenderKey = ""; coordinator.update()
+        try await waitForReload(web)
+        web = try await settle()
+        for _ in 0..<30 where web.scrollView.contentOffset.y < 2000 { try await Task.sleep(for: .milliseconds(100)) }
+        XCTAssertEqual(web.scrollView.contentOffset.y, 2400, accuracy: 120, "reloaded at the saved reading position")
+        XCTAssertEqual(state.reading.history.records["长文.md"]?.location.heading, saved.heading)
+        XCTAssertEqual(coordinator.recoveries, 0, "a successful reload resets the retry budget")
+        // WebKit may also discard the page process; that path restores the same way.
+        let kill = NSSelectorFromString("_killWebContentProcess")
+        guard web.responds(to: kill) else { return }
+        web.perform(kill)
+        try await waitForReload(web)
+        web = try await settle()
+        for _ in 0..<30 where web.scrollView.contentOffset.y < 2000 { try await Task.sleep(for: .milliseconds(100)) }
+        XCTAssertEqual(web.scrollView.contentOffset.y, 2400, accuracy: 120)
+    }
     @MainActor func testHTMLProductionStoreHasNoBridgeAndSeparatesRepositoriesAndPaths() async throws {
         var config = RepositoryConfig(); config.owner = "test"; config.repo = UUID().uuidString
         let a = HTMLTestPage(config: config, path: "books/one.html"), b = HTMLTestPage(config: config, path: "books/two.html")

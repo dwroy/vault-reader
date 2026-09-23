@@ -56,9 +56,8 @@ struct RendererWebView: UIViewRepresentable {
             if coordinator.parent.readingOptions != nil, coordinator.renderedOnce {
                 let position = coordinator.parent.session.onPosition, save = coordinator.parent.session.onSave
                 Task {
-                    if let raw = try? await web.evaluateJavaScript("VaultReader.capturePosition()"),
-                       let data = try? JSONSerialization.data(withJSONObject: raw),
-                       let value = try? JSONDecoder().decode(ReadingLocation.self, from: data) { position?(value) }
+                    if let raw = try? await web.evaluateJavaScript(Coordinator.capture),
+                       let value = try? Coordinator.decode(ReadingLocation.self, from: raw) { position?(value) }
                     save?()
                 }
             } else { coordinator.parent.session.onSave?() }
@@ -86,7 +85,40 @@ struct RendererWebView: UIViewRepresentable {
         var generation = UUID()
         var renderTask: Task<Void, Never>?
         var captureTask: Task<Void, Never>?
+        /// One silent reload per failure streak before an error is shown.
+        var recoveries = 0
         init(_ parent: RendererWebView) { self.parent = parent }
+        /// Values cross the WebKit bridge only as JSON strings. iOS 26.6 rejected a captured
+        /// position object ("unsupported type") that iOS 26.3 returned and accepted.
+        static let capture = "JSON.stringify(VaultReader.capturePosition())"
+        static func decode<T: Decodable>(_ type: T.Type, from raw: Any?) throws -> T? {
+            guard let text = raw as? String else { return nil }
+            return try JSONDecoder().decode(T.self, from: Data(text.utf8))
+        }
+        static func json<T: Encodable>(_ value: T) throws -> String { String(decoding: try JSONEncoder().encode(value), as: UTF8.self) }
+        struct StepError: LocalizedError {
+            let step: String
+            let underlying: any Error
+            var errorDescription: String? {
+                let error = underlying as NSError
+                let detail = (error.userInfo["WKJavaScriptExceptionMessage"] as? String).map { "，\($0)" } ?? ""
+                return "\(step)（\(error.domain) \(error.code)）：\(error.localizedDescription)\(detail)"
+            }
+        }
+        func step<T>(_ name: String, _ work: () async throws -> T) async throws -> T {
+            do { return try await work() }
+            catch is CancellationError { throw CancellationError() }
+            catch { throw StepError(step: name, underlying: error) }
+        }
+        /// Loads the renderer again after WebKit lost the page. `reload()` would be refused by the
+        /// navigation policy below, leaving a blank page; the saved position is restored on first render.
+        func recover(_ web: WKWebView) {
+            renderTask?.cancel(); renderTask = nil; captureTask?.cancel(); captureTask = nil
+            generation = UUID(); updating = false
+            loaded = false; lastTree = ""; lastRenderKey = ""; renderedOnce = false
+            web.accessibilityIdentifier = nil
+            web.load(URLRequest(url: URL(string: "vault://app/index.html")!))
+        }
         func update() {
             guard loaded, let web, !updating else { return }
             let scale = UIFontMetrics.default.scaledValue(for: 17) / 17 * (parent.readingOptions?.fontScale ?? 1)
@@ -99,14 +131,20 @@ struct RendererWebView: UIViewRepresentable {
                 defer { if generation == currentGeneration { updating = false; if lastRenderKey == key { update() } } }
                 do {
                     if lastTree != tree {
-                        let data = try JSONEncoder().encode(entriesToRender)
-                        let entries = try JSONSerialization.jsonObject(with: data)
-                        _ = try await web.callAsyncJavaScript("if (VaultReader.version !== 2) throw new Error('Unsupported reader contract'); VaultReader.setTree(entries)", arguments: ["entries": entries], in: nil, contentWorld: .page)
+                        let entries = try Self.json(entriesToRender)
+                        _ = try await step("载入文件列表") { try await web.callAsyncJavaScript("if (VaultReader.version !== 2) throw new Error('Unsupported reader contract'); VaultReader.setTree(JSON.parse(entries)); return true", arguments: ["entries": entries], in: nil, contentWorld: .page) }
                         try Task.checkCancellation()
                         lastTree = tree
                     }
-                    let preserved = renderedOnce && parent.readingOptions != nil ? (try? await web.evaluateJavaScript("VaultReader.capturePosition()")) : nil
-                    _ = try await web.callAsyncJavaScript("VaultReader.setReadingMode(book); return VaultReader.render(markdown, path, scale, theme)", arguments: ["markdown": parent.markdown, "path": parent.path, "scale": scale, "theme": theme, "book": parent.readingOptions != nil], in: nil, contentWorld: .page)
+                    let arguments: [String: Any] = ["markdown": parent.markdown, "path": parent.path, "scale": scale, "theme": theme, "book": parent.readingOptions != nil]
+                    let reflow = renderedOnce && parent.readingOptions != nil
+                    if reflow {
+                        // Capture, reflow and restore inside the page so no WebKit object has to cross back.
+                        _ = try await step("重新排版") { try await web.callAsyncJavaScript("const position = VaultReader.capturePosition(); VaultReader.setReadingMode(book); VaultReader.render(markdown, path, scale, theme); VaultReader.restorePosition(position); return true", arguments: arguments, in: nil, contentWorld: .page) }
+                        try await Task.sleep(for: .milliseconds(50))
+                    } else {
+                        _ = try await step("排版") { try await web.callAsyncJavaScript("VaultReader.setReadingMode(book); VaultReader.render(markdown, path, scale, theme); return true", arguments: arguments, in: nil, contentWorld: .page) }
+                    }
                     if !renderedOnce {
                         // A programmatic multi-level navigation can load WebKit before it is visible.
                         // Restore only after its real viewport exists, without relying on offscreen rAF.
@@ -120,59 +158,56 @@ struct RendererWebView: UIViewRepresentable {
                         // Poll font readiness with cancellable native waits instead.
                         for _ in 0..<100 {
                             try Task.checkCancellation()
-                            if (try await web.evaluateJavaScript("document.fonts.status")) as? String == "loaded" { break }
+                            if (try await step("等待字体") { try await web.evaluateJavaScript("document.fonts.status") }) as? String == "loaded" { break }
                             try await Task.sleep(for: .milliseconds(50))
                         }
                         try await Task.sleep(for: .milliseconds(35))
                         try Task.checkCancellation()
                         if let position = parent.session.position, parent.readingOptions != nil, parent.anchor.isEmpty {
-                            let data = try JSONEncoder().encode(position)
-                            let object = try JSONSerialization.jsonObject(with: data)
-                            _ = try await web.callAsyncJavaScript("VaultReader.restorePosition(position)", arguments: ["position": object], in: nil, contentWorld: .page)
+                            let saved = try Self.json(position)
+                            _ = try await step("恢复位置") { try await web.callAsyncJavaScript("VaultReader.restorePosition(JSON.parse(position)); return true", arguments: ["position": saved], in: nil, contentWorld: .page) }
                             try await Task.sleep(for: .milliseconds(50))
                         } else if let y = parent.session.scrollY {
-                            _ = try await web.callAsyncJavaScript("window.scrollTo(0, y)", arguments: ["y": y], in: nil, contentWorld: .page)
+                            _ = try await step("恢复位置") { try await web.callAsyncJavaScript("window.scrollTo(0, y); return true", arguments: ["y": y], in: nil, contentWorld: .page) }
                             try await Task.sleep(for: .milliseconds(35))
                         } else if !parent.anchor.isEmpty {
-                            _ = try await web.callAsyncJavaScript("VaultReader.scrollToAnchor(anchor)", arguments: ["anchor": parent.anchor], in: nil, contentWorld: .page)
+                            _ = try await step("跳转标题") { try await web.callAsyncJavaScript("VaultReader.scrollToAnchor(anchor); return true", arguments: ["anchor": parent.anchor], in: nil, contentWorld: .page) }
                         }
                         renderedOnce = true
                         web.accessibilityIdentifier = "reader-ready"
                         parent.state.recordHomeRendered(parent.path)
                     }
-                    if let preserved {
-                        _ = try await web.callAsyncJavaScript("VaultReader.restorePosition(position)", arguments: ["position": preserved], in: nil, contentWorld: .page)
-                        try await Task.sleep(for: .milliseconds(50))
-                    }
                     if parent.readingOptions != nil {
-                        if let raw = try await web.evaluateJavaScript("VaultReader.outline()") as? [[String: Any]] {
-                            let data = try JSONSerialization.data(withJSONObject: raw)
-                            parent.session.onOutline?(try JSONDecoder().decode([ReadingOutline].self, from: data))
+                        if let outline = try Self.decode([ReadingOutline].self, from: await step("读取章节目录") { try await web.evaluateJavaScript("JSON.stringify(VaultReader.outline())") }) {
+                            parent.session.onOutline?(outline)
                         }
                         if let section = parent.session.sectionRequest {
                             parent.session.sectionRequest = nil
-                            _ = try await web.callAsyncJavaScript("VaultReader.scrollToSection(id)", arguments: ["id": section], in: nil, contentWorld: .page)
+                            _ = try await step("跳转章节") { try await web.callAsyncJavaScript("VaultReader.scrollToSection(id); return true", arguments: ["id": section], in: nil, contentWorld: .page) }
                         }
                     }
                     try Task.checkCancellation()
-                    if parent.readingOptions != nil, let raw = try await web.evaluateJavaScript("VaultReader.capturePosition()") {
+                    if parent.readingOptions != nil, let position = try Self.decode(ReadingLocation.self, from: await step("记录位置") { try await web.evaluateJavaScript(Self.capture) }) {
                         try Task.checkCancellation()
-                        let data = try JSONSerialization.data(withJSONObject: raw)
-                        let position = try JSONDecoder().decode(ReadingLocation.self, from: data)
                         parent.session.position = position; parent.session.onPosition?(position)
                     }
-                    lastRenderKey = key
-                } catch is CancellationError {} catch { if !Task.isCancelled { parent.onError("排版加载失败：\(error.localizedDescription)") } }
+                    lastRenderKey = key; recoveries = 0
+                } catch is CancellationError {} catch {
+                    guard !Task.isCancelled, generation == currentGeneration else { return }
+                    // A lost or stale page is reloaded once and restored from the last saved position.
+                    if recoveries == 0 { recoveries += 1; recover(web) }
+                    else { parent.onError("排版加载失败：\(error.localizedDescription)") }
+                }
             }
         }
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) { loaded = true; update() }
         func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: any Error) { parent.onError(error.localizedDescription) }
-        func webViewWebContentProcessDidTerminate(_ webView: WKWebView) { loaded = false; lastTree = ""; lastRenderKey = ""; renderedOnce = false; webView.reload() }
+        func webViewWebContentProcessDidTerminate(_ webView: WKWebView) { recover(webView) }
         func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
             guard message.frameInfo.isMainFrame, message.frameInfo.request.url?.host == "app", let body = message.body as? [String: Any] else { return }
             if message.name == "open", let href = body["href"] as? String, let url = URL(string: href) {
                 if url.scheme == "vault", url.host == "f", String(url.path.dropFirst()) == parent.path {
-                    Task { _ = try? await web?.callAsyncJavaScript("VaultReader.scrollToAnchor(anchor)", arguments: ["anchor": url.fragment?.removingPercentEncoding ?? ""], in: nil, contentWorld: .page) }
+                    Task { _ = try? await web?.callAsyncJavaScript("VaultReader.scrollToAnchor(anchor); return true", arguments: ["anchor": url.fragment?.removingPercentEncoding ?? ""], in: nil, contentWorld: .page) }
                 } else { parent.onOpen(url) }
             }
             if message.name == "preview", let path = body["path"] as? String { parent.onPreview(path) }
@@ -190,11 +225,9 @@ struct RendererWebView: UIViewRepresentable {
                 do {
                     try await Task.sleep(for: .milliseconds(120)); try Task.checkCancellation()
                     guard let self, let web = self.web, self.renderedOnce else { return }
-                    let raw = try await web.evaluateJavaScript("VaultReader.capturePosition()")
+                    let raw = try await web.evaluateJavaScript(Coordinator.capture)
                     try Task.checkCancellation()
-                    guard let raw else { return }
-                    let data = try JSONSerialization.data(withJSONObject: raw)
-                    let position = try JSONDecoder().decode(ReadingLocation.self, from: data)
+                    guard let position = try Coordinator.decode(ReadingLocation.self, from: raw) else { return }
                     self.parent.session.position = position
                     self.parent.session.onPosition?(position)
                 } catch {}

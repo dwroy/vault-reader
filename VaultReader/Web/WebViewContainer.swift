@@ -13,7 +13,7 @@ import VaultCore
     func go(to section: String) {
         guard let web = container?.web else { sectionRequest = section; return }
         sectionRequest = nil
-        Task { _ = try? await web.callAsyncJavaScript("VaultReader.scrollToSection(id)", arguments: ["id": section], in: nil, contentWorld: .page) }
+        Task { _ = try? await web.callAsyncJavaScript("VaultReader.scrollToSection(id); return true", arguments: ["id": section], in: nil, contentWorld: .page) }
     }
     weak var container: WebViewContainer?
     func resume() { container?.mount() }
