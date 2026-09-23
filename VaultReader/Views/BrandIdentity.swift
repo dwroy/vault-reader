@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// The same original book mark used by the Home Screen icon, with vector scaling.
+/// The same original open-book mark used by the Home Screen icon, with vector scaling.
 struct BrandMark: View {
     var size: CGFloat = 44
     var body: some View {
@@ -17,7 +17,7 @@ struct BrandIdentity: View {
             BrandMark(size: markSize)
             VStack(alignment: .leading, spacing: 3) {
                 Text("Vault Reader").font(.title3.weight(.semibold))
-                Text("你的随身知识库").font(.caption).foregroundStyle(.secondary)
+                Text("AI 时代的随身知识库").font(.caption).foregroundStyle(.secondary)
             }
         }
         .accessibilityElement(children: .combine)

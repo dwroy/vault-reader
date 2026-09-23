@@ -1,6 +1,8 @@
 # Vault Reader
 
-A native, read-only reader for an Obsidian vault stored in GitHub or GitLab. **iOS first, Android next.** No server or account system; a repository-scoped, read-only token stays in the device credential store.
+**AI 时代的随身知识库 · Agent 整理，随手开读。** 原生支持 Git · Markdown · HTML.
+
+A native, read-only reader for plain-text knowledge bases: a GitHub or GitLab repository of Markdown, HTML and supporting files, written and reorganized by agents such as Claude Code and Codex. Agents keep working through files and commits; the app only reads, so it never competes with them for writes. Existing Obsidian vaults work as-is, including wikilinks and embeds. **iOS first, Android next.** No server or account system; a repository-scoped, read-only token stays in the device credential store. Store-ready copy lives in [docs/APP-DESCRIPTION.md](docs/APP-DESCRIPTION.md).
 
 M1b implementation candidate: saved repositories with quick switching (GitHub, GitLab.com and HTTPS self-managed GitLab), Directory first, a project-based Reading tab, Recent commits, local filename/full-text Search, Settings, Markdown completion, independent HTML readers, images/QuickLook and content-addressed cache. A personal-team build has been installed and exercised on iPhone. Private-repository online sync and the remaining device acceptance limits are recorded in docs/ACCEPTANCE.md. Android is architecturally prepared, not yet implemented.
 

@@ -66,7 +66,7 @@ struct RootView: View {
 
             }
         }
-        .tint(Color(red: 0.14, green: 0.46, blue: 0.35))
+        .tint(Color(red: 0.11, green: 0.37, blue: 0.29))
         .sheet(isPresented: $state.showSettings) { SettingsView(state: state) }
         .task {
             await state.start(); if !state.needsSetup { state.startPrefetch() }
@@ -106,11 +106,11 @@ struct WelcomeView: View {
             VStack(alignment: .leading, spacing: 24) {
                 Spacer()
                 BrandIdentity(markSize: 68)
-                Text("让笔记，\n随身可读。").font(.system(size: 38, weight: .semibold, design: .serif)).lineSpacing(6)
-                Text("连接你的 GitHub 或 GitLab 知识库。\n从目录出发，沿着双链慢慢读。").font(.body).foregroundStyle(.secondary).lineSpacing(6)
+                Text("Agent 整理，\n随手开读。").font(.system(size: 38, weight: .semibold, design: .serif)).lineSpacing(6)
+                Text("用 Claude、Codex 等工具维护知识，\n在手机上随时阅读。").font(.body).foregroundStyle(.secondary).lineSpacing(6)
                 if let error = state.error { Text(error).font(.callout).foregroundStyle(.red) }
                 Button { state.showSettings = true } label: { Label("连接知识库", systemImage: "arrow.right").frame(maxWidth: .infinity).padding(.vertical, 8) }.buttonStyle(.borderedProminent)
-                Text("只读访问 · Token 保存在设备钥匙串").font(.caption).foregroundStyle(.secondary)
+                Text("原生支持 Git · Markdown · HTML\nGitHub / GitLab 只读访问 · Token 保存在设备钥匙串").font(.caption).foregroundStyle(.secondary).lineSpacing(4)
                 Spacer(); Spacer()
             }.padding(30).navigationTitle("Vault Reader").navigationBarTitleDisplayMode(.inline)
         }
