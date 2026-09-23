@@ -82,3 +82,10 @@ Settings now offers **Hide files starting with a dot**, defaulting to off. It pe
 Three existing simulator flows passed: Directory/Settings navigation, Search/Recent files, and PDF resume with project isolation. The exported Settings screenshot confirms the new switch and its description fit the iPhone layout. Evidence lives in the book-reader worktree's ignored `build/acceptance/file-display-tests.log` and `file-display-attachments/`. The Mac was locked, so this pass does not claim an additional manual toggle/relaunch acceptance. The iPhone is still unavailable for device installation.
 
 Main source `a5d61e6` produced **0.2.0 (7)** with the Wei Dong personal team; the app passed strict signature verification. Build log: ignored `build/acceptance/file-display-device-build.log`. No phone installation occurred; build 4 is still the last confirmed installed version.
+
+
+## USB installation — 2026-09-23
+
+After the owner reconnected the iPhone, CoreDevice reported Roy connected and unlocked. The existing integrated **0.2.0 (7)** app passed strict signature verification again, with the confirmed Wei Dong personal team (DPK7SSB889). It was installed over the existing reader through USB without uninstalling the app, then successfully launched. A fresh installed-app query confirmed marketing version 0.2.0 and bundle version 7. An exact query for `com.dwroy.vaultreader.uitests.xctrunner` returned no matching app; the test runner was not reinstalled.
+
+Main's ignored evidence: `build/acceptance/reader-v7-usb-install.json`, `reader-v7-usb-launch.json`, `reader-v7-installed-app.json`, and `reader-v7-runner-check.json`. This closes the pending build-7 installation and launch gate; it does not claim a new physical-device reading, touch, toggle/relaunch or network-sync acceptance pass. The earlier build-4 "last installed" statements are historical; build 7 is now the latest confirmed installed version.
