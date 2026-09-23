@@ -17,6 +17,8 @@ struct NoteView: View {
     @State private var video: PreviewItem?
     @State private var readerSession = ReaderSession()
     @State private var external: PreviewItem?
+    @State private var shareContent: NoteShareContent?
+    @State private var shareTask: Task<Void, Never>?
     var body: some View {
         Group {
             if let markdown {
@@ -42,11 +44,14 @@ struct NoteView: View {
         }
         .sheet(item: $video) { VideoSheet(url: $0.url) }
         .sheet(item: $external) { SafariView(url: $0.url) }
+        .sheet(item: $shareContent) { NoteShareSheet(content: $0) }
         .alert("提示", isPresented: Binding(get: { actionError != nil }, set: { if !$0 { actionError = nil } })) { Button("好", role: .cancel) {} } message: { Text(actionError ?? "") }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
                     if !readingBook { Button("用阅读器打开", systemImage: "book") { navigate(.note(NoteRoute(path: route.path, anchor: route.anchor, reading: true))) } }
+                    Button("分享", systemImage: "square.and.arrow.up", action: share)
+                        .disabled(markdown == nil || shareTask != nil)
                     Button("复制路径", systemImage: "doc.on.doc") { UIPasteboard.general.string = route.path }
                     Button("在 \(state.config.provider.title) 打开", systemImage: "safari") { external = PreviewItem(url: state.config.fileURL(path: route.path)) }
                     Button("刷新", systemImage: "arrow.clockwise") { Task { await state.refresh(); await load() } }
@@ -54,8 +59,24 @@ struct NoteView: View {
             }
         }
         .onAppear { (book?.viewport ?? readerSession).resume() }
-        .onDisappear { (book?.viewport ?? readerSession).suspend(); book?.store.flush() }
+        .onDisappear { shareTask?.cancel(); shareTask = nil; (book?.viewport ?? readerSession).suspend(); book?.store.flush() }
         .onChange(of: scenePhase) { _, phase in if phase == .background { book?.store.flush() } }
+    }
+    private func share() {
+        guard shareTask == nil else { return }
+        guard let web = (book?.viewport ?? readerSession).container?.web else {
+            actionError = "请等文章加载完成后再分享。"; return
+        }
+        shareTask = Task { @MainActor in
+            defer { shareTask = nil }
+            do {
+                let content = try await NoteShareContent.read(from: web)
+                try Task.checkCancellation()
+                shareContent = content
+            } catch is CancellationError {} catch {
+                if !Task.isCancelled { actionError = "无法分享：\(error.localizedDescription)" }
+            }
+        }
     }
     private func load() async {
         loadError = nil

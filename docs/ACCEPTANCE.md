@@ -2,6 +2,17 @@
 
 M1b implementation candidate, extended by the owner’s explicit requests for saved repositories and GitLab. iOS first, Android second. **The full M1 gate remains open.** No private-repository online sync is claimed without a valid read-only credential.
 
+## Article sharing — 2026-09-24
+
+The note action menu now has Share before Copy path, in normal and book reading modes. It opens the iOS system activity sheet with the article's plain text, as requested by the owner. This works from the loaded page without a repository URL or another download. Images contribute descriptions only; original files and rich formatting are not exported.
+
+- Three hosted renderer tests pass, including body extraction with Chinese headings, paragraphs, links, code, image descriptions and collapsed details. The share omits frontmatter/tags and hidden comments, rejects an empty body, and leaves the original page unchanged.
+- The iPhone 17 / iOS 26.3 UI flow passes: menu order, system activity sheet, Copy, return to the article, then sharing again in book reading mode. The simulator pasteboard contains the complete synthetic article body without frontmatter; menu and sheet screenshots were inspected.
+- The same UI flow passes on the iPad Pro 11-inch (M5) / iOS 26.3 simulator.
+- The first run failed before tests because the simulator could not launch its runner; starting the simulator resolved it. A subsequent UI assertion used a button query for the system Copy action, which iOS exposes as a cell; correcting that query produced the passing flow.
+
+Evidence is under `.worktrees/note-share/build/acceptance/` (ignored). The phone was unavailable during this work, so physical-device installation and third-party share destinations are not yet verified for this feature. Existing M1 acceptance limits below remain in effect.
+
 ## Automated verification
 
 - 5 Node renderer/link tests pass; the shared JS/CSS and bridge contract are unchanged in M1b.
@@ -129,4 +140,3 @@ Main source `c33d1fa` produced **0.2.0 (10)** with the Wei Dong personal team; s
 Main source `947b6ff` (the merged open-book rebrand) with the build number raised to 11 produced **0.2.0 (11)** with the Wei Dong personal team; strict signature verification passed (`build/acceptance/open-book-brand-device-build.log`). USB installation succeeded and the device reports 0.2.0 (11) (`reader-v11-usb-install.json`, `reader-v11-installed-app.json`). The remote launch was refused because the phone was locked (`reader-v11-usb-launch.json`), so the new Home Screen icon and welcome copy still await the owner's visual check on the phone.
 
 Main source `8912092` (Settings moved into the Directory menu, on top of the open-book rebrand) with the build number raised to 12 produced **0.2.0 (12)** with the Wei Dong personal team; strict signature verification passed (`build/acceptance/settings-menu-device-build.log`). USB installation succeeded, the device reports 0.2.0 (12) (`reader-v12-usb-install.json`, `reader-v12-installed-app.json`) and the remote launch succeeded (`reader-v12-usb-launch.json`). The owner's visual check of the icon, welcome copy and Directory menu on the phone is still pending.
-

@@ -26,6 +26,44 @@ import WebKit
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: any Error) { continuation?.resume(throwing: error); continuation = nil }
 }
 final class RendererTests: XCTestCase {
+    @MainActor func testShareUsesCompleteRenderedBodyWithoutMetadata() async throws {
+        let page = RendererPage(); try await page.load()
+        let markdown = """
+        ---
+        private_property: do-not-share-this
+        tags: [private-tag]
+        ---
+        # 分享标题
+
+        这是 **正文**，包含 [链接文字](https://example.com) 和 [[child|双链文字]]。
+
+        %%隐藏备注%%
+        <details><summary>补充说明</summary><p>折叠的正文也要分享。</p></details>
+
+        ```swift
+        let answer = 42
+        ```
+
+        ![图片说明](https://example.com/image.png)
+
+        最后一段。
+        """
+        _ = try await page.view.callAsyncJavaScript("VaultReader.render(markdown, 'share.md', 1, 'light'); return true", arguments: ["markdown": markdown], in: nil, contentWorld: .page)
+        let before = try await page.view.evaluateJavaScript("document.body.innerHTML") as? String
+        let content = try await NoteShareContent.read(from: page.view)
+        for expected in ["分享标题", "这是 正文", "链接文字", "双链文字", "折叠的正文也要分享。", "let answer = 42", "图片说明", "最后一段。"] {
+            XCTAssertTrue(content.text.contains(expected), content.text)
+        }
+        for excluded in ["do-not-share-this", "private-tag", "隐藏备注", "vault://", "**", "```", "<details>"] {
+            XCTAssertFalse(content.text.contains(excluded), content.text)
+        }
+        XCTAssertTrue(content.text.contains("\n"), "Paragraph boundaries survive text sharing")
+        let after = try await page.view.evaluateJavaScript("document.body.innerHTML") as? String
+        XCTAssertEqual(before, after, "Sharing does not change the reading page")
+        _ = try await page.view.callAsyncJavaScript("VaultReader.render('---\\nsecret: hidden\\n---\\n', 'empty.md', 1, 'light'); return true", arguments: [:], in: nil, contentWorld: .page)
+        do { _ = try await NoteShareContent.read(from: page.view); XCTFail("Metadata-only notes must not be shared") }
+        catch NoteShareContent.ShareError.empty {}
+    }
     @MainActor func testSharedBundleRendersAndSanitizesMarkdown() async throws {
         let page = RendererPage(); try await page.load()
         let script = """

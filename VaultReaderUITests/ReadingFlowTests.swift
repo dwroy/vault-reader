@@ -1,5 +1,29 @@
 import XCTest
 final class ReadingFlowTests: XCTestCase {
+    @MainActor func testShareBodyFromNoteAndReadingMode() throws {
+        let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
+        XCTAssertTrue(app.staticTexts["README.md"].waitForExistence(timeout: 15)); app.staticTexts["README.md"].tap()
+        XCTAssertTrue(app.webViews["reader-ready"].waitForExistence(timeout: 15))
+        func shareAndCopy(_ name: String) {
+            app.buttons["笔记操作"].tap()
+            let share = app.buttons["分享"], copyPath = app.buttons["复制路径"]
+            XCTAssertTrue(share.waitForExistence(timeout: 5)); XCTAssertTrue(share.isEnabled)
+            XCTAssertLessThan(share.frame.minY, copyPath.frame.minY)
+            let menu = XCTAttachment(screenshot: app.screenshot()); menu.name = name + "-menu"; menu.lifetime = .keepAlways; add(menu)
+            share.tap()
+            let copy = app.cells.matching(NSPredicate(format: "label IN %@", ["Copy", "拷贝", "复制"])).firstMatch
+            XCTAssertTrue(copy.waitForExistence(timeout: 10), app.debugDescription)
+            let sheet = XCTAttachment(screenshot: app.screenshot()); sheet.name = name + "-system-share"; sheet.lifetime = .keepAlways; add(sheet)
+            copy.tap()
+            XCTAssertTrue(app.buttons["笔记操作"].waitForExistence(timeout: 5))
+            XCTAssertTrue(app.webViews.staticTexts["我的知识库"].waitForExistence(timeout: 5))
+        }
+        shareAndCopy("note")
+        app.buttons["笔记操作"].tap(); app.buttons["用阅读器打开"].tap()
+        XCTAssertTrue(app.buttons["readingContents"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.webViews["reader-ready"].waitForExistence(timeout: 15))
+        shareAndCopy("reading")
+    }
     @MainActor func testDirectoryNoteWikiAndImage() throws {
         let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
         XCTAssertTrue(app.staticTexts["README.md"].waitForExistence(timeout: 15))
