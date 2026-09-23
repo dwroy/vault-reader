@@ -99,3 +99,5 @@ At the owner's request, Reading now follows an explicit reading-list Markdown in
 - The owner's real reading list was restructured in the notes vault (not in this repository). Its README now declares `书单: study/read/书单.md`. A local VaultCore check against the vault's tracked paths resolved that declaration, parsed all 8 books, resolved all 20 file links, and found no reading-folder file missing from the list. That output was not committed.
 
 These checks do not claim a physical-device reading pass or a network refresh of the updated list on the phone.
+
+Main source `a6db3ce` produced **0.2.0 (8)** with the Wei Dong personal team (DPK7SSB889); the app passed strict signature verification (`build/acceptance/book-list-device-build.log`). It was installed over USB on the iPhone, and the device now reports 0.2.0 (8) (`reader-v8-usb-install.json`, `reader-v8-installed-app.json`). A remote launch was refused because the phone was locked (`reader-v8-usb-launch.json`), so this build has no confirmed device launch or on-device reading-list pass yet.

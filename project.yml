@@ -13,7 +13,7 @@ settings:
     INFOPLIST_KEY_CFBundleDisplayName: Vault Reader
     INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
     MARKETING_VERSION: 0.2.0
-    CURRENT_PROJECT_VERSION: 7
+    CURRENT_PROJECT_VERSION: 8
 packages:
   VaultCore:
     path: packages/VaultCore
