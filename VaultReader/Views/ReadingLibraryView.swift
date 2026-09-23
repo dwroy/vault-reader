@@ -41,6 +41,8 @@ struct ReadingLibraryView: View {
     @State private var linkedPDFs = Set<String>()
     /// Books declared by reading-list Markdown; nil until the lists have been read once.
     @State private var listed: [ListedBook]?
+    /// Reading-list files that were read, shown with articles so the list itself can be opened.
+    @State private var listFiles: [String] = []
     @State private var query = ""
     @State private var indexError: String?
     private var catalog: BookCatalog { BookCatalog(index: VaultIndex(state.visibleEntries), linkedPDFs: linkedPDFs) }
@@ -65,7 +67,7 @@ struct ReadingLibraryView: View {
             if let error = indexError {
                 Section { Text("部分书单暂未载入：\(error)").font(.caption).foregroundStyle(.secondary) }
             }
-            if listed == nil && !catalog.indexes.isEmpty {
+            if listed == nil {
                 Section { HStack(spacing: 10) { ProgressView(); Text("正在读取书单…").foregroundStyle(.secondary) } }
             } else if let listed, !listed.isEmpty {
                 ForEach(BookList.groups(books)) { group in
@@ -90,13 +92,14 @@ struct ReadingLibraryView: View {
                     }
                 }
             }
-            if !catalog.indexes.isEmpty {
+            let articles = listFiles.compactMap { state.index.files[$0] }.filter { state.fileDisplay.includes($0.path) } + catalog.indexes.filter { !listFiles.contains($0.path) }
+            if !articles.isEmpty {
                 Section("文章与书单") {
-                    ForEach(catalog.indexes.filter { matches($0.name) }) { entry in fileLink(entry) }
+                    ForEach(articles.filter { matches($0.name) }) { entry in fileLink(entry) }
                 }
             }
-            if catalog.books.isEmpty && catalog.indexes.isEmpty && recent.isEmpty && (listed ?? []).isEmpty {
-                ContentUnavailableView("还没有阅读内容", systemImage: "books.vertical", description: Text("可以从目录打开书籍、PDF，或在文章的操作菜单中选择“用阅读器打开”。"))
+            if listed != nil && catalog.books.isEmpty && articles.isEmpty && recent.isEmpty && (listed ?? []).isEmpty {
+                ContentUnavailableView("还没有阅读内容", systemImage: "books.vertical", description: Text("在 README 的属性里写“书单: 书单文件路径”，或新建名为“书单.md”的文件，即可按书单列书。也可以从目录打开文章，在操作菜单中选择“用阅读器打开”。"))
             }
         }
         .navigationTitle("书籍与文章").navigationBarTitleDisplayMode(.inline)
@@ -115,23 +118,37 @@ struct ReadingLibraryView: View {
     private func matches(_ book: ListedBook) -> Bool {
         query.isEmpty || matches(book.title) || matches(book.author ?? "") || book.links.contains { matches($0.label) || matches($0.path ?? "") }
     }
-    /// Reads every top-level Markdown in a reading folder: explicit books first, linked PDFs for the folder fallback.
+    /// The root README's `书单:` frontmatter names the lists for any vault layout. Without it,
+    /// conventional `书单.md`/`booklist.md` files and top-level reading-folder Markdown are read.
     private func discoverLists() async {
         indexError = nil
         let key = state.config.storageKey, visible = VaultIndex(state.visibleEntries)
-        var books: [ListedBook] = [], pdfs = Set<String>()
-        for entry in BookCatalog(index: visible).indexes where (entry.size ?? 0) < 256 * 1024 {
+        var sources: [String] = []
+        if let readme = BookList.readme(in: state.index), (state.index.files[readme]?.size ?? 0) < 256 * 1024 {
             do {
-                let data = try await state.file(entry.path)
+                let data = try await state.file(readme)
                 try Task.checkCancellation()
                 guard key == state.config.storageKey else { return }
-                let markdown = String(decoding: data, as: UTF8.self)
-                books += BookList(markdown: markdown, at: entry.path, index: state.index).books
-                pdfs.formUnion(BookCatalog.linkedPDFs(in: markdown, at: entry.path, index: visible))
+                sources = BookList.declared(inReadme: String(decoding: data, as: UTF8.self), at: readme, index: state.index)
             } catch is CancellationError { return }
             catch { indexError = error.localizedDescription }
         }
-        linkedPDFs = pdfs; listed = books
+        if sources.isEmpty { sources = BookList.conventional(in: visible) }
+        var books: [ListedBook] = [], files: [String] = [], pdfs = Set<String>()
+        for path in sources.prefix(32) where (state.index.files[path]?.size ?? 0) < 256 * 1024 {
+            do {
+                let data = try await state.file(path)
+                try Task.checkCancellation()
+                guard key == state.config.storageKey else { return }
+                let markdown = String(decoding: data, as: UTF8.self)
+                let found = BookList(markdown: markdown, at: path, index: state.index).books
+                books += found
+                if !found.isEmpty { files.append(path) }
+                pdfs.formUnion(BookCatalog.linkedPDFs(in: markdown, at: path, index: visible))
+            } catch is CancellationError { return }
+            catch { indexError = error.localizedDescription }
+        }
+        linkedPDFs = pdfs; listFiles = files; listed = books
     }
 }
 

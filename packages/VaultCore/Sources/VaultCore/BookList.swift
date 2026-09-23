@@ -127,6 +127,50 @@ public struct BookList: Sendable {
         self.books = books
     }
 
+    /// Frontmatter keys in the root README that name reading lists, for any vault layout:
+    /// `书单: study/read/书单.md`, a YAML list of paths, or `"[[书单]]"`.
+    public static let declarationKeys: Set<String> = ["书单", "booklist"]
+    /// Conventional list names, found anywhere when the README declares nothing.
+    public static let fileNames: Set<String> = ["书单.md", "booklist.md"]
+    public static func readme(in index: VaultIndex) -> String? {
+        index.entries.filter { !$0.path.contains("/") && $0.name.lowercased() == "readme.md" }.map(\.path).sorted().first
+    }
+    /// Indexed Markdown paths declared in README frontmatter. Missing, traversing and non-Markdown targets are dropped.
+    public static func declared(inReadme markdown: String, at path: String, index: VaultIndex) -> [String] {
+        var lines = markdown.replacingOccurrences(of: "\r\n", with: "\n").components(separatedBy: "\n")
+        if lines.first?.hasPrefix("\u{FEFF}") == true { lines[0].removeFirst() }
+        guard lines.first?.trimmingCharacters(in: .whitespaces) == "---",
+              let end = lines.indices.dropFirst().first(where: { lines[$0].trimmingCharacters(in: .whitespaces) == "---" }) else { return [] }
+        var values: [String] = [], inKey = false
+        for line in lines[1..<end] {
+            if let colon = line.firstIndex(of: ":"), !line.hasPrefix(" "), !line.hasPrefix("\t"), !line.hasPrefix("-") {
+                let key = line[..<colon].trimmingCharacters(in: .whitespaces).trimmingCharacters(in: CharacterSet(charactersIn: "'\"")).lowercased()
+                inKey = declarationKeys.contains(key)
+                guard inKey else { continue }
+                let value = line[line.index(after: colon)...].trimmingCharacters(in: .whitespaces)
+                if value.hasPrefix("["), value.hasSuffix("]"), !value.hasPrefix("[[") {
+                    values += value.dropFirst().dropLast().split(separator: ",").map(String.init)
+                } else if !value.isEmpty { values.append(value) }
+            } else if inKey, let (_, item) = listItem(line) { values.append(item) }
+            else if !line.trimmingCharacters(in: .whitespaces).isEmpty, !line.hasPrefix(" "), !line.hasPrefix("\t") { inKey = false }
+        }
+        let resolver = LinkResolver(index: index)
+        var result: [String] = []
+        for value in values {
+            let item = value.trimmingCharacters(in: .whitespaces).trimmingCharacters(in: CharacterSet(charactersIn: "'\"")).trimmingCharacters(in: .whitespaces)
+            let target = resolver.links(in: item, role: .other, from: path).first?.path ?? resolver.relativePath(item, from: path)
+            if let target, target != path, index.files[target]?.isMarkdown == true, !result.contains(target) { result.append(target) }
+        }
+        return result
+    }
+    /// Without a README declaration: every `书单.md`/`booklist.md`, then top-level Markdown in reading folders.
+    public static func conventional(in index: VaultIndex) -> [String] {
+        let named = index.entries.filter { fileNames.contains($0.name.lowercased()) }.map(\.path).sorted()
+        var result: [String] = []
+        for path in named + BookCatalog(index: index).indexes.map(\.path) where !result.contains(path) { result.append(path) }
+        return result
+    }
+
     /// Groups in first-appearance order, across one or more lists.
     public static func groups(_ books: [ListedBook]) -> [BookGroup] {
         var order: [String?] = [], members: [String: [ListedBook]] = [:]

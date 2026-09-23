@@ -109,6 +109,21 @@ final class ReadingTests: XCTestCase {
         XCTAssertEqual(lighthouse.links(.other).first?.url?.host, "example.com")
         XCTAssertNil(list.books[2].group)
     }
+    func testReadmeDeclaresReadingListsAnywhereInTheVault() {
+        let index = VaultIndex(["README.md", "docs/readme.md", "书架/我的书单.md", "书架/第二份.md", "notes/清单.md", "a.pdf", "secret.md"].map(entry))
+        XCTAssertEqual(BookList.readme(in: index), "README.md")
+        let scalar = "---\ntags: [x]\n书单: 书架/我的书单.md\n---\n# Home\n书单: notes/清单.md"
+        XCTAssertEqual(BookList.declared(inReadme: scalar, at: "README.md", index: index), ["书架/我的书单.md"], "only frontmatter declares")
+        let list = "---\nbooklist:\n  - \"[[第二份]]\"\n  - notes/清单\n  - '[清单](notes/清单.md)'\n  - missing.md\n  - a.pdf\n  - ../secret.md\nother: 1\n  - 书架/我的书单.md\n---\n"
+        XCTAssertEqual(BookList.declared(inReadme: list, at: "README.md", index: index), ["书架/第二份.md", "notes/清单.md"])
+        let flow = "\u{FEFF}---\n\"书单\": [书架/我的书单.md, \"[[第二份]]\"]\n---\n"
+        XCTAssertEqual(BookList.declared(inReadme: flow, at: "README.md", index: index), ["书架/我的书单.md", "书架/第二份.md"])
+        XCTAssertEqual(BookList.declared(inReadme: "# No frontmatter\n书单: 书架/我的书单.md", at: "README.md", index: index), [])
+    }
+    func testConventionalListsAreFoundByNameBeforeReadingFolders() {
+        let index = VaultIndex(["notes/书单.md", "Library/BookList.md", "study/read/intro.md", "study/read/书单.md", "study/read/book/a.md", "other/note.md"].map(entry))
+        XCTAssertEqual(BookList.conventional(in: index), ["Library/BookList.md", "notes/书单.md", "study/read/书单.md", "study/read/intro.md"])
+    }
     func testBookListRejectsTraversalAndUnsupportedSchemes() {
         let index = VaultIndex(["read/书单.md", "secret.pdf", "read/a.pdf"].map(entry))
         let md = "## 书\n- 原书：[escape](../../secret.pdf)、[app](obsidian://open?vault=x)、[ok](a.pdf)、[file](file:///etc/hosts)"
