@@ -25,19 +25,32 @@ enum Command {
         }
     }
 }
-let left: [Command] = [.m(244,276), .c(329,280,421,312,487,365), .l(487,745), .c(418,690,330,663,244,658), .q(228,657,228,641), .l(228,294), .q(228,275,244,276), .z]
-let right: [Command] = [.m(537,365), .c(604,312,695,280,780,276), .q(796,275,796,294), .l(796,641), .q(796,657,780,658), .c(694,663,606,690,537,745), .z]
-// The notch echoes a saved place, while the two page edges form a quiet V.
-let bookmark: [Command] = [.m(674,302), .q(697,292,720,286), .l(720,433), .l(697,416), .l(674,442), .z]
-let line1: [Command] = [.m(294,385), .c(342,391,387,408,427,432)]
-let line2: [Command] = [.m(294,452), .c(342,458,387,475,427,499)]
+// An open book: the left page is a Markdown document being written (heading, prose, caret);
+// the right page carries the sparkle of the agents that maintain it. Pages slant toward the spine.
+let leftPage: [Command] = [.m(200,266), .q(200,240,225,248), .l(457,318), .q(482,325,482,351), .l(482,739), .q(482,765,457,758), .l(225,688), .q(200,680,200,654), .z]
+let rightPage: [Command] = [.m(542,351), .q(542,325,567,318), .l(799,248), .q(824,240,824,266), .l(824,654), .q(824,680,799,688), .l(567,758), .q(542,765,542,739), .z]
+let heading: [[Command]] = [[.m(281,326), .l(268,399)], [.m(316,336), .l(303,410)], [.m(253,341), .l(331,364)], [.m(253,371), .l(331,394)]]
+let headingBar: [Command] = [.m(364,389), .l(436,411)]
+let prose: [[Command]] = [[.m(252,446), .l(434,501)], [.m(252,526), .l(376,563)]]
+let caret = CGRect(x:389, y:539, width:26, height:64)
+let sparkle: [Command] = [.m(683,397), .c(690,466,719,495,788,502), .c(719,509,690,538,683,607), .c(676,538,647,509,578,502), .c(647,495,676,466,683,397), .z]
 
 struct Palette {
-    let background: String, page: String, bookmark: String, ink: String
+    let background: String, page: String, ink: String, line: String, spark: String, caret: String
 }
-let regular = Palette(background:"24755A", page:"FFF9EB", bookmark:"DDC17C", ink:"D2DED0")
-let dark = Palette(background:"102D25", page:"BDE6D1", bookmark:"D9BE7A", ink:"659E83")
-let tinted = Palette(background:"202020", page:"EEEEEE", bookmark:"AAAAAA", ink:"A0A0A0")
+enum Layer {
+    case fill([Command], KeyPath<Palette, String>)
+    case stroke([Command], CGFloat, KeyPath<Palette, String>)
+    case rounded(CGRect, CGFloat, KeyPath<Palette, String>)
+}
+let layers: [Layer] = [.fill(leftPage, \.page), .fill(rightPage, \.page)]
+    + heading.map { .stroke($0, 18, \.ink) } + [.stroke(headingBar, 30, \.ink)]
+    + prose.map { .stroke($0, 28, \.line) } + [.rounded(caret, 6, \.caret), .fill(sparkle, \.spark)]
+
+let regular = Palette(background:"1B5E4B", page:"FFF9EB", ink:"1B5E4B", line:"C9D8CF", spark:"E8AE45", caret:"E8AE45")
+let dark = Palette(background:"102D25", page:"BDE6D1", ink:"102D25", line:"8FBFA8", spark:"C28A2C", caret:"C28A2C")
+let tinted = Palette(background:"202020", page:"EEEEEE", ink:"202020", line:"B4B4B4", spark:"6E6E6E", caret:"6E6E6E")
+let logo = Palette(background:"FFFFFF", page:"1B5E4B", ink:"FFF9EB", line:"8DB8A5", spark:"E8AE45", caret:"E8AE45")
 
 func color(_ hex: String) -> CGColor {
     let rgb = UInt32(hex, radix:16)!
@@ -58,10 +71,14 @@ func path(_ commands:[Command]) -> CGPath {
 }
 func draw(_ ctx:CGContext, _ palette:Palette, background:Bool) {
     if background { ctx.setFillColor(color(palette.background)); ctx.fill(CGRect(x:0,y:0,width:1024,height:1024)) }
-    for p in [left,right] { ctx.addPath(path(p)); ctx.setFillColor(color(palette.page)); ctx.fillPath() }
-    ctx.addPath(path(bookmark)); ctx.setFillColor(color(palette.bookmark)); ctx.fillPath()
-    ctx.setLineWidth(17); ctx.setLineCap(.round); ctx.setStrokeColor(color(palette.ink))
-    for p in [line1,line2] { ctx.addPath(path(p)); ctx.strokePath() }
+    ctx.setLineCap(.round)
+    for layer in layers {
+        switch layer {
+        case let .fill(p, key): ctx.addPath(path(p)); ctx.setFillColor(color(palette[keyPath:key])); ctx.fillPath()
+        case let .stroke(p, width, key): ctx.addPath(path(p)); ctx.setLineWidth(width); ctx.setStrokeColor(color(palette[keyPath:key])); ctx.strokePath()
+        case let .rounded(rect, radius, key): ctx.addPath(CGPath(roundedRect:rect,cornerWidth:radius,cornerHeight:radius,transform:nil)); ctx.setFillColor(color(palette[keyPath:key])); ctx.fillPath()
+        }
+    }
 }
 func writeJSON(_ value:Any, to url:URL) throws {
     try FileManager.default.createDirectory(at:url.deletingLastPathComponent(),withIntermediateDirectories:true)
@@ -77,20 +94,27 @@ func png(_ name:String,_ palette:Palette) throws {
     CGImageDestinationAddImage(destination,ctx.makeImage()!,nil)
     guard CGImageDestinationFinalize(destination) else { fatalError("PNG export failed") }
 }
+// The standalone mark is cropped to a square around the open book.
+let markBox = CGRect(x:182, y:172, width:660, height:660)
 func pdf(_ name:String,_ palette:Palette) throws {
     let url=assets.appendingPathComponent("BrandMark.imageset/\(name).pdf")
-    var bounds=CGRect(x:0,y:0,width:600,height:500)
+    var bounds=CGRect(origin:.zero,size:markBox.size)
     let ctx=CGContext(url as CFURL,mediaBox:&bounds,nil)!
-    ctx.beginPDFPage(nil); ctx.translateBy(x:-212,y:760); ctx.scaleBy(x:1,y:-1)
+    ctx.beginPDFPage(nil); ctx.translateBy(x:-markBox.minX,y:markBox.maxY); ctx.scaleBy(x:1,y:-1)
     draw(ctx,palette,background:false)
     ctx.endPDFPage(); ctx.closePDF()
 }
 func svg(_ name:String,_ palette:Palette,background:Bool) throws {
-    let viewBox=background ? "0 0 1024 1024" : "212 260 600 500"
+    func n(_ v: CGFloat) -> String { String(Int(v)) }
+    let viewBox=background ? "0 0 1024 1024" : "\(n(markBox.minX)) \(n(markBox.minY)) \(n(markBox.width)) \(n(markBox.height))"
     var elements = background ? ["<rect width=\"1024\" height=\"1024\" fill=\"#\(palette.background)\"/>"] : []
-    for p in [left,right] { elements.append("<path d=\"\(p.map(\.svg).joined(separator:" "))\" fill=\"#\(palette.page)\"/>") }
-    elements.append("<path d=\"\(bookmark.map(\.svg).joined(separator:" "))\" fill=\"#\(palette.bookmark)\"/>")
-    for p in [line1,line2] { elements.append("<path d=\"\(p.map(\.svg).joined(separator:" "))\" fill=\"none\" stroke=\"#\(palette.ink)\" stroke-width=\"17\" stroke-linecap=\"round\"/>") }
+    for layer in layers {
+        switch layer {
+        case let .fill(p, key): elements.append("<path d=\"\(p.map(\.svg).joined(separator:" "))\" fill=\"#\(palette[keyPath:key])\"/>")
+        case let .stroke(p, width, key): elements.append("<path d=\"\(p.map(\.svg).joined(separator:" "))\" fill=\"none\" stroke=\"#\(palette[keyPath:key])\" stroke-width=\"\(n(width))\" stroke-linecap=\"round\"/>")
+        case let .rounded(r, radius, key): elements.append("<rect x=\"\(n(r.minX))\" y=\"\(n(r.minY))\" width=\"\(n(r.width))\" height=\"\(n(r.height))\" rx=\"\(n(radius))\" fill=\"#\(palette[keyPath:key])\"/>")
+        }
+    }
     let content="<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"\(viewBox)\" role=\"img\" aria-label=\"Vault Reader\">\n" + elements.joined(separator:"\n") + "\n</svg>\n"
     try content.write(to:artwork.appendingPathComponent(name),atomically:true,encoding:.utf8)
 }
@@ -105,7 +129,6 @@ try writeJSON(["info":info,"images":[
     ["filename":"BrandMark.pdf","idiom":"universal"],
     ["filename":"BrandMark-dark.pdf","idiom":"universal","appearances":[["appearance":"luminosity","value":"dark"]]]
 ],"properties":["preserves-vector-representation":true]],to:assets.appendingPathComponent("BrandMark.imageset/Contents.json"))
-let logo=Palette(background:"FFFFFF",page:"24755A",bookmark:"DDC17C",ink:"A7CBBA")
 try png("AppIcon",regular); try png("AppIcon-dark",dark); try png("AppIcon-tinted",tinted)
 try pdf("BrandMark",logo); try pdf("BrandMark-dark",dark)
 try svg("app-icon.svg",regular,background:true); try svg("logo.svg",logo,background:false)

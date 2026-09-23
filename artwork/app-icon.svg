@@ -1,8 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Vault Reader">
-<rect width="1024" height="1024" fill="#24755A"/>
-<path d="M244 276 C329 280 421 312 487 365 L487 745 C418 690 330 663 244 658 Q228 657 228 641 L228 294 Q228 275 244 276 Z" fill="#FFF9EB"/>
-<path d="M537 365 C604 312 695 280 780 276 Q796 275 796 294 L796 641 Q796 657 780 658 C694 663 606 690 537 745 Z" fill="#FFF9EB"/>
-<path d="M674 302 Q697 292 720 286 L720 433 L697 416 L674 442 Z" fill="#DDC17C"/>
-<path d="M294 385 C342 391 387 408 427 432" fill="none" stroke="#D2DED0" stroke-width="17" stroke-linecap="round"/>
-<path d="M294 452 C342 458 387 475 427 499" fill="none" stroke="#D2DED0" stroke-width="17" stroke-linecap="round"/>
+<rect width="1024" height="1024" fill="#1B5E4B"/>
+<path d="M200 266 Q200 240 225 248 L457 318 Q482 325 482 351 L482 739 Q482 765 457 758 L225 688 Q200 680 200 654 Z" fill="#FFF9EB"/>
+<path d="M542 351 Q542 325 567 318 L799 248 Q824 240 824 266 L824 654 Q824 680 799 688 L567 758 Q542 765 542 739 Z" fill="#FFF9EB"/>
+<path d="M281 326 L268 399" fill="none" stroke="#1B5E4B" stroke-width="18" stroke-linecap="round"/>
+<path d="M316 336 L303 410" fill="none" stroke="#1B5E4B" stroke-width="18" stroke-linecap="round"/>
+<path d="M253 341 L331 364" fill="none" stroke="#1B5E4B" stroke-width="18" stroke-linecap="round"/>
+<path d="M253 371 L331 394" fill="none" stroke="#1B5E4B" stroke-width="18" stroke-linecap="round"/>
+<path d="M364 389 L436 411" fill="none" stroke="#1B5E4B" stroke-width="30" stroke-linecap="round"/>
+<path d="M252 446 L434 501" fill="none" stroke="#C9D8CF" stroke-width="28" stroke-linecap="round"/>
+<path d="M252 526 L376 563" fill="none" stroke="#C9D8CF" stroke-width="28" stroke-linecap="round"/>
+<rect x="389" y="539" width="26" height="64" rx="6" fill="#E8AE45"/>
+<path d="M683 397 C690 466 719 495 788 502 C719 509 690 538 683 607 C676 538 647 509 578 502 C647 495 676 466 683 397 Z" fill="#E8AE45"/>
 </svg>

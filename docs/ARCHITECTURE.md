@@ -73,7 +73,7 @@ Synthetic fixtures are public and committed. Real-vault link audit output and sc
 
 ## Brand assets
 
-Original open-book and bookmark artwork is shared by the AppIcon and native logo. Asset catalogs supply default/dark/tinted 1024 px app icons and scalable light/dark PDF marks. `artwork/` contains SVG exports and regeneration instructions; XcodeGen selects AppIcon. No SF Symbol is used as the app icon.
+Original open-book artwork (a Markdown page with heading, caret and an agent sparkle) is shared by the AppIcon and native logo. Asset catalogs supply default/dark/tinted 1024 px app icons and scalable light/dark PDF marks. `artwork/` contains SVG exports and regeneration instructions; XcodeGen selects AppIcon. No SF Symbol is used as the app icon.
 
 ## Reading extension requested by the owner
 

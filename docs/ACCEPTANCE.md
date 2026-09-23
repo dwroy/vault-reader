@@ -40,6 +40,10 @@ The main-checkout **0.2.0 (4)** build was signed with the Wei Dong personal team
 
 At the owner's request, `com.dwroy.vaultreader.uitests.xctrunner` was uninstalled from the phone. A final exact bundle-ID query returned no matching app. The reader and its credentials were retained. Main evidence: ignored `build/acceptance/directory-tabs-device-build.log`, `directory-tabs-usb-install.json`, `directory-tabs-usb-launch.json`, `directory-tabs-final.private.png`, and `final-test-runner-check.json`.
 
+### AI-era identity refresh — 2026-09-23
+
+At the owner's request the identity now positions the app as an AI-era pocket knowledge base (subtitle AI 时代的随身知识库, tagline Agent 整理，随手开读。). Following the owner's reference sheet, the artwork is an open book with slanted pages: the left page is a Markdown document being written (heading, prose, caret) and the right page carries an amber agent sparkle, on a deeper green (#1B5E4B) that the native tint now matches. The renderer's link accent is unchanged. The generator rebuilt the opaque default/dark/tinted 1024 px icons and the light/dark vector marks; README, welcome copy and `docs/APP-DESCRIPTION.md` carry the new description. On a fresh iPhone 17 / iOS 26.3 simulator the Debug build succeeded and the Home Screen icon, the light/dark welcome screen and the 28 pt Directory toolbar mark (demo mode) were inspected visually. It has not been installed on the physical iPhone, and no automated test covers the artwork.
+
 ## Real local vault
 
 Read-only audit snapshot (11:04): 984 git-tracked files, 393 Markdown files, 1,766 prose wikilinks, 1,748 resolved, 18 unresolved, one duplicate Markdown basename group and zero ambiguous link occurrences. Code/frontmatter/comments are excluded. The only tracked duplicate group is five README files; Obsidian's quick switcher was checked for that group. This is not a complete resolver-parity or unresolved-link-baseline comparison. Obsidian can also see files outside the tracked-file scope, so its total cannot be substituted directly.

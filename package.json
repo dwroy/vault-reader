@@ -1,7 +1,7 @@
 {
   "name": "vault-reader",
   "version": "0.1.0",
-  "description": "Read an Obsidian vault that lives in a (private) GitHub repository on your iPhone.",
+  "description": "AI-era pocket knowledge base: Markdown and HTML in GitHub or GitLab, organized by agents such as Claude Code and Codex, read on your phone.",
   "scripts": {
     "build:renderer": "node scripts/build-renderer.mjs",
     "test": "node --test tests/*.test.mjs",

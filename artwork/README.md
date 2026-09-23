@@ -1,6 +1,6 @@
 # Vault Reader identity
 
-Original vector artwork: two open pages forming a V, with a bookmark. The green matches the native reader accent. These paths are authored for this project, not derived from SF Symbols.
+Original vector artwork for an AI-era pocket knowledge base: an open book whose slanted left page is a Markdown document being written (`#` heading, prose lines, caret) and whose right page carries an amber sparkle for the agents that maintain the vault. The deep green matches the native tint. These paths are authored for this project, not derived from SF Symbols or any AI vendor's mark.
 
 - `logo.svg`: transparent standalone mark; native wordmark uses Dynamic Type text.
 - `app-icon.svg`: full square icon master; iOS applies its own corner mask.
