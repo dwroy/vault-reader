@@ -116,3 +116,5 @@ Fix: reading values now cross the bridge as JSON strings, and preference changes
 - 8 Node, 23 Swift package and 19 simulator tests (10 hosted, 9 UI) pass. One earlier full run had a single UI flow (`testDirectoryNoteWikiAndImage`) time out waiting 5 seconds for the next note. It passed in two isolated reruns and in the following full run.
 - These checks do not claim a manual on-device font-change pass after the fix.
 
+Main source `c33d1fa` produced **0.2.0 (10)** with the Wei Dong personal team; strict signature verification passed (`build/acceptance/reflow-recovery-device-build.log`). USB installation succeeded and the device reports 0.2.0 (10) (`reader-v10-usb-install.json`, `reader-v10-installed-app.json`). The remote launch was refused because the phone was locked (`reader-v10-usb-launch.json`).
+
