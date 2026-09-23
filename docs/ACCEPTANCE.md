@@ -122,3 +122,5 @@ Fix: reading values now cross the bridge as JSON strings, and preference changes
 
 Main source `c33d1fa` produced **0.2.0 (10)** with the Wei Dong personal team; strict signature verification passed (`build/acceptance/reflow-recovery-device-build.log`). USB installation succeeded and the device reports 0.2.0 (10) (`reader-v10-usb-install.json`, `reader-v10-installed-app.json`). The remote launch was refused because the phone was locked (`reader-v10-usb-launch.json`).
 
+Main source `947b6ff` (the merged open-book rebrand) with the build number raised to 11 produced **0.2.0 (11)** with the Wei Dong personal team; strict signature verification passed (`build/acceptance/open-book-brand-device-build.log`). USB installation succeeded and the device reports 0.2.0 (11) (`reader-v11-usb-install.json`, `reader-v11-installed-app.json`). The remote launch was refused because the phone was locked (`reader-v11-usb-launch.json`), so the new Home Screen icon and welcome copy still await the owner's visual check on the phone.
+
