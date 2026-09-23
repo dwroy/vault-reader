@@ -20,24 +20,29 @@ final class ReadingFlowTests: XCTestCase {
         let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
         XCTAssertTrue(app.tabBars.buttons["目录"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.tabBars.buttons["目录"].isSelected)
-        XCTAssertEqual(app.tabBars.buttons.allElementsBoundByIndex.map(\.label), ["目录", "阅读", "最近", "搜索", "设置"])
+        XCTAssertEqual(app.tabBars.buttons.allElementsBoundByIndex.map(\.label), ["目录", "阅读", "最近", "搜索"])
         XCTAssertFalse(app.tabBars.buttons["首页"].exists)
         XCTAssertTrue(app.staticTexts["生活"].waitForExistence(timeout: 5))
         app.staticTexts["生活"].tap()
         XCTAssertTrue(app.staticTexts["公园的一天.md"].waitForExistence(timeout: 5))
-        app.staticTexts["公园的一天.md"].tap()
-        XCTAssertTrue(app.webViews.staticTexts["公园的一天"].waitForExistence(timeout: 5))
-        app.tabBars.buttons["设置"].tap()
+        app.buttons["目录操作"].tap()
+        let refresh = app.buttons["刷新"], settings = app.buttons["设置"]
+        XCTAssertTrue(settings.waitForExistence(timeout: 5))
+        XCTAssertLessThan(refresh.frame.minY, settings.frame.minY)
+        let menu = XCTAttachment(screenshot: app.screenshot()); menu.name = "directory-menu"; menu.lifetime = .keepAlways; add(menu)
+        settings.tap()
         XCTAssertTrue(app.secureTextFields["token"].waitForExistence(timeout: 5))
-        XCTAssertFalse(app.buttons["完成"].exists)
+        XCTAssertTrue(app.buttons["完成"].exists)
         XCTAssertFalse(app.textFields["首页"].exists)
-        let shot = XCTAttachment(screenshot: app.screenshot()); shot.name = "settings-tab"; shot.lifetime = .keepAlways; add(shot)
-        app.tabBars.buttons["目录"].tap()
+        let shot = XCTAttachment(screenshot: app.screenshot()); shot.name = "settings-sheet"; shot.lifetime = .keepAlways; add(shot)
+        app.buttons["完成"].tap()
+        XCTAssertTrue(app.staticTexts["公园的一天.md"].waitForExistence(timeout: 5))
+        app.staticTexts["公园的一天.md"].tap()
         XCTAssertTrue(app.webViews.staticTexts["公园的一天"].waitForExistence(timeout: 5))
     }
     @MainActor func testInvalidTokenShowsRecoverableError() throws {
         let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
-        XCTAssertTrue(app.tabBars.buttons["设置"].waitForExistence(timeout: 10)); app.tabBars.buttons["设置"].tap()
+        openSettings(app)
         let token = app.secureTextFields["token"].firstMatch
         XCTAssertTrue(token.waitForExistence(timeout: 5)); token.tap(); token.typeText("invalid-vault-reader-test-token")
         app.buttons["saveConnection"].tap()
@@ -92,11 +97,15 @@ final class ReadingFlowTests: XCTestCase {
 
     @MainActor func testGitLabSetupOffersServerAndNamespace() throws {
         let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
-        XCTAssertTrue(app.tabBars.buttons["设置"].waitForExistence(timeout: 15)); app.tabBars.buttons["设置"].tap()
+        openSettings(app)
         app.buttons["添加知识库"].tap()
         app.buttons["providerPicker"].tap(); app.buttons["GitLab"].tap()
         XCTAssertTrue(app.textFields["GitLab 地址"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.textFields["命名空间"].exists)
+    }
+    @MainActor private func openSettings(_ app: XCUIApplication) {
+        XCTAssertTrue(app.buttons["目录操作"].waitForExistence(timeout: 15)); app.buttons["目录操作"].tap()
+        XCTAssertTrue(app.buttons["设置"].waitForExistence(timeout: 5)); app.buttons["设置"].tap()
     }
 
 }

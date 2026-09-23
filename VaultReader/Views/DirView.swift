@@ -26,6 +26,7 @@ struct DirView: View {
                 Menu {
                     Button("刷新", systemImage: "arrow.clockwise") { Task { await state.refresh() } }
                         .disabled(state.isRefreshing || state.switchingRepository)
+                    Button("设置", systemImage: "gearshape") { state.addingRepository = false; state.showSettings = true }
                 } label: { Image(systemName: "ellipsis.circle") }.accessibilityLabel("目录操作")
             }
         }

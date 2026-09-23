@@ -3,7 +3,7 @@ import VaultCore
 
 struct NoteRoute: Hashable { let path: String; var anchor = ""; var reading = false }
 enum ReaderRoute: Hashable { case note(NoteRoute), directory(String), file(String), readingLibrary, book(ListedBook) }
-private enum ReaderTab: Hashable { case directory, reading, recent, search, settings }
+private enum ReaderTab: Hashable { case directory, reading, recent, search }
 struct RootView: View {
     @Bindable var state: AppState
     @State private var selectedTab: ReaderTab = .directory
@@ -60,8 +60,6 @@ struct RootView: View {
                         SearchView(state: state)
                             .navigationDestination(for: ReaderRoute.self) { route in destination(route, path: $searchPath) }
                     }.tabItem { Label("搜索", systemImage: "magnifyingglass") }.tag(ReaderTab.search)
-                    SettingsView(state: state, isTab: true) { selectedTab = .directory }
-                        .tabItem { Label("设置", systemImage: "gearshape") }.tag(ReaderTab.settings)
                 }.id(state.config.identity + "#" + state.config.branch)
 
             }
