@@ -46,7 +46,7 @@ At the owner's request the identity now positions the app as an AI-era pocket kn
 
 ### Settings in the Directory menu — 2026-09-23
 
-At the owner's request Settings left the tab bar, which is now **Directory → Reading → Recent → Search**. Directory's ellipsis menu (root and subfolders) lists Refresh and then Settings; Settings opens as a sheet over the current stack and Done returns to the same folder. The UI tests now reach Settings through that menu and assert the item order. All nine Directory/Settings and Reading UI tests passed on the iPhone 17 / iOS 26.3 simulator (`build/DerivedData/Logs/Test/Test-VaultReader-2026.09.23_12-06-08-+0800.xcresult`). Not yet installed on the physical iPhone.
+At the owner's request Settings left the tab bar, which is now **Directory → Reading → Recent → Search**. Directory's ellipsis menu (root and subfolders) lists Refresh and then Settings; Settings opens as a sheet over the current stack and Done returns to the same folder. The UI tests now reach Settings through that menu and assert the item order. All nine Directory/Settings and Reading UI tests passed on the iPhone 17 / iOS 26.3 simulator (`build/DerivedData/Logs/Test/Test-VaultReader-2026.09.23_12-06-08-+0800.xcresult` in the settings-menu worktree). Device installation is recorded with build 12 below.
 
 ## Real local vault
 
@@ -127,4 +127,6 @@ Fix: reading values now cross the bridge as JSON strings, and preference changes
 Main source `c33d1fa` produced **0.2.0 (10)** with the Wei Dong personal team; strict signature verification passed (`build/acceptance/reflow-recovery-device-build.log`). USB installation succeeded and the device reports 0.2.0 (10) (`reader-v10-usb-install.json`, `reader-v10-installed-app.json`). The remote launch was refused because the phone was locked (`reader-v10-usb-launch.json`).
 
 Main source `947b6ff` (the merged open-book rebrand) with the build number raised to 11 produced **0.2.0 (11)** with the Wei Dong personal team; strict signature verification passed (`build/acceptance/open-book-brand-device-build.log`). USB installation succeeded and the device reports 0.2.0 (11) (`reader-v11-usb-install.json`, `reader-v11-installed-app.json`). The remote launch was refused because the phone was locked (`reader-v11-usb-launch.json`), so the new Home Screen icon and welcome copy still await the owner's visual check on the phone.
+
+Main source `8912092` (Settings moved into the Directory menu, on top of the open-book rebrand) with the build number raised to 12 produced **0.2.0 (12)** with the Wei Dong personal team; strict signature verification passed (`build/acceptance/settings-menu-device-build.log`). USB installation succeeded, the device reports 0.2.0 (12) (`reader-v12-usb-install.json`, `reader-v12-installed-app.json`) and the remote launch succeeded (`reader-v12-usb-launch.json`). The owner's visual check of the icon, welcome copy and Directory menu on the phone is still pending.
 
