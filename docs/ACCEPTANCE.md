@@ -13,6 +13,8 @@ The note action menu now has Share before Copy path, in normal and book reading 
 
 Evidence is under `.worktrees/note-share/build/acceptance/` (ignored). The phone was unavailable during this work, so physical-device installation and third-party share destinations are not yet verified for this feature. Existing M1 acceptance limits below remain in effect.
 
+Main source `21b943f` produced **0.2.0 (13)** using the Wei Dong personal team. The device build and strict signature verification passed (`build/acceptance/note-share-device-build.log`); the installable app is under `build/M1bDevice/Build/Products/Debug-iphoneos/`. This build has not been installed on the phone.
+
 ## Automated verification
 
 - 5 Node renderer/link tests pass; the shared JS/CSS and bridge contract are unchanged in M1b.
