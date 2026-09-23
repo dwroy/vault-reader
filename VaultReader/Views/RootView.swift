@@ -2,7 +2,7 @@ import SwiftUI
 import VaultCore
 
 struct NoteRoute: Hashable { let path: String; var anchor = ""; var reading = false }
-enum ReaderRoute: Hashable { case note(NoteRoute), directory(String), file(String), readingLibrary }
+enum ReaderRoute: Hashable { case note(NoteRoute), directory(String), file(String), readingLibrary, book(ListedBook) }
 private enum ReaderTab: Hashable { case directory, reading, recent, search, settings }
 struct RootView: View {
     @Bindable var state: AppState
@@ -93,6 +93,7 @@ struct RootView: View {
             else { AttachmentView(state: state, path: file) }
         case .directory(let directory): DirView(state: state, path: directory)
         case .readingLibrary: ReadingLibraryView(state: state)
+        case .book(let book): BookDetailView(state: state, book: book)
         }
     }
 

@@ -89,3 +89,13 @@ Main source `a5d61e6` produced **0.2.0 (7)** with the Wei Dong personal team; th
 After the owner reconnected the iPhone, CoreDevice reported Roy connected and unlocked. The existing integrated **0.2.0 (7)** app passed strict signature verification again, with the confirmed Wei Dong personal team (DPK7SSB889). It was installed over the existing reader through USB without uninstalling the app, then successfully launched. A fresh installed-app query confirmed marketing version 0.2.0 and bundle version 7. An exact query for `com.dwroy.vaultreader.uitests.xctrunner` returned no matching app; the test runner was not reinstalled.
 
 Main's ignored evidence: `build/acceptance/reader-v7-usb-install.json`, `reader-v7-usb-launch.json`, `reader-v7-installed-app.json`, and `reader-v7-runner-check.json`. This closes the pending build-7 installation and launch gate; it does not claim a new physical-device reading, touch, toggle/relaunch or network-sync acceptance pass. The earlier build-4 "last installed" statements are historical; build 7 is now the latest confirmed installed version.
+
+## Reading list follow-up
+
+At the owner's request, Reading now follows an explicit reading-list Markdown instead of guessing books from folders, and recent reading is limited to the three most recent Markdown documents. Imported PDFs and HTML readers no longer appear in Continue/Recent reading; their saved positions remain available from each book page. Folder-based discovery remains the fallback for vaults without such a list.
+
+- 21 Swift package tests pass, including new cases for the Markdown-only three-item recent list, group/book parsing, every file role, multi-link and indented items, escaped wikilink pipes, code fences, shallow-path wikilink precedence matching the renderer, external links, missing targets, traversal and unsupported schemes.
+- The full iOS 26.3 simulator suite passed (9 hosted checks and 9 UI flows), as did 8 Node renderer/link tests. The book flows now cover Markdown chapter resume/reflow through the book page and PDF page 3 surviving relaunch while the PDF stays out of Continue/Recent reading and project progress stays isolated. The synthetic demo list now uses the new format. Evidence is in the book-list worktree's ignored `build/acceptance/` (`book-list-full-tests.log`, `book-list-attachments/`).
+- The owner's real reading list was restructured in the notes vault (not in this repository). A local VaultCore check against its tracked paths parsed all 8 books, resolved every file link, and found no reading-folder file missing from the list. That output was not committed.
+
+These checks do not claim a physical-device reading pass or a network refresh of the updated list on the phone.

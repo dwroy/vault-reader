@@ -6,6 +6,10 @@ final class BookReadingFlowTests: XCTestCase {
         let project = app.buttons["reading-project-example/synthetic-vault-main"]
         XCTAssertTrue(project.waitForExistence(timeout: 5)); project.tap()
     }
+    @MainActor private func openBook(_ title: String, app: XCUIApplication) {
+        let book = app.buttons["reading-book:" + title]
+        XCTAssertTrue(book.waitForExistence(timeout: 10)); book.tap()
+    }
     @MainActor private func openFile(_ path: String, app: XCUIApplication) {
         let link = app.buttons["reading-file:" + path]
         for _ in 0..<5 { if link.isHittable { break }; app.swipeUp() }
@@ -13,7 +17,7 @@ final class BookReadingFlowTests: XCTestCase {
     }
     @MainActor func testMarkdownContinuesAfterRelaunchAndReflowsAtSameChapter() {
         let app = XCUIApplication(); app.launchArguments = ["--demo", "--reset-reading"]; app.launch()
-        openProject(app)
+        openProject(app); openBook("夜航手记", app: app)
         openFile("read/夜航手记/夜航手记-原文.md", app: app)
         XCTAssertTrue(app.buttons["readingContents"].waitForExistence(timeout: 15)); app.buttons["readingContents"].tap()
         XCTAssertTrue(app.buttons["第二章 灯塔"].waitForExistence(timeout: 5)); app.buttons["第二章 灯塔"].tap()
@@ -32,6 +36,8 @@ final class BookReadingFlowTests: XCTestCase {
         XCTAssertTrue(chapter.isHittable)
         let shot = XCTAttachment(screenshot: app.screenshot()); shot.name = "book-resumed"; shot.lifetime = .keepAlways; add(shot)
         app.navigationBars.buttons.element(boundBy: 0).tap()
+        XCTAssertTrue(app.buttons["continueBook"].waitForExistence(timeout: 5), "Markdown stays in recent reading")
+        openBook("夜航手记", app: app)
         openFile("read/夜航手记/夜航手记-精简版.md", app: app)
         XCTAssertTrue(app.buttons["readingContents"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.webViews.staticTexts["夜航手记精简版"].firstMatch.waitForExistence(timeout: 10))
@@ -39,7 +45,7 @@ final class BookReadingFlowTests: XCTestCase {
     }
     @MainActor func testPDFRestoresPageAndProjectsStaySeparate() {
         let app = XCUIApplication(); app.launchArguments = ["--demo", "--reset-reading"]; app.launch()
-        openProject(app); openFile("files/夜航手记.pdf", app: app)
+        openProject(app); openBook("夜航手记", app: app); openFile("files/夜航手记.pdf", app: app)
         XCTAssertTrue(app.buttons["pdfPage"].waitForExistence(timeout: 15))
         app.buttons["下一页"].tap(); app.buttons["下一页"].tap()
         let page = app.buttons["pdfPage"]
@@ -47,11 +53,20 @@ final class BookReadingFlowTests: XCTestCase {
         wait(for: [page3], timeout: 6)
         app.terminate(); app.launchArguments = ["--demo"]; app.launch()
         XCTAssertTrue(app.tabBars.buttons["阅读"].waitForExistence(timeout: 15)); app.tabBars.buttons["阅读"].tap()
-        XCTAssertTrue(app.buttons["continueReading"].waitForExistence(timeout: 5)); app.buttons["continueReading"].tap()
+        XCTAssertTrue(app.buttons["reading-project-example/synthetic-vault-main"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["continueReading"].exists, "imported PDFs stay out of recent reading")
+        app.buttons["reading-project-example/synthetic-vault-main"].tap()
+        XCTAssertTrue(app.buttons["reading-book:夜航手记"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.buttons["continueBook"].exists)
+        XCTAssertTrue(app.buttons["reading-book:夜航手记"].label.contains("第 3 页"), app.buttons["reading-book:夜航手记"].label)
+        openBook("夜航手记", app: app)
+        XCTAssertTrue(app.staticTexts["合成的短评，不含私人内容。"].waitForExistence(timeout: 5))
+        let books = XCTAttachment(screenshot: app.screenshot()); books.name = "book-detail"; books.lifetime = .keepAlways; add(books)
+        openFile("files/夜航手记.pdf", app: app)
         XCTAssertTrue(app.buttons["pdfPage"].waitForExistence(timeout: 15))
         XCTAssertEqual(app.buttons["pdfPage"].label, "第 3 / 5 页")
         let shot = XCTAttachment(screenshot: app.screenshot()); shot.name = "pdf-resumed"; shot.lifetime = .keepAlways; add(shot)
-        app.navigationBars.buttons.element(boundBy: 0).tap(); app.navigationBars.buttons.element(boundBy: 0).tap()
+        for _ in 0..<3 { app.navigationBars.buttons.element(boundBy: 0).tap() }
         let other = app.buttons["reading-project-example/synthetic-other-main"]
         XCTAssertTrue(other.waitForExistence(timeout: 5)); other.tap()
         XCTAssertTrue(app.staticTexts["example/synthetic-other"].waitForExistence(timeout: 10))

@@ -46,6 +46,10 @@ public struct ReadingHistory: Codable, Sendable {
         for old in recent.dropFirst(200) { records.removeValue(forKey: old.path) }
     }
     public var recent: [ReadingRecord] { records.values.sorted { $0.updatedAt > $1.updatedAt } }
+    /// Recent reading lists Markdown only. PDF and HTML keep their progress for the book page.
+    public func recentMarkdown(limit: Int, where include: (ReadingRecord) -> Bool = { _ in true }) -> [ReadingRecord] {
+        Array(recent.filter { $0.kind == .markdown && include($0) }.prefix(limit))
+    }
 }
 public struct ShelfBook: Identifiable, Sendable {
     public let id: String
