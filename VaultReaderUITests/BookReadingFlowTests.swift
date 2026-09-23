@@ -42,6 +42,11 @@ final class BookReadingFlowTests: XCTestCase {
         XCTAssertTrue(app.buttons["readingContents"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.webViews.staticTexts["夜航手记精简版"].firstMatch.waitForExistence(timeout: 10))
         XCTAssertTrue(app.webViews.staticTexts["夜航手记精简版"].firstMatch.isHittable)
+        for _ in 0..<3 { app.navigationBars.buttons.element(boundBy: 0).tap() }
+        XCTAssertTrue(app.buttons["continueReading"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["continueReading"].label.contains("夜航手记-精简版"), app.buttons["continueReading"].label)
+        XCTAssertTrue(app.buttons["continueReading-1"].label.contains("夜航手记-原文"), app.buttons["continueReading-1"].label)
+        XCTAssertFalse(app.buttons["continueReading-2"].exists, "only Markdown actually read is listed")
     }
     @MainActor func testPDFRestoresPageAndProjectsStaySeparate() {
         let app = XCUIApplication(); app.launchArguments = ["--demo", "--reset-reading"]; app.launch()

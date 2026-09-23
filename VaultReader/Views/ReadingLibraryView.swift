@@ -10,11 +10,14 @@ struct ReadingProjectsView: View {
     let openProject: (RepositoryConfig, String?) -> Void
     var body: some View {
         List {
-            if let record = state.reading.history.recentMarkdown(limit: 1, where: { state.index.files[$0.path] != nil && state.fileDisplay.includes($0.path) }).first {
+            let recent = state.reading.history.recentMarkdown(limit: 3) { state.index.files[$0.path] != nil && state.fileDisplay.includes($0.path) }
+            if !recent.isEmpty {
                 Section("继续阅读") {
-                    Button { openProject(state.config, record.path) } label: {
-                        ReadingRow(title: record.title, format: "\(state.config.owner)/\(state.config.repo)", record: record)
-                    }.accessibilityIdentifier("continueReading")
+                    ForEach(Array(recent.enumerated()), id: \.element.id) { offset, record in
+                        Button { openProject(state.config, record.path) } label: {
+                            ReadingRow(title: record.title, format: "\(state.config.owner)/\(state.config.repo)", record: record)
+                        }.accessibilityIdentifier(offset == 0 ? "continueReading" : "continueReading-\(offset)")
+                    }
                 }
             }
             Section("项目") {

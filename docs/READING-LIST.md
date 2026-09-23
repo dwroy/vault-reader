@@ -82,5 +82,5 @@ Unknown keys are ignored. File sections are shown in the order of this table.
 
 - Reading shows groups and books in list order. A book row shows author, status, rating and the most recent position among its files. Opening it shows the file sections above with per-file progress.
 - Reading-folder files not mentioned by any list appear under “未列入书单”.
-- Recent reading shows the three most recently read Markdown documents. PDF and HTML progress is saved and shown on the book page, but those files are not listed as recent.
+- Continue reading (project page) and recent reading (inside a project) show the three most recently read Markdown documents. PDF and HTML progress is saved and shown on the book page, but those files are not listed as recent.
 - Lists are parsed only on the device. The app never writes to the vault.
