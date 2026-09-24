@@ -11,9 +11,11 @@ The note action menu now has Share before Copy path, in normal and book reading 
 - The same UI flow passes on the iPad Pro 11-inch (M5) / iOS 26.3 simulator.
 - The first run failed before tests because the simulator could not launch its runner; starting the simulator resolved it. A subsequent UI assertion used a button query for the system Copy action, which iOS exposes as a cell; correcting that query produced the passing flow.
 
-Evidence is under `.worktrees/note-share/build/acceptance/` (ignored). The phone was unavailable during this work, so physical-device installation and third-party share destinations are not yet verified for this feature. Existing M1 acceptance limits below remain in effect.
+Evidence is under `.worktrees/note-share/build/acceptance/` (ignored). The phone was unavailable during implementation; the later installation is recorded below. Third-party share destinations are not yet verified for this feature. Existing M1 acceptance limits below remain in effect.
 
-Main source `21b943f` produced **0.2.0 (13)** using the Wei Dong personal team. The device build and strict signature verification passed (`build/acceptance/note-share-device-build.log`); the installable app is under `build/M1bDevice/Build/Products/Debug-iphoneos/`. This build has not been installed on the phone.
+Main source `21b943f` produced **0.2.0 (13)** using the Wei Dong personal team. The device build and strict signature verification passed (`build/acceptance/note-share-device-build.log`); the installable app is under `build/M1bDevice/Build/Products/Debug-iphoneos/`.
+
+After the owner connected the iPhone, main source `42f7c1c` was rebuilt and passed strict signature verification (`note-share-connected-device-build.log`). Installation succeeded, and an exact bundle-ID query confirmed **0.2.0 (13)** on the device (`reader-v13-install.json`, `reader-v13-installed-app.json`). The first launch was refused because the phone was locked (`reader-v13-launch.json`). After the owner unlocked it, launch succeeded (`reader-v13-unlocked-launch.json`). This confirms installation and launch; on-device sharing has not been exercised.
 
 ## Automated verification
 
