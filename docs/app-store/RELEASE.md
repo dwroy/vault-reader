@@ -10,7 +10,7 @@ Candidate: Vault Reader 1.0.0 (14), bundle ID `com.dwroy.vaultreader`, iOS/iPadO
 - Privacy: https://github.com/dwroy/vault-reader/blob/main/docs/PRIVACY.md
 - Support: https://github.com/dwroy/vault-reader/blob/main/docs/SUPPORT.md
 - Contact: https://github.com/dwroy/vault-reader/issues
-- The source repository is public with Issues enabled. The new policy and support documents must be published to main before these two URLs can be entered as working submission URLs. Git push requires owner authorization per AGENTS.md.
+- The source repository is public with Issues enabled. The owner authorized the Git push. Both documents are now published on main and their public URLs returned HTTP 200 in the release check.
 - The same Markdown documents are bundled for offline access on the welcome screen and in Settings.
 
 ## Review access
@@ -33,7 +33,7 @@ Required-reason API declarations shipped in `PrivacyInfo.xcprivacy`:
 
 ## Account and distribution checks
 
-App Store Connect was accessed and switched from CyberGame Limited to Wei Dong's individual provider. The personal provider has no existing app records. Creating an app is currently blocked by the updated Apple Developer Program License Agreement; the account holder has been asked to review and accept it. EU distribution additionally needs the trader-status declaration or exclusion of EU territories, based on the owner's answer.
+App Store Connect was accessed and switched from CyberGame Limited to Wei Dong's individual provider. The personal provider has no existing app records. Creating an app remains blocked by the individual team's updated Apple Developer Program License Agreement; the specific agreement page is open for the owner. EU territories are excluded at the owner's request.
 
 When those account requirements are cleared: create the app with the existing bundle ID, Simplified Chinese primary language, SKU `vault-reader-ios`, Productivity category, price 0, approved territories and manual release. Review the current age-rating questionnaire based on actual features: no social network, public UGC feed, messaging, ads, purchases or app-supplied restricted content; do not invent a rating before completing the questionnaire. Set content-rights answers based on the original synthetic samples and users' own repository files.
 
@@ -61,5 +61,5 @@ Record current execution results in `docs/ACCEPTANCE.md`. Required release gates
 - Local main archive: `build/app-store/VaultReader-1.0.0-14-final.xcarchive`.
 - Export options: `build/app-store/ExportOptions.plist`, automatic signing, verified personal team, destination `export` (not upload).
 - Selected raw screenshots: `build/app-store/screenshots/iphone-6.9/` and `build/app-store/screenshots/ipad-13/`; identical originals remain in the development worktree with the `.xcresult` evidence.
-- Archive and strict signature/bundle checks passed. App Store `.ipa` export failed because Xcode has no Apple Account configured and cannot obtain a distribution profile. Xcode's login dialog has been opened for the owner. The developer agreement still blocked App Store Connect at the final refresh. These are external account blockers, not a completed submission.
-- Required next actions: finish the individual-team agreement and Xcode login, authorize Git push to publish policy/support URLs, connect the phone for fresh real-device acceptance, then create the App Store record/export/upload and verify server-side processing. Price and territory changes must follow the confirmed free/non-mainland/non-EU plan. Use manual release.
+- Archive and strict signature/bundle checks passed. The owner completed Xcode login and it was verified in Apple Accounts. A fresh App Store `.ipa` export then failed with `Unable to process request - PLA Update available` and could not obtain the distribution profile. App Store Connect independently still shows the same personal-team agreement gate. No binary was uploaded and no review was submitted.
+- Required next actions: finish the individual-team agreement and connect the phone for fresh real-device acceptance, then create the App Store record/export/upload and verify server-side processing. Xcode login and authorized publication of policy/support URLs are complete. Price and territory changes must follow the confirmed free/non-mainland/non-EU plan. Use manual release.
