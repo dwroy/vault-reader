@@ -12,6 +12,8 @@ Implemented the owner's requested search improvements: live filenames plus Markd
 
 The rendered search marks are bounded to the first 1,000 occurrences in a page. New physical-device search interaction, live private-vault synchronization and real-vault performance have **not** been verified for this change. Earlier device acceptance below does not close those new checks.
 
+At the owner's request, main source `abf4a5b` produced the development build **1.0.0 (16)** with the confirmed **Wei Dong personal team (DPK7SSB889)**. The build number was overridden locally; the submitted App Store build and tracked release configuration were unchanged. The main-checkout build succeeded, strict signature verification passed, the profile authorizes the connected iPhone, and the packaged renderer matches the source bundle. The app was installed over USB without uninstalling the existing reader; a fresh device query confirms **1.0.0 (16)**. The first launch was refused because the phone had locked after the earlier lock-state check. Installation is confirmed; launch awaits an unlocked device. Evidence is in ignored `build/acceptance/search-device-*`, with the app at `build/SearchDevice/Build/Products/Debug-iphoneos/VaultReader.app`. This does not claim a fresh physical search/touch or private-sync acceptance pass.
+
 M1b implementation candidate, extended by the owner’s explicit requests for saved repositories and GitLab. iOS first, Android second. **The full M1 gate remains open.** No private-repository online sync is claimed without a valid read-only credential.
 
 ## Article sharing — 2026-09-24
