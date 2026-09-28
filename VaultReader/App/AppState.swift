@@ -27,6 +27,7 @@ final class AppState {
     var recent: [CommitSummary] = []
     var recentError: String?
     var loadingRecent = false
+    var searchRevision = 0
     var prefetchCompleted = 0
     var prefetchTotal = 0
     var isPrefetching = false
@@ -245,6 +246,7 @@ final class AppState {
             defer { if generation == epoch && !Task.isCancelled { isPrefetching = false; prefetchTask = nil } }
             await engine.update(entries)
             guard generation == epoch, !Task.isCancelled else { return }
+            prefetchCompleted = await engine.count; searchRevision += 1
             var missing: [TreeEntry] = []
             // Hydrate every available document before a failed network request can interrupt completion.
             for entry in markdown {
@@ -254,7 +256,7 @@ final class AppState {
                 } else { missing.append(entry) }
             }
             guard generation == epoch, !Task.isCancelled else { return }
-            prefetchCompleted = await engine.count
+            prefetchCompleted = await engine.count; searchRevision += 1
             for entry in missing {
                 do {
                     try Task.checkCancellation()
@@ -263,9 +265,21 @@ final class AppState {
                     guard generation == epoch else { return }
                     guard let text = String(data: data, encoding: .utf8) else { throw CocoaError(.fileReadInapplicableStringEncoding) }
                     await engine.insert(text, for: entry)
-                    prefetchCompleted = await engine.count
+                    prefetchCompleted = await engine.count; searchRevision += 1
                 } catch is CancellationError { return }
-                catch { if generation == epoch && !Task.isCancelled { prefetchError = error.localizedDescription }; return }
+                catch {
+                    guard generation == epoch, !Task.isCancelled else { return }
+                    prefetchError = error.localizedDescription
+                    // File-specific failures must not prevent the remaining documents from being indexed.
+                    // Stop on service-wide failures instead of hammering a disconnected/rate-limited server.
+                    if let failure = error as? VaultError {
+                        switch failure {
+                        case .missing, .tooLarge, .corruptBlob: continue
+                        default: return
+                        }
+                    }
+                    if (error as NSError).domain != NSCocoaErrorDomain { return }
+                }
             }
         }
     }
@@ -344,8 +358,9 @@ final class AppState {
         needsSetup = true; isOffline = true; notice = L10n.text("Local token removed. Cached files remain available.")
     }
     #if DEBUG
-    func startDemoForTesting() async throws {
+    func startDemoForTesting(source: (any RepositorySource)? = nil) async throws {
         try await startSamples(persist: false, sampleLanguage: "zh-Hans")
+        if let source { client = source }
     }
     #endif
     private func loadDemo(language: String) async throws {

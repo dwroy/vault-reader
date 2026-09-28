@@ -75,6 +75,7 @@
 "Local token removed. Cached files remain available." = "Jeton local supprimé. Le cache reste disponible.";
 "Manage GitLab tokens" = "Gérer les jetons GitLab";
 "Markdown and SVG stay cached. Other attachments are removed by last access time. Text is cached while the app is open for offline search." = "Markdown et SVG sont conservés. Les autres pièces jointes sont supprimées selon leur dernier accès. Le texte est mis en cache quand l’app est ouverte pour permettre la recherche hors ligne.";
+"Markdown searchable: %1$ld/%2$ld" = "Markdown consultable : %1$ld/%2$ld";
 "Namespace" = "Espace de noms";
 "Native Markdown · HTML · PDF\nRead-only GitHub / GitLab access · Tokens stay in Keychain" = "Markdown · HTML · PDF intégrés\nGitHub / GitLab en lecture seule · Jetons dans le trousseau";
 "Next page" = "Page suivante";
@@ -87,6 +88,7 @@
 "Not found" = "Introuvable";
 "Not found: %1$@" = "Introuvable : %1$@";
 "Not in a book list" = "Hors des listes de livres";
+"Not yet searchable: %1$ld" = "Pas encore consultables : %1$ld";
 "Note actions" = "Actions de la note";
 "Notice" = "Information";
 "OK" = "OK";
@@ -146,13 +148,17 @@
 "Saved libraries" = "Bibliothèques enregistrées";
 "Saving position" = "Enregistrement de la position";
 "Search" = "Rechercher";
+"Search filenames and text" = "Rechercher noms et texte";
 "Search text" = "Rechercher dans le texte";
+"Searches this library. All words must match. PDF, HTML and images are searched by filename only." = "Recherche dans cette bibliothèque. Tous les mots doivent correspondre. Pour les PDF, HTML et images, seul le nom est recherché.";
 "Searching names and text" = "Recherche dans les noms et le texte";
+"Searching…" = "Recherche…";
 "Sepia" = "Sépia";
 "Settings" = "Réglages";
 "Setup guide & support" = "Guide de connexion et assistance";
 "Share" = "Partager";
 "Smaller" = "Réduire";
+"Some Markdown text is not available yet. Results may be incomplete." = "Certains textes Markdown ne sont pas encore disponibles. Les résultats peuvent être incomplets.";
 "Some book lists could not be loaded: %1$@" = "Certaines listes n’ont pas pu être chargées : %1$@";
 "Stops online sync but keeps cached files and reading progress. To revoke access completely, also revoke the token on GitHub or GitLab." = "Arrête la synchronisation, mais conserve le cache et la progression. Pour révoquer totalement l’accès, révoquez aussi le jeton sur GitHub ou GitLab.";
 "Storage used" = "Espace utilisé";

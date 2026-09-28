@@ -1393,6 +1393,23 @@
       "zh-Hant": "Markdown 與 SVG 保留，其他附件按最近訪問時間淘汰。Markdown 在前台自動補全，可離線搜索正文。"
     }
   },
+  "Markdown searchable: %1$ld/%2$ld": {
+    "scope": "app",
+    "translations": {
+      "ar": "ملفات Markdown القابلة للبحث: %1$ld/%2$ld",
+      "de": "Durchsuchbares Markdown: %1$ld/%2$ld",
+      "en": "Markdown searchable: %1$ld/%2$ld",
+      "es": "Markdown disponible: %1$ld/%2$ld",
+      "fr": "Markdown consultable : %1$ld/%2$ld",
+      "hi": "खोजने योग्य Markdown: %1$ld/%2$ld",
+      "id": "Markdown yang dapat dicari: %1$ld/%2$ld",
+      "ja": "検索可能なMarkdown：%1$ld/%2$ld",
+      "ko": "검색 가능한 Markdown: %1$ld/%2$ld",
+      "pt-BR": "Markdown pesquisável: %1$ld/%2$ld",
+      "zh-Hans": "可搜索正文：%1$ld/%2$ld 篇",
+      "zh-Hant": "可搜尋正文：%1$ld/%2$ld 篇"
+    }
+  },
   "Namespace": {
     "scope": "app",
     "translations": {
@@ -1595,6 +1612,23 @@
       "pt-BR": "Fora das listas",
       "zh-Hans": "未列入书单",
       "zh-Hant": "未列入書單"
+    }
+  },
+  "Not yet searchable: %1$ld": {
+    "scope": "app",
+    "translations": {
+      "ar": "ملفات غير قابلة للبحث بعد: %1$ld",
+      "de": "Noch nicht durchsuchbar: %1$ld",
+      "en": "Not yet searchable: %1$ld",
+      "es": "Aún no disponibles: %1$ld",
+      "fr": "Pas encore consultables : %1$ld",
+      "hi": "अभी खोज में शामिल नहीं: %1$ld",
+      "id": "Belum dapat dicari: %1$ld",
+      "ja": "まだ検索できない文書：%1$ld",
+      "ko": "아직 검색할 수 없는 문서: %1$ld",
+      "pt-BR": "Ainda não pesquisáveis: %1$ld",
+      "zh-Hans": "尚未纳入正文搜索：%1$ld 篇",
+      "zh-Hant": "尚未納入正文搜尋：%1$ld 篇"
     }
   },
   "Note actions": {
@@ -2617,6 +2651,23 @@
       "zh-Hant": "搜索"
     }
   },
+  "Search filenames and text": {
+    "scope": "app",
+    "translations": {
+      "ar": "البحث في أسماء الملفات والنص",
+      "de": "Dateinamen und Text suchen",
+      "en": "Search filenames and text",
+      "es": "Buscar nombres y texto",
+      "fr": "Rechercher noms et texte",
+      "hi": "फ़ाइल नाम और पाठ खोजें",
+      "id": "Cari nama berkas dan teks",
+      "ja": "ファイル名と本文を検索",
+      "ko": "파일명과 본문 검색",
+      "pt-BR": "Buscar nomes e texto",
+      "zh-Hans": "搜索文件名和正文",
+      "zh-Hant": "搜尋檔案名稱與正文"
+    }
+  },
   "Search text": {
     "scope": "app",
     "translations": {
@@ -2634,6 +2685,23 @@
       "zh-Hant": "搜索正文"
     }
   },
+  "Searches this library. All words must match. PDF, HTML and images are searched by filename only.": {
+    "scope": "app",
+    "translations": {
+      "ar": "يبحث في هذه المكتبة. يجب أن تتطابق جميع الكلمات. يُبحث في ملفات PDF وHTML والصور بالاسم فقط.",
+      "de": "Sucht in dieser Bibliothek. Alle Wörter müssen vorkommen. PDF, HTML und Bilder werden nur nach Dateiname durchsucht.",
+      "en": "Searches this library. All words must match. PDF, HTML and images are searched by filename only.",
+      "es": "Busca en esta biblioteca. Deben coincidir todas las palabras. En PDF, HTML e imágenes solo se busca el nombre.",
+      "fr": "Recherche dans cette bibliothèque. Tous les mots doivent correspondre. Pour les PDF, HTML et images, seul le nom est recherché.",
+      "hi": "इस लाइब्रेरी में खोजता है। सभी शब्द मिलने चाहिए। PDF, HTML और छवियों में केवल फ़ाइल नाम खोजे जाते हैं।",
+      "id": "Mencari di pustaka ini. Semua kata harus cocok. PDF, HTML, dan gambar hanya dicari berdasarkan nama berkas.",
+      "ja": "このライブラリを検索します。すべての語が一致する必要があります。PDF・HTML・画像はファイル名のみ検索します。",
+      "ko": "현재 라이브러리를 검색하며 모든 검색어가 일치해야 합니다. PDF, HTML, 이미지는 파일명만 검색합니다.",
+      "pt-BR": "Busca nesta biblioteca. Todas as palavras devem corresponder. PDF, HTML e imagens são buscados apenas pelo nome.",
+      "zh-Hans": "搜索当前知识库，多个关键词需全部匹配。PDF、HTML 和图片仅搜索文件名。",
+      "zh-Hant": "搜尋目前知識庫，多個關鍵詞需全部符合。PDF、HTML 與圖片僅搜尋檔案名稱。"
+    }
+  },
   "Searching names and text": {
     "scope": "app",
     "translations": {
@@ -2649,6 +2717,23 @@
       "pt-BR": "Buscando nomes e texto",
       "zh-Hans": "正在搜索文件名与正文",
       "zh-Hant": "正在搜索檔案名與正文"
+    }
+  },
+  "Searching…": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ البحث…",
+      "de": "Suche…",
+      "en": "Searching…",
+      "es": "Buscando…",
+      "fr": "Recherche…",
+      "hi": "खोज जारी है…",
+      "id": "Mencari…",
+      "ja": "検索中…",
+      "ko": "검색 중…",
+      "pt-BR": "Buscando…",
+      "zh-Hans": "正在搜索…",
+      "zh-Hant": "正在搜尋…"
     }
   },
   "Sepia": {
@@ -2734,6 +2819,23 @@
       "pt-BR": "Diminuir",
       "zh-Hans": "缩小",
       "zh-Hant": "縮小"
+    }
+  },
+  "Some Markdown text is not available yet. Results may be incomplete.": {
+    "scope": "app",
+    "translations": {
+      "ar": "بعض نصوص Markdown غير متاحة بعد. قد تكون النتائج غير مكتملة.",
+      "de": "Einige Markdown-Texte sind noch nicht verfügbar. Die Ergebnisse können unvollständig sein.",
+      "en": "Some Markdown text is not available yet. Results may be incomplete.",
+      "es": "Parte del texto Markdown aún no está disponible. Los resultados pueden estar incompletos.",
+      "fr": "Certains textes Markdown ne sont pas encore disponibles. Les résultats peuvent être incomplets.",
+      "hi": "कुछ Markdown पाठ अभी उपलब्ध नहीं हैं। परिणाम अधूरे हो सकते हैं।",
+      "id": "Sebagian teks Markdown belum tersedia. Hasil mungkin belum lengkap.",
+      "ja": "一部のMarkdown本文はまだ利用できません。検索結果が不完全な場合があります。",
+      "ko": "일부 Markdown 본문이 아직 준비되지 않아 검색 결과가 불완전할 수 있습니다.",
+      "pt-BR": "Parte do texto Markdown ainda não está disponível. Os resultados podem estar incompletos.",
+      "zh-Hans": "部分 Markdown 正文尚未就绪，搜索结果可能不完整。",
+      "zh-Hant": "部分 Markdown 正文尚未就緒，搜尋結果可能不完整。"
     }
   },
   "Some book lists could not be loaded: %1$@": {

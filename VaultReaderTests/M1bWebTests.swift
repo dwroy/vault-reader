@@ -24,9 +24,10 @@ import VaultCore
 private struct ProbeStack: View {
     let state: AppState
     @Bindable var probe: NavigationProbe
+    var root = NoteRoute(path: "长文.md")
     var body: some View {
         NavigationStack(path: $probe.path) {
-            NoteView(state: state, route: NoteRoute(path: "长文.md"), navigate: { probe.path.append($0) })
+            NoteView(state: state, route: root, navigate: { probe.path.append($0) }, readingBook: root.reading)
                 .navigationDestination(for: ReaderRoute.self) { route in
                     if case .note(let note) = route { NoteView(state: state, route: note, navigate: { probe.path.append($0) }) }
                 }
@@ -176,5 +177,94 @@ final class M1bWebTests: XCTestCase {
         XCTAssertTrue((restored.navigationDelegate as? RendererWebView.Coordinator)?.parent.session === originalSession)
         XCTAssertEqual(restored.scrollView.contentOffset.y, 700, accuracy: 8)
         XCTAssertLessThanOrEqual(ReaderWebViewRegistry.views.allObjects.count, 3)
+    }
+}
+
+private actor SearchPrefetchSource: RepositorySource {
+    let data: [String: Data]
+    private(set) var requested: [String] = []
+    init(_ data: [String: Data]) { self.data = data }
+    func branch(etag: String?) async throws -> BranchSnapshot? { nil }
+    func tree(sha: String) async throws -> GitTree { throw VaultError.missing }
+    func blob(_ entry: TreeEntry, progress: (@Sendable (Double) -> Void)?) async throws -> Data {
+        requested.append(entry.path)
+        guard let value = data[entry.path] else { throw VaultError.missing }
+        return value
+    }
+    func recent(etag: String?) async throws -> RecentSnapshot? { nil }
+    func commitFiles(sha: String) async throws -> CommitFiles { throw VaultError.missing }
+}
+
+extension M1bWebTests {
+    @MainActor func testSearchPrefetchContinuesPastMissingAndInvalidText() async throws {
+        let id = UUID().uuidString
+        let missing = TreeEntry(path: "a-\(id).md", sha: BlobStore.hash(Data(id.utf8)), size: 1)
+        let invalidData = Data([0xff, 0xfe, 0xfd]), validData = Data("# \(id)\n\n后续正文能搜到".utf8)
+        let invalid = TreeEntry(path: "b-\(id).md", sha: BlobStore.hash(invalidData), size: invalidData.count)
+        let valid = TreeEntry(path: "c-\(id).md", sha: BlobStore.hash(validData), size: validData.count)
+        let source = SearchPrefetchSource([invalid.path: invalidData, valid.path: validData])
+        let state = AppState(); try await state.startDemoForTesting(source: source)
+        state.stopPrefetch(); state.index = VaultIndex([missing, invalid, valid]); state.treeSHA = id
+        state.startPrefetch()
+        defer { state.stopPrefetch() }
+        for _ in 0..<100 where state.isPrefetching { try await Task.sleep(for: .milliseconds(30)) }
+        XCTAssertFalse(state.isPrefetching)
+        XCTAssertEqual(state.prefetchTotal, 3); XCTAssertEqual(state.prefetchCompleted, 1)
+        XCTAssertNotNil(state.prefetchError)
+        let requests = await source.requested
+        XCTAssertTrue(requests.contains(missing.path)); XCTAssertTrue(requests.contains(valid.path))
+        let hits = try await state.searchIndex.search("后续 正文")
+        XCTAssertEqual(hits.map(\.path), [valid.path])
+        XCTAssertGreaterThan(state.searchRevision, 0)
+    }
+    @MainActor func testSearchOpensAtMatchAndPreservesSubsequentReadingPosition() async throws {
+        let state = AppState(); try await state.startDemoForTesting(); state.stopPrefetch()
+        let path = "search-location.md", phrase = "独特定位文字"
+        let markdown = "# Search fixture\n\n" + (1...60).map { "## Section \($0)\n\n" + ($0 == 40 ? "**独特**定位文字 CAFÉ。" : "Synthetic paragraph for scrolling. Read this paragraph slowly.") + "\n\n" }.joined()
+        let data = Data(markdown.utf8), entry = TreeEntry(path: path, sha: BlobStore.hash(data), size: data.count)
+        try await state.blobs?.put(data, entry: entry)
+        state.index = VaultIndex(state.index.entries + [entry]); state.treeSHA += "-search"
+        var saved = ReadingRecord(path: path, title: "Search fixture", kind: .markdown)
+        saved.location = ReadingLocation(heading: nil, withinHeading: 0, fraction: 0.05)
+        state.reading.record(saved, immediately: true)
+        let probe = NavigationProbe(), scene = try XCTUnwrap(UIApplication.shared.connectedScenes.first as? UIWindowScene)
+        let window = UIWindow(windowScene: scene)
+        window.rootViewController = UIHostingController(rootView: ProbeStack(state: state, probe: probe, root: NoteRoute(path: path, reading: true, searchTerms: [phrase, "cafe"])))
+        window.makeKeyAndVisible()
+        defer { window.isHidden = true; window.rootViewController = nil; state.stopPrefetch() }
+        func settle(_ expected: String) async throws -> WKWebView {
+            for _ in 0..<150 {
+                if let web = ReaderWebViewRegistry.views.allObjects.first(where: { $0.window === window && ($0.navigationDelegate as? RendererWebView.Coordinator)?.parent.path == expected }),
+                   web.accessibilityIdentifier == "reader-ready" { return web }
+                try await Task.sleep(for: .milliseconds(100))
+            }
+            XCTFail("Search reader failed to appear")
+            throw VaultError.missing
+        }
+        var web = try await settle(path)
+        XCTAssertGreaterThan(web.scrollView.contentOffset.y, 2500, "Search overrides the old book bookmark")
+        let geometry = try await web.evaluateJavaScript("JSON.stringify({top:document.querySelector('mark.search-hit').getBoundingClientRect().top,height:innerHeight,text:[...document.querySelectorAll('mark.search-hit')].map(x=>x.textContent).join('')})")
+        let json = try XCTUnwrap(geometry as? String)
+        let values = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(json.utf8)) as? [String: Any])
+        XCTAssertGreaterThan(values["top"] as? Double ?? -1, 0)
+        XCTAssertLessThan(values["top"] as? Double ?? 10000, values["height"] as? Double ?? 0)
+        XCTAssertEqual(values["text"] as? String, phrase + "CAFÉ")
+        let snapshot = UIGraphicsImageRenderer(bounds: window.bounds).image { _ in window.drawHierarchy(in: window.bounds, afterScreenUpdates: true) }
+        let shot = XCTAttachment(image: snapshot); shot.name = "search-located-in-book"; shot.lifetime = .keepAlways; add(shot)
+        web.scrollView.setContentOffset(CGPoint(x: 0, y: 1800), animated: false)
+        try await Task.sleep(for: .milliseconds(500))
+        // Reflow does not reveal the first result again.
+        let coordinator = try XCTUnwrap(web.navigationDelegate as? RendererWebView.Coordinator)
+        coordinator.lastRenderKey = ""; coordinator.update()
+        try await Task.sleep(for: .milliseconds(500))
+        XCTAssertEqual(web.scrollView.contentOffset.y, 1800, accuracy: 25)
+        probe.path.append(.note(NoteRoute(path: "长文.md")))
+        _ = try await settle("长文.md")
+        probe.path.removeAll()
+        web = try await settle(path)
+        for _ in 0..<30 where abs(web.scrollView.contentOffset.y - 1800) > 25 { try await Task.sleep(for: .milliseconds(100)) }
+        XCTAssertEqual(web.scrollView.contentOffset.y, 1800, accuracy: 25, "Returning restores the new position, not the first hit")
+        let restoredHighlights = try await web.evaluateJavaScript("document.querySelectorAll('mark.search-hit').length")
+        XCTAssertEqual(restoredHighlights as? Int, 3)
     }
 }

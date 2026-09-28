@@ -75,6 +75,7 @@
 "Local token removed. Cached files remain available." = "Lokales Token entfernt. Der Cache bleibt verfügbar.";
 "Manage GitLab tokens" = "GitLab-Tokens verwalten";
 "Markdown and SVG stay cached. Other attachments are removed by last access time. Text is cached while the app is open for offline search." = "Markdown und SVG bleiben gespeichert. Andere Anhänge werden nach letztem Zugriff entfernt. Bei geöffneter App wird Text für die Offlinesuche geladen.";
+"Markdown searchable: %1$ld/%2$ld" = "Durchsuchbares Markdown: %1$ld/%2$ld";
 "Namespace" = "Namensraum";
 "Native Markdown · HTML · PDF\nRead-only GitHub / GitLab access · Tokens stay in Keychain" = "Markdown · HTML · PDF integriert\nGitHub / GitLab nur lesend · Tokens im Schlüsselbund";
 "Next page" = "Nächste Seite";
@@ -87,6 +88,7 @@
 "Not found" = "Nicht gefunden";
 "Not found: %1$@" = "Nicht gefunden: %1$@";
 "Not in a book list" = "In keiner Bücherliste";
+"Not yet searchable: %1$ld" = "Noch nicht durchsuchbar: %1$ld";
 "Note actions" = "Notizaktionen";
 "Notice" = "Hinweis";
 "OK" = "OK";
@@ -146,13 +148,17 @@
 "Saved libraries" = "Gespeicherte Bibliotheken";
 "Saving position" = "Position wird gespeichert";
 "Search" = "Suchen";
+"Search filenames and text" = "Dateinamen und Text suchen";
 "Search text" = "Text durchsuchen";
+"Searches this library. All words must match. PDF, HTML and images are searched by filename only." = "Sucht in dieser Bibliothek. Alle Wörter müssen vorkommen. PDF, HTML und Bilder werden nur nach Dateiname durchsucht.";
 "Searching names and text" = "Suche in Namen und Text";
+"Searching…" = "Suche…";
 "Sepia" = "Sepia";
 "Settings" = "Einstellungen";
 "Setup guide & support" = "Einrichtung und Support";
 "Share" = "Teilen";
 "Smaller" = "Kleiner";
+"Some Markdown text is not available yet. Results may be incomplete." = "Einige Markdown-Texte sind noch nicht verfügbar. Die Ergebnisse können unvollständig sein.";
 "Some book lists could not be loaded: %1$@" = "Einige Bücherlisten konnten nicht geladen werden: %1$@";
 "Stops online sync but keeps cached files and reading progress. To revoke access completely, also revoke the token on GitHub or GitLab." = "Beendet die Onlinesynchronisierung, behält aber Cache und Lesefortschritt. Widerrufe das Token zusätzlich bei GitHub oder GitLab, um den Zugriff vollständig zu entziehen.";
 "Storage used" = "Belegter Speicher";

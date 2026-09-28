@@ -75,6 +75,7 @@
 "Local token removed. Cached files remain available." = "Token lokal dihapus. Cache tetap tersedia.";
 "Manage GitLab tokens" = "Kelola token GitLab";
 "Markdown and SVG stay cached. Other attachments are removed by last access time. Text is cached while the app is open for offline search." = "Markdown dan SVG tetap disimpan. Lampiran lain dihapus berdasarkan akses terakhir. Teks diunduh saat aplikasi terbuka agar dapat dicari secara luring.";
+"Markdown searchable: %1$ld/%2$ld" = "Markdown yang dapat dicari: %1$ld/%2$ld";
 "Namespace" = "Namespace";
 "Native Markdown · HTML · PDF\nRead-only GitHub / GitLab access · Tokens stay in Keychain" = "Dukungan Markdown · HTML · PDF\nGitHub / GitLab hanya-baca · Token di Keychain";
 "Next page" = "Halaman berikutnya";
@@ -87,6 +88,7 @@
 "Not found" = "Tidak ditemukan";
 "Not found: %1$@" = "Tidak ditemukan: %1$@";
 "Not in a book list" = "Di luar daftar buku";
+"Not yet searchable: %1$ld" = "Belum dapat dicari: %1$ld";
 "Note actions" = "Tindakan catatan";
 "Notice" = "Pemberitahuan";
 "OK" = "OK";
@@ -146,13 +148,17 @@
 "Saved libraries" = "Pustaka tersimpan";
 "Saving position" = "Menyimpan posisi";
 "Search" = "Cari";
+"Search filenames and text" = "Cari nama berkas dan teks";
 "Search text" = "Cari dalam teks";
+"Searches this library. All words must match. PDF, HTML and images are searched by filename only." = "Mencari di pustaka ini. Semua kata harus cocok. PDF, HTML, dan gambar hanya dicari berdasarkan nama berkas.";
 "Searching names and text" = "Mencari nama dan teks";
+"Searching…" = "Mencari…";
 "Sepia" = "Sepia";
 "Settings" = "Pengaturan";
 "Setup guide & support" = "Panduan koneksi & dukungan";
 "Share" = "Bagikan";
 "Smaller" = "Perkecil";
+"Some Markdown text is not available yet. Results may be incomplete." = "Sebagian teks Markdown belum tersedia. Hasil mungkin belum lengkap.";
 "Some book lists could not be loaded: %1$@" = "Sebagian daftar buku tidak dapat dimuat: %1$@";
 "Stops online sync but keeps cached files and reading progress. To revoke access completely, also revoke the token on GitHub or GitLab." = "Menghentikan sinkronisasi daring, tetapi mempertahankan cache dan progres baca. Untuk mencabut akses sepenuhnya, cabut juga token di GitHub atau GitLab.";
 "Storage used" = "Penyimpanan terpakai";

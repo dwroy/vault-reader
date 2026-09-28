@@ -37,3 +37,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2em 0; }
 :root[data-reading="book"] { line-height: 1.95; }
 :root[data-reading="book"] body { padding: 24px 22px 64px; }
 :root[data-reading="book"] main { max-width: 38em; }
+
+/* Search highlights preserve inline layout and work in every reading theme. */
+mark.search-hit { padding: 0; color: inherit; background: #ffe17b; border-radius: 2px; }
+:root[data-theme="dark"] mark.search-hit { background: #765a13; color: #fff5cc; }

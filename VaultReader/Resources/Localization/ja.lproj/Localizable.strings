@@ -75,6 +75,7 @@
 "Local token removed. Cached files remain available." = "端末のトークンを削除しました。キャッシュは引き続き利用できます。";
 "Manage GitLab tokens" = "GitLabトークンを管理";
 "Markdown and SVG stay cached. Other attachments are removed by last access time. Text is cached while the app is open for offline search." = "MarkdownとSVGは保持します。その他の添付ファイルは最終アクセス順に削除します。アプリの使用中に本文を取得し、オフライン検索に備えます。";
+"Markdown searchable: %1$ld/%2$ld" = "検索可能なMarkdown：%1$ld/%2$ld";
 "Namespace" = "名前空間";
 "Native Markdown · HTML · PDF\nRead-only GitHub / GitLab access · Tokens stay in Keychain" = "Markdown · HTML · PDFに対応\nGitHub / GitLabは読み取り専用 · トークンはキーチェーンに保存";
 "Next page" = "次のページ";
@@ -87,6 +88,7 @@
 "Not found" = "見つかりません";
 "Not found: %1$@" = "見つかりません：%1$@";
 "Not in a book list" = "リストにないファイル";
+"Not yet searchable: %1$ld" = "まだ検索できない文書：%1$ld";
 "Note actions" = "ノートの操作";
 "Notice" = "お知らせ";
 "OK" = "OK";
@@ -146,13 +148,17 @@
 "Saved libraries" = "保存済みライブラリ";
 "Saving position" = "読書位置を保存中";
 "Search" = "検索";
+"Search filenames and text" = "ファイル名と本文を検索";
 "Search text" = "本文を検索";
+"Searches this library. All words must match. PDF, HTML and images are searched by filename only." = "このライブラリを検索します。すべての語が一致する必要があります。PDF・HTML・画像はファイル名のみ検索します。";
 "Searching names and text" = "ファイル名と本文を検索中";
+"Searching…" = "検索中…";
 "Sepia" = "セピア";
 "Settings" = "設定";
 "Setup guide & support" = "接続ガイドとサポート";
 "Share" = "共有";
 "Smaller" = "小さく";
+"Some Markdown text is not available yet. Results may be incomplete." = "一部のMarkdown本文はまだ利用できません。検索結果が不完全な場合があります。";
 "Some book lists could not be loaded: %1$@" = "一部のブックリストを読み込めませんでした：%1$@";
 "Stops online sync but keeps cached files and reading progress. To revoke access completely, also revoke the token on GitHub or GitLab." = "同期を停止しますが、キャッシュと読書位置は保持します。アクセスを完全に取り消すには、GitHubまたはGitLabでもトークンを失効させてください。";
 "Storage used" = "使用容量";

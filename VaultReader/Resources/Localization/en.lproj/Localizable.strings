@@ -75,6 +75,7 @@
 "Local token removed. Cached files remain available." = "Local token removed. Cached files remain available.";
 "Manage GitLab tokens" = "Manage GitLab tokens";
 "Markdown and SVG stay cached. Other attachments are removed by last access time. Text is cached while the app is open for offline search." = "Markdown and SVG stay cached. Other attachments are removed by last access time. Text is cached while the app is open for offline search.";
+"Markdown searchable: %1$ld/%2$ld" = "Markdown searchable: %1$ld/%2$ld";
 "Namespace" = "Namespace";
 "Native Markdown · HTML · PDF\nRead-only GitHub / GitLab access · Tokens stay in Keychain" = "Native Markdown · HTML · PDF\nRead-only GitHub / GitLab access · Tokens stay in Keychain";
 "Next page" = "Next page";
@@ -87,6 +88,7 @@
 "Not found" = "Not found";
 "Not found: %1$@" = "Not found: %1$@";
 "Not in a book list" = "Not in a book list";
+"Not yet searchable: %1$ld" = "Not yet searchable: %1$ld";
 "Note actions" = "Note actions";
 "Notice" = "Notice";
 "OK" = "OK";
@@ -146,13 +148,17 @@
 "Saved libraries" = "Saved libraries";
 "Saving position" = "Saving position";
 "Search" = "Search";
+"Search filenames and text" = "Search filenames and text";
 "Search text" = "Search text";
+"Searches this library. All words must match. PDF, HTML and images are searched by filename only." = "Searches this library. All words must match. PDF, HTML and images are searched by filename only.";
 "Searching names and text" = "Searching names and text";
+"Searching…" = "Searching…";
 "Sepia" = "Sepia";
 "Settings" = "Settings";
 "Setup guide & support" = "Setup guide & support";
 "Share" = "Share";
 "Smaller" = "Smaller";
+"Some Markdown text is not available yet. Results may be incomplete." = "Some Markdown text is not available yet. Results may be incomplete.";
 "Some book lists could not be loaded: %1$@" = "Some book lists could not be loaded: %1$@";
 "Stops online sync but keeps cached files and reading progress. To revoke access completely, also revoke the token on GitHub or GitLab." = "Stops online sync but keeps cached files and reading progress. To revoke access completely, also revoke the token on GitHub or GitLab.";
 "Storage used" = "Storage used";

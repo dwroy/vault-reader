@@ -17,6 +17,12 @@ export interface ReaderAPI {
   setTree(entries: TreeEntry[]): void;
   render(markdown: string, path: string, fontScale: number, colorScheme: 'light' | 'dark' | 'sepia'): boolean;
   scrollToAnchor(anchor: string): void;
+  /** Additive v2 API: highlight literal body terms; empty terms clear highlights.
+   * Matches span inline elements, ignore case/diacritics and exclude metadata.
+   * At most the first 1,000 occurrences are marked to bound DOM growth in books. */
+  highlightSearch(terms: string[]): number;
+  /** Reveal the first highlighted occurrence, opening enclosing details. False if none. */
+  scrollToSearchMatch(): boolean;
   setReadingMode(enabled: boolean): void;
   outline(): ReadingSection[];
   capturePosition(): ReadingPosition;

@@ -12,6 +12,7 @@ struct RendererWebView: UIViewRepresentable {
     let onPreview: (String) -> Void
     let onError: (String) -> Void
     var readingOptions: ReadingRecord? = nil
+    var searchTerms: [String] = []
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     func makeCoordinator() -> Coordinator { Coordinator(self) }
@@ -123,7 +124,7 @@ struct RendererWebView: UIViewRepresentable {
             guard loaded, let web, !updating else { return }
             let scale = UIFontMetrics.default.scaledValue(for: 17) / 17 * (parent.readingOptions?.fontScale ?? 1)
             let theme = parent.readingOptions?.theme == .system || parent.readingOptions == nil ? (parent.colorScheme == .dark ? "dark" : "light") : parent.readingOptions!.theme.rawValue
-            let key = "\(parent.path)|\(parent.markdown)|\(parent.state.treeSHA)|\(scale)|\(theme)|\(parent.anchor)|\(parent.readingOptions != nil)"
+            let key = "\(parent.path)|\(parent.markdown)|\(parent.state.treeSHA)|\(scale)|\(theme)|\(parent.anchor)|\(parent.readingOptions != nil)|\(parent.searchTerms)"
             guard key != lastRenderKey else { return }
             updating = true
             let currentGeneration = generation, tree = parent.state.treeSHA, entriesToRender = parent.state.index.entries
@@ -149,6 +150,8 @@ struct RendererWebView: UIViewRepresentable {
                     } else {
                         _ = try await step(L10n.text("Rendering")) { try await web.callAsyncJavaScript("VaultReader.setReadingMode(book); VaultReader.render(markdown, path, scale, theme); return true", arguments: arguments, in: nil, contentWorld: .page) }
                     }
+                    let searchTerms = try Self.json(parent.searchTerms)
+                    _ = try await web.callAsyncJavaScript("return VaultReader.highlightSearch(JSON.parse(terms))", arguments: ["terms": searchTerms], in: nil, contentWorld: .page)
                     if !renderedOnce {
                         // A programmatic multi-level navigation can load WebKit before it is visible.
                         // Restore only after its real viewport exists, without relying on offscreen rAF.
@@ -167,7 +170,15 @@ struct RendererWebView: UIViewRepresentable {
                         }
                         try await Task.sleep(for: .milliseconds(35))
                         try Task.checkCancellation()
-                        if let position = parent.session.position, parent.readingOptions != nil, parent.anchor.isEmpty {
+                        var revealedSearch = false
+                        if !parent.searchTerms.isEmpty, !parent.session.didRevealSearch {
+                            revealedSearch = (try await web.callAsyncJavaScript("return VaultReader.scrollToSearchMatch()", arguments: [:], in: nil, contentWorld: .page)) as? Bool == true
+                            parent.session.didRevealSearch = true
+                        }
+                        if revealedSearch {
+                            // A search result takes precedence over an old book bookmark only on first entry.
+                            try await Task.sleep(for: .milliseconds(35))
+                        } else if let position = parent.session.position, parent.readingOptions != nil, parent.anchor.isEmpty {
                             let saved = try Self.json(position)
                             _ = try await step(L10n.text("Restoring position")) { try await web.callAsyncJavaScript("VaultReader.restorePosition(JSON.parse(position)); return true", arguments: ["position": saved], in: nil, contentWorld: .page) }
                             try await Task.sleep(for: .milliseconds(50))

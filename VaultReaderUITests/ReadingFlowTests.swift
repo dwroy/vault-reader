@@ -90,8 +90,11 @@ final class ReadingFlowTests: XCTestCase {
         XCTAssertTrue(app.tabBars.buttons["搜索"].waitForExistence(timeout: 15)); app.tabBars.buttons["搜索"].tap()
         let field = app.searchFields.firstMatch
         XCTAssertTrue(field.waitForExistence(timeout: 5)); field.tap(); field.typeText("银杏")
-        app.buttons["搜索正文"].tap()
-        XCTAssertTrue(app.staticTexts["长文.md"].waitForExistence(timeout: 5)); app.staticTexts["长文.md"].firstMatch.tap()
+        XCTAssertTrue(app.staticTexts["长文.md"].waitForExistence(timeout: 5), "Body search starts while typing")
+        field.typeText(" 慢慢")
+        XCTAssertTrue(app.staticTexts["长文.md"].waitForExistence(timeout: 5), "Refining the query keeps body search active")
+        let results = XCTAttachment(screenshot: app.screenshot()); results.name = "search-words-and-highlights"; results.lifetime = .keepAlways; add(results)
+        app.staticTexts["长文.md"].firstMatch.tap()
         XCTAssertTrue(app.webViews.staticTexts["长文"].waitForExistence(timeout: 5))
         app.tabBars.buttons["最近"].tap()
         XCTAssertTrue(app.staticTexts["记录第 1 天"].waitForExistence(timeout: 5)); app.staticTexts["记录第 1 天"].tap()

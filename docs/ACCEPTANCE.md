@@ -1,5 +1,17 @@
 # M1 acceptance — 2026-09-22
 
+## Search usability — 2026-09-28
+
+Implemented the owner's requested search improvements: live filenames plus Markdown text, whitespace-separated AND terms, filename relevance ranking, original-spelling highlighted snippets, in-document highlighting/reveal, and explicit searchable/pending Markdown counts. Common Markdown formatting, link labels and Obsidian comments are projected before indexing; frontmatter and link destinations are excluded. A missing/corrupt/oversized/undecodable file no longer blocks the rest of the foreground download queue. Service-wide failures still stop for retry. PDF/HTML/image body indexing, fuzzy/semantic search, and full Obsidian syntax parity remain outside this change.
+
+- `npm test`: **11 passed**, including cross-inline search marks, case/diacritic preservation, link behavior, metadata exclusion, repeat/clear highlighting and opening collapsed matches without a delayed scroll reset. `npm run build:renderer` regenerated the bundle/CSS and license notices (dependency notices unchanged).
+- `swift test --package-path packages/VaultCore`: **27 passed**. Search coverage includes multiword AND across name/body, name ranking with and without extensions, readable Markdown, code literals, SHA invalidation, Unicode snippets and highlight ranges. The >5 MB / 400-document query is approximately **9 ms** on this Mac; this is query time after indexing, not startup latency or an iPhone measurement.
+- iPhone 17 / iOS 26.3 simulator: **12 distinct hosted/UI checks passed** across `SearchVerification2.xcresult` and `SearchVerification3.xcresult`. These cover cached-text completion/deletion, missing and invalid-text downloads followed by a valid document, vault isolation, renderer/share/sanitization, reflow recovery, twelve-level navigation, search-as-you-type/refinement, and revealing a result in section 40 of a synthetic book. That result overrides the old bookmark, remains visible, and preserves a subsequent 1,800-point position after reflow and navigation away/back.
+- One intermediate hosted run failed because its test attempted an XCUI screenshot from a unit-test process. Replacing that capture with an in-process UIKit snapshot allowed the location/return assertions to finish; the targeted rerun passed. The original failed run is retained as evidence, not counted as a passing suite.
+- The 12-language catalog and generated resources pass `scripts/build-localizations.py --check`. Search-result and located-book screenshots were visually inspected; synthetic evidence is under ignored `.worktrees/search-polish/build/`.
+
+The rendered search marks are bounded to the first 1,000 occurrences in a page. New physical-device search interaction, live private-vault synchronization and real-vault performance have **not** been verified for this change. Earlier device acceptance below does not close those new checks.
+
 M1b implementation candidate, extended by the owner’s explicit requests for saved repositories and GitLab. iOS first, Android second. **The full M1 gate remains open.** No private-repository online sync is claimed without a valid read-only credential.
 
 ## Article sharing — 2026-09-24

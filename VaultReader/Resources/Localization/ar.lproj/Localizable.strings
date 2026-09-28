@@ -75,6 +75,7 @@
 "Local token removed. Cached files remain available." = "تم حذف رمز الوصول المحلي. تظل الملفات المخزنة متاحة.";
 "Manage GitLab tokens" = "إدارة رموز GitLab";
 "Markdown and SVG stay cached. Other attachments are removed by last access time. Text is cached while the app is open for offline search." = "تُحفظ ملفات Markdown وSVG. تُحذف المرفقات الأخرى حسب آخر وصول. يُخزّن النص أثناء فتح التطبيق للبحث دون اتصال.";
+"Markdown searchable: %1$ld/%2$ld" = "ملفات Markdown القابلة للبحث: %1$ld/%2$ld";
 "Namespace" = "نطاق الأسماء";
 "Native Markdown · HTML · PDF\nRead-only GitHub / GitLab access · Tokens stay in Keychain" = "دعم مدمج لـ Markdown · HTML · PDF\nGitHub / GitLab للقراءة فقط · الرموز في سلسلة المفاتيح";
 "Next page" = "الصفحة التالية";
@@ -87,6 +88,7 @@
 "Not found" = "غير موجود";
 "Not found: %1$@" = "غير موجود: %1$@";
 "Not in a book list" = "خارج قوائم الكتب";
+"Not yet searchable: %1$ld" = "ملفات غير قابلة للبحث بعد: %1$ld";
 "Note actions" = "إجراءات الملاحظة";
 "Notice" = "تنبيه";
 "OK" = "موافق";
@@ -146,13 +148,17 @@
 "Saved libraries" = "المكتبات المحفوظة";
 "Saving position" = "جارٍ حفظ الموضع";
 "Search" = "بحث";
+"Search filenames and text" = "البحث في أسماء الملفات والنص";
 "Search text" = "البحث في النص";
+"Searches this library. All words must match. PDF, HTML and images are searched by filename only." = "يبحث في هذه المكتبة. يجب أن تتطابق جميع الكلمات. يُبحث في ملفات PDF وHTML والصور بالاسم فقط.";
 "Searching names and text" = "جارٍ البحث في الأسماء والنصوص";
+"Searching…" = "جارٍ البحث…";
 "Sepia" = "بني فاتح";
 "Settings" = "الإعدادات";
 "Setup guide & support" = "دليل الاتصال والدعم";
 "Share" = "مشاركة";
 "Smaller" = "تصغير";
+"Some Markdown text is not available yet. Results may be incomplete." = "بعض نصوص Markdown غير متاحة بعد. قد تكون النتائج غير مكتملة.";
 "Some book lists could not be loaded: %1$@" = "تعذّر تحميل بعض قوائم الكتب: %1$@";
 "Stops online sync but keeps cached files and reading progress. To revoke access completely, also revoke the token on GitHub or GitLab." = "يوقف المزامنة عبر الإنترنت مع الاحتفاظ بالملفات وموضع القراءة. لإلغاء الوصول بالكامل، ألغِ الرمز أيضًا في GitHub أو GitLab.";
 "Storage used" = "المساحة المستخدمة";

@@ -99,3 +99,37 @@ test('book restoration is not overwritten by a delayed first animation frame',as
   assert.equal(y,700);
   dom.window.close();
 });
+
+test('search highlights span inline formatting, preserve spelling and never search URL attributes',()=>{
+  const {dom,api,document,messages}=page();
+  api.setTree([{path:'child.md',type:'blob'}]);
+  api.render('---\nsecret: hidden-property\n---\n# Search\n\n我们在**公园**散步。 CAFÉ café\n\n[[child|孩子]] [Visible](https://example.invalid/hidden-url)\n\n`literal-code`','search.md');
+  const before=document.getElementById('content').textContent;
+  assert.equal(api.highlightSearch(['公园散步','cafe','孩子']),4);
+  assert.equal([...document.querySelectorAll('mark.search-hit')].map(x=>x.textContent).join('|'),'公园|散步|CAFÉ|café|孩子');
+  assert.equal(document.getElementById('content').textContent,before);
+  document.querySelector('a').click();assert.equal(messages.at(-1).body.href,'vault://f/child.md');
+  assert.equal(api.highlightSearch(['hidden-property','hidden-url','<img src=x onerror=alert(1)>']),0);
+  assert.equal(document.querySelectorAll('mark.search-hit').length,0);
+  assert.equal(api.highlightSearch(['literal-code']),1);
+  assert.equal(api.highlightSearch(['literal-code']),1);
+  assert.equal(document.querySelectorAll('mark mark').length,0);
+  assert.equal(api.highlightSearch([]),0);
+  assert.equal(document.getElementById('content').textContent,before);
+  dom.window.close();
+});
+test('search opens collapsed content and its position survives the delayed initial scroll',async()=>{
+  const {dom,api,document}=page();let y=0;
+  Object.defineProperty(dom.window,'scrollY',{get:()=>y,configurable:true});
+  Object.defineProperty(dom.window,'innerHeight',{value:800,configurable:true});
+  dom.window.scrollTo=(_x,next)=>{y=next};
+  api.render('# Search\n\n<details><summary>More</summary><p>目标文字</p></details>','search.md');
+  assert.equal(api.highlightSearch(['目标']),1);
+  document.querySelector('mark.search-hit').getBoundingClientRect=()=>({top:1800-y});
+  assert.equal(api.scrollToSearchMatch(),true);
+  assert.equal(document.querySelector('details').open,true);
+  assert.equal(y,1600);
+  await new Promise(resolve=>setTimeout(resolve,60));assert.equal(y,1600);
+  api.highlightSearch(['不存在']);assert.equal(api.scrollToSearchMatch(),false);assert.equal(y,1600);
+  dom.window.close();
+});

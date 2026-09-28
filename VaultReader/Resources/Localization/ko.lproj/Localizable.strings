@@ -75,6 +75,7 @@
 "Local token removed. Cached files remain available." = "기기의 토큰을 제거했습니다. 캐시는 계속 사용할 수 있습니다.";
 "Manage GitLab tokens" = "GitLab 토큰 관리";
 "Markdown and SVG stay cached. Other attachments are removed by last access time. Text is cached while the app is open for offline search." = "Markdown과 SVG는 보관합니다. 다른 첨부 파일은 마지막 접근 순서에 따라 제거합니다. 앱이 열려 있을 때 본문을 캐시하여 오프라인으로 검색할 수 있습니다.";
+"Markdown searchable: %1$ld/%2$ld" = "검색 가능한 Markdown: %1$ld/%2$ld";
 "Namespace" = "네임스페이스";
 "Native Markdown · HTML · PDF\nRead-only GitHub / GitLab access · Tokens stay in Keychain" = "Markdown · HTML · PDF 기본 지원\nGitHub / GitLab 읽기 전용 · 토큰은 키체인에 보관";
 "Next page" = "다음 페이지";
@@ -87,6 +88,7 @@
 "Not found" = "찾을 수 없음";
 "Not found: %1$@" = "찾을 수 없음: %1$@";
 "Not in a book list" = "도서 목록에 없는 파일";
+"Not yet searchable: %1$ld" = "아직 검색할 수 없는 문서: %1$ld";
 "Note actions" = "노트 작업";
 "Notice" = "알림";
 "OK" = "확인";
@@ -146,13 +148,17 @@
 "Saved libraries" = "저장된 라이브러리";
 "Saving position" = "읽던 위치 저장 중";
 "Search" = "검색";
+"Search filenames and text" = "파일명과 본문 검색";
 "Search text" = "본문 검색";
+"Searches this library. All words must match. PDF, HTML and images are searched by filename only." = "현재 라이브러리를 검색하며 모든 검색어가 일치해야 합니다. PDF, HTML, 이미지는 파일명만 검색합니다.";
 "Searching names and text" = "파일명과 본문 검색 중";
+"Searching…" = "검색 중…";
 "Sepia" = "세피아";
 "Settings" = "설정";
 "Setup guide & support" = "연결 가이드 및 지원";
 "Share" = "공유";
 "Smaller" = "작게";
+"Some Markdown text is not available yet. Results may be incomplete." = "일부 Markdown 본문이 아직 준비되지 않아 검색 결과가 불완전할 수 있습니다.";
 "Some book lists could not be loaded: %1$@" = "일부 도서 목록을 불러오지 못했습니다: %1$@";
 "Stops online sync but keeps cached files and reading progress. To revoke access completely, also revoke the token on GitHub or GitLab." = "온라인 동기화를 중단하지만 캐시와 읽기 진행률은 유지합니다. 접근 권한을 완전히 없애려면 GitHub나 GitLab에서도 토큰을 취소하세요.";
 "Storage used" = "사용 공간";

@@ -1,7 +1,7 @@
 import SwiftUI
 import VaultCore
 
-struct NoteRoute: Hashable { let path: String; var anchor = ""; var reading = false }
+struct NoteRoute: Hashable { let path: String; var anchor = ""; var reading = false; var searchTerms: [String] = [] }
 enum ReaderRoute: Hashable { case note(NoteRoute), directory(String), file(String), readingLibrary, book(ListedBook) }
 private enum ReaderTab: Hashable { case directory, reading, recent, search }
 struct RootView: View {

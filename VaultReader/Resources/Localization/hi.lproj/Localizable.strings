@@ -75,6 +75,7 @@
 "Local token removed. Cached files remain available." = "स्थानीय टोकन हटा दिया गया। कैश की फ़ाइलें उपलब्ध हैं।";
 "Manage GitLab tokens" = "GitLab टोकन प्रबंधित करें";
 "Markdown and SVG stay cached. Other attachments are removed by last access time. Text is cached while the app is open for offline search." = "Markdown और SVG रखे जाते हैं। अन्य अटैचमेंट अंतिम उपयोग के क्रम में हटाए जाते हैं। ऐप खुला रहने पर टेक्स्ट कैश होता है ताकि ऑफ़लाइन खोज सकें।";
+"Markdown searchable: %1$ld/%2$ld" = "खोजने योग्य Markdown: %1$ld/%2$ld";
 "Namespace" = "नेमस्पेस";
 "Native Markdown · HTML · PDF\nRead-only GitHub / GitLab access · Tokens stay in Keychain" = "Markdown · HTML · PDF का सीधा समर्थन\nGitHub / GitLab केवल पढ़ने के लिए · टोकन Keychain में";
 "Next page" = "अगला पृष्ठ";
@@ -87,6 +88,7 @@
 "Not found" = "नहीं मिला";
 "Not found: %1$@" = "नहीं मिला: %1$@";
 "Not in a book list" = "पुस्तक सूची से बाहर";
+"Not yet searchable: %1$ld" = "अभी खोज में शामिल नहीं: %1$ld";
 "Note actions" = "नोट के विकल्प";
 "Notice" = "सूचना";
 "OK" = "ठीक है";
@@ -146,13 +148,17 @@
 "Saved libraries" = "सहेजी गई लाइब्रेरी";
 "Saving position" = "पढ़ने की जगह सहेजी जा रही है";
 "Search" = "खोजें";
+"Search filenames and text" = "फ़ाइल नाम और पाठ खोजें";
 "Search text" = "टेक्स्ट में खोजें";
+"Searches this library. All words must match. PDF, HTML and images are searched by filename only." = "इस लाइब्रेरी में खोजता है। सभी शब्द मिलने चाहिए। PDF, HTML और छवियों में केवल फ़ाइल नाम खोजे जाते हैं।";
 "Searching names and text" = "नाम और टेक्स्ट में खोज जारी है";
+"Searching…" = "खोज जारी है…";
 "Sepia" = "सीपिया";
 "Settings" = "सेटिंग्स";
 "Setup guide & support" = "कनेक्शन गाइड और सहायता";
 "Share" = "साझा करें";
 "Smaller" = "छोटा करें";
+"Some Markdown text is not available yet. Results may be incomplete." = "कुछ Markdown पाठ अभी उपलब्ध नहीं हैं। परिणाम अधूरे हो सकते हैं।";
 "Some book lists could not be loaded: %1$@" = "कुछ पुस्तक सूचियाँ लोड नहीं हो सकीं: %1$@";
 "Stops online sync but keeps cached files and reading progress. To revoke access completely, also revoke the token on GitHub or GitLab." = "ऑनलाइन सिंक रुकता है, लेकिन कैश और पढ़ने की प्रगति बनी रहती है। पहुँच पूरी तरह रद्द करने के लिए GitHub या GitLab पर भी टोकन रद्द करें।";
 "Storage used" = "इस्तेमाल की गई जगह";

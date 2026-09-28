@@ -22,7 +22,7 @@ struct NoteView: View {
     var body: some View {
         Group {
             if let markdown {
-                RendererWebView(state: state, session: book?.viewport ?? readerSession, markdown: markdown, path: route.path, anchor: route.anchor, onOpen: open, onPreview: showPreview, onError: { actionError = $0 }, readingOptions: book?.record)
+                RendererWebView(state: state, session: book?.viewport ?? readerSession, markdown: markdown, path: route.path, anchor: route.anchor, onOpen: open, onPreview: showPreview, onError: { actionError = $0 }, readingOptions: book?.record, searchTerms: route.searchTerms)
             } else if let loadError {
                 ContentUnavailableView {
                     Label(L10n.text("Could not open file"), systemImage: "doc.text.magnifyingglass")
@@ -49,7 +49,7 @@ struct NoteView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
-                    if !readingBook { Button(L10n.text("Open in reader"), systemImage: "book") { navigate(.note(NoteRoute(path: route.path, anchor: route.anchor, reading: true))) } }
+                    if !readingBook { Button(L10n.text("Open in reader"), systemImage: "book") { navigate(.note(NoteRoute(path: route.path, anchor: route.anchor, reading: true, searchTerms: route.searchTerms))) } }
                     Button(L10n.text("Share"), systemImage: "square.and.arrow.up", action: share)
                         .disabled(markdown == nil || shareTask != nil)
                     Button(L10n.text("Copy path"), systemImage: "doc.on.doc") { UIPasteboard.general.string = route.path }

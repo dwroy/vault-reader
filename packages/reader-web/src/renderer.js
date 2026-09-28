@@ -3,10 +3,11 @@ import DOMPurify from 'dompurify';
 import footnote from 'markdown-it-footnote';
 import taskLists from 'markdown-it-task-lists';
 import { createTree, encodePath, headingID } from './tree.js';
+import { highlightSearch, scrollToSearchMatch as revealSearch } from './search.js';
 
 const resourceURL = path => (window.VaultHost?.resourceBaseURL || 'vault://file/') + encodePath(path);
 let tree = createTree([]), currentPath = '', lastContent = '', lastPath = '';
-let readingHeadings = [];
+let readingHeadings = [], scrollFrame = 0;
 const english = Object.freeze({ language: 'en', notFound: 'Not found', anotherVault: 'Another vault', imageNotFound: 'Image not found', properties: 'Properties', imageUnavailable: 'Image unavailable. Connect and refresh to retry.' });
 let labels = {...english};
 const setLocalization = values => {
@@ -135,7 +136,10 @@ const render = (source, path, fontScale = 1, colorScheme = 'light') => {
     });
     lastContent = source; lastPath = path;
     // Native book restoration owns the initial position; a delayed frame must not reset it.
-    if (document.documentElement.dataset.reading !== "book") requestAnimationFrame(() => window.scrollTo(0, scroll));
+    if (document.documentElement.dataset.reading !== "book") {
+      cancelAnimationFrame(scrollFrame);
+      scrollFrame = requestAnimationFrame(() => window.scrollTo(0, scroll));
+    }
   }
   emit('height', { px: document.documentElement.scrollHeight });
   return true;
@@ -180,4 +184,5 @@ const restorePosition = position => {
 };
 const scrollToSection = id => { const item = readingHeadings.find(item => item.id === id); if (item) window.scrollTo(0, Math.max(0,topOf(item))); };
 const setReadingMode = enabled => { document.documentElement.dataset.reading = enabled ? 'book' : ''; };
-window.VaultReader = Object.freeze({ version: 2, setLocalization, setTree, render, scrollToAnchor, outline, capturePosition, restorePosition, scrollToSection, setReadingMode });
+const scrollToSearchMatch = () => { cancelAnimationFrame(scrollFrame); return revealSearch(); };
+window.VaultReader = Object.freeze({ version: 2, setLocalization, setTree, render, scrollToAnchor, outline, capturePosition, restorePosition, scrollToSection, setReadingMode, highlightSearch, scrollToSearchMatch });

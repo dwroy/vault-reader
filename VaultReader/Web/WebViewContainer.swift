@@ -4,6 +4,7 @@ import VaultCore
 
 /// SwiftUI can retain offscreen navigation views. Retain only this empty shell, not WebKit.
 @MainActor final class ReaderSession {
+    var didRevealSearch = false
     var scrollY: Double?
     var position: ReadingLocation?
     var onPosition: ((ReadingLocation) -> Void)?

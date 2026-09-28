@@ -75,6 +75,7 @@
 "Local token removed. Cached files remain available." = "已移除本机 Token，已缓存内容仍可阅读。";
 "Manage GitLab tokens" = "管理 GitLab Token";
 "Markdown and SVG stay cached. Other attachments are removed by last access time. Text is cached while the app is open for offline search." = "Markdown 与 SVG 保留，其他附件按最近访问时间淘汰。Markdown 在前台自动补全，可离线搜索正文。";
+"Markdown searchable: %1$ld/%2$ld" = "可搜索正文：%1$ld/%2$ld 篇";
 "Namespace" = "命名空间";
 "Native Markdown · HTML · PDF\nRead-only GitHub / GitLab access · Tokens stay in Keychain" = "原生支持 Markdown · HTML · PDF\nGitHub / GitLab 只读访问 · Token 保存在钥匙串";
 "Next page" = "下一页";
@@ -87,6 +88,7 @@
 "Not found" = "未找到";
 "Not found: %1$@" = "未找到：%1$@";
 "Not in a book list" = "未列入书单";
+"Not yet searchable: %1$ld" = "尚未纳入正文搜索：%1$ld 篇";
 "Note actions" = "笔记操作";
 "Notice" = "提示";
 "OK" = "好";
@@ -146,13 +148,17 @@
 "Saved libraries" = "已保存知识库";
 "Saving position" = "记录位置";
 "Search" = "搜索";
+"Search filenames and text" = "搜索文件名和正文";
 "Search text" = "搜索正文";
+"Searches this library. All words must match. PDF, HTML and images are searched by filename only." = "搜索当前知识库，多个关键词需全部匹配。PDF、HTML 和图片仅搜索文件名。";
 "Searching names and text" = "正在搜索文件名与正文";
+"Searching…" = "正在搜索…";
 "Sepia" = "护眼纸";
 "Settings" = "设置";
 "Setup guide & support" = "连接指南与支持";
 "Share" = "分享";
 "Smaller" = "缩小";
+"Some Markdown text is not available yet. Results may be incomplete." = "部分 Markdown 正文尚未就绪，搜索结果可能不完整。";
 "Some book lists could not be loaded: %1$@" = "部分书单暂未载入：%1$@";
 "Stops online sync but keeps cached files and reading progress. To revoke access completely, also revoke the token on GitHub or GitLab." = "停止联网同步，保留本机缓存和阅读进度。要彻底撤销访问，请同时在 GitHub 或 GitLab 中撤销 Token。";
 "Storage used" = "文件占用";
