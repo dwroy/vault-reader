@@ -35,7 +35,7 @@ struct ReadingProjectsView: View {
                 }
             }
         }
-        .navigationTitle(L10n.text("Reading")).navigationBarTitleDisplayMode(.inline)
+        .libraryNavigationTitle(L10n.text("Reading"), state: state)
     }
 }
 
@@ -105,7 +105,7 @@ struct ReadingLibraryView: View {
                 ContentUnavailableView(L10n.text("No reading content yet"), systemImage: "books.vertical", description: Text(L10n.text("Add “booklist: path/to/booklist.md” to README frontmatter, or create booklist.md. You can also open any article from Files and choose Open in reader.")))
             }
         }
-        .navigationTitle(L10n.text("Books & articles")).navigationBarTitleDisplayMode(.inline)
+        .libraryNavigationTitle(L10n.text("Books & articles"), state: state, retry: { await state.refresh(); await discoverLists() })
         .searchable(text: $query, prompt: L10n.text("Find books, papers and articles"))
         .task(id: state.config.storageKey + state.treeSHA + String(state.fileDisplay.hideDotFiles)) { await discoverLists() }
     }
@@ -198,7 +198,7 @@ struct BookDetailView: View {
                 Section { Text(L10n.text("No files are listed for this book yet. Add links to the original, full text, summary or notes under the book in your book list.")).font(.callout).foregroundStyle(.secondary) }
             }
         }
-        .navigationTitle(book.title).navigationBarTitleDisplayMode(.inline)
+        .libraryNavigationTitle(book.title, state: state)
     }
     @ViewBuilder private func row(_ link: BookLink) -> some View {
         if let path = link.path, let entry = state.index.files[path] {

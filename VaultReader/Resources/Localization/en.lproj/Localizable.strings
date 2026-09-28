@@ -10,10 +10,12 @@
 "App language" = "App language";
 "Appearance" = "Appearance";
 "Articles & book lists" = "Articles & book lists";
+"Attention" = "Attention";
 "Books" = "Books";
 "Books & articles" = "Books & articles";
 "Branch" = "Branch";
 "Cache limit" = "Cache limit";
+"Cached" = "Cached";
 "Cancel" = "Cancel";
 "Change the language in iOS Settings. Your documents keep their original language." = "Change the language in iOS Settings. Your documents keep their original language.";
 "Clear attachment cache" = "Clear attachment cache";
@@ -62,6 +64,7 @@
 "Last read: %1$@ · %2$@" = "Last read: %1$@ · %2$@";
 "Last verified" = "Last verified";
 "Leave sample library" = "Leave sample library";
+"Library status" = "Library status";
 "Light" = "Light";
 "Links to another vault are not supported. Switch repositories to open that content." = "Links to another vault are not supported. Switch repositories to open that content.";
 "Loading book lists…" = "Loading book lists…";
@@ -88,10 +91,12 @@
 "Not found" = "Not found";
 "Not found: %1$@" = "Not found: %1$@";
 "Not in a book list" = "Not in a book list";
+"Not updated" = "Not updated";
 "Not yet searchable: %1$ld" = "Not yet searchable: %1$ld";
 "Note actions" = "Note actions";
 "Notice" = "Notice";
 "OK" = "OK";
+"Offline" = "Offline";
 "Offline · " = "Offline · ";
 "Online version" = "Online version";
 "Open iOS Settings" = "Open iOS Settings";
@@ -121,6 +126,7 @@
 "Projects" = "Projects";
 "Properties" = "Properties";
 "Provider" = "Provider";
+"Rate limited" = "Rate limited";
 "Read-only · No developer server" = "Read-only · No developer server";
 "Read: %1$ld%%" = "Read: %1$ld%%";
 "Reader" = "Reader";
@@ -143,6 +149,7 @@
 "Retry" = "Retry";
 "Retry file list" = "Retry file list";
 "Reviews" = "Reviews";
+"Sample" = "Sample";
 "Sample library · Connect your repository in Settings" = "Sample library · Connect your repository in Settings";
 "Save & verify" = "Save & verify";
 "Saved libraries" = "Saved libraries";
@@ -157,6 +164,7 @@
 "Settings" = "Settings";
 "Setup guide & support" = "Setup guide & support";
 "Share" = "Share";
+"Sign in" = "Sign in";
 "Smaller" = "Smaller";
 "Some Markdown text is not available yet. Results may be incomplete." = "Some Markdown text is not available yet. Results may be incomplete.";
 "Some book lists could not be loaded: %1$@" = "Some book lists could not be loaded: %1$@";
@@ -181,9 +189,11 @@
 "Try sample library" = "Try sample library";
 "Up to date" = "Up to date";
 "Updated files: %1$ld" = "Updated files: %1$ld";
+"Updating" = "Updating";
 "Use GitLab read_api access, preferably a token limited to this project. Namespaces can include group/subgroup. Self-hosted servers require HTTPS. Each project's token stays in Keychain." = "Use GitLab read_api access, preferably a token limited to this project. Namespaces can include group/subgroup. Self-hosted servers require HTTPS. Each project's token stays in Keychain.";
 "Version" = "Version";
 "View commit on %1$@" = "View commit on %1$@";
+"View status details" = "View status details";
 "Wait for the article to finish loading before sharing." = "Wait for the article to finish loading before sharing.";
 "Waiting for fonts" = "Waiting for fonts";
 "You can download it again later." = "You can download it again later.";

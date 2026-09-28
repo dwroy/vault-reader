@@ -10,10 +10,12 @@
 "App language" = "لغة التطبيق";
 "Appearance" = "المظهر";
 "Articles & book lists" = "مقالات وقوائم كتب";
+"Attention" = "تنبيه";
 "Books" = "الكتب";
 "Books & articles" = "كتب ومقالات";
 "Branch" = "الفرع";
 "Cache limit" = "حد التخزين المؤقت";
+"Cached" = "مخزّن محليًا";
 "Cancel" = "إلغاء";
 "Change the language in iOS Settings. Your documents keep their original language." = "غيّر اللغة في إعدادات iOS. تحتفظ المستندات بلغتها الأصلية.";
 "Clear attachment cache" = "مسح المرفقات المخزنة";
@@ -62,6 +64,7 @@
 "Last read: %1$@ · %2$@" = "آخر قراءة: %1$@ · %2$@";
 "Last verified" = "آخر تحقق";
 "Leave sample library" = "مغادرة المكتبة التجريبية";
+"Library status" = "حالة المكتبة";
 "Light" = "فاتح";
 "Links to another vault are not supported. Switch repositories to open that content." = "الروابط إلى مكتبة أخرى غير مدعومة. انتقل إلى المستودع المناسب لفتح المحتوى.";
 "Loading book lists…" = "جارٍ تحميل قوائم الكتب…";
@@ -88,10 +91,12 @@
 "Not found" = "غير موجود";
 "Not found: %1$@" = "غير موجود: %1$@";
 "Not in a book list" = "خارج قوائم الكتب";
+"Not updated" = "غير محدّث";
 "Not yet searchable: %1$ld" = "ملفات غير قابلة للبحث بعد: %1$ld";
 "Note actions" = "إجراءات الملاحظة";
 "Notice" = "تنبيه";
 "OK" = "موافق";
+"Offline" = "غير متصل";
 "Offline · " = "دون اتصال · ";
 "Online version" = "النسخة عبر الإنترنت";
 "Open iOS Settings" = "فتح إعدادات iOS";
@@ -121,6 +126,7 @@
 "Projects" = "المشروعات";
 "Properties" = "الخصائص";
 "Provider" = "مزوّد الخدمة";
+"Rate limited" = "الطلبات محدودة";
 "Read-only · No developer server" = "للقراءة فقط · بلا خادم للمطوّر";
 "Read: %1$ld%%" = "تمت قراءة: %1$ld%%";
 "Reader" = "القارئ";
@@ -143,6 +149,7 @@
 "Retry" = "إعادة المحاولة";
 "Retry file list" = "إعادة تحميل قائمة الملفات";
 "Reviews" = "مراجعات";
+"Sample" = "نموذج";
 "Sample library · Connect your repository in Settings" = "مكتبة تجريبية · اربط مستودعك من الإعدادات";
 "Save & verify" = "حفظ وتحقق";
 "Saved libraries" = "المكتبات المحفوظة";
@@ -157,6 +164,7 @@
 "Settings" = "الإعدادات";
 "Setup guide & support" = "دليل الاتصال والدعم";
 "Share" = "مشاركة";
+"Sign in" = "تسجيل الدخول";
 "Smaller" = "تصغير";
 "Some Markdown text is not available yet. Results may be incomplete." = "بعض نصوص Markdown غير متاحة بعد. قد تكون النتائج غير مكتملة.";
 "Some book lists could not be loaded: %1$@" = "تعذّر تحميل بعض قوائم الكتب: %1$@";
@@ -181,9 +189,11 @@
 "Try sample library" = "تجربة المكتبة النموذجية";
 "Up to date" = "كل شيء محدّث";
 "Updated files: %1$ld" = "الملفات المحدّثة: %1$ld";
+"Updating" = "جارٍ التحديث";
 "Use GitLab read_api access, preferably a token limited to this project. Namespaces can include group/subgroup. Self-hosted servers require HTTPS. Each project's token stays in Keychain." = "استخدم صلاحية read_api في GitLab، ويفضّل رمزًا مخصصًا لهذا المشروع. يمكن أن يتضمن نطاق الأسماء group/subgroup. تتطلب الخوادم الخاصة HTTPS. يُحفظ كل رمز في سلسلة المفاتيح.";
 "Version" = "الإصدار";
 "View commit on %1$@" = "عرض الالتزام في %1$@";
+"View status details" = "عرض تفاصيل الحالة";
 "Wait for the article to finish loading before sharing." = "انتظر حتى يكتمل تحميل المقال قبل مشاركته.";
 "Waiting for fonts" = "جارٍ انتظار الخطوط";
 "You can download it again later." = "يمكنك تنزيله مجددًا لاحقًا.";

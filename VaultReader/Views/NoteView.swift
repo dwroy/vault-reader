@@ -32,12 +32,10 @@ struct NoteView: View {
                 }
             } else { ProgressView(L10n.text("Loading…")) }
         }
-        .safeAreaInset(edge: .top, spacing: 0) { if !readingBook { StatusBanner(state: state) } }
         .safeAreaInset(edge: .bottom, spacing: 0) { if let book { ReadingControls(book: book) } }
         .toolbar(readingBook ? .hidden : .automatic, for: .tabBar)
         .preferredColorScheme(book?.record.theme == .dark ? .dark : (book?.record.theme == .light || book?.record.theme == .sepia ? .light : nil))
-        .navigationTitle((route.path as NSString).lastPathComponent.replacingOccurrences(of: ".md", with: ""))
-        .navigationBarTitleDisplayMode(.inline)
+        .libraryNavigationTitle((route.path as NSString).lastPathComponent.replacingOccurrences(of: ".md", with: ""), state: state, retry: { await state.refresh(); await load() })
         .task(id: state.config.identity + state.config.branch + (state.index.files[route.path]?.sha ?? "missing")) { await load() }
         .sheet(isPresented: Binding(get: { previewPath != nil }, set: { if !$0 { previewPath = nil } })) {
             if let path = previewPath { AttachmentSheet(state: state, path: path) }

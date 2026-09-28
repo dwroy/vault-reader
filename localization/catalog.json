@@ -203,6 +203,23 @@
       "zh-Hant": "文章與書單"
     }
   },
+  "Attention": {
+    "scope": "app",
+    "translations": {
+      "ar": "تنبيه",
+      "de": "Hinweis",
+      "en": "Attention",
+      "es": "Atención",
+      "fr": "À vérifier",
+      "hi": "ध्यान दें",
+      "id": "Perhatian",
+      "ja": "要確認",
+      "ko": "확인 필요",
+      "pt-BR": "Atenção",
+      "zh-Hans": "异常",
+      "zh-Hant": "異常"
+    }
+  },
   "Books": {
     "scope": "app",
     "translations": {
@@ -269,6 +286,23 @@
       "pt-BR": "Limite de cache",
       "zh-Hans": "缓存上限",
       "zh-Hant": "快取上限"
+    }
+  },
+  "Cached": {
+    "scope": "app",
+    "translations": {
+      "ar": "مخزّن محليًا",
+      "de": "Im Cache",
+      "en": "Cached",
+      "es": "En caché",
+      "fr": "En cache",
+      "hi": "कैश में",
+      "id": "Tersimpan",
+      "ja": "キャッシュ",
+      "ko": "캐시",
+      "pt-BR": "Em cache",
+      "zh-Hans": "本地缓存",
+      "zh-Hant": "本機快取"
     }
   },
   "Cancel": {
@@ -1172,6 +1206,23 @@
       "zh-Hant": "退出示例知識庫"
     }
   },
+  "Library status": {
+    "scope": "app",
+    "translations": {
+      "ar": "حالة المكتبة",
+      "de": "Bibliotheksstatus",
+      "en": "Library status",
+      "es": "Estado de la biblioteca",
+      "fr": "État de la bibliothèque",
+      "hi": "लाइब्रेरी की स्थिति",
+      "id": "Status pustaka",
+      "ja": "ライブラリの状態",
+      "ko": "라이브러리 상태",
+      "pt-BR": "Status da biblioteca",
+      "zh-Hans": "知识库状态",
+      "zh-Hant": "知識庫狀態"
+    }
+  },
   "Light": {
     "scope": "app",
     "translations": {
@@ -1614,6 +1665,23 @@
       "zh-Hant": "未列入書單"
     }
   },
+  "Not updated": {
+    "scope": "app",
+    "translations": {
+      "ar": "غير محدّث",
+      "de": "Nicht aktuell",
+      "en": "Not updated",
+      "es": "Sin actualizar",
+      "fr": "Non actualisé",
+      "hi": "अपडेट नहीं हुआ",
+      "id": "Belum diperbarui",
+      "ja": "未更新",
+      "ko": "업데이트 안 됨",
+      "pt-BR": "Não atualizado",
+      "zh-Hans": "未更新",
+      "zh-Hant": "未更新"
+    }
+  },
   "Not yet searchable: %1$ld": {
     "scope": "app",
     "translations": {
@@ -1680,6 +1748,23 @@
       "pt-BR": "OK",
       "zh-Hans": "好",
       "zh-Hant": "好"
+    }
+  },
+  "Offline": {
+    "scope": "app",
+    "translations": {
+      "ar": "غير متصل",
+      "de": "Offline",
+      "en": "Offline",
+      "es": "Sin conexión",
+      "fr": "Hors ligne",
+      "hi": "ऑफ़लाइन",
+      "id": "Luring",
+      "ja": "オフライン",
+      "ko": "오프라인",
+      "pt-BR": "Off-line",
+      "zh-Hans": "离线",
+      "zh-Hant": "離線"
     }
   },
   "Offline · ": {
@@ -2175,6 +2260,23 @@
       "zh-Hant": "平台"
     }
   },
+  "Rate limited": {
+    "scope": "app",
+    "translations": {
+      "ar": "الطلبات محدودة",
+      "de": "Anfragelimit",
+      "en": "Rate limited",
+      "es": "Límite alcanzado",
+      "fr": "Limite atteinte",
+      "hi": "अनुरोध सीमा",
+      "id": "Batas permintaan",
+      "ja": "制限中",
+      "ko": "요청 제한",
+      "pt-BR": "Limite atingido",
+      "zh-Hans": "已限流",
+      "zh-Hant": "已限流"
+    }
+  },
   "Read-only · No developer server": {
     "scope": "app",
     "translations": {
@@ -2566,6 +2668,23 @@
       "zh-Hant": "評論"
     }
   },
+  "Sample": {
+    "scope": "app",
+    "translations": {
+      "ar": "نموذج",
+      "de": "Beispiel",
+      "en": "Sample",
+      "es": "Ejemplo",
+      "fr": "Exemple",
+      "hi": "नमूना",
+      "id": "Contoh",
+      "ja": "サンプル",
+      "ko": "샘플",
+      "pt-BR": "Exemplo",
+      "zh-Hans": "示例库",
+      "zh-Hant": "範例庫"
+    }
+  },
   "Sample library · Connect your repository in Settings": {
     "scope": "app",
     "translations": {
@@ -2802,6 +2921,23 @@
       "pt-BR": "Compartilhar",
       "zh-Hans": "分享",
       "zh-Hant": "分享"
+    }
+  },
+  "Sign in": {
+    "scope": "app",
+    "translations": {
+      "ar": "تسجيل الدخول",
+      "de": "Anmelden",
+      "en": "Sign in",
+      "es": "Iniciar sesión",
+      "fr": "Se connecter",
+      "hi": "साइन इन",
+      "id": "Masuk",
+      "ja": "認証が必要",
+      "ko": "인증 필요",
+      "pt-BR": "Entrar",
+      "zh-Hans": "待授权",
+      "zh-Hant": "待授權"
     }
   },
   "Smaller": {
@@ -3365,6 +3501,23 @@
       "zh-Hant": "已更新 %1$ld 個檔案"
     }
   },
+  "Updating": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ التحديث",
+      "de": "Aktualisiert…",
+      "en": "Updating",
+      "es": "Actualizando",
+      "fr": "Mise à jour",
+      "hi": "अपडेट जारी",
+      "id": "Memperbarui",
+      "ja": "更新中",
+      "ko": "업데이트 중",
+      "pt-BR": "Atualizando",
+      "zh-Hans": "更新中",
+      "zh-Hant": "更新中"
+    }
+  },
   "Use GitLab read_api access, preferably a token limited to this project. Namespaces can include group/subgroup. Self-hosted servers require HTTPS. Each project's token stays in Keychain.": {
     "scope": "app",
     "translations": {
@@ -3414,6 +3567,23 @@
       "pt-BR": "Ver commit no %1$@",
       "zh-Hans": "在 %1$@ 查看提交",
       "zh-Hant": "在 %1$@ 查看提交"
+    }
+  },
+  "View status details": {
+    "scope": "app",
+    "translations": {
+      "ar": "عرض تفاصيل الحالة",
+      "de": "Statusdetails anzeigen",
+      "en": "View status details",
+      "es": "Ver detalles del estado",
+      "fr": "Voir les détails de l’état",
+      "hi": "स्थिति का विवरण देखें",
+      "id": "Lihat detail status",
+      "ja": "状態の詳細を表示",
+      "ko": "상태 세부 정보 보기",
+      "pt-BR": "Ver detalhes do status",
+      "zh-Hans": "查看状态详情",
+      "zh-Hant": "查看狀態詳情"
     }
   },
   "Wait for the article to finish loading before sharing.": {

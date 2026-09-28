@@ -28,7 +28,7 @@ struct AttachmentView: View {
                 }.padding()
             }
         }
-        .navigationTitle((path as NSString).lastPathComponent).navigationBarTitleDisplayMode(.inline)
+        .libraryNavigationTitle((path as NSString).lastPathComponent, state: state)
         .onDisappear {
             if let url, let store = previewStore { Task { try? await store.releasePreview(url) } }
             url = nil; previewStore = nil

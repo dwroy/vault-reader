@@ -10,10 +10,12 @@
 "App language" = "應用語言";
 "Appearance" = "紙張";
 "Articles & book lists" = "文章與書單";
+"Attention" = "異常";
 "Books" = "書籍";
 "Books & articles" = "書籍與文章";
 "Branch" = "分支";
 "Cache limit" = "快取上限";
+"Cached" = "本機快取";
 "Cancel" = "取消";
 "Change the language in iOS Settings. Your documents keep their original language." = "在 iOS 設置中更改應用語言，文檔保留原文。";
 "Clear attachment cache" = "清理附件快取";
@@ -62,6 +64,7 @@
 "Last read: %1$@ · %2$@" = "上次：%1$@ · %2$@";
 "Last verified" = "上次校驗";
 "Leave sample library" = "退出示例知識庫";
+"Library status" = "知識庫狀態";
 "Light" = "淺色";
 "Links to another vault are not supported. Switch repositories to open that content." = "暫不支持跨知識庫鏈接，請切換知識庫後打開對應內容。";
 "Loading book lists…" = "正在讀取書單…";
@@ -88,10 +91,12 @@
 "Not found" = "未找到";
 "Not found: %1$@" = "未找到：%1$@";
 "Not in a book list" = "未列入書單";
+"Not updated" = "未更新";
 "Not yet searchable: %1$ld" = "尚未納入正文搜尋：%1$ld 篇";
 "Note actions" = "筆記操作";
 "Notice" = "提示";
 "OK" = "好";
+"Offline" = "離線";
 "Offline · " = "離線 · ";
 "Online version" = "查看在線版本 / Online version";
 "Open iOS Settings" = "打開 iOS 設置";
@@ -121,6 +126,7 @@
 "Projects" = "項目";
 "Properties" = "屬性";
 "Provider" = "平台";
+"Rate limited" = "已限流";
 "Read-only · No developer server" = "只讀 · 無伺服器";
 "Read: %1$ld%%" = "已讀 %1$ld%%";
 "Reader" = "閱讀器";
@@ -143,6 +149,7 @@
 "Retry" = "重試";
 "Retry file list" = "重試檔案列表";
 "Reviews" = "評論";
+"Sample" = "範例庫";
 "Sample library · Connect your repository in Settings" = "演示資料 · 可在設置中連接倉庫";
 "Save & verify" = "保存並校驗";
 "Saved libraries" = "已保存知識庫";
@@ -157,6 +164,7 @@
 "Settings" = "設置";
 "Setup guide & support" = "連接指南與支持";
 "Share" = "分享";
+"Sign in" = "待授權";
 "Smaller" = "縮小";
 "Some Markdown text is not available yet. Results may be incomplete." = "部分 Markdown 正文尚未就緒，搜尋結果可能不完整。";
 "Some book lists could not be loaded: %1$@" = "部分書單暫未載入：%1$@";
@@ -181,9 +189,11 @@
 "Try sample library" = "體驗示例知識庫";
 "Up to date" = "已是最新";
 "Updated files: %1$ld" = "已更新 %1$ld 個檔案";
+"Updating" = "更新中";
 "Use GitLab read_api access, preferably a token limited to this project. Namespaces can include group/subgroup. Self-hosted servers require HTTPS. Each project's token stays in Keychain." = "GitLab 使用 read_api 只讀權限；如可用，優先使用僅授權此項目的 Access Token。命名空間可含多級 group/subgroup。自建地址需使用 HTTPS。憑據按服務與項目獨立保存在 Keychain。";
 "Version" = "版本";
 "View commit on %1$@" = "在 %1$@ 查看提交";
+"View status details" = "查看狀態詳情";
 "Wait for the article to finish loading before sharing." = "請等文章加載完成後再分享。";
 "Waiting for fonts" = "等待字體";
 "You can download it again later." = "可以稍後重新下載。";

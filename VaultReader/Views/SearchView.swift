@@ -55,7 +55,7 @@ struct SearchView: View {
                 if remaining > 0 { Text(L10n.text("Some Markdown text is not available yet. Results may be incomplete.")).font(.callout).foregroundStyle(.secondary) }
             }
         }
-        .navigationTitle(L10n.text("Search"))
+        .libraryNavigationTitle(L10n.text("Search"), state: state, retry: { await state.refresh(); state.startPrefetch() })
         .task { state.startPrefetch() }
         .searchable(text: $query, prompt: L10n.text("Search filenames and text"))
         .task(id: request) {
@@ -70,7 +70,6 @@ struct SearchView: View {
                 hits = found; appliedQuery = requested.query; appliedRepository = requested.repository; searching = false
             } catch { if !Task.isCancelled { searching = false } }
         }
-        .safeAreaInset(edge: .top, spacing: 0) { StatusBanner(state: state) }
     }
     private func destination(_ hit: SearchHit) -> ReaderRoute {
         state.index.files[hit.path]?.isMarkdown == true

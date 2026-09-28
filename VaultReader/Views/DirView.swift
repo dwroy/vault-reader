@@ -17,9 +17,7 @@ struct DirView: View {
                 }
             }
         }
-        .safeAreaInset(edge: .top, spacing: 0) { StatusBanner(state: state) }
-        .navigationTitle(path.isEmpty ? L10n.text("Files") : (path as NSString).lastPathComponent)
-        .navigationBarTitleDisplayMode(.inline)
+        .libraryNavigationTitle(path.isEmpty ? L10n.text("Files") : (path as NSString).lastPathComponent, state: state)
         .refreshable { await state.refresh() }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {

@@ -135,7 +135,7 @@ struct HTMLReaderView: View {
                 HTMLFileWebView(state: state, session: book.viewport, path: path, onExternal: { external = PreviewItem(url: $0) }, onFile: navigate, onError: { error = $0 }, book: book).id(attempt)
             } else { ProgressView(L10n.text("Opening reader…")) }
         }
-        .navigationTitle((path as NSString).lastPathComponent).navigationBarTitleDisplayMode(.inline)
+        .libraryNavigationTitle((path as NSString).lastPathComponent, state: state)
         .sheet(item: $external) { SafariView(url: $0.url) }
         .toolbar(.hidden, for: .tabBar)
         .task { if book == nil { book = BookSession(path: path, kind: .html, store: state.reading) } }

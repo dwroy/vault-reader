@@ -24,10 +24,9 @@ struct RecentView: View {
                 Text(L10n.text("No cached commits. Connect to load the 30 most recent commits.")).foregroundStyle(.secondary)
             }
         }
-        .navigationTitle(L10n.text("Recent"))
+        .libraryNavigationTitle(L10n.text("Recent"), state: state, retry: { await state.refresh(); await state.loadRecent() })
         .task { await state.loadRecent() }
         .refreshable { await state.refresh(); await state.loadRecent() }
-        .safeAreaInset(edge: .top, spacing: 0) { StatusBanner(state: state) }
     }
 }
 private struct CommitRow: View {

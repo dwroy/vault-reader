@@ -10,10 +10,12 @@
 "App language" = "ऐप की भाषा";
 "Appearance" = "रूप";
 "Articles & book lists" = "लेख और पुस्तक सूचियाँ";
+"Attention" = "ध्यान दें";
 "Books" = "पुस्तकें";
 "Books & articles" = "पुस्तकें और लेख";
 "Branch" = "ब्रांच";
 "Cache limit" = "कैश की सीमा";
+"Cached" = "कैश में";
 "Cancel" = "रद्द करें";
 "Change the language in iOS Settings. Your documents keep their original language." = "iOS सेटिंग्स में भाषा बदलें। आपके दस्तावेज़ अपनी मूल भाषा में रहेंगे।";
 "Clear attachment cache" = "अटैचमेंट कैश साफ़ करें";
@@ -62,6 +64,7 @@
 "Last read: %1$@ · %2$@" = "पिछली बार पढ़ा: %1$@ · %2$@";
 "Last verified" = "पिछली जाँच";
 "Leave sample library" = "नमूना लाइब्रेरी से बाहर जाएँ";
+"Library status" = "लाइब्रेरी की स्थिति";
 "Light" = "हल्का";
 "Links to another vault are not supported. Switch repositories to open that content." = "दूसरी लाइब्रेरी के लिंक समर्थित नहीं हैं। सामग्री खोलने के लिए रिपॉज़िटरी बदलें।";
 "Loading book lists…" = "पुस्तक सूचियाँ लोड हो रही हैं…";
@@ -88,10 +91,12 @@
 "Not found" = "नहीं मिला";
 "Not found: %1$@" = "नहीं मिला: %1$@";
 "Not in a book list" = "पुस्तक सूची से बाहर";
+"Not updated" = "अपडेट नहीं हुआ";
 "Not yet searchable: %1$ld" = "अभी खोज में शामिल नहीं: %1$ld";
 "Note actions" = "नोट के विकल्प";
 "Notice" = "सूचना";
 "OK" = "ठीक है";
+"Offline" = "ऑफ़लाइन";
 "Offline · " = "ऑफ़लाइन · ";
 "Online version" = "ऑनलाइन संस्करण";
 "Open iOS Settings" = "iOS सेटिंग्स खोलें";
@@ -121,6 +126,7 @@
 "Projects" = "प्रोजेक्ट";
 "Properties" = "गुण";
 "Provider" = "सेवा प्रदाता";
+"Rate limited" = "अनुरोध सीमा";
 "Read-only · No developer server" = "केवल पढ़ने के लिए · डेवलपर का सर्वर नहीं";
 "Read: %1$ld%%" = "पढ़ा गया: %1$ld%%";
 "Reader" = "रीडर";
@@ -143,6 +149,7 @@
 "Retry" = "फिर कोशिश करें";
 "Retry file list" = "फ़ाइल सूची फिर लोड करें";
 "Reviews" = "समीक्षाएँ";
+"Sample" = "नमूना";
 "Sample library · Connect your repository in Settings" = "नमूना लाइब्रेरी · सेटिंग्स में अपनी रिपॉज़िटरी जोड़ें";
 "Save & verify" = "सहेजें और जाँचें";
 "Saved libraries" = "सहेजी गई लाइब्रेरी";
@@ -157,6 +164,7 @@
 "Settings" = "सेटिंग्स";
 "Setup guide & support" = "कनेक्शन गाइड और सहायता";
 "Share" = "साझा करें";
+"Sign in" = "साइन इन";
 "Smaller" = "छोटा करें";
 "Some Markdown text is not available yet. Results may be incomplete." = "कुछ Markdown पाठ अभी उपलब्ध नहीं हैं। परिणाम अधूरे हो सकते हैं।";
 "Some book lists could not be loaded: %1$@" = "कुछ पुस्तक सूचियाँ लोड नहीं हो सकीं: %1$@";
@@ -181,9 +189,11 @@
 "Try sample library" = "नमूना लाइब्रेरी आज़माएँ";
 "Up to date" = "सब कुछ अपडेट है";
 "Updated files: %1$ld" = "अपडेट की गई फ़ाइलें: %1$ld";
+"Updating" = "अपडेट जारी";
 "Use GitLab read_api access, preferably a token limited to this project. Namespaces can include group/subgroup. Self-hosted servers require HTTPS. Each project's token stays in Keychain." = "GitLab की read_api अनुमति इस्तेमाल करें। हो सके तो केवल इस प्रोजेक्ट का टोकन चुनें। नेमस्पेस में group/subgroup हो सकता है। निजी सर्वर के लिए HTTPS आवश्यक है। हर टोकन Keychain में रहता है।";
 "Version" = "संस्करण";
 "View commit on %1$@" = "%1$@ पर कमिट देखें";
+"View status details" = "स्थिति का विवरण देखें";
 "Wait for the article to finish loading before sharing." = "साझा करने से पहले लेख का लोड पूरा होने दें।";
 "Waiting for fonts" = "फ़ॉन्ट की प्रतीक्षा है";
 "You can download it again later." = "आप इसे बाद में फिर डाउनलोड कर सकते हैं।";

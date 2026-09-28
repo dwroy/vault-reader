@@ -125,7 +125,7 @@ struct PDFReaderView: View {
                 }
             }
         }
-        .navigationTitle((path as NSString).lastPathComponent).navigationBarTitleDisplayMode(.inline)
+        .libraryNavigationTitle((path as NSString).lastPathComponent, state: state)
         .toolbar(.hidden, for: .tabBar)
         .toolbar { ToolbarItem(placement: .topBarTrailing) { Button(L10n.text("Files"), systemImage: "list.bullet") { showingContents = true }.disabled(session == nil) } }
         .sheet(isPresented: $showingContents) {

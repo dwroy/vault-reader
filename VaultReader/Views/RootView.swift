@@ -132,18 +132,3 @@ struct WelcomeView: View {
         }
     }
 }
-
-struct StatusBanner: View {
-    let state: AppState
-    var body: some View {
-        if let notice = state.notice {
-            HStack(spacing: 7) {
-                if state.isRefreshing { ProgressView().controlSize(.mini) }
-                else { Image(systemName: state.isOffline ? "wifi.slash" : "checkmark.circle") }
-                Text(state.isOffline ? L10n.text("Offline · ") + notice : notice).font(.caption)
-                Spacer(minLength: 0)
-            }.foregroundStyle(state.isOffline ? Color.orange : Color.secondary)
-                .padding(.horizontal, 18).padding(.vertical, 7).background(.bar)
-        }
-    }
-}

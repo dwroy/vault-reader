@@ -10,10 +10,12 @@
 "App language" = "Idioma do app";
 "Appearance" = "Aparência";
 "Articles & book lists" = "Artigos e listas de livros";
+"Attention" = "Atenção";
 "Books" = "Livros";
 "Books & articles" = "Livros e artigos";
 "Branch" = "Branch";
 "Cache limit" = "Limite de cache";
+"Cached" = "Em cache";
 "Cancel" = "Cancelar";
 "Change the language in iOS Settings. Your documents keep their original language." = "Altere o idioma nos Ajustes do iOS. Os documentos mantêm o idioma original.";
 "Clear attachment cache" = "Limpar cache de anexos";
@@ -62,6 +64,7 @@
 "Last read: %1$@ · %2$@" = "Última leitura: %1$@ · %2$@";
 "Last verified" = "Última verificação";
 "Leave sample library" = "Sair da biblioteca de exemplo";
+"Library status" = "Status da biblioteca";
 "Light" = "Claro";
 "Links to another vault are not supported. Switch repositories to open that content." = "Links para outra biblioteca não são compatíveis. Troque de repositório para abrir o conteúdo.";
 "Loading book lists…" = "Carregando listas de livros…";
@@ -88,10 +91,12 @@
 "Not found" = "Não encontrado";
 "Not found: %1$@" = "Não encontrado: %1$@";
 "Not in a book list" = "Fora das listas";
+"Not updated" = "Não atualizado";
 "Not yet searchable: %1$ld" = "Ainda não pesquisáveis: %1$ld";
 "Note actions" = "Ações da nota";
 "Notice" = "Aviso";
 "OK" = "OK";
+"Offline" = "Off-line";
 "Offline · " = "Off-line · ";
 "Online version" = "Versão on-line";
 "Open iOS Settings" = "Abrir Ajustes do iOS";
@@ -121,6 +126,7 @@
 "Projects" = "Projetos";
 "Properties" = "Propriedades";
 "Provider" = "Provedor";
+"Rate limited" = "Limite atingido";
 "Read-only · No developer server" = "Somente leitura · Sem servidor do desenvolvedor";
 "Read: %1$ld%%" = "Lido: %1$ld%%";
 "Reader" = "Leitor";
@@ -143,6 +149,7 @@
 "Retry" = "Tentar novamente";
 "Retry file list" = "Recarregar lista de arquivos";
 "Reviews" = "Resenhas";
+"Sample" = "Exemplo";
 "Sample library · Connect your repository in Settings" = "Biblioteca de exemplo · Conecte seu repositório nos Ajustes";
 "Save & verify" = "Salvar e verificar";
 "Saved libraries" = "Bibliotecas salvas";
@@ -157,6 +164,7 @@
 "Settings" = "Ajustes";
 "Setup guide & support" = "Guia de conexão e suporte";
 "Share" = "Compartilhar";
+"Sign in" = "Entrar";
 "Smaller" = "Diminuir";
 "Some Markdown text is not available yet. Results may be incomplete." = "Parte do texto Markdown ainda não está disponível. Os resultados podem estar incompletos.";
 "Some book lists could not be loaded: %1$@" = "Não foi possível carregar algumas listas: %1$@";
@@ -181,9 +189,11 @@
 "Try sample library" = "Testar biblioteca de exemplo";
 "Up to date" = "Tudo atualizado";
 "Updated files: %1$ld" = "Arquivos atualizados: %1$ld";
+"Updating" = "Atualizando";
 "Use GitLab read_api access, preferably a token limited to this project. Namespaces can include group/subgroup. Self-hosted servers require HTTPS. Each project's token stays in Keychain." = "Use a permissão read_api do GitLab, de preferência com um token limitado ao projeto. Namespaces aceitam grupo/subgrupo. Servidores próprios exigem HTTPS. Cada token fica nas Chaves.";
 "Version" = "Versão";
 "View commit on %1$@" = "Ver commit no %1$@";
+"View status details" = "Ver detalhes do status";
 "Wait for the article to finish loading before sharing." = "Aguarde o artigo terminar de carregar antes de compartilhar.";
 "Waiting for fonts" = "Aguardando fontes";
 "You can download it again later." = "Você pode baixar novamente mais tarde.";

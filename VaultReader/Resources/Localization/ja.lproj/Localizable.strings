@@ -10,10 +10,12 @@
 "App language" = "アプリの言語";
 "Appearance" = "表示";
 "Articles & book lists" = "記事とブックリスト";
+"Attention" = "要確認";
 "Books" = "本";
 "Books & articles" = "本と記事";
 "Branch" = "ブランチ";
 "Cache limit" = "キャッシュ上限";
+"Cached" = "キャッシュ";
 "Cancel" = "キャンセル";
 "Change the language in iOS Settings. Your documents keep their original language." = "iOSの設定で言語を変更できます。文書の言語は変わりません。";
 "Clear attachment cache" = "添付ファイルのキャッシュを削除";
@@ -62,6 +64,7 @@
 "Last read: %1$@ · %2$@" = "前回：%1$@ · %2$@";
 "Last verified" = "最終確認";
 "Leave sample library" = "サンプルライブラリを終了";
+"Library status" = "ライブラリの状態";
 "Light" = "ライト";
 "Links to another vault are not supported. Switch repositories to open that content." = "別のライブラリへのリンクには対応していません。リポジトリを切り替えて開いてください。";
 "Loading book lists…" = "ブックリストを読み込み中…";
@@ -88,10 +91,12 @@
 "Not found" = "見つかりません";
 "Not found: %1$@" = "見つかりません：%1$@";
 "Not in a book list" = "リストにないファイル";
+"Not updated" = "未更新";
 "Not yet searchable: %1$ld" = "まだ検索できない文書：%1$ld";
 "Note actions" = "ノートの操作";
 "Notice" = "お知らせ";
 "OK" = "OK";
+"Offline" = "オフライン";
 "Offline · " = "オフライン · ";
 "Online version" = "オンライン版";
 "Open iOS Settings" = "iOSの設定を開く";
@@ -121,6 +126,7 @@
 "Projects" = "プロジェクト";
 "Properties" = "プロパティ";
 "Provider" = "サービス";
+"Rate limited" = "制限中";
 "Read-only · No developer server" = "読み取り専用 · 開発者のサーバーなし";
 "Read: %1$ld%%" = "読了：%1$ld%%";
 "Reader" = "リーダー";
@@ -143,6 +149,7 @@
 "Retry" = "再試行";
 "Retry file list" = "ファイル一覧を再読み込み";
 "Reviews" = "レビュー";
+"Sample" = "サンプル";
 "Sample library · Connect your repository in Settings" = "サンプルライブラリ · 設定からリポジトリを接続できます";
 "Save & verify" = "保存して確認";
 "Saved libraries" = "保存済みライブラリ";
@@ -157,6 +164,7 @@
 "Settings" = "設定";
 "Setup guide & support" = "接続ガイドとサポート";
 "Share" = "共有";
+"Sign in" = "認証が必要";
 "Smaller" = "小さく";
 "Some Markdown text is not available yet. Results may be incomplete." = "一部のMarkdown本文はまだ利用できません。検索結果が不完全な場合があります。";
 "Some book lists could not be loaded: %1$@" = "一部のブックリストを読み込めませんでした：%1$@";
@@ -181,9 +189,11 @@
 "Try sample library" = "サンプルライブラリを試す";
 "Up to date" = "最新の状態です";
 "Updated files: %1$ld" = "更新したファイル数：%1$ld";
+"Updating" = "更新中";
 "Use GitLab read_api access, preferably a token limited to this project. Namespaces can include group/subgroup. Self-hosted servers require HTTPS. Each project's token stays in Keychain." = "GitLabではread_api権限を使い、可能なら対象プロジェクト限定のトークンを選んでください。名前空間はgroup/subgroup形式に対応します。独自サーバーにはHTTPSが必要です。トークンは個別にキーチェーンに保存されます。";
 "Version" = "バージョン";
 "View commit on %1$@" = "%1$@でコミットを表示";
+"View status details" = "状態の詳細を表示";
 "Wait for the article to finish loading before sharing." = "記事の読み込みが完了してから共有してください。";
 "Waiting for fonts" = "フォントを待機中";
 "You can download it again later." = "後で再ダウンロードできます。";

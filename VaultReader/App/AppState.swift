@@ -16,8 +16,8 @@ final class AppState {
     var switchingRepository = false
     var index = VaultIndex()
     var treeSHA = ""
-    var notice: String?
-    var isOffline = false
+    var libraryStatus: LibraryStatus?
+    var canRefresh: Bool { client != nil && !demo && !isRefreshing && !switchingRepository }
     var isRefreshing = false
     var needsSetup = true
     var showSettings = false
@@ -66,6 +66,7 @@ final class AppState {
             if ProcessInfo.processInfo.arguments.contains("--demo") {
                 try await startSamples(persist: false)
                 if ProcessInfo.processInfo.arguments.contains("--reset-reading") { reading.clearDemoProgress() }
+                applyStatusPreview()
                 return
             }
             #endif
@@ -74,7 +75,7 @@ final class AppState {
             #if DEBUG
             if ProcessInfo.processInfo.arguments.contains("--cached-vault") {
                 library.remember(config)
-                needsSetup = false; demo = true; notice = L10n.text("Local cache check · Not connected"); ready = true; return
+                needsSetup = false; demo = true; libraryStatus = LibraryStatus(kind: .cached, message: L10n.text("Local cache check · Not connected"), action: .none); ready = true; return
             }
             if let token = ProcessInfo.processInfo.environment["VR_TOKEN"], !token.isEmpty, try Keychain.read(config.identity) == nil {
                 try Keychain.save(token, account: config.identity)
@@ -83,16 +84,16 @@ final class AppState {
             #endif
             if let token = try Keychain.read(config.identity) {
                 client = source(config, token: token); needsSetup = false
-            }
+            } else if !index.entries.isEmpty { libraryStatus = .missingCredential }
             ready = true
             if !needsSetup { await refresh() }
-        } catch { self.error = error.localizedDescription; ready = true }
+        } catch { self.error = error.localizedDescription; libraryStatus = .failure(error); ready = true }
     }
     private func prepare() async throws {
         reading.flush()
         if reading.key != config.storageKey || reading.isSample != demo { reading = ReadingStore(config: config, isSample: demo) }
         stopPrefetch()
-        epoch = UUID(); isRefreshing = false
+        epoch = UUID(); isRefreshing = false; libraryStatus = nil
         index = VaultIndex(); treeSHA = ""; blobs = nil; meta = nil; snapshot = nil
         searchIndex = SearchIndex(); prefetchCompleted = 0; prefetchTotal = 0
         recentRequest = UUID(); loadingRecent = false; recentError = nil; recent = []
@@ -137,7 +138,7 @@ final class AppState {
         try await prepare()
         try await meta?.write(tree, name: "tree"); try await meta?.write(branch, name: "branch")
         snapshot = branch; index = VaultIndex(tree.tree); treeSHA = tree.sha
-        needsSetup = false; isOffline = false; notice = L10n.format("Connected · Files: %1$ld", index.entries.count); error = nil
+        needsSetup = false; libraryStatus = nil; error = nil
         startPrefetch()
     }
     func selectRepository(_ selected: RepositoryConfig) async {
@@ -145,19 +146,19 @@ final class AppState {
         switchingRepository = true
         defer { switchingRepository = false }
         stopPrefetch(); ready = false; client = nil
-        config = selected; needsSetup = true; error = nil; notice = nil
+        config = selected; needsSetup = true; error = nil; libraryStatus = nil
         do {
             if !demo { UserDefaults.standard.set(try JSONEncoder().encode(selected), forKey: "repository") }
             try await prepare()
             if demo {
-                needsSetup = false; isOffline = false; notice = L10n.text("Sample library · Connect your repository in Settings")
+                needsSetup = false; libraryStatus = .sample
             } else if let token = try Keychain.read(selected.identity) {
                 client = source(selected, token: token); needsSetup = false
-                isOffline = true; notice = L10n.text("Opened cached files. Checking for updates…")
-            } else { isOffline = true; notice = L10n.text("No token saved for this repository. Cached files remain available.") }
+                libraryStatus = nil
+            } else { libraryStatus = .missingCredential }
             ready = true; startPrefetch()
             if client != nil { Task { await refresh() } }
-        } catch { ready = true; self.error = error.localizedDescription; notice = error.localizedDescription }
+        } catch { ready = true; self.error = error.localizedDescription; libraryStatus = .failure(error) }
     }
     func refresh() async {
         guard let client, let meta, !isRefreshing, !demo else { return }
@@ -169,19 +170,18 @@ final class AppState {
                 if branch.tree != treeSHA {
                     let tree = try await client.tree(sha: branch.tree)
                     guard generation == epoch else { return }
-                    let newIndex = VaultIndex(tree.tree), count = newIndex.changedCount(from: index)
+                    let newIndex = VaultIndex(tree.tree)
                     try await meta.write(tree, name: "tree")
                     guard generation == epoch else { return }
                     stopPrefetch()
                     index = newIndex; treeSHA = tree.sha
-                    notice = L10n.format("Updated files: %1$ld", count)
-                } else { notice = L10n.text("Up to date") }
+                }
                 try await meta.write(branch, name: "branch")
                 guard generation == epoch else { return }
                 snapshot = branch
             }
             guard generation == epoch else { return }
-            isOffline = false; error = nil
+            libraryStatus = nil; error = nil
             if !isPrefetching { startPrefetch() }
             UserDefaults.standard.set(Date(), forKey: "validated.\(config.identity)")
             await updateUsage()
@@ -321,17 +321,17 @@ final class AppState {
     }
     private func handle(_ error: Error) {
         if (error as? VaultError) == .unauthorized {
-            do { try Keychain.delete(config.identity) } catch { self.error = error.localizedDescription; return }
+            do { try Keychain.delete(config.identity) } catch { self.error = error.localizedDescription; libraryStatus = .failure(error); return }
             client = nil; needsSetup = true; showSettings = true
         }
-        isOffline = true; notice = error.localizedDescription
+        libraryStatus = .failure(error)
     }
     /// Samples use their own cache, reading progress and HTML origins. Saved connections are untouched.
     func startSamples(persist: Bool = true, sampleLanguage: String? = nil) async throws {
         guard !switchingRepository else { return }
         switchingRepository = true; ready = false
         defer { switchingRepository = false; ready = true }
-        client = nil; error = nil; notice = nil; isOffline = false; demo = true
+        client = nil; error = nil; libraryStatus = nil; demo = true
         config = RepositoryConfig(); config.owner = "example"; config.repo = "synthetic-vault"
         try await prepare()
         try await loadDemo(language: sampleLanguage ?? L10n.language)
@@ -344,7 +344,7 @@ final class AppState {
         stopPrefetch(); reading.flush()
         UserDefaults.standard.removeObject(forKey: "sampleLibraryActive")
         demo = false; client = nil; ready = false; needsSetup = true
-        showSettings = false; addingRepository = false; error = nil; notice = nil
+        showSettings = false; addingRepository = false; error = nil; libraryStatus = nil
         library = storedLibrary
         config = UserDefaults.standard.data(forKey: "repository").flatMap { try? JSONDecoder().decode(RepositoryConfig.self, from: $0) } ?? Self.emptyConnection()
         await start()
@@ -355,9 +355,23 @@ final class AppState {
         UserDefaults.standard.removeObject(forKey: "entered.\(config.identity)")
         UserDefaults.standard.removeObject(forKey: "validated.\(config.identity)")
         stopPrefetch(); epoch = UUID(); client = nil; isRefreshing = false
-        needsSetup = true; isOffline = true; notice = L10n.text("Local token removed. Cached files remain available.")
+        needsSetup = true; libraryStatus = LibraryStatus(kind: .authorization, message: L10n.text("Local token removed. Cached files remain available."), action: .settings)
     }
     #if DEBUG
+    /// Synthetic status snapshots for simulator UI checks; only called after --demo.
+    private func applyStatusPreview() {
+        let arguments = ProcessInfo.processInfo.arguments
+        guard let flag = arguments.firstIndex(of: "--status-preview"), arguments.indices.contains(flag + 1) else { return }
+        switch arguments[flag + 1] {
+        case "timeout": libraryStatus = .failure(VaultError.network(URLError.timedOut.rawValue))
+        case "offline": libraryStatus = .failure(VaultError.network(URLError.notConnectedToInternet.rawValue))
+        case "authorization": libraryStatus = .failure(VaultError.unauthorized)
+        case "rate-limited": libraryStatus = .failure(VaultError.rateLimited(nil))
+        case "updating": isRefreshing = true
+        case "healthy": libraryStatus = nil
+        default: break
+        }
+    }
     func startDemoForTesting(source: (any RepositorySource)? = nil) async throws {
         try await startSamples(persist: false, sampleLanguage: "zh-Hans")
         if let source { client = source }
@@ -407,7 +421,7 @@ final class AppState {
         let secondEntry = TreeEntry(path: "README.md", sha: BlobStore.hash(secondText), size: secondText.count)
         try await secondBlobs.put(secondText, entry: secondEntry)
         try await secondMeta.write(GitTree(sha: "second-demo", tree: [secondEntry]), name: "tree")
-        notice = L10n.text("Sample library · Connect your repository in Settings")
+        libraryStatus = .sample
         let demoCommits = (1...30).map { n in
             ["sha": String(format: "%040x", n), "commit": ["message": chineseSamples ? "记录第 \(n) 天\n\n补上公园散步的片段。" : "Day \(n): a small observation\n\nAdd a note from a walk in the park.", "committer": ["name": "Demo", "date": "2026-09-22T00:00:00Z"]]] as [String: Any]
         }
