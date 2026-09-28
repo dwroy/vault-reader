@@ -35,9 +35,9 @@ Required-reason API declarations shipped in `PrivacyInfo.xcprivacy`:
 
 ## Account and distribution checks
 
-The owner completed the individual-team agreement. Build 14 was successfully exported, uploaded and processed under the verified Wei Dong personal team, **DPK7SSB889**. App Store Connect record **6816816892** has SKU `vault-reader-ios`, Productivity category and version **1.0.0**, with manual release selected. Build 15 replaces build 14 for the multilingual launch; its final archive/upload and review status are recorded below when completed.
+The owner completed the individual-team agreement. Build 14 was successfully exported, uploaded and processed under the verified Wei Dong personal team, **DPK7SSB889**. App Store Connect record **6816816892** has SKU `vault-reader-ios`, Productivity category and version **1.0.0**, with manual release selected. Build 15 replaces build 14 for the multilingual launch. Its personal-team archive, export and upload succeeded; server processing reports Complete / Ready to Submit. **1.0.0 (15) was submitted and is Waiting for Review**, as recorded below.
 
-All 12 localized names/subtitles and version descriptions, promotional text, keywords and support links have been saved. English-specific screenshots are being added because Apple requires them before switching the store's primary language from Simplified Chinese to English. The global age rating is 4+ (with Apple's regional equivalents), not Made for Kids. No broad user-content feed, chat, advertisements, unrestricted in-app web browser or app-supplied restricted content exists. HTML navigation only allows the current repository document; explicit external links open the system browser.
+All 12 localized names/subtitles and version descriptions, promotional text, keywords and support links have been saved. English-specific iPhone 6.9-inch and iPad 13-inch screenshots are uploaded, and the store primary language is now English (U.S.). Chinese screenshots retain their own set with the updated AI Native welcome screen; other locales inherit English screenshots. All saved descriptions/promotional text/keywords were checked against source. The global age rating is 4+ (with Apple's regional equivalents), not Made for Kids. No broad user-content feed, chat, advertisements, unrestricted in-app web browser or app-supplied restricted content exists. HTML navigation only allows the current repository document; explicit external links open the system browser.
 
 The owner confirmed completion of content rights, privacy accuracy and private review contacts. Content rights is now saved as Yes (necessary third-party rights). The App Privacy page visibly reports **Published** by the owner, with **Data Not Collected**. Review-contact fields are populated and remain only in App Store Connect, never in this repository.
 
@@ -49,7 +49,7 @@ Detailed evidence is in `docs/ACCEPTANCE.md`. Completed development checks inclu
 
 The owner's physical phone is currently unavailable. The last confirmed installed/launched app remains build 14; simulator coverage does not establish fresh private-repository synchronization, offline recovery, physical touch or attachment transfer. This limitation is carried into release acceptance rather than represented as a pass.
 
-Final integration, archive/distribution checks, build selection, primary store language and App Review submission remain to be recorded below. A local build or saved metadata is not an uploaded or approved app.
+Final integration, archive/distribution checks, upload, processing and primary store language are complete. Build 15 is selected and the final App Review submission succeeded. Review approval and manual public release are still pending.
 
 ## Official references checked
 
@@ -62,6 +62,9 @@ Final integration, archive/distribution checks, build selection, primary store l
 
 - Development evidence: project-local `note-share` worktree, ignored `build/localization/`.
 - Current screenshots: `build/localization/screenshots/iphone-6.9/` (1320×2868) and `ipad-13/` (2064×2752), synthetic content only, RGB PNG.
-- Previous build 14 archive/export remains under main's ignored `build/app-store/` for traceability.
+- Source: 975aa4e, integrated and pushed to main. Final archive: main `build/app-store/VaultReader-1.0.0-15.xcarchive`; distribution package: `build/app-store/export-15/VaultReader.ipa`. Previous build 14 artifacts remain for traceability.
 - Export/upload options use automatic signing, personal team DPK7SSB889 and `manageAppVersionAndBuildNumber=false`.
-- No App Review submission or public availability is claimed until confirmed in the subsequent release record.
+- Review submission succeeded on **2026-09-28 at 14:54 Asia/Shanghai**. Status: **Waiting for Review**. Submission ID: `5cd6c637-8dfd-4771-a91d-2d6e93fe8bc5`.
+- Review record: https://appstoreconnect.apple.com/apps/6816816892/distribution/reviewsubmissions/details/5cd6c637-8dfd-4771-a91d-2d6e93fe8bc5
+- Main evidence: `build/app-store/submission-15.png`. All 10 newly added store locales now have their own policy URL; the completeness check passed after these were filled.
+- Apple approval and public launch remain pending. **Manual release** is selected; approval alone does not publish the app.
