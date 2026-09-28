@@ -130,10 +130,10 @@ struct HTMLReaderView: View {
     var body: some View {
         Group {
             if let error {
-                ContentUnavailableView { Label("无法打开阅读器", systemImage: "doc") } description: { Text(error) } actions: { Button("重试") { self.error = nil; attempt += 1 } }
+                ContentUnavailableView { Label(L10n.text("Could not open reader"), systemImage: "doc") } description: { Text(error) } actions: { Button(L10n.text("Retry")) { self.error = nil; attempt += 1 } }
             } else if let book {
                 HTMLFileWebView(state: state, session: book.viewport, path: path, onExternal: { external = PreviewItem(url: $0) }, onFile: navigate, onError: { error = $0 }, book: book).id(attempt)
-            } else { ProgressView("正在打开阅读器…") }
+            } else { ProgressView(L10n.text("Opening reader…")) }
         }
         .navigationTitle((path as NSString).lastPathComponent).navigationBarTitleDisplayMode(.inline)
         .sheet(item: $external) { SafariView(url: $0.url) }

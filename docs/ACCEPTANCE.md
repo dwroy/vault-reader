@@ -186,3 +186,27 @@ CoreDevice installed the final app over the existing iPhone installation and con
 App Store Connect's questionnaire produced 4+ (regional equivalents also displayed). Privacy-policy URL and a no-developer-data-collection response were saved as a draft, consistent with the source audit and Apple's collection definition. Publication of that response requires acknowledging Apple's accuracy statement. The content-rights declaration was blocked by automatic approval review pending the owner's explicit confirmation. No submission, App Review approval or public availability is claimed in this entry.
 
 Availability was saved for **147 countries/regions**, excluding China mainland and the **27 EU members**. Each excluded region appeared as Not Available in the saved availability table. Automatic future-territory inclusion is disabled. Free pricing was then confirmed, and Mac/Vision Pro availability was turned off for this iOS/iPadOS launch. English (U.S.) listing text and subtitle were saved, inheriting the synthetic screenshots. Automatic approval review prevented Add for Review while owner confirmation of content rights, privacy accuracy and private review contacts was still pending. No final submission validation result is claimed.
+
+
+## Twelve-language launch — 2026-09-28
+
+The owner requested English as the default and selected 12 UI languages: en, zh-Hans, zh-Hant, ja, ko, es, pt-BR, fr, de, ar, hi and id. Candidate is **1.0.0 (15)**. The existing project-local release worktree was reused. iPad large-screen redesign remains deferred.
+
+Native interface/status/error strings use generated app and Foundation-only SwiftPM resources. Shared renderer chrome accepts translated labels; prose direction is detected per block and code remains left-to-right. Repository contents, paths and credentials are never translated. New original English samples serve non-Chinese interfaces; help/privacy retain reviewed English and Simplified Chinese with a translated availability notice. The app follows iOS/per-app language preferences and falls back to English.
+
+Evidence under the worktree's ignored `build/localization/`:
+
+- Resource validation: **202 keys × 12 languages**, no missing values or format-argument mismatch. All 12 store locale fields pass Apple's length checks.
+- Node: **9 passed** (`node-final.log`), including mixed-language direction and escaped renderer labels.
+- Swift package: **24 passed**. An early test exposed SwiftPM lowercasing compound locale directories; case-insensitive bundle selection fixed zh-Hans, zh-Hant and pt-BR lookup.
+- Debug hosted: **15 passed** (`hosted.xcresult`), including localization, sample isolation and renderer recovery.
+- Existing Chinese Debug UI: **10 passed** (`existing-ui.xcresult`), covering sharing, repository switching/GitLab form, links/images, search/recent, HTML persistence and Markdown/PDF resume.
+- Release: **8 executions passed across iPhone 17 Pro Max and iPad Pro 13-inch (M5)** (`release-final.xcresult`). The public-sample/settings flow cycles through all 12 languages and unsupported sw-KE fallback; the other flows cover Chinese review access and English/Arabic reading/PDF resume. Earlier screenshot tests needed to scroll to README after locale-dependent sorting; UI behavior itself was unchanged.
+- Visual review found missing Arabic glyphs despite successful accessibility assertions. Offline Noto Arabic/Devanagari script faces were added with their licenses, preserving Latin/code font choice. A dedicated hosted raster test now confirms distinct Arabic/Hindi glyphs and LTR code (**1 passed**, `glyph-hosted.xcresult`). Release screenshots are rerun after this fix. Two attempted combined configurations did not run: Release-only scheme omitted the hosted target, and Release disables testable module imports. The hosted Debug plus public Release runs keep these concerns separate.
+
+The owner completed the declarations/contact fields. App Store Connect now visibly confirms the third-party rights declaration, published Data Not Collected privacy response, and populated private review contact fields. All 12 store names/subtitles and descriptions/promotional text/keywords/support URLs were saved. Store primary language, new screenshots, archive/upload and final review status are recorded in the completion entry below.
+
+A fresh CoreDevice query reports the iPhone and iPad unavailable. No build-15 device install or fresh private-sync, cached-offline, physical-touch or attachment-transfer acceptance is claimed at this point. Build 14 remains the last confirmed installed/launched phone version.
+
+
+Font completion: the final **8 Release UI executions passed on both devices** (`glyph-ui.xcresult`): Chinese review/sample access, English Markdown/HTML/PDF resume, Arabic Markdown/RTL/PDF resume, and Hindi document rendering. Exported screenshots visibly confirm connected Arabic glyphs and Devanagari text, with code kept LTR. English and Chinese reading screens retain their layout. The original 12-language welcome/settings checks remain valid because the font change is limited to shared document rendering. RGB screenshots were exported to `build/localization/screenshots/`; none are committed. Final resource/bundle/license checks and `git diff --check` pass.

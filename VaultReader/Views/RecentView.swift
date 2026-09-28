@@ -10,21 +10,21 @@ struct RecentView: View {
     }
     var body: some View {
         List {
-            if state.loadingRecent { ProgressView("读取最近提交…") }
-            if let error = state.recentError { Text(error).foregroundStyle(.secondary); Button("重试") { Task { await state.loadRecent() } } }
+            if state.loadingRecent { ProgressView(L10n.text("Loading recent commits…")) }
+            if let error = state.recentError { Text(error).foregroundStyle(.secondary); Button(L10n.text("Retry")) { Task { await state.loadRecent() } } }
             ForEach(0..<3) { bucket in
                 let commits = state.recent.filter { group($0) == bucket }
                 if !commits.isEmpty {
-                    Section(["今天", "本周", "更早"][bucket]) {
+                    Section([L10n.text("Today"), L10n.text("This week"), L10n.text("Earlier")][bucket]) {
                         ForEach(commits) { commit in CommitRow(state: state, commit: commit) }
                     }
                 }
             }
             if state.recent.isEmpty && !state.loadingRecent {
-                Text("暂无提交缓存。连接后显示最近 30 条提交。").foregroundStyle(.secondary)
+                Text(L10n.text("No cached commits. Connect to load the 30 most recent commits.")).foregroundStyle(.secondary)
             }
         }
-        .navigationTitle("最近")
+        .navigationTitle(L10n.text("Recent"))
         .task { await state.loadRecent() }
         .refreshable { await state.refresh(); await state.loadRecent() }
         .safeAreaInset(edge: .top, spacing: 0) { StatusBanner(state: state) }
@@ -47,15 +47,15 @@ private struct CommitRow: View {
                     } else { fileLabel(file).foregroundStyle(.secondary) }
                 }
                 if !details.files.isEmpty && details.files.allSatisfy({ !state.fileDisplay.includes($0.filename) }) {
-                    Text("此提交中的文件已按显示设置隐藏。").font(.caption).foregroundStyle(.secondary)
+                    Text(L10n.text("Files in this commit are hidden by your visibility settings.")).font(.caption).foregroundStyle(.secondary)
                 }
-                Text("文件打开当前分支版本；已删除或不在当前目录树中的文件不可打开。").font(.caption).foregroundStyle(.secondary)
+                Text(L10n.text("Files open from the current branch. Deleted files and files outside the current tree cannot be opened.")).font(.caption).foregroundStyle(.secondary)
                 if details.truncated || details.limitsMayApply == true {
-                    Text("服务端可能限制变更清单或内容；完整变更以仓库网页为准。").font(.caption).foregroundStyle(.secondary)
-                    Link("在 \(state.config.provider.title) 查看提交", destination: state.config.commitURL(sha: commit.sha))
+                    Text(L10n.text("The service may limit this change list. Open the repository website for the full changes.")).font(.caption).foregroundStyle(.secondary)
+                    Link(L10n.format("View commit on %1$@", state.config.provider.title), destination: state.config.commitURL(sha: commit.sha))
                 }
-            } else if let error { Text(error).font(.caption); Button("重试文件列表") { retry += 1 } }
-            else { ProgressView("读取文件列表…") }
+            } else if let error { Text(error).font(.caption); Button(L10n.text("Retry file list")) { retry += 1 } }
+            else { ProgressView(L10n.text("Loading file list…")) }
         } label: {
             VStack(alignment: .leading, spacing: 5) {
                 Text(commit.title).lineLimit(2)
@@ -71,7 +71,7 @@ private struct CommitRow: View {
     private func fileLabel(_ file: ChangedFile) -> some View {
         VStack(alignment: .leading, spacing: 3) {
             Text(file.filename).font(.callout)
-            Text(file.status + (file.previous_filename.map { " · 原路径：" + $0 } ?? "")).font(.caption).foregroundStyle(.secondary)
+            Text(file.status + (file.previous_filename.map { L10n.text(" · Previous path: ") + $0 } ?? "")).font(.caption).foregroundStyle(.secondary)
         }
     }
 }

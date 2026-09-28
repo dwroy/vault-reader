@@ -20,7 +20,7 @@ Markdown、HTML、PDF，原生支持
 先体验，再连接
 无需账号即可打开内置示例。连接自己的仓库需要 GitHub 或 GitLab 账号与只读 Token；Token 保存在设备钥匙串，不进入网页渲染层。
 
-免费，无广告、内购或订阅。阅读进度暂不跨设备同步；部分 HTML 和外部图片需要联网，Obsidian 插件及 Git LFS 文件内容不受支持。应用不提供内置 AI 聊天、生成或编辑。首版界面主要为简体中文，附英文使用帮助。
+免费，无广告、内购或订阅。阅读进度暂不跨设备同步；部分 HTML 和外部图片需要联网，Obsidian 插件及 Git LFS 文件内容不受支持。应用不提供内置 AI 聊天、生成或编辑。界面支持英语、简体中文、繁体中文、日语、韩语、西班牙语、巴西葡萄牙语、法语、德语、阿拉伯语、印地语和印尼语，跟随系统偏好，未支持的语言回退英语。资料保留原文；示例及完整帮助、隐私文档提供英语和中文版本。
 
 支持：https://github.com/dwroy/vault-reader/issues
 隐私政策：https://github.com/dwroy/vault-reader/blob/main/docs/PRIVACY.md

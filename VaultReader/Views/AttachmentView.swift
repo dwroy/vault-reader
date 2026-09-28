@@ -16,15 +16,15 @@ struct AttachmentView: View {
         Group {
             if let url { PreviewController(url: url) }
             else if tooLarge || (state.index.files[path]?.size ?? 0) > BlobStore.maximumFileBytes {
-                ContentUnavailableView { Label("文件超过 100 MB", systemImage: "doc") } actions: { Link("在 \(state.config.provider.title) 打开", destination: state.config.fileURL(path: path)) }
+                ContentUnavailableView { Label(L10n.text("File exceeds 100 MB"), systemImage: "doc") } actions: { Link(L10n.format("Open in %1$@", state.config.provider.title), destination: state.config.fileURL(path: path)) }
             } else if let error {
-                ContentUnavailableView { Label(cancelled ? "下载已取消" : "无法预览", systemImage: "doc") } description: { Text(error) } actions: { Button("重试") { cancelled = false; attempt += 1 } }
+                ContentUnavailableView { Label(cancelled ? L10n.text("Download cancelled") : L10n.text("Preview unavailable"), systemImage: "doc") } description: { Text(error) } actions: { Button(L10n.text("Retry")) { cancelled = false; attempt += 1 } }
             } else {
                 VStack(spacing: 16) {
                     Text((path as NSString).lastPathComponent)
                     if let size = state.index.files[path]?.size { Text(ByteCountFormatter.string(fromByteCount: Int64(size), countStyle: .file)).foregroundStyle(.secondary) }
-                    if let progress { ProgressView(value: progress).frame(maxWidth: 240) } else { ProgressView("正在准备预览…") }
-                    Button("取消") { cancelled = true; error = "附件尚未下载完成。" }
+                    if let progress { ProgressView(value: progress).frame(maxWidth: 240) } else { ProgressView(L10n.text("Preparing preview…")) }
+                    Button(L10n.text("Cancel")) { cancelled = true; error = L10n.text("The attachment has not finished downloading.") }
                 }.padding()
             }
         }
@@ -50,7 +50,7 @@ struct AttachmentSheet: View {
     let path: String
     @Environment(\.dismiss) private var dismiss
     var body: some View {
-        NavigationStack { AttachmentView(state: state, path: path).toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { dismiss() } } } }
+        NavigationStack { AttachmentView(state: state, path: path).toolbar { ToolbarItem(placement: .confirmationAction) { Button(L10n.text("Done")) { dismiss() } } } }
     }
 }
 struct VideoSheet: View {
@@ -58,7 +58,7 @@ struct VideoSheet: View {
     @State private var player = AVPlayer()
     @Environment(\.dismiss) private var dismiss
     var body: some View {
-        NavigationStack { VideoPlayer(player: player).toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { dismiss() } } } }
+        NavigationStack { VideoPlayer(player: player).toolbar { ToolbarItem(placement: .confirmationAction) { Button(L10n.text("Done")) { dismiss() } } } }
             .onAppear { player.replaceCurrentItem(with: AVPlayerItem(url: url)); player.play() }.onDisappear { player.pause() }
     }
 }

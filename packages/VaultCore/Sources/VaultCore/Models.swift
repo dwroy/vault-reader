@@ -102,25 +102,25 @@ public enum VaultError: LocalizedError, Equatable {
     case rateLimited(Date?), http(Int), network(Int)
     public var errorDescription: String? {
         switch self {
-        case .unauthorized: "Token 无效或已过期，请在设置中重新录入。"
-        case .forbidden: "仓库服务拒绝访问，请检查仓库授权及只读 Token 权限。"
-        case .missing: "未找到文件、仓库或分支。请检查路径及 Token 的仓库授权。"
-        case .tooLarge: "文件超过 100 MB，请在仓库网页打开。"
-        case .invalidTree: "仓库目录未完整返回，已保留上次完整缓存。"
-        case .corruptBlob: "文件校验失败，未写入缓存。请重试。"
-        case .invalidConfiguration: "请填写有效的平台地址、Owner、仓库和分支。"
-        case .noToken: "请先在设置中录入只读 Token。"
-        case .rateLimited(let date): date.map { "仓库服务请求额度已用完，\($0.formatted(date: .omitted, time: .shortened)) 后可重试。" } ?? "仓库服务暂时限制请求，请稍后重试。"
+        case .unauthorized: CoreL10n.text("The token is invalid or expired. Enter it again in Settings.")
+        case .forbidden: CoreL10n.text("Access denied. Check repository authorization and read-only token permissions.")
+        case .missing: CoreL10n.text("File, repository or branch not found. Check the path and the token's repository access.")
+        case .tooLarge: CoreL10n.text("The file exceeds 100 MB. Open it on the repository website.")
+        case .invalidTree: CoreL10n.text("The repository returned an incomplete file tree. Your last complete cache was kept.")
+        case .corruptBlob: CoreL10n.text("File verification failed. It was not cached. Please try again.")
+        case .invalidConfiguration: CoreL10n.text("Enter a valid server URL, owner, repository and branch.")
+        case .noToken: CoreL10n.text("Enter a read-only token in Settings first.")
+        case .rateLimited(let date): date.map { CoreL10n.format("The service's request limit was reached. Try again after %1$@.", $0.formatted(date: .omitted, time: .shortened)) } ?? CoreL10n.text("The service is temporarily limiting requests. Please try again later.")
         case .network(let code):
             switch URLError.Code(rawValue: code) {
-            case .notConnectedToInternet: "系统报告设备离线。请检查 Wi-Fi、蜂窝数据及本 App 的联网权限。已缓存内容仍可阅读。"
-            case .timedOut: "连接仓库服务超时，请检查网络后重试。已缓存内容仍可阅读。"
-            case .cannotFindHost, .dnsLookupFailed: "无法解析仓库服务地址，请检查域名与网络。已缓存内容仍可阅读。"
-            case .secureConnectionFailed, .serverCertificateUntrusted, .serverCertificateHasBadDate, .serverCertificateHasUnknownRoot: "无法验证仓库服务的安全连接，请检查服务证书、设备日期和网络。已缓存内容仍可阅读。"
-            case .networkConnectionLost: "与仓库服务的网络连接中断，请重试。已缓存内容仍可阅读。"
-            default: "无法连接仓库服务（网络错误 \(code)）。请检查网络后重试。已缓存内容仍可阅读。"
+            case .notConnectedToInternet: CoreL10n.text("Your device is offline. Check Wi-Fi, mobile data and this app's network permissions. Cached files remain available.")
+            case .timedOut: CoreL10n.text("The repository connection timed out. Check your network and retry. Cached files remain available.")
+            case .cannotFindHost, .dnsLookupFailed: CoreL10n.text("The repository address could not be resolved. Check the hostname and network. Cached files remain available.")
+            case .secureConnectionFailed, .serverCertificateUntrusted, .serverCertificateHasBadDate, .serverCertificateHasUnknownRoot: CoreL10n.text("The secure connection could not be verified. Check the server certificate, device date and network. Cached files remain available.")
+            case .networkConnectionLost: CoreL10n.text("The repository connection was lost. Please retry. Cached files remain available.")
+            default: CoreL10n.format("Could not connect to the repository (network error %1$ld). Check your network and retry. Cached files remain available.", code)
             }
-        case .http(let code): "仓库服务请求失败（\(code)），缓存仍可阅读。"
+        case .http(let code): CoreL10n.format("Repository request failed (%1$ld). Cached files remain available.", code)
         }
     }
 }

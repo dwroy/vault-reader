@@ -29,7 +29,7 @@ struct NoteShareContent: Identifiable {
 
     enum ShareError: LocalizedError {
         case empty
-        var errorDescription: String? { "这篇文章没有可分享的正文，请确认文章已加载完成。" }
+        var errorDescription: String? { L10n.text("There is no article text to share. Make sure the article has finished loading.") }
     }
 }
 

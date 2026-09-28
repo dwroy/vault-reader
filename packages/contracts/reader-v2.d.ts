@@ -2,8 +2,18 @@
 export interface ReadingSection { id: string; title: string; level: number }
 export interface ReadingPosition { heading: string | null; withinHeading: number; fraction: number }
 export interface TreeEntry { path: string; sha: string; size?: number; type: 'blob' | 'tree' }
+/** App chrome only; document contents retain their original language and direction. */
+export interface ReaderLocalization {
+  language: string;
+  notFound: string;
+  anotherVault: string;
+  imageNotFound: string;
+  properties: string;
+  imageUnavailable: string;
+}
 export interface ReaderAPI {
   readonly version: 2;
+  setLocalization(labels: ReaderLocalization): void;
   setTree(entries: TreeEntry[]): void;
   render(markdown: string, path: string, fontScale: number, colorScheme: 'light' | 'dark' | 'sepia'): boolean;
   scrollToAnchor(anchor: string): void;

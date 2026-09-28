@@ -26,6 +26,31 @@ import WebKit
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: any Error) { continuation?.resume(throwing: error); continuation = nil }
 }
 final class RendererTests: XCTestCase {
+    @MainActor func testOfflineArabicAndHindiGlyphsRenderDistinctly() async throws {
+        let page = RendererPage(); try await page.load()
+        let result = try await page.view.callAsyncJavaScript("""
+        VaultReader.render('# مرحبًا\\n\\nनमस्ते\\n\\n```swift\\nlet path = "a/b"\\n```', 'mixed.md');
+        const arabic = await document.fonts.load('32px "Noto Sans Arabic Variable"', 'سم');
+        const hindi = await document.fonts.load('32px "Noto Sans Devanagari Variable"', 'कग');
+        const canvas = document.createElement('canvas'); canvas.width = 100; canvas.height = 80;
+        document.body.append(canvas);
+        const context = canvas.getContext('2d');
+        context.font = '32px ' + getComputedStyle(document.querySelector('p')).fontFamily;
+        function glyph(text) {
+          context.clearRect(0, 0, 100, 80); context.fillText(text, 10, 50);
+          return canvas.toDataURL();
+        }
+        const result = {arabic: arabic.length, hindi: hindi.length,
+          arabicDistinct: glyph('س') !== glyph('م'), hindiDistinct: glyph('क') !== glyph('ग'),
+          codeDirection: getComputedStyle(document.querySelector('code')).direction};
+        canvas.remove(); return result;
+        """, arguments: [:], in: nil, contentWorld: .page) as! [String: Any]
+        XCTAssertGreaterThan(result["arabic"] as? Int ?? 0, 0)
+        XCTAssertGreaterThan(result["hindi"] as? Int ?? 0, 0)
+        XCTAssertEqual(result["arabicDistinct"] as? Bool, true, "Arabic must render real glyphs, not identical missing-glyph boxes")
+        XCTAssertEqual(result["hindiDistinct"] as? Bool, true, "Hindi must render real glyphs, not identical missing-glyph boxes")
+        XCTAssertEqual(result["codeDirection"] as? String, "ltr")
+    }
     @MainActor func testShareUsesCompleteRenderedBodyWithoutMetadata() async throws {
         let page = RendererPage(); try await page.load()
         let markdown = """

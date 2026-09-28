@@ -130,9 +130,13 @@ struct RendererWebView: UIViewRepresentable {
             renderTask = Task {
                 defer { if generation == currentGeneration { updating = false; if lastRenderKey == key { update() } } }
                 do {
+                    let labels = ["language": L10n.language, "notFound": L10n.text("Not found"),
+                                  "anotherVault": L10n.text("Another vault"), "imageNotFound": L10n.text("Image not found"),
+                                  "properties": L10n.text("Properties"), "imageUnavailable": L10n.text("Image unavailable. Connect and refresh to retry.")]
+                    _ = try await web.callAsyncJavaScript("VaultReader.setLocalization(labels); return true", arguments: ["labels": labels], in: nil, contentWorld: .page)
                     if lastTree != tree {
                         let entries = try Self.json(entriesToRender)
-                        _ = try await step("载入文件列表") { try await web.callAsyncJavaScript("if (VaultReader.version !== 2) throw new Error('Unsupported reader contract'); VaultReader.setTree(JSON.parse(entries)); return true", arguments: ["entries": entries], in: nil, contentWorld: .page) }
+                        _ = try await step(L10n.text("Loading file list")) { try await web.callAsyncJavaScript("if (VaultReader.version !== 2) throw new Error('Unsupported reader contract'); VaultReader.setTree(JSON.parse(entries)); return true", arguments: ["entries": entries], in: nil, contentWorld: .page) }
                         try Task.checkCancellation()
                         lastTree = tree
                     }
@@ -140,10 +144,10 @@ struct RendererWebView: UIViewRepresentable {
                     let reflow = renderedOnce && parent.readingOptions != nil
                     if reflow {
                         // Capture, reflow and restore inside the page so no WebKit object has to cross back.
-                        _ = try await step("重新排版") { try await web.callAsyncJavaScript("const position = VaultReader.capturePosition(); VaultReader.setReadingMode(book); VaultReader.render(markdown, path, scale, theme); VaultReader.restorePosition(position); return true", arguments: arguments, in: nil, contentWorld: .page) }
+                        _ = try await step(L10n.text("Reflowing")) { try await web.callAsyncJavaScript("const position = VaultReader.capturePosition(); VaultReader.setReadingMode(book); VaultReader.render(markdown, path, scale, theme); VaultReader.restorePosition(position); return true", arguments: arguments, in: nil, contentWorld: .page) }
                         try await Task.sleep(for: .milliseconds(50))
                     } else {
-                        _ = try await step("排版") { try await web.callAsyncJavaScript("VaultReader.setReadingMode(book); VaultReader.render(markdown, path, scale, theme); return true", arguments: arguments, in: nil, contentWorld: .page) }
+                        _ = try await step(L10n.text("Rendering")) { try await web.callAsyncJavaScript("VaultReader.setReadingMode(book); VaultReader.render(markdown, path, scale, theme); return true", arguments: arguments, in: nil, contentWorld: .page) }
                     }
                     if !renderedOnce {
                         // A programmatic multi-level navigation can load WebKit before it is visible.
@@ -158,36 +162,36 @@ struct RendererWebView: UIViewRepresentable {
                         // Poll font readiness with cancellable native waits instead.
                         for _ in 0..<100 {
                             try Task.checkCancellation()
-                            if (try await step("等待字体") { try await web.evaluateJavaScript("document.fonts.status") }) as? String == "loaded" { break }
+                            if (try await step(L10n.text("Waiting for fonts")) { try await web.evaluateJavaScript("document.fonts.status") }) as? String == "loaded" { break }
                             try await Task.sleep(for: .milliseconds(50))
                         }
                         try await Task.sleep(for: .milliseconds(35))
                         try Task.checkCancellation()
                         if let position = parent.session.position, parent.readingOptions != nil, parent.anchor.isEmpty {
                             let saved = try Self.json(position)
-                            _ = try await step("恢复位置") { try await web.callAsyncJavaScript("VaultReader.restorePosition(JSON.parse(position)); return true", arguments: ["position": saved], in: nil, contentWorld: .page) }
+                            _ = try await step(L10n.text("Restoring position")) { try await web.callAsyncJavaScript("VaultReader.restorePosition(JSON.parse(position)); return true", arguments: ["position": saved], in: nil, contentWorld: .page) }
                             try await Task.sleep(for: .milliseconds(50))
                         } else if let y = parent.session.scrollY {
-                            _ = try await step("恢复位置") { try await web.callAsyncJavaScript("window.scrollTo(0, y); return true", arguments: ["y": y], in: nil, contentWorld: .page) }
+                            _ = try await step(L10n.text("Restoring position")) { try await web.callAsyncJavaScript("window.scrollTo(0, y); return true", arguments: ["y": y], in: nil, contentWorld: .page) }
                             try await Task.sleep(for: .milliseconds(35))
                         } else if !parent.anchor.isEmpty {
-                            _ = try await step("跳转标题") { try await web.callAsyncJavaScript("VaultReader.scrollToAnchor(anchor); return true", arguments: ["anchor": parent.anchor], in: nil, contentWorld: .page) }
+                            _ = try await step(L10n.text("Opening heading")) { try await web.callAsyncJavaScript("VaultReader.scrollToAnchor(anchor); return true", arguments: ["anchor": parent.anchor], in: nil, contentWorld: .page) }
                         }
                         renderedOnce = true
                         web.accessibilityIdentifier = "reader-ready"
                         parent.state.recordHomeRendered(parent.path)
                     }
                     if parent.readingOptions != nil {
-                        if let outline = try Self.decode([ReadingOutline].self, from: await step("读取章节目录") { try await web.evaluateJavaScript("JSON.stringify(VaultReader.outline())") }) {
+                        if let outline = try Self.decode([ReadingOutline].self, from: await step(L10n.text("Loading contents")) { try await web.evaluateJavaScript("JSON.stringify(VaultReader.outline())") }) {
                             parent.session.onOutline?(outline)
                         }
                         if let section = parent.session.sectionRequest {
                             parent.session.sectionRequest = nil
-                            _ = try await step("跳转章节") { try await web.callAsyncJavaScript("VaultReader.scrollToSection(id); return true", arguments: ["id": section], in: nil, contentWorld: .page) }
+                            _ = try await step(L10n.text("Opening section")) { try await web.callAsyncJavaScript("VaultReader.scrollToSection(id); return true", arguments: ["id": section], in: nil, contentWorld: .page) }
                         }
                     }
                     try Task.checkCancellation()
-                    if parent.readingOptions != nil, let position = try Self.decode(ReadingLocation.self, from: await step("记录位置") { try await web.evaluateJavaScript(Self.capture) }) {
+                    if parent.readingOptions != nil, let position = try Self.decode(ReadingLocation.self, from: await step(L10n.text("Saving position")) { try await web.evaluateJavaScript(Self.capture) }) {
                         try Task.checkCancellation()
                         parent.session.position = position; parent.session.onPosition?(position)
                     }
@@ -196,7 +200,7 @@ struct RendererWebView: UIViewRepresentable {
                     guard !Task.isCancelled, generation == currentGeneration else { return }
                     // A lost or stale page is reloaded once and restored from the last saved position.
                     if recoveries == 0 { recoveries += 1; recover(web) }
-                    else { parent.onError("排版加载失败：\(error.localizedDescription)") }
+                    else { parent.onError(L10n.format("Could not render: %1$@", error.localizedDescription)) }
                 }
             }
         }

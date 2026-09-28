@@ -1,8 +1,14 @@
 import XCTest
 final class ReadingFlowTests: XCTestCase {
+    @MainActor private func revealReadme(_ app: XCUIApplication) {
+        XCTAssertTrue(app.buttons["directoryActions"].waitForExistence(timeout: 15))
+        for _ in 0..<6 { if app.staticTexts["README.md"].exists && app.staticTexts["README.md"].isHittable { return }; app.swipeUp() }
+        XCTAssertTrue(app.staticTexts["README.md"].isHittable)
+    }
     @MainActor func testShareBodyFromNoteAndReadingMode() throws {
-        let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
-        XCTAssertTrue(app.staticTexts["README.md"].waitForExistence(timeout: 15)); app.staticTexts["README.md"].tap()
+        let app = XCUIApplication(); app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "--demo"]; app.launch()
+        revealReadme(app)
+        XCTAssertTrue(app.staticTexts["README.md"].exists); app.staticTexts["README.md"].tap()
         XCTAssertTrue(app.webViews["reader-ready"].waitForExistence(timeout: 15))
         func shareAndCopy(_ name: String) {
             app.buttons["笔记操作"].tap()
@@ -25,8 +31,9 @@ final class ReadingFlowTests: XCTestCase {
         shareAndCopy("reading")
     }
     @MainActor func testDirectoryNoteWikiAndImage() throws {
-        let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
-        XCTAssertTrue(app.staticTexts["README.md"].waitForExistence(timeout: 15))
+        let app = XCUIApplication(); app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "--demo"]; app.launch()
+        revealReadme(app)
+        XCTAssertTrue(app.staticTexts["README.md"].exists)
         app.staticTexts["README.md"].tap()
         XCTAssertTrue(app.webViews.staticTexts["我的知识库"].waitForExistence(timeout: 15))
         let home = XCTAttachment(screenshot: app.screenshot()); home.name = "directory-note"; home.lifetime = .keepAlways; add(home)
@@ -41,7 +48,7 @@ final class ReadingFlowTests: XCTestCase {
         let shot = XCTAttachment(screenshot: app.screenshot()); shot.name = "image-preview"; shot.lifetime = .keepAlways; add(shot)
     }
     @MainActor func testDirectoryAndSettings() throws {
-        let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
+        let app = XCUIApplication(); app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "--demo"]; app.launch()
         XCTAssertTrue(app.tabBars.buttons["目录"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.tabBars.buttons["目录"].isSelected)
         XCTAssertEqual(app.tabBars.buttons.allElementsBoundByIndex.map(\.label), ["目录", "阅读", "最近", "搜索"])
@@ -66,7 +73,7 @@ final class ReadingFlowTests: XCTestCase {
         XCTAssertTrue(app.webViews.staticTexts["公园的一天"].waitForExistence(timeout: 5))
     }
     @MainActor func testInvalidTokenShowsRecoverableError() throws {
-        let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
+        let app = XCUIApplication(); app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "--demo"]; app.launch()
         openSettings(app)
         revealToken(app)
         let token = app.secureTextFields["token"].firstMatch
@@ -79,7 +86,7 @@ final class ReadingFlowTests: XCTestCase {
     }
 
     @MainActor func testSearchAndRecentFiles() throws {
-        let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
+        let app = XCUIApplication(); app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "--demo"]; app.launch()
         XCTAssertTrue(app.tabBars.buttons["搜索"].waitForExistence(timeout: 15)); app.tabBars.buttons["搜索"].tap()
         let field = app.searchFields.firstMatch
         XCTAssertTrue(field.waitForExistence(timeout: 5)); field.tap(); field.typeText("银杏")
@@ -92,7 +99,7 @@ final class ReadingFlowTests: XCTestCase {
         XCTAssertTrue(app.webViews.staticTexts["公园的一天"].waitForExistence(timeout: 5))
     }
     @MainActor func testHTMLPersistsAfterTerminationAndIsolatesFiles() throws {
-        let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
+        let app = XCUIApplication(); app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "--demo"]; app.launch()
         func open(_ name: String) {
             XCTAssertTrue(app.tabBars.buttons["目录"].waitForExistence(timeout: 15)); app.tabBars.buttons["目录"].tap()
             let file = app.staticTexts[name]
@@ -113,7 +120,7 @@ final class ReadingFlowTests: XCTestCase {
     }
 
     @MainActor func testSavedVaultMenuSwitchesAndReturnsOffline() throws {
-        let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
+        let app = XCUIApplication(); app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "--demo"]; app.launch()
         XCTAssertTrue(app.buttons["切换知识库"].waitForExistence(timeout: 15)); app.buttons["切换知识库"].tap()
         app.buttons["example/synthetic-other · main"].tap()
         XCTAssertTrue(app.staticTexts["example / synthetic-other"].waitForExistence(timeout: 10))
@@ -122,7 +129,7 @@ final class ReadingFlowTests: XCTestCase {
     }
 
     @MainActor func testGitLabSetupOffersServerAndNamespace() throws {
-        let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
+        let app = XCUIApplication(); app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "--demo"]; app.launch()
         openSettings(app)
         app.buttons["添加知识库"].tap()
         app.buttons["providerPicker"].tap(); app.buttons["GitLab"].tap()

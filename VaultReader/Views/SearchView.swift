@@ -13,15 +13,15 @@ struct SearchView: View {
             Section {
                 HStack {
                     if state.isPrefetching { ProgressView().controlSize(.small) }
-                    Text("正文已补全 \(state.prefetchCompleted)/\(state.prefetchTotal)").font(.caption).foregroundStyle(.secondary)
+                    Text(L10n.format("Text cached: %1$ld/%2$ld", state.prefetchCompleted, state.prefetchTotal)).font(.caption).foregroundStyle(.secondary)
                     Spacer()
                     if !state.isPrefetching && state.prefetchCompleted < state.prefetchTotal {
-                        Button("继续") { state.startPrefetch() }
+                        Button(L10n.text("Continue")) { state.startPrefetch() }
                     }
                 }
                 if let error = state.prefetchError { Text(error).font(.caption).foregroundStyle(.secondary) }
                 if !query.isEmpty {
-                    Button(fullText ? "正在搜索文件名与正文" : "搜索正文") { fullText = true }.disabled(fullText)
+                    Button(fullText ? L10n.text("Searching names and text") : L10n.text("Search text")) { fullText = true }.disabled(fullText)
                 }
             }
             ForEach(visibleHits) { hit in
@@ -33,11 +33,11 @@ struct SearchView: View {
                     }.padding(.vertical, 3)
                 }
             }
-            if !query.isEmpty && visibleHits.isEmpty && !searching { Text("没有匹配的结果").foregroundStyle(.secondary) }
+            if !query.isEmpty && visibleHits.isEmpty && !searching { Text(L10n.text("No results")).foregroundStyle(.secondary) }
         }
-        .navigationTitle("搜索")
+        .navigationTitle(L10n.text("Search"))
         .task { state.startPrefetch() }
-        .searchable(text: $query, prompt: "文件名；回车搜索正文")
+        .searchable(text: $query, prompt: L10n.text("Filename; return to search text"))
         .onChange(of: query) { _, _ in fullText = false }
         .onSubmit(of: .search) { fullText = true }
         .task(id: "\(query)|\(fullText)|\(state.prefetchCompleted)|\(state.treeSHA)") {

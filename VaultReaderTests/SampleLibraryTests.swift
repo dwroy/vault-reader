@@ -21,7 +21,7 @@ final class SampleLibraryTests: XCTestCase {
         XCTAssertNil(defaults.data(forKey: "repositoryLibrary"))
         let reopened = AppState(); await reopened.start()
         XCTAssertTrue(reopened.demo)
-        XCTAssertNotNil(reopened.index.files["files/夜航手记.pdf"])
+        XCTAssertEqual(reopened.index.entries.filter { $0.ext == "pdf" }.count, 1)
         await reopened.leaveSamples()
         XCTAssertFalse(reopened.demo); XCTAssertTrue(reopened.needsSetup)
         XCTAssertTrue(reopened.library.repositories.isEmpty)

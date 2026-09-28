@@ -12,7 +12,9 @@ args = parser.parse_args()
 root = Path(__file__).resolve().parents[1]
 metadata = root / 'docs/app-store'
 errors = []
-for locale in ['zh-Hans', 'en-US']:
+store_locales = ['en-US', 'zh-Hans', 'zh-Hant', 'ja', 'ko', 'es-MX', 'pt-BR', 'fr-FR', 'de-DE', 'ar-SA', 'hi', 'id']
+app_locales = ['en', 'zh-Hans', 'zh-Hant', 'ja', 'ko', 'es', 'pt-BR', 'fr', 'de', 'ar', 'hi', 'id']
+for locale in store_locales:
     for field, limit in {'name': 30, 'subtitle': 30, 'keywords': 100,
                          'promotional_text': 170, 'description': 4000}.items():
         value = (metadata / locale / (field + '.txt')).read_text().strip()
@@ -31,6 +33,7 @@ if args.app:
     info = plistlib.loads((args.app / 'Info.plist').read_bytes())
     for key, expected in [('CFBundleIdentifier', 'com.dwroy.vaultreader'),
                           ('CFBundleShortVersionString', '1.0.0'),
+                          ('CFBundleDevelopmentRegion', 'en'),
                           ('ITSAppUsesNonExemptEncryption', False)]:
         if info.get(key) != expected:
             errors.append(f'Unexpected {key}: {info.get(key)}')
@@ -41,6 +44,18 @@ if args.app:
         errors.append('Bundled privacy manifest differs from source')
     if not (args.app / 'renderer/vendor/THIRD-PARTY-NOTICES.txt').is_file():
         errors.append('Missing renderer license notices')
+    for locale in app_locales:
+        if not (args.app / (locale + '.lproj') / 'Localizable.strings').is_file():
+            errors.append(f'Missing app locale: {locale}')
+    core = args.app / 'VaultCore_VaultCore.bundle'
+    core_locales = {path.parent.name.lower() for path in core.glob('*.lproj/Localizable.strings')}
+    for locale in app_locales:
+        if locale.lower() + '.lproj' not in core_locales:
+            errors.append(f'Missing repository-error locale: {locale}')
+    for script in ['arabic', 'devanagari']:
+        font = args.app / 'renderer/vendor/fonts' / f'noto-sans-{script}-{script}-wght-normal.woff2'
+        if not font.is_file():
+            errors.append(f'Missing offline {script} font')
     print(f"Bundle: {info.get('CFBundleShortVersionString')} ({info.get('CFBundleVersion')}), SDK {info.get('DTSDKName')}")
 if args.check_urls:
     for name in ['support_url', 'privacy_url']:

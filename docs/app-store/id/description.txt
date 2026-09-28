@@ -1,0 +1,19 @@
+AI Native. Siap dibaca.
+Pustaka pengetahuan dengan dukungan bawaan untuk Markdown, HTML, dan PDF.
+
+Atur catatan dan laporan dengan alat eksternal seperti Claude Code atau Codex. Baca di iPhone dan iPad dengan Vault Reader. Hubungkan GitHub, GitLab.com, atau GitLab mandiri melalui HTTPS. Akses hanya-baca tidak pernah mengubah berkas asli.
+
+• Markdown: catatan, dokumen, wikilink, sematan, tabel, dan kode.
+• HTML: laporan dan dokumen interaktif.
+• PDF: buku dan makalah dengan pembaca PDF bawaan serta posisi halaman tersimpan.
+
+Sesuaikan ukuran teks dan tema, gunakan daftar isi, dan beralih repositori. Cari nama berkas dan teks Markdown dalam cache. Lihat commit terbaru untuk menemukan pembaruan. Berkas yang sudah di-cache dapat dibaca luring. Posisi baca disimpan di perangkat ini.
+
+Coba pustaka contoh tanpa akun. Repositori Anda memerlukan token hanya-baca yang disimpan di Keychain perangkat dan tidak pernah diberikan ke konten web.
+
+Gratis, tanpa iklan, pembelian, atau langganan. Tidak ada chat, pembuatan konten, atau penyuntingan AI bawaan. Progres baca tidak disinkronkan antarperangkat. Beberapa HTML dan gambar eksternal memerlukan internet. Plugin Obsidian dan isi berkas Git LFS tidak didukung.
+
+Antarmuka mendukung 12 bahasa, termasuk Indonesia, dengan bahasa Inggris sebagai bahasa cadangan. Dokumen tetap dalam bahasa asli. Contoh serta dokumen bantuan dan privasi lengkap tersedia dalam bahasa Inggris dan Tionghoa.
+
+Support: https://github.com/dwroy/vault-reader/issues
+Privacy: https://github.com/dwroy/vault-reader/blob/main/docs/PRIVACY.md

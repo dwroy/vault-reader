@@ -38,11 +38,12 @@ final class MockProtocol: URLProtocol, @unchecked Sendable {
     func testTruncatedTreeIsNeverAccepted() async throws {
         do { _ = try await client().tree(sha: "tree"); XCTFail() } catch { XCTAssertEqual(error as? VaultError, .invalidTree) }
     }
-    func testOfflineTransportHasActionableChineseMessage() async throws {
+    func testOfflineTransportHasActionableLocalizedMessage() async throws {
         do { _ = try await client("offline").branch(etag: nil); XCTFail() }
         catch {
             XCTAssertEqual(error as? VaultError, .network(URLError.notConnectedToInternet.rawValue))
-            XCTAssertTrue(error.localizedDescription.contains("已缓存内容仍可阅读"))
+            XCTAssertFalse(error.localizedDescription.isEmpty)
+            XCTAssertNotEqual(error.localizedDescription, VaultError.unauthorized.localizedDescription)
         }
     }
 

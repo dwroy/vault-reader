@@ -16,7 +16,7 @@ struct RootView: View {
     @Environment(\.colorScheme) private var colorScheme
     var body: some View {
         Group {
-            if !state.ready { ProgressView("打开知识库…") }
+            if !state.ready { ProgressView(L10n.text("Opening library…")) }
             else if state.needsSetup && state.index.entries.isEmpty && state.library.repositories.isEmpty {
                 WelcomeView(state: state)
             } else {
@@ -33,12 +33,12 @@ struct RootView: View {
                                             }
                                         }
                                         Divider()
-                                        Button("添加知识库", systemImage: "plus") { state.addingRepository = true; state.showSettings = true }
-                                    } label: { BrandMark(size: 28) }.accessibilityLabel("切换知识库")
+                                        Button(L10n.text("Add library"), systemImage: "plus") { state.addingRepository = true; state.showSettings = true }
+                                    } label: { BrandMark(size: 28) }.accessibilityLabel(L10n.text("Switch library"))
                                 }
                             }
                             .navigationDestination(for: ReaderRoute.self) { route in destination(route, path: $directoryPath) }
-                    }.tabItem { Label("目录", systemImage: "folder") }.tag(ReaderTab.directory)
+                    }.tabItem { Label(L10n.text("Files"), systemImage: "folder") }.tag(ReaderTab.directory)
                     NavigationStack(path: $readingPath) {
                         ReadingProjectsView(state: state) { config, resumePath in
                             readingProject = config.storageKey
@@ -52,15 +52,15 @@ struct RootView: View {
                             }
                         }
                         .navigationDestination(for: ReaderRoute.self) { route in destination(route, path: $readingPath) }
-                    }.tabItem { Label("阅读", systemImage: "book") }.tag(ReaderTab.reading)
+                    }.tabItem { Label(L10n.text("Reading"), systemImage: "book") }.tag(ReaderTab.reading)
                     NavigationStack(path: $recentPath) {
                         RecentView(state: state)
                             .navigationDestination(for: ReaderRoute.self) { route in destination(route, path: $recentPath) }
-                    }.tabItem { Label("最近", systemImage: "clock") }.tag(ReaderTab.recent)
+                    }.tabItem { Label(L10n.text("Recent"), systemImage: "clock") }.tag(ReaderTab.recent)
                     NavigationStack(path: $searchPath) {
                         SearchView(state: state)
                             .navigationDestination(for: ReaderRoute.self) { route in destination(route, path: $searchPath) }
-                    }.tabItem { Label("搜索", systemImage: "magnifyingglass") }.tag(ReaderTab.search)
+                    }.tabItem { Label(L10n.text("Search"), systemImage: "magnifyingglass") }.tag(ReaderTab.search)
                 }.id(state.config.identity + "#" + state.config.branch)
 
             }
@@ -108,23 +108,23 @@ struct WelcomeView: View {
             VStack(alignment: .leading, spacing: 24) {
                 Spacer()
                 BrandIdentity(markSize: 68)
-                Text("Agent 整理，\n随手开读。").font(.system(size: 38, weight: .semibold, design: .serif)).lineSpacing(6)
-                Text("用 Claude、Codex 等工具维护知识，\n在手机上随时阅读。").font(.body).foregroundStyle(.secondary).lineSpacing(6)
+                Text(L10n.text("AI Native.\nReady to read.")).font(.system(size: 38, weight: .semibold, design: .serif)).lineSpacing(6)
+                Text(L10n.text("Organize knowledge with Claude, Codex and other tools. Read it wherever you are.")).font(.body).foregroundStyle(.secondary).lineSpacing(6)
                 if let error = state.error { Text(error).font(.callout).foregroundStyle(.red) }
-                Button { state.showSettings = true } label: { Label("连接知识库", systemImage: "arrow.right").frame(maxWidth: .infinity).padding(.vertical, 8).foregroundStyle(colorScheme == .dark ? Color.black : Color.white) }.buttonStyle(.borderedProminent)
+                Button { state.showSettings = true } label: { Label(L10n.text("Connect library"), systemImage: "arrow.forward").frame(maxWidth: .infinity).padding(.vertical, 8).foregroundStyle(colorScheme == .dark ? Color.black : Color.white) }.buttonStyle(.borderedProminent)
                 Button {
                     openingSamples = true
                     Task {
                         defer { openingSamples = false }
                         do { try await state.startSamples() } catch { state.error = error.localizedDescription }
                     }
-                } label: { Label("体验示例知识库", systemImage: "book").frame(maxWidth: .infinity).padding(.vertical, 6) }
+                } label: { Label(L10n.text("Try sample library"), systemImage: "book").frame(maxWidth: .infinity).padding(.vertical, 6) }
                     .buttonStyle(.bordered).disabled(openingSamples).accessibilityIdentifier("openSamples")
-                Text("原生支持 Git · Markdown · HTML\nGitHub / GitLab 只读访问 · Token 保存在设备钥匙串").font(.caption).foregroundStyle(.secondary).lineSpacing(4)
+                Text(L10n.text("Native Markdown · HTML · PDF\nRead-only GitHub / GitLab access · Tokens stay in Keychain")).font(.caption).foregroundStyle(.secondary).lineSpacing(4)
                 HStack {
-                    NavigationLink("使用帮助") { AppDocumentView(document: .support) }
+                    NavigationLink(L10n.text("Help")) { AppDocumentView(document: .support) }
                     Spacer()
-                    NavigationLink("隐私政策") { AppDocumentView(document: .privacy) }
+                    NavigationLink(L10n.text("Privacy Policy")) { AppDocumentView(document: .privacy) }
                 }.font(.footnote)
                 Spacer(); Spacer()
             }.frame(maxWidth: 600).frame(maxWidth: .infinity).padding(30).navigationTitle("Vault Reader").navigationBarTitleDisplayMode(.inline)
@@ -140,7 +140,7 @@ struct StatusBanner: View {
             HStack(spacing: 7) {
                 if state.isRefreshing { ProgressView().controlSize(.mini) }
                 else { Image(systemName: state.isOffline ? "wifi.slash" : "checkmark.circle") }
-                Text(state.isOffline ? "离线 · " + notice : notice).font(.caption)
+                Text(state.isOffline ? L10n.text("Offline · ") + notice : notice).font(.caption)
                 Spacer(minLength: 0)
             }.foregroundStyle(state.isOffline ? Color.orange : Color.secondary)
                 .padding(.horizontal, 18).padding(.vertical, 7).background(.bar)

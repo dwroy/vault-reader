@@ -12,7 +12,7 @@ struct ReadingProjectsView: View {
         List {
             let recent = state.reading.history.recentMarkdown(limit: 3) { state.index.files[$0.path] != nil && state.fileDisplay.includes($0.path) }
             if !recent.isEmpty {
-                Section("继续阅读") {
+                Section(L10n.text("Continue reading")) {
                     ForEach(Array(recent.enumerated()), id: \.element.id) { offset, record in
                         Button { openProject(state.config, record.path) } label: {
                             ReadingRow(title: record.title, format: "\(state.config.owner)/\(state.config.repo)", record: record)
@@ -20,7 +20,7 @@ struct ReadingProjectsView: View {
                     }
                 }
             }
-            Section("项目") {
+            Section(L10n.text("Projects")) {
                 ForEach(state.library.repositories, id: \.storageKey) { config in
                     Button { openProject(config, nil) } label: {
                         HStack(spacing: 14) {
@@ -29,13 +29,13 @@ struct ReadingProjectsView: View {
                                 Text("\(config.owner)/\(config.repo)").foregroundStyle(.primary)
                                 Text("\(config.provider.title) · \(config.branch)").font(.caption).foregroundStyle(.secondary)
                             }
-                            Spacer(); Image(systemName: "chevron.right").font(.caption.weight(.semibold)).foregroundStyle(.tertiary)
+                            Spacer(); Image(systemName: "chevron.forward").font(.caption.weight(.semibold)).foregroundStyle(.tertiary)
                         }.padding(.vertical, 6)
                     }.disabled(state.switchingRepository).accessibilityIdentifier("reading-project-" + config.owner + "/" + config.repo + "-" + config.branch)
                 }
             }
         }
-        .navigationTitle("阅读").navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(L10n.text("Reading")).navigationBarTitleDisplayMode(.inline)
     }
 }
 
@@ -59,7 +59,7 @@ struct ReadingLibraryView: View {
                 Text("\(state.config.owner)/\(state.config.repo)").font(.subheadline).foregroundStyle(.secondary)
             }
             if !recent.isEmpty {
-                Section("最近阅读") {
+                Section(L10n.text("Recently read")) {
                     ForEach(Array(recent.enumerated()), id: \.element.id) { offset, record in
                         NavigationLink(value: readingRoute(record.path, index: state.index)) {
                             ReadingRow(title: record.title, format: "Markdown", record: record)
@@ -68,13 +68,13 @@ struct ReadingLibraryView: View {
                 }
             }
             if let error = indexError {
-                Section { Text("部分书单暂未载入：\(error)").font(.caption).foregroundStyle(.secondary) }
+                Section { Text(L10n.format("Some book lists could not be loaded: %1$@", error)).font(.caption).foregroundStyle(.secondary) }
             }
             if listed == nil {
-                Section { HStack(spacing: 10) { ProgressView(); Text("正在读取书单…").foregroundStyle(.secondary) } }
+                Section { HStack(spacing: 10) { ProgressView(); Text(L10n.text("Loading book lists…")).foregroundStyle(.secondary) } }
             } else if let listed, !listed.isEmpty {
                 ForEach(BookList.groups(books)) { group in
-                    Section(group.title ?? "书籍") {
+                    Section(group.title ?? L10n.text("Books")) {
                         ForEach(group.books) { book in
                             NavigationLink(value: ReaderRoute.book(book)) { BookRow(book: book, latest: latest(book)) }
                                 .accessibilityIdentifier("reading-book:" + book.title)
@@ -86,7 +86,7 @@ struct ReadingLibraryView: View {
                 if !unlisted.isEmpty {
                     Section {
                         ForEach(unlisted) { entry in fileLink(entry) }
-                    } header: { Text("未列入书单") } footer: { Text("在书单里给它们加上书名和角色后，会归到对应的书下。") }
+                    } header: { Text(L10n.text("Not in a book list")) } footer: { Text(L10n.text("Add a title and role in your book list to group these files under a book.")) }
                 }
             } else {
                 ForEach(catalog.books.filter { matches($0.title) || $0.editions.contains(where: { matches($0.name) }) }) { book in
@@ -97,16 +97,16 @@ struct ReadingLibraryView: View {
             }
             let articles = listFiles.compactMap { state.index.files[$0] }.filter { state.fileDisplay.includes($0.path) } + catalog.indexes.filter { !listFiles.contains($0.path) }
             if !articles.isEmpty {
-                Section("文章与书单") {
+                Section(L10n.text("Articles & book lists")) {
                     ForEach(articles.filter { matches($0.name) }) { entry in fileLink(entry) }
                 }
             }
             if listed != nil && catalog.books.isEmpty && articles.isEmpty && recent.isEmpty && (listed ?? []).isEmpty {
-                ContentUnavailableView("还没有阅读内容", systemImage: "books.vertical", description: Text("在 README 的属性里写“书单: 书单文件路径”，或新建名为“书单.md”的文件，即可按书单列书。也可以从目录打开文章，在操作菜单中选择“用阅读器打开”。"))
+                ContentUnavailableView(L10n.text("No reading content yet"), systemImage: "books.vertical", description: Text(L10n.text("Add “booklist: path/to/booklist.md” to README frontmatter, or create booklist.md. You can also open any article from Files and choose Open in reader.")))
             }
         }
-        .navigationTitle("书籍与文章").navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $query, prompt: "查找书籍、论文、文章")
+        .navigationTitle(L10n.text("Books & articles")).navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $query, prompt: L10n.text("Find books, papers and articles"))
         .task(id: state.config.storageKey + state.treeSHA + String(state.fileDisplay.hideDotFiles)) { await discoverLists() }
     }
     private func fileLink(_ entry: TreeEntry) -> some View {
@@ -165,7 +165,7 @@ private struct BookRow: View {
                 Text(book.title).foregroundStyle(.primary).lineLimit(2)
                 let info = [book.author, book.status, book.rating].compactMap { $0 }
                 if !info.isEmpty { Text(info.joined(separator: " · ")).font(.caption).foregroundStyle(.secondary).lineLimit(2) }
-                if let latest { Text("上次：\(latest.title) · \(progressText(latest))").font(.caption).foregroundStyle(.secondary).lineLimit(1) }
+                if let latest { Text(L10n.format("Last read: %1$@ · %2$@", latest.title, progressText(latest))).font(.caption).foregroundStyle(.secondary).lineLimit(1) }
             }
         }.padding(.vertical, 5)
     }
@@ -195,7 +195,7 @@ struct BookDetailView: View {
                 }
             }
             if book.links.isEmpty && book.comments.isEmpty {
-                Section { Text("书单里还没有这本书的文件。整理好原书、全文、精简版或笔记后，在书单里这本书下面加一行即可。").font(.callout).foregroundStyle(.secondary) }
+                Section { Text(L10n.text("No files are listed for this book yet. Add links to the original, full text, summary or notes under the book in your book list.")).font(.callout).foregroundStyle(.secondary) }
             }
         }
         .navigationTitle(book.title).navigationBarTitleDisplayMode(.inline)
@@ -220,7 +220,7 @@ struct BookDetailView: View {
                 Image(systemName: "questionmark.folder").foregroundStyle(.secondary).frame(width: 24)
                 VStack(alignment: .leading, spacing: 5) {
                     Text(link.label).foregroundStyle(.secondary).lineLimit(2)
-                    Text("未找到：\(link.target)").font(.caption).foregroundStyle(.secondary).lineLimit(2)
+                    Text(L10n.format("Not found: %1$@", link.target)).font(.caption).foregroundStyle(.secondary).lineLimit(2)
                 }
             }.padding(.vertical, 5).accessibilityIdentifier("reading-missing:" + link.target)
         }
@@ -230,21 +230,21 @@ struct BookDetailView: View {
 extension BookRole {
     var title: String {
         switch self {
-        case .condensed: "精简版"
-        case .fulltext: "全文"
-        case .reader: "阅读器"
-        case .original: "原书"
-        case .notes: "读书笔记"
-        case .review: "评论"
-        case .other: "其他"
+        case .condensed: L10n.text("Summary")
+        case .fulltext: L10n.text("Full text")
+        case .reader: L10n.text("Reader")
+        case .original: L10n.text("Original")
+        case .notes: L10n.text("Reading notes")
+        case .review: L10n.text("Reviews")
+        case .other: L10n.text("Other")
         }
     }
 }
 
 private func progressText(_ record: ReadingRecord) -> String {
-    if let page = record.location.page { return "第 \(page + 1) 页" }
-    if record.kind == .html { return "接着上次阅读" }
-    return "已读 \(Int((record.location.fraction * 100).rounded()))%"
+    if let page = record.location.page { return L10n.format("Page %1$ld", page + 1) }
+    if record.kind == .html { return L10n.text("Resume reading") }
+    return L10n.format("Read: %1$ld%%", Int((record.location.fraction * 100).rounded()))
 }
 
 private struct ReadingRow: View {

@@ -27,6 +27,6 @@ enum Keychain {
         guard status == errSecSuccess || status == errSecItemNotFound else { throw failure(status) }
     }
     private static func failure(_ status: OSStatus) -> NSError {
-        NSError(domain: NSOSStatusErrorDomain, code: Int(status), userInfo: [NSLocalizedDescriptionKey: "无法访问安全凭据存储（\(status)）。"])
+        NSError(domain: NSOSStatusErrorDomain, code: Int(status), userInfo: [NSLocalizedDescriptionKey: L10n.format("Could not access secure credential storage (%1$ld).", Int(status))])
     }
 }

@@ -1,9 +1,9 @@
 import XCTest
 
-/// Runs against the actual Release build with no debug launch arguments.
+/// Public Release flow; system language arguments only, no debug product flags.
 final class AppStoreFlowTests: XCTestCase {
     @MainActor func testPublicSamplesPrivacyAndRelaunch() {
-        let app = XCUIApplication(); app.launch()
+        let app = XCUIApplication(); app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN"]; app.launch()
         if app.buttons["目录操作"].waitForExistence(timeout: 3) {
             app.buttons["目录操作"].tap(); app.buttons["设置"].tap()
             if app.buttons["leaveSamples"].waitForExistence(timeout: 3) { app.buttons["leaveSamples"].tap() }
@@ -11,7 +11,9 @@ final class AppStoreFlowTests: XCTestCase {
         XCTAssertTrue(app.buttons["openSamples"].waitForExistence(timeout: 10))
         capture(app, "01-welcome")
         app.buttons["openSamples"].tap()
-        XCTAssertTrue(app.staticTexts["README.md"].waitForExistence(timeout: 15))
+        XCTAssertTrue(app.buttons["directoryActions"].waitForExistence(timeout: 15))
+        for _ in 0..<6 { if app.staticTexts["README.md"].exists && app.staticTexts["README.md"].isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(app.staticTexts["README.md"].isHittable)
         capture(app, "02-directory")
         app.staticTexts["README.md"].tap()
         XCTAssertTrue(app.webViews["reader-ready"].waitForExistence(timeout: 15))
@@ -38,6 +40,8 @@ final class AppStoreFlowTests: XCTestCase {
         XCTAssertTrue(app.buttons["openSamples"].waitForExistence(timeout: 10))
     }
     @MainActor private func capture(_ app: XCUIApplication, _ name: String) {
+        // Accessibility can be ready before the first composited simulator frame.
+        Thread.sleep(forTimeInterval: 0.8)
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = name; attachment.lifetime = .keepAlways; add(attachment)
     }

@@ -73,7 +73,7 @@ final class AppState {
             #if DEBUG
             if ProcessInfo.processInfo.arguments.contains("--cached-vault") {
                 library.remember(config)
-                needsSetup = false; demo = true; notice = "本机缓存验收 · 未连接服务器"; ready = true; return
+                needsSetup = false; demo = true; notice = L10n.text("Local cache check · Not connected"); ready = true; return
             }
             if let token = ProcessInfo.processInfo.environment["VR_TOKEN"], !token.isEmpty, try Keychain.read(config.identity) == nil {
                 try Keychain.save(token, account: config.identity)
@@ -136,7 +136,7 @@ final class AppState {
         try await prepare()
         try await meta?.write(tree, name: "tree"); try await meta?.write(branch, name: "branch")
         snapshot = branch; index = VaultIndex(tree.tree); treeSHA = tree.sha
-        needsSetup = false; isOffline = false; notice = "已连接 · \(index.entries.count) 个文件"; error = nil
+        needsSetup = false; isOffline = false; notice = L10n.format("Connected · Files: %1$ld", index.entries.count); error = nil
         startPrefetch()
     }
     func selectRepository(_ selected: RepositoryConfig) async {
@@ -149,11 +149,11 @@ final class AppState {
             if !demo { UserDefaults.standard.set(try JSONEncoder().encode(selected), forKey: "repository") }
             try await prepare()
             if demo {
-                needsSetup = false; isOffline = false; notice = "演示资料 · 可在设置中连接仓库"
+                needsSetup = false; isOffline = false; notice = L10n.text("Sample library · Connect your repository in Settings")
             } else if let token = try Keychain.read(selected.identity) {
                 client = source(selected, token: token); needsSetup = false
-                isOffline = true; notice = "已打开本机缓存，正在检查更新…"
-            } else { isOffline = true; notice = "此知识库未保存 Token，可阅读已有缓存。" }
+                isOffline = true; notice = L10n.text("Opened cached files. Checking for updates…")
+            } else { isOffline = true; notice = L10n.text("No token saved for this repository. Cached files remain available.") }
             ready = true; startPrefetch()
             if client != nil { Task { await refresh() } }
         } catch { ready = true; self.error = error.localizedDescription; notice = error.localizedDescription }
@@ -173,8 +173,8 @@ final class AppState {
                     guard generation == epoch else { return }
                     stopPrefetch()
                     index = newIndex; treeSHA = tree.sha
-                    notice = "已更新 \(count) 个文件"
-                } else { notice = "已是最新" }
+                    notice = L10n.format("Updated files: %1$ld", count)
+                } else { notice = L10n.text("Up to date") }
                 try await meta.write(branch, name: "branch")
                 guard generation == epoch else { return }
                 snapshot = branch
@@ -313,14 +313,14 @@ final class AppState {
         isOffline = true; notice = error.localizedDescription
     }
     /// Samples use their own cache, reading progress and HTML origins. Saved connections are untouched.
-    func startSamples(persist: Bool = true) async throws {
+    func startSamples(persist: Bool = true, sampleLanguage: String? = nil) async throws {
         guard !switchingRepository else { return }
         switchingRepository = true; ready = false
         defer { switchingRepository = false; ready = true }
         client = nil; error = nil; notice = nil; isOffline = false; demo = true
         config = RepositoryConfig(); config.owner = "example"; config.repo = "synthetic-vault"
         try await prepare()
-        try await loadDemo()
+        try await loadDemo(language: sampleLanguage ?? L10n.language)
         if persist { UserDefaults.standard.set(true, forKey: "sampleLibraryActive") }
         addingRepository = false; showSettings = false
         startPrefetch()
@@ -341,14 +341,14 @@ final class AppState {
         UserDefaults.standard.removeObject(forKey: "entered.\(config.identity)")
         UserDefaults.standard.removeObject(forKey: "validated.\(config.identity)")
         stopPrefetch(); epoch = UUID(); client = nil; isRefreshing = false
-        needsSetup = true; isOffline = true; notice = "已移除本机 Token，已缓存内容仍可阅读。"
+        needsSetup = true; isOffline = true; notice = L10n.text("Local token removed. Cached files remain available.")
     }
     #if DEBUG
     func startDemoForTesting() async throws {
-        try await startSamples(persist: false)
+        try await startSamples(persist: false, sampleLanguage: "zh-Hans")
     }
     #endif
-    private func loadDemo() async throws {
+    private func loadDemo(language: String) async throws {
         // Only synthetic examples are included in the binary; no private vault content.
         var samples: [(String, String)] = [
             ("README.md", "---\ntags: [阅读, 本地优先]\n书单: 书架/我的书单.md\n---\n# 我的知识库\n把写过的日子，重新读一遍。\n\n## 从这里开始\n- [[生活/孩子索引|孩子的成长记录]]\n- [[阅读/阅读清单|书与思考]]\n- [[使用说明]]\n\n## 今日一页\n留一点时间，回到自己的文字。\n\n> 这是演示资料。连接你的 GitHub 仓库后，首页会显示你的 README。\n"),
@@ -368,13 +368,17 @@ final class AppState {
         for n in 1...12 {
             samples.append(("深读/第 \(n) 页.md", "# 第 \(n) 页\n\n" + String(repeating: "保留每次阅读的位置。\n\n", count: 100)))
         }
+        let chineseSamples = language.hasPrefix("zh")
+        if !chineseSamples {
+            samples = EnglishSamples.files + samples.filter { $0.0 == "files/leaf.svg" }
+        }
         var entries: [TreeEntry] = []
         for (path, value) in samples {
             let data = Data(value.utf8), entry = TreeEntry(path: path, sha: BlobStore.hash(Data(value.utf8)), size: Data(value.utf8).count, type: "blob")
             try await blobs?.put(data, entry: entry); entries.append(entry)
         }
         let pdf = BookDemoFixtures.pdf
-        let pdfEntry = TreeEntry(path: "files/夜航手记.pdf", sha: BlobStore.hash(pdf), size: pdf.count)
+        let pdfEntry = TreeEntry(path: chineseSamples ? "files/夜航手记.pdf" : "files/Night Voyage.pdf", sha: BlobStore.hash(pdf), size: pdf.count)
         try await blobs?.put(pdf, entry: pdfEntry); entries.append(pdfEntry)
         index = VaultIndex(entries); treeSHA = "demo"; needsSetup = false; demo = true
         try await meta?.write(GitTree(sha: treeSHA, tree: entries), name: "tree")
@@ -384,17 +388,18 @@ final class AppState {
             .appendingPathComponent("VaultReaderSamples").appendingPathComponent(MetaStore.key(second.identity))
         let secondBlobs = try BlobStore(root: secondRoot.appendingPathComponent("blobs"))
         let secondMeta = try MetaStore(root: secondRoot.appendingPathComponent("meta").appendingPathComponent(MetaStore.key(second.branch)))
-        let secondText = Data("# 第二个知识库\n\n这是另一份独立缓存，不包含第一库的银杏笔记。".utf8)
+        let secondText = Data((chineseSamples ? "# 第二个知识库\n\n这是另一份独立缓存，不包含第一库的银杏笔记。" : "# Another library\n\nThis repository has a separate cache. It does not contain files from your first library.").utf8)
         let secondEntry = TreeEntry(path: "README.md", sha: BlobStore.hash(secondText), size: secondText.count)
         try await secondBlobs.put(secondText, entry: secondEntry)
         try await secondMeta.write(GitTree(sha: "second-demo", tree: [secondEntry]), name: "tree")
-        notice = "演示资料 · 可在设置中连接仓库"
+        notice = L10n.text("Sample library · Connect your repository in Settings")
         let demoCommits = (1...30).map { n in
-            ["sha": String(format: "%040x", n), "commit": ["message": "记录第 \(n) 天\n\n补上公园散步的片段。", "committer": ["name": "Demo", "date": "2026-09-22T00:00:00Z"]]] as [String: Any]
+            ["sha": String(format: "%040x", n), "commit": ["message": chineseSamples ? "记录第 \(n) 天\n\n补上公园散步的片段。" : "Day \(n): a small observation\n\nAdd a note from a walk in the park.", "committer": ["name": "Demo", "date": "2026-09-22T00:00:00Z"]]] as [String: Any]
         }
         recent = try JSONDecoder().decode([CommitSummary].self, from: JSONSerialization.data(withJSONObject: demoCommits))
         try await meta?.write(RecentSnapshot(commits: recent, etag: nil), name: "recent")
-        let detail = try JSONDecoder().decode(CommitFiles.self, from: Data(#"{"files":[{"filename":"生活/公园的一天.md","status":"modified"},{"filename":"旧日记.md","status":"removed"}],"truncated":false}"#.utf8))
+        let detailJSON = chineseSamples ? #"{"files":[{"filename":"生活/公园的一天.md","status":"modified"},{"filename":"旧日记.md","status":"removed"}],"truncated":false}"# : #"{"files":[{"filename":"Notes/A day in the park.md","status":"modified"},{"filename":"Old journal.md","status":"removed"}],"truncated":false}"#
+        let detail = try JSONDecoder().decode(CommitFiles.self, from: Data(detailJSON.utf8))
         for commit in recent { try await meta?.write(detail, name: "commit-" + MetaStore.key(commit.sha)) }
     }
     static let demoHTML = """

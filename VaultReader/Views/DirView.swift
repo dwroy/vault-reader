@@ -7,7 +7,7 @@ struct DirView: View {
     var body: some View {
         List {
             if path.isEmpty {
-                Section { Text("\(state.config.owner) / \(state.config.repo)").font(.subheadline).foregroundStyle(.secondary) } footer: { Text("\(state.visibleEntries.count) 个文件 · \(state.config.branch)") }
+                Section { Text("\(state.config.owner) / \(state.config.repo)").font(.subheadline).foregroundStyle(.secondary) } footer: { Text(L10n.format("Files: %1$ld · %2$@", state.visibleEntries.count, state.config.branch)) }
             }
             ForEach(state.index.children(of: path).filter { state.fileDisplay.includes($0.path) }) { item in
                 if item.isDirectory { NavigationLink(value: ReaderRoute.directory(item.path)) { row(item) } }
@@ -18,16 +18,16 @@ struct DirView: View {
             }
         }
         .safeAreaInset(edge: .top, spacing: 0) { StatusBanner(state: state) }
-        .navigationTitle(path.isEmpty ? "目录" : (path as NSString).lastPathComponent)
+        .navigationTitle(path.isEmpty ? L10n.text("Files") : (path as NSString).lastPathComponent)
         .navigationBarTitleDisplayMode(.inline)
         .refreshable { await state.refresh() }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
-                    Button("刷新", systemImage: "arrow.clockwise") { Task { await state.refresh() } }
+                    Button(L10n.text("Refresh"), systemImage: "arrow.clockwise") { Task { await state.refresh() } }
                         .disabled(state.isRefreshing || state.switchingRepository)
-                    Button("设置", systemImage: "gearshape") { state.addingRepository = false; state.showSettings = true }
-                } label: { Image(systemName: "ellipsis.circle") }.accessibilityLabel("目录操作")
+                    Button(L10n.text("Settings"), systemImage: "gearshape") { state.addingRepository = false; state.showSettings = true }.accessibilityIdentifier("openSettings")
+                } label: { Image(systemName: "ellipsis.circle") }.accessibilityLabel(L10n.text("Directory actions")).accessibilityIdentifier("directoryActions")
             }
         }
     }

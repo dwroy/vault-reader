@@ -13,13 +13,13 @@ struct SettingsView: View {
         @Bindable var fileDisplay = state.fileDisplay
         NavigationStack {
             Form {
-                Section("帮助与隐私") {
-                    NavigationLink("连接指南与支持") { AppDocumentView(document: .support) }.accessibilityIdentifier("supportDocument")
-                    NavigationLink("隐私政策") { AppDocumentView(document: .privacy) }.accessibilityIdentifier("privacyDocument")
+                Section(L10n.text("Help & Privacy")) {
+                    NavigationLink(L10n.text("Setup guide & support")) { AppDocumentView(document: .support) }.accessibilityIdentifier("supportDocument")
+                    NavigationLink(L10n.text("Privacy Policy")) { AppDocumentView(document: .privacy) }.accessibilityIdentifier("privacyDocument")
                     if state.demo {
-                        Button("退出示例知识库") { Task { await state.leaveSamples(); dismiss() } }.accessibilityIdentifier("leaveSamples")
+                        Button(L10n.text("Leave sample library")) { Task { await state.leaveSamples(); dismiss() } }.accessibilityIdentifier("leaveSamples")
                     } else {
-                        Button("体验示例知识库") {
+                        Button(L10n.text("Try sample library")) {
                             saving = true
                             Task {
                                 defer { saving = false }
@@ -29,13 +29,13 @@ struct SettingsView: View {
                     }
                 }
                 Section {
-                    Toggle("隐藏以点开头的文件", isOn: $fileDisplay.hideDotFiles)
+                    Toggle(L10n.text("Hide dotfiles"), isOn: $fileDisplay.hideDotFiles)
                         .accessibilityIdentifier("hideDotFiles")
-                } header: { Text("文件显示") } footer: {
-                    Text("同时隐藏 .obsidian 等以点开头的文件夹及其内容。适用于所有仓库的目录、阅读、搜索和最近文件列表，修改立即生效。")
+                } header: { Text(L10n.text("File visibility")) } footer: {
+                    Text(L10n.text("Hide files and folders starting with a dot, including .obsidian and its contents. Applies immediately to lists in every repository."))
                 }
                 if !state.library.repositories.isEmpty {
-                    Section("已保存知识库") {
+                    Section(L10n.text("Saved libraries")) {
                         ForEach(state.library.repositories, id: \.storageKey) { saved in
                             Button {
                                 Task { await state.selectRepository(saved); dismiss() }
@@ -43,34 +43,34 @@ struct SettingsView: View {
                                 HStack { Text(saved.displayName); Spacer(); if saved.storageKey == state.config.storageKey { Image(systemName: "checkmark") } }
                             }.disabled(state.switchingRepository)
                         }
-                        Button("添加知识库", systemImage: "plus") { newRepository() }
+                        Button(L10n.text("Add library"), systemImage: "plus") { newRepository() }
                     }
                 }
-                Section(state.addingRepository ? "添加仓库" : "仓库连接") {
-                    Picker("平台", selection: $config.provider) {
+                Section(state.addingRepository ? L10n.text("Add repository") : L10n.text("Repository connection")) {
+                    Picker(L10n.text("Provider"), selection: $config.provider) {
                         ForEach(RepositoryProvider.allCases, id: \.self) { Text($0.title).tag($0) }
                     }.accessibilityIdentifier("providerPicker")
-                    if config.provider == .gitlab { field("GitLab 地址", value: $config.server) }
-                    field(config.provider == .gitlab ? "命名空间" : "Owner", value: $config.owner)
-                    field("Repository", value: $config.repo)
-                    field("分支", value: $config.branch)
+                    if config.provider == .gitlab { field(L10n.text("GitLab URL"), value: $config.server) }
+                    field(config.provider == .gitlab ? L10n.text("Namespace") : L10n.text("Owner"), value: $config.owner)
+                    field(L10n.text("Repository"), value: $config.repo)
+                    field(L10n.text("Branch"), value: $config.branch)
                 }
                 Section {
-                    SecureField("粘贴只读 Token", text: $token).textInputAutocapitalization(.never).autocorrectionDisabled().privacySensitive().accessibilityIdentifier("token")
+                    SecureField(L10n.text("Paste a read-only token"), text: $token).textInputAutocapitalization(.never).autocorrectionDisabled().privacySensitive().accessibilityIdentifier("token")
                     if config.provider == .github {
-                        Link("创建只读 Token", destination: URL(string: "https://github.com/settings/personal-access-tokens/new")!)
+                        Link(L10n.text("Create read-only token"), destination: URL(string: "https://github.com/settings/personal-access-tokens/new")!)
                     } else if let server = config.serverURL {
-                        Link("管理 GitLab Token", destination: server.appendingPathComponent("-/user_settings/personal_access_tokens"))
+                        Link(L10n.text("Manage GitLab tokens"), destination: server.appendingPathComponent("-/user_settings/personal_access_tokens"))
                     }
-                    if let date = state.tokenEnteredAt { LabeledContent("录入日期", value: date.formatted(date: .abbreviated, time: .omitted)) }
-                    if let date = state.lastValidatedAt { LabeledContent("上次校验", value: date.formatted(date: .abbreviated, time: .shortened)) }
+                    if let date = state.tokenEnteredAt { LabeledContent(L10n.text("Added"), value: date.formatted(date: .abbreviated, time: .omitted)) }
+                    if let date = state.lastValidatedAt { LabeledContent(L10n.text("Last verified"), value: date.formatted(date: .abbreviated, time: .shortened)) }
                     if !state.demo && state.tokenEnteredAt != nil {
-                        Button("移除本机 Token", role: .destructive) { confirmingForgetToken = true }
+                        Button(L10n.text("Remove local token"), role: .destructive) { confirmingForgetToken = true }
                     }
-                } header: { Text("安全凭据") } footer: {
+                } header: { Text(L10n.text("Credentials")) } footer: {
                     Text(config.provider == .github
-                         ? "只授权对应仓库，Contents 选择 Read-only。每个仓库的 Token 分别保存在本机 Keychain，不会交给网页。留空沿用该仓库已有凭据。"
-                         : "GitLab 使用 read_api 只读权限；如可用，优先使用仅授权此项目的 Access Token。命名空间可含多级 group/subgroup。自建地址需使用 HTTPS。凭据按服务与项目独立保存在 Keychain。")
+                         ? L10n.text("Grant access only to the repository you need, with Contents set to Read-only. Tokens stay in the device Keychain and never enter web content. Leave blank to keep the saved token.")
+                         : L10n.text("Use GitLab read_api access, preferably a token limited to this project. Namespaces can include group/subgroup. Self-hosted servers require HTTPS. Each project's token stays in Keychain."))
                 }
                 if let error { Section { Text(error).foregroundStyle(.red).accessibilityIdentifier("connectionError") } }
                 Section {
@@ -81,33 +81,38 @@ struct SettingsView: View {
                             do { try await state.connect(config, token: token); token = ""; dismiss() }
                             catch { self.error = error.localizedDescription }
                         }
-                    } label: { HStack { Text("保存并校验"); Spacer(); if saving { ProgressView() } } }.disabled(saving || !config.isValid).accessibilityIdentifier("saveConnection")
+                    } label: { HStack { Text(L10n.text("Save & verify")); Spacer(); if saving { ProgressView() } } }.disabled(saving || !config.isValid).accessibilityIdentifier("saveConnection")
                 }
-                Section("本机缓存") {
-                    LabeledContent("文件占用", value: ByteCountFormatter.string(fromByteCount: Int64(state.cacheBytes), countStyle: .file))
-                    Picker("缓存上限", selection: $config.cacheLimitMB) { ForEach([100, 250, 500, 1000], id: \.self) { Text("\($0) MB").tag($0) } }
-                    LabeledContent("正文补全", value: "\(state.prefetchCompleted)/\(state.prefetchTotal)")
-                    Button(state.isPrefetching ? "暂停补全" : "继续补全") { if state.isPrefetching { state.stopPrefetch() } else { state.startPrefetch() } }
-                    Button("清理附件缓存") { Task { await state.clearAttachments() } }
-                    Text("Markdown 与 SVG 保留，其他附件按最近访问时间淘汰。Markdown 在前台自动补全，可离线搜索正文。").font(.caption).foregroundStyle(.secondary)
+                Section(L10n.text("Local cache")) {
+                    LabeledContent(L10n.text("Storage used"), value: ByteCountFormatter.string(fromByteCount: Int64(state.cacheBytes), countStyle: .file))
+                    Picker(L10n.text("Cache limit"), selection: $config.cacheLimitMB) { ForEach([100, 250, 500, 1000], id: \.self) { Text("\($0) MB").tag($0) } }
+                    LabeledContent(L10n.text("Text cached"), value: "\(state.prefetchCompleted)/\(state.prefetchTotal)")
+                    Button(state.isPrefetching ? L10n.text("Pause caching") : L10n.text("Resume caching")) { if state.isPrefetching { state.stopPrefetch() } else { state.startPrefetch() } }
+                    Button(L10n.text("Clear attachment cache")) { Task { await state.clearAttachments() } }
+                    Text(L10n.text("Markdown and SVG stay cached. Other attachments are removed by last access time. Text is cached while the app is open for offline search.")).font(.caption).foregroundStyle(.secondary)
                 }
                 Section {
                     BrandIdentity(markSize: 44).padding(.vertical, 6)
-                    LabeledContent("版本", value: AppDocumentView.version)
-                    Text("只读 · 无服务器").foregroundStyle(.secondary)
+                    LabeledContent(L10n.text("Version"), value: AppDocumentView.version)
+                    Text(L10n.text("Read-only · No developer server")).foregroundStyle(.secondary)
+                }
+                Section(L10n.text("App language")) {
+                    Link(L10n.text("Open iOS Settings"), destination: URL(string: UIApplication.openSettingsURLString)!)
+                    Text(L10n.text("Change the language in iOS Settings. Your documents keep their original language."))
+                        .font(.caption).foregroundStyle(.secondary)
                 }
             }
-            .navigationTitle("设置").navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(L10n.text("Settings")).navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .confirmationAction) { Button("完成") { dismiss() }.disabled(saving) }
+                ToolbarItem(placement: .confirmationAction) { Button(L10n.text("Done")) { dismiss() }.disabled(saving).accessibilityIdentifier("closeSettings") }
             }
             .disabled(saving)
             .interactiveDismissDisabled(saving)
-            .confirmationDialog("移除这个知识库的本机 Token？", isPresented: $confirmingForgetToken, titleVisibility: .visible) {
-                Button("移除 Token", role: .destructive) {
+            .confirmationDialog(L10n.text("Remove this repository's local token?"), isPresented: $confirmingForgetToken, titleVisibility: .visible) {
+                Button(L10n.text("Remove token"), role: .destructive) {
                     do { try state.forgetCredential(); token = "" } catch { self.error = error.localizedDescription }
                 }
-            } message: { Text("停止联网同步，保留本机缓存和阅读进度。要彻底撤销访问，请同时在 GitHub 或 GitLab 中撤销 Token。") }
+            } message: { Text(L10n.text("Stops online sync but keeps cached files and reading progress. To revoke access completely, also revoke the token on GitHub or GitLab.")) }
             .onChange(of: config.identity) { _, _ in token = "" }
             .onAppear { if state.addingRepository { newRepository() } else { config = state.config }; Task { await state.updateUsage() } }
         }
@@ -118,6 +123,11 @@ struct SettingsView: View {
         token = ""; error = nil; state.addingRepository = true
     }
     private func field(_ label: String, value: Binding<String>) -> some View {
-        HStack { Text(label).frame(width: 92, alignment: .leading); TextField(label, text: value).textInputAutocapitalization(.never).autocorrectionDisabled().multilineTextAlignment(.trailing).accessibilityIdentifier(label) }
+        HStack {
+            Text(label).fixedSize(horizontal: false, vertical: true).frame(maxWidth: .infinity, alignment: .leading)
+            TextField(label, text: value).textInputAutocapitalization(.never).autocorrectionDisabled()
+                .multilineTextAlignment(.trailing).environment(\.layoutDirection, .leftToRight)
+                .frame(maxWidth: .infinity).accessibilityIdentifier(label)
+        }
     }
 }

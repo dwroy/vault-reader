@@ -105,49 +105,49 @@ struct PDFReaderView: View {
                         VStack(spacing: 0) {
                             if let warning = session.book.store.saveError { Text(warning).font(.caption).foregroundStyle(.orange) }
                             HStack {
-                                Button("上一页", systemImage: "chevron.left") { session.go(session.page - 1) }.labelStyle(.iconOnly).frame(minWidth: 44, minHeight: 44).disabled(session.page == 0)
+                                Button(L10n.text("Previous page"), systemImage: "chevron.backward") { session.go(session.page - 1) }.labelStyle(.iconOnly).frame(minWidth: 44, minHeight: 44).disabled(session.page == 0)
                                 Spacer()
-                                Button("第 \(session.page + 1) / \(session.document.pageCount) 页") { pageInput = String(session.page + 1); showingPage = true }.frame(minHeight: 44).accessibilityIdentifier("pdfPage")
+                                Button(L10n.format("Page %1$ld of %2$ld", session.page + 1, session.document.pageCount)) { pageInput = String(session.page + 1); showingPage = true }.frame(minHeight: 44).accessibilityIdentifier("pdfPage")
                                 Spacer()
-                                Button("下一页", systemImage: "chevron.right") { session.go(session.page + 1) }.labelStyle(.iconOnly).frame(minWidth: 44, minHeight: 44).disabled(session.page >= session.document.pageCount - 1)
+                                Button(L10n.text("Next page"), systemImage: "chevron.forward") { session.go(session.page + 1) }.labelStyle(.iconOnly).frame(minWidth: 44, minHeight: 44).disabled(session.page >= session.document.pageCount - 1)
                             }.padding(.horizontal, 24).padding(.vertical, 6)
                         }.background(.bar)
                     }
             } else if let error {
-                ContentUnavailableView { Label(cancelled ? "下载已取消" : "无法打开 PDF", systemImage: "doc") } description: { Text(error) } actions: {
-                    Button("重试") { cancelled = false; attempt += 1 }
-                    Link("在仓库中打开", destination: state.config.fileURL(path: path))
+                ContentUnavailableView { Label(cancelled ? L10n.text("Download cancelled") : L10n.text("Could not open PDF"), systemImage: "doc") } description: { Text(error) } actions: {
+                    Button(L10n.text("Retry")) { cancelled = false; attempt += 1 }
+                    Link(L10n.text("Open in repository"), destination: state.config.fileURL(path: path))
                 }
             } else {
                 VStack(spacing: 18) {
-                    if let progress { ProgressView(value: progress).frame(maxWidth: 240) } else { ProgressView("正在打开 PDF…") }
-                    Button("取消") { cancelled = true; error = "可以稍后重新下载。" }
+                    if let progress { ProgressView(value: progress).frame(maxWidth: 240) } else { ProgressView(L10n.text("Opening PDF…")) }
+                    Button(L10n.text("Cancel")) { cancelled = true; error = L10n.text("You can download it again later.") }
                 }
             }
         }
         .navigationTitle((path as NSString).lastPathComponent).navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .tabBar)
-        .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("目录", systemImage: "list.bullet") { showingContents = true }.disabled(session == nil) } }
+        .toolbar { ToolbarItem(placement: .topBarTrailing) { Button(L10n.text("Files"), systemImage: "list.bullet") { showingContents = true }.disabled(session == nil) } }
         .sheet(isPresented: $showingContents) {
             NavigationStack {
                 if let session {
                     let outline = session.outline
                     List {
-                        if outline.isEmpty { Text("这份 PDF 没有章节目录，可以按页码跳转。").foregroundStyle(.secondary) }
+                        if outline.isEmpty { Text(L10n.text("This PDF has no table of contents. Jump to a page instead.")).foregroundStyle(.secondary) }
                         ForEach(Array(outline.enumerated()), id: \.offset) { row in
                             Button(row.element.0) { session.go(row.element.1); showingContents = false }
                         }
-                        Button("跳到指定页") { pageInput = String(session.page + 1); showingContents = false; showingPage = true }
+                        Button(L10n.text("Go to page")) { pageInput = String(session.page + 1); showingContents = false; showingPage = true }
                     }
-                    .navigationTitle("PDF 目录").navigationBarTitleDisplayMode(.inline)
-                    .toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { showingContents = false } } }
+                    .navigationTitle(L10n.text("PDF contents")).navigationBarTitleDisplayMode(.inline)
+                    .toolbar { ToolbarItem(placement: .confirmationAction) { Button(L10n.text("Done")) { showingContents = false } } }
                 }
             }
         }
-        .alert("跳转页码", isPresented: $showingPage) {
-            TextField("页码", text: $pageInput).keyboardType(.numberPad)
-            Button("跳转") { if let page = Int(pageInput), let session { session.go(page - 1) } }
-            Button("取消", role: .cancel) {}
+        .alert(L10n.text("Jump to page"), isPresented: $showingPage) {
+            TextField(L10n.text("Page number"), text: $pageInput).keyboardType(.numberPad)
+            Button(L10n.text("Go")) { if let page = Int(pageInput), let session { session.go(page - 1) } }
+            Button(L10n.text("Cancel"), role: .cancel) {}
         }
         .task(id: "\(attempt)|\(cancelled)") { await load() }
         .onDisappear {

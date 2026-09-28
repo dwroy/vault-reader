@@ -1,0 +1,1 @@
+AI Native，隨手開讀。原生支援 Markdown、HTML、PDF，連接 GitHub 或 GitLab，把 AI 生成與整理的知識庫帶在身邊。搜索、離線閱讀、接著讀。

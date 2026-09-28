@@ -1,0 +1,3436 @@
+{
+  " · Previous path: ": {
+    "scope": "app",
+    "translations": {
+      "ar": " · المسار السابق: ",
+      "de": " · Vorheriger Pfad: ",
+      "en": " · Previous path: ",
+      "es": " · Ruta anterior: ",
+      "fr": " · Ancien chemin : ",
+      "hi": " · पिछला पाथ: ",
+      "id": " · Jalur sebelumnya: ",
+      "ja": " · 以前のパス：",
+      "ko": " · 이전 경로: ",
+      "pt-BR": " · Caminho anterior: ",
+      "zh-Hans": " · 原路径：",
+      "zh-Hant": " · 原路徑："
+    }
+  },
+  "AI Native.\nReady to read.": {
+    "scope": "app",
+    "translations": {
+      "ar": "AI Native.\nجاهز للقراءة.",
+      "de": "AI Native.\nBereit zum Lesen.",
+      "en": "AI Native.\nReady to read.",
+      "es": "AI Native.\nListo para leer.",
+      "fr": "AI Native.\nÀ portée de lecture.",
+      "hi": "AI Native.\nपढ़ने के लिए तैयार।",
+      "id": "AI Native.\nSiap dibaca.",
+      "ja": "AI Native。\nいつでも読める。",
+      "ko": "AI Native.\n언제든 읽으세요.",
+      "pt-BR": "AI Native.\nPronto para ler.",
+      "zh-Hans": "AI Native，\n随手开读。",
+      "zh-Hant": "AI Native，\n隨手開讀。"
+    }
+  },
+  "Access denied. Check repository authorization and read-only token permissions.": {
+    "scope": "core",
+    "translations": {
+      "ar": "تم رفض الوصول. تحقق من تفويض المستودع وصلاحيات القراءة للرمز.",
+      "de": "Zugriff verweigert. Prüfe die Repository-Freigabe und die Leseberechtigungen des Tokens.",
+      "en": "Access denied. Check repository authorization and read-only token permissions.",
+      "es": "Acceso denegado. Comprueba la autorización del repositorio y los permisos de lectura del token.",
+      "fr": "Accès refusé. Vérifiez l’autorisation du dépôt et les permissions de lecture du jeton.",
+      "hi": "पहुँच अस्वीकृत है। रिपॉज़िटरी की अनुमति और टोकन के पढ़ने के अधिकार जाँचें।",
+      "id": "Akses ditolak. Periksa otorisasi repositori dan izin hanya-baca token.",
+      "ja": "アクセスが拒否されました。リポジトリの許可とトークンの読み取り権限を確認してください。",
+      "ko": "접근이 거부되었습니다. 저장소 승인과 토큰의 읽기 권한을 확인하세요.",
+      "pt-BR": "Acesso negado. Verifique a autorização do repositório e as permissões de leitura do token.",
+      "zh-Hans": "仓库服务拒绝访问，请检查仓库授权及只读 Token 权限。",
+      "zh-Hant": "倉庫服務拒絕訪問，請檢查倉庫授權及只讀 Token 權限。"
+    }
+  },
+  "Add a title and role in your book list to group these files under a book.": {
+    "scope": "app",
+    "translations": {
+      "ar": "أضف عنوانًا ودورًا في قائمة الكتب لجمع هذه الملفات تحت كتاب واحد.",
+      "de": "Ergänze Titel und Rolle in der Bücherliste, um diese Dateien einem Buch zuzuordnen.",
+      "en": "Add a title and role in your book list to group these files under a book.",
+      "es": "Añade un título y una función en la lista para agrupar estos archivos bajo un libro.",
+      "fr": "Ajoutez un titre et un rôle dans votre liste pour regrouper ces fichiers sous un livre.",
+      "hi": "इन फ़ाइलों को किसी पुस्तक के अंतर्गत रखने के लिए पुस्तक सूची में शीर्षक और भूमिका जोड़ें।",
+      "id": "Tambahkan judul dan peran dalam daftar buku untuk mengelompokkan berkas ini di bawah sebuah buku.",
+      "ja": "ブックリストに書名と役割を追加すると、本ごとにまとめられます。",
+      "ko": "도서 목록에 제목과 역할을 추가하면 해당 책 아래에 파일이 묶입니다.",
+      "pt-BR": "Adicione título e função na lista para agrupar esses arquivos em um livro.",
+      "zh-Hans": "在书单里给它们加上书名和角色后，会归到对应的书下。",
+      "zh-Hant": "在書單里給它們加上書名和角色後，會歸到對應的書下。"
+    }
+  },
+  "Add library": {
+    "scope": "app",
+    "translations": {
+      "ar": "إضافة مكتبة",
+      "de": "Bibliothek hinzufügen",
+      "en": "Add library",
+      "es": "Añadir biblioteca",
+      "fr": "Ajouter une bibliothèque",
+      "hi": "लाइब्रेरी जोड़ें",
+      "id": "Tambah pustaka",
+      "ja": "ライブラリを追加",
+      "ko": "라이브러리 추가",
+      "pt-BR": "Adicionar biblioteca",
+      "zh-Hans": "添加知识库",
+      "zh-Hant": "添加知識庫"
+    }
+  },
+  "Add repository": {
+    "scope": "app",
+    "translations": {
+      "ar": "إضافة مستودع",
+      "de": "Repository hinzufügen",
+      "en": "Add repository",
+      "es": "Añadir repositorio",
+      "fr": "Ajouter un dépôt",
+      "hi": "रिपॉज़िटरी जोड़ें",
+      "id": "Tambah repositori",
+      "ja": "リポジトリを追加",
+      "ko": "저장소 추가",
+      "pt-BR": "Adicionar repositório",
+      "zh-Hans": "添加仓库",
+      "zh-Hant": "添加倉庫"
+    }
+  },
+  "Add “booklist: path/to/booklist.md” to README frontmatter, or create booklist.md. You can also open any article from Files and choose Open in reader.": {
+    "scope": "app",
+    "translations": {
+      "ar": "أضف “booklist: path/to/booklist.md” إلى خصائص README، أو أنشئ booklist.md. يمكنك أيضًا فتح مقال من الملفات واختيار فتح في القارئ.",
+      "de": "Ergänze „booklist: pfad/booklist.md“ in den README-Metadaten oder erstelle booklist.md. Du kannst auch einen Artikel unter Dateien öffnen und Im Leser öffnen wählen.",
+      "en": "Add “booklist: path/to/booklist.md” to README frontmatter, or create booklist.md. You can also open any article from Files and choose Open in reader.",
+      "es": "Añade “booklist: ruta/booklist.md” al bloque de propiedades de README o crea booklist.md. También puedes abrir un artículo desde Archivos y elegir Abrir en el lector.",
+      "fr": "Ajoutez « booklist: chemin/booklist.md » aux propriétés de README, ou créez booklist.md. Vous pouvez aussi ouvrir un article depuis Fichiers et choisir Ouvrir dans le lecteur.",
+      "hi": "README के गुणों में “booklist: path/to/booklist.md” जोड़ें या booklist.md बनाएँ। फ़ाइलों से कोई लेख खोलकर रीडर में खोलें भी चुन सकते हैं।",
+      "id": "Tambahkan “booklist: jalur/booklist.md” ke frontmatter README, atau buat booklist.md. Anda juga dapat membuka artikel dari Berkas dan memilih Buka di pembaca.",
+      "ja": "READMEのフロントマターに「booklist: path/to/booklist.md」を追加するか、booklist.mdを作成してください。ファイルから記事を開き、「リーダーで開く」を選ぶこともできます。",
+      "ko": "README 속성에 “booklist: path/to/booklist.md”를 추가하거나 booklist.md를 만드세요. 파일에서 글을 열고 리더에서 열기를 선택해도 됩니다.",
+      "pt-BR": "Adicione “booklist: caminho/booklist.md” às propriedades do README ou crie booklist.md. Você também pode abrir um artigo em Arquivos e escolher Abrir no leitor.",
+      "zh-Hans": "在 README 的属性里写“书单: 书单文件路径”，或新建名为“书单.md”的文件，即可按书单列书。也可以从目录打开文章，在操作菜单中选择“用阅读器打开”。",
+      "zh-Hant": "在 README 的屬性里寫“書單: 書單檔案路徑”，或新建名為“書單.md”的檔案，即可按書單列書。也可以從目錄打開文章，在操作菜單中選擇“用閱讀器打開”。"
+    }
+  },
+  "Added": {
+    "scope": "app",
+    "translations": {
+      "ar": "تاريخ الإضافة",
+      "de": "Hinzugefügt",
+      "en": "Added",
+      "es": "Añadido",
+      "fr": "Ajouté le",
+      "hi": "जोड़ा गया",
+      "id": "Ditambahkan",
+      "ja": "登録日",
+      "ko": "등록일",
+      "pt-BR": "Adicionado",
+      "zh-Hans": "录入日期",
+      "zh-Hant": "錄入日期"
+    }
+  },
+  "Another vault": {
+    "scope": "app",
+    "translations": {
+      "ar": "مكتبة أخرى",
+      "de": "Andere Bibliothek",
+      "en": "Another vault",
+      "es": "Otra biblioteca",
+      "fr": "Autre bibliothèque",
+      "hi": "दूसरी लाइब्रेरी",
+      "id": "Pustaka lain",
+      "ja": "別のライブラリ",
+      "ko": "다른 라이브러리",
+      "pt-BR": "Outra biblioteca",
+      "zh-Hans": "另一知识库",
+      "zh-Hant": "另一知識庫"
+    }
+  },
+  "App language": {
+    "scope": "app",
+    "translations": {
+      "ar": "لغة التطبيق",
+      "de": "App-Sprache",
+      "en": "App language",
+      "es": "Idioma de la app",
+      "fr": "Langue de l’app",
+      "hi": "ऐप की भाषा",
+      "id": "Bahasa aplikasi",
+      "ja": "アプリの言語",
+      "ko": "앱 언어",
+      "pt-BR": "Idioma do app",
+      "zh-Hans": "应用语言",
+      "zh-Hant": "應用語言"
+    }
+  },
+  "Appearance": {
+    "scope": "app",
+    "translations": {
+      "ar": "المظهر",
+      "de": "Darstellung",
+      "en": "Appearance",
+      "es": "Apariencia",
+      "fr": "Apparence",
+      "hi": "रूप",
+      "id": "Tampilan",
+      "ja": "表示",
+      "ko": "모양",
+      "pt-BR": "Aparência",
+      "zh-Hans": "纸张",
+      "zh-Hant": "紙張"
+    }
+  },
+  "Articles & book lists": {
+    "scope": "app",
+    "translations": {
+      "ar": "مقالات وقوائم كتب",
+      "de": "Artikel und Bücherlisten",
+      "en": "Articles & book lists",
+      "es": "Artículos y listas de libros",
+      "fr": "Articles et listes de livres",
+      "hi": "लेख और पुस्तक सूचियाँ",
+      "id": "Artikel & daftar buku",
+      "ja": "記事とブックリスト",
+      "ko": "글 및 도서 목록",
+      "pt-BR": "Artigos e listas de livros",
+      "zh-Hans": "文章与书单",
+      "zh-Hant": "文章與書單"
+    }
+  },
+  "Books": {
+    "scope": "app",
+    "translations": {
+      "ar": "الكتب",
+      "de": "Bücher",
+      "en": "Books",
+      "es": "Libros",
+      "fr": "Livres",
+      "hi": "पुस्तकें",
+      "id": "Buku",
+      "ja": "本",
+      "ko": "도서",
+      "pt-BR": "Livros",
+      "zh-Hans": "书籍",
+      "zh-Hant": "書籍"
+    }
+  },
+  "Books & articles": {
+    "scope": "app",
+    "translations": {
+      "ar": "كتب ومقالات",
+      "de": "Bücher und Artikel",
+      "en": "Books & articles",
+      "es": "Libros y artículos",
+      "fr": "Livres et articles",
+      "hi": "पुस्तकें और लेख",
+      "id": "Buku & artikel",
+      "ja": "本と記事",
+      "ko": "도서 및 글",
+      "pt-BR": "Livros e artigos",
+      "zh-Hans": "书籍与文章",
+      "zh-Hant": "書籍與文章"
+    }
+  },
+  "Branch": {
+    "scope": "app",
+    "translations": {
+      "ar": "الفرع",
+      "de": "Branch",
+      "en": "Branch",
+      "es": "Rama",
+      "fr": "Branche",
+      "hi": "ब्रांच",
+      "id": "Branch",
+      "ja": "ブランチ",
+      "ko": "브랜치",
+      "pt-BR": "Branch",
+      "zh-Hans": "分支",
+      "zh-Hant": "分支"
+    }
+  },
+  "Cache limit": {
+    "scope": "app",
+    "translations": {
+      "ar": "حد التخزين المؤقت",
+      "de": "Cache-Limit",
+      "en": "Cache limit",
+      "es": "Límite de caché",
+      "fr": "Limite du cache",
+      "hi": "कैश की सीमा",
+      "id": "Batas cache",
+      "ja": "キャッシュ上限",
+      "ko": "캐시 한도",
+      "pt-BR": "Limite de cache",
+      "zh-Hans": "缓存上限",
+      "zh-Hant": "快取上限"
+    }
+  },
+  "Cancel": {
+    "scope": "app",
+    "translations": {
+      "ar": "إلغاء",
+      "de": "Abbrechen",
+      "en": "Cancel",
+      "es": "Cancelar",
+      "fr": "Annuler",
+      "hi": "रद्द करें",
+      "id": "Batal",
+      "ja": "キャンセル",
+      "ko": "취소",
+      "pt-BR": "Cancelar",
+      "zh-Hans": "取消",
+      "zh-Hant": "取消"
+    }
+  },
+  "Change the language in iOS Settings. Your documents keep their original language.": {
+    "scope": "app",
+    "translations": {
+      "ar": "غيّر اللغة في إعدادات iOS. تحتفظ المستندات بلغتها الأصلية.",
+      "de": "Ändere die Sprache in den iOS-Einstellungen. Deine Dokumente behalten ihre Originalsprache.",
+      "en": "Change the language in iOS Settings. Your documents keep their original language.",
+      "es": "Cambia el idioma en Ajustes de iOS. Tus documentos conservan su idioma original.",
+      "fr": "Changez la langue dans les Réglages iOS. Vos documents conservent leur langue d’origine.",
+      "hi": "iOS सेटिंग्स में भाषा बदलें। आपके दस्तावेज़ अपनी मूल भाषा में रहेंगे।",
+      "id": "Ubah bahasa di Pengaturan iOS. Dokumen Anda tetap dalam bahasa aslinya.",
+      "ja": "iOSの設定で言語を変更できます。文書の言語は変わりません。",
+      "ko": "iOS 설정에서 언어를 변경하세요. 문서의 원래 언어는 유지됩니다.",
+      "pt-BR": "Altere o idioma nos Ajustes do iOS. Os documentos mantêm o idioma original.",
+      "zh-Hans": "在 iOS 设置中更改应用语言，文档保留原文。",
+      "zh-Hant": "在 iOS 設置中更改應用語言，文檔保留原文。"
+    }
+  },
+  "Clear attachment cache": {
+    "scope": "app",
+    "translations": {
+      "ar": "مسح المرفقات المخزنة",
+      "de": "Anhang-Cache leeren",
+      "en": "Clear attachment cache",
+      "es": "Borrar caché de adjuntos",
+      "fr": "Vider le cache des pièces jointes",
+      "hi": "अटैचमेंट कैश साफ़ करें",
+      "id": "Hapus cache lampiran",
+      "ja": "添付ファイルのキャッシュを削除",
+      "ko": "첨부 파일 캐시 지우기",
+      "pt-BR": "Limpar cache de anexos",
+      "zh-Hans": "清理附件缓存",
+      "zh-Hant": "清理附件快取"
+    }
+  },
+  "Connect library": {
+    "scope": "app",
+    "translations": {
+      "ar": "ربط مكتبة",
+      "de": "Bibliothek verbinden",
+      "en": "Connect library",
+      "es": "Conectar biblioteca",
+      "fr": "Connecter une bibliothèque",
+      "hi": "लाइब्रेरी कनेक्ट करें",
+      "id": "Hubungkan pustaka",
+      "ja": "ライブラリを接続",
+      "ko": "라이브러리 연결",
+      "pt-BR": "Conectar biblioteca",
+      "zh-Hans": "连接知识库",
+      "zh-Hant": "連接知識庫"
+    }
+  },
+  "Connected · Files: %1$ld": {
+    "scope": "app",
+    "translations": {
+      "ar": "متصل · الملفات: %1$ld",
+      "de": "Verbunden · Dateien: %1$ld",
+      "en": "Connected · Files: %1$ld",
+      "es": "Conectado · Archivos: %1$ld",
+      "fr": "Connecté · Fichiers : %1$ld",
+      "hi": "कनेक्ट है · फ़ाइलें: %1$ld",
+      "id": "Terhubung · Berkas: %1$ld",
+      "ja": "接続済み · ファイル数：%1$ld",
+      "ko": "연결됨 · 파일: %1$ld개",
+      "pt-BR": "Conectado · Arquivos: %1$ld",
+      "zh-Hans": "已连接 · %1$ld 个文件",
+      "zh-Hant": "已連接 · %1$ld 個檔案"
+    }
+  },
+  "Contact support": {
+    "scope": "app",
+    "translations": {
+      "ar": "التواصل مع الدعم",
+      "de": "Support kontaktieren",
+      "en": "Contact support",
+      "es": "Contactar con soporte",
+      "fr": "Contacter l’assistance",
+      "hi": "सहायता से संपर्क करें",
+      "id": "Hubungi dukungan",
+      "ja": "サポートに問い合わせる",
+      "ko": "지원 문의",
+      "pt-BR": "Falar com o suporte",
+      "zh-Hans": "联系支持 / Contact support",
+      "zh-Hant": "聯繫支持 / Contact support"
+    }
+  },
+  "Contents": {
+    "scope": "app",
+    "translations": {
+      "ar": "الفهرس",
+      "de": "Inhalt",
+      "en": "Contents",
+      "es": "Índice",
+      "fr": "Sommaire",
+      "hi": "विषय-सूची",
+      "id": "Daftar isi",
+      "ja": "目次",
+      "ko": "목차",
+      "pt-BR": "Sumário",
+      "zh-Hans": "章节目录",
+      "zh-Hant": "章節目錄"
+    }
+  },
+  "Continue": {
+    "scope": "app",
+    "translations": {
+      "ar": "متابعة",
+      "de": "Fortsetzen",
+      "en": "Continue",
+      "es": "Continuar",
+      "fr": "Continuer",
+      "hi": "जारी रखें",
+      "id": "Lanjutkan",
+      "ja": "続ける",
+      "ko": "계속",
+      "pt-BR": "Continuar",
+      "zh-Hans": "继续",
+      "zh-Hant": "繼續"
+    }
+  },
+  "Continue reading": {
+    "scope": "app",
+    "translations": {
+      "ar": "متابعة القراءة",
+      "de": "Weiterlesen",
+      "en": "Continue reading",
+      "es": "Seguir leyendo",
+      "fr": "Continuer la lecture",
+      "hi": "पढ़ना जारी रखें",
+      "id": "Lanjutkan membaca",
+      "ja": "続きを読む",
+      "ko": "계속 읽기",
+      "pt-BR": "Continuar leitura",
+      "zh-Hans": "继续阅读",
+      "zh-Hant": "繼續閱讀"
+    }
+  },
+  "Copy path": {
+    "scope": "app",
+    "translations": {
+      "ar": "نسخ المسار",
+      "de": "Pfad kopieren",
+      "en": "Copy path",
+      "es": "Copiar ruta",
+      "fr": "Copier le chemin",
+      "hi": "पाथ कॉपी करें",
+      "id": "Salin jalur",
+      "ja": "パスをコピー",
+      "ko": "경로 복사",
+      "pt-BR": "Copiar caminho",
+      "zh-Hans": "复制路径",
+      "zh-Hant": "複製路徑"
+    }
+  },
+  "Could not access secure credential storage (%1$ld).": {
+    "scope": "app",
+    "translations": {
+      "ar": "تعذّر الوصول إلى التخزين الآمن لبيانات الاعتماد (%1$ld).",
+      "de": "Zugriff auf den sicheren Zugangsspeicher fehlgeschlagen (%1$ld).",
+      "en": "Could not access secure credential storage (%1$ld).",
+      "es": "No se pudo acceder al almacén seguro de credenciales (%1$ld).",
+      "fr": "Impossible d’accéder au stockage sécurisé des identifiants (%1$ld).",
+      "hi": "सुरक्षित प्रमाण-पत्र संग्रह तक पहुँच नहीं मिली (%1$ld)।",
+      "id": "Tidak dapat mengakses penyimpanan kredensial aman (%1$ld).",
+      "ja": "安全な認証情報ストレージにアクセスできませんでした（%1$ld）。",
+      "ko": "보안 인증 정보 저장소에 접근할 수 없습니다(%1$ld).",
+      "pt-BR": "Não foi possível acessar o armazenamento seguro de credenciais (%1$ld).",
+      "zh-Hans": "无法访问安全凭据存储（%1$ld）。",
+      "zh-Hant": "無法訪問安全憑據存儲（%1$ld）。"
+    }
+  },
+  "Could not connect to the repository (network error %1$ld). Check your network and retry. Cached files remain available.": {
+    "scope": "core",
+    "translations": {
+      "ar": "تعذّر الاتصال بالمستودع (خطأ الشبكة %1$ld). تحقق من الشبكة وأعد المحاولة. تظل الملفات المخزنة متاحة.",
+      "de": "Repository-Verbindung fehlgeschlagen (Netzwerkfehler %1$ld). Prüfe das Netzwerk und versuche es erneut. Der Cache bleibt verfügbar.",
+      "en": "Could not connect to the repository (network error %1$ld). Check your network and retry. Cached files remain available.",
+      "es": "No se pudo conectar al repositorio (error de red %1$ld). Comprueba la red y reintenta. La caché sigue disponible.",
+      "fr": "Connexion au dépôt impossible (erreur réseau %1$ld). Vérifiez le réseau et réessayez. Le cache reste disponible.",
+      "hi": "रिपॉज़िटरी से कनेक्ट नहीं हो सका (नेटवर्क त्रुटि %1$ld)। नेटवर्क जाँचकर फिर कोशिश करें। कैश की फ़ाइलें पढ़ सकते हैं।",
+      "id": "Tidak dapat terhubung ke repositori (kesalahan jaringan %1$ld). Periksa jaringan dan coba lagi. Cache tetap dapat dibaca.",
+      "ja": "リポジトリに接続できません（ネットワークエラー%1$ld）。接続を確認して再試行してください。キャッシュは引き続き読めます。",
+      "ko": "저장소에 연결할 수 없습니다(네트워크 오류 %1$ld). 네트워크를 확인하고 다시 시도하세요. 캐시된 파일은 읽을 수 있습니다.",
+      "pt-BR": "Não foi possível conectar ao repositório (erro de rede %1$ld). Verifique a rede e tente novamente. O cache continua disponível.",
+      "zh-Hans": "无法连接仓库服务（网络错误 %1$ld）。请检查网络后重试。已缓存内容仍可阅读。",
+      "zh-Hant": "無法連接倉庫服務（網路錯誤 %1$ld）。請檢查網路後重試。已快取內容仍可閱讀。"
+    }
+  },
+  "Could not open PDF": {
+    "scope": "app",
+    "translations": {
+      "ar": "تعذّر فتح PDF",
+      "de": "PDF konnte nicht geöffnet werden",
+      "en": "Could not open PDF",
+      "es": "No se pudo abrir el PDF",
+      "fr": "Impossible d’ouvrir le PDF",
+      "hi": "PDF नहीं खुल सका",
+      "id": "Tidak dapat membuka PDF",
+      "ja": "PDFを開けませんでした",
+      "ko": "PDF를 열 수 없습니다",
+      "pt-BR": "Não foi possível abrir o PDF",
+      "zh-Hans": "无法打开 PDF",
+      "zh-Hant": "無法打開 PDF"
+    }
+  },
+  "Could not open file": {
+    "scope": "app",
+    "translations": {
+      "ar": "تعذّر فتح الملف",
+      "de": "Datei konnte nicht geöffnet werden",
+      "en": "Could not open file",
+      "es": "No se pudo abrir el archivo",
+      "fr": "Impossible d’ouvrir le fichier",
+      "hi": "फ़ाइल नहीं खुल सकी",
+      "id": "Tidak dapat membuka berkas",
+      "ja": "ファイルを開けませんでした",
+      "ko": "파일을 열 수 없습니다",
+      "pt-BR": "Não foi possível abrir o arquivo",
+      "zh-Hans": "暂时无法打开",
+      "zh-Hant": "暫時無法打開"
+    }
+  },
+  "Could not open reader": {
+    "scope": "app",
+    "translations": {
+      "ar": "تعذّر فتح القارئ",
+      "de": "Leser konnte nicht geöffnet werden",
+      "en": "Could not open reader",
+      "es": "No se pudo abrir el lector",
+      "fr": "Impossible d’ouvrir le lecteur",
+      "hi": "रीडर नहीं खुल सका",
+      "id": "Tidak dapat membuka pembaca",
+      "ja": "リーダーを開けませんでした",
+      "ko": "리더를 열 수 없습니다",
+      "pt-BR": "Não foi possível abrir o leitor",
+      "zh-Hans": "无法打开阅读器",
+      "zh-Hant": "無法打開閱讀器"
+    }
+  },
+  "Could not render: %1$@": {
+    "scope": "app",
+    "translations": {
+      "ar": "تعذّر عرض المحتوى: %1$@",
+      "de": "Darstellung fehlgeschlagen: %1$@",
+      "en": "Could not render: %1$@",
+      "es": "No se pudo mostrar: %1$@",
+      "fr": "Affichage impossible : %1$@",
+      "hi": "दिखाया नहीं जा सका: %1$@",
+      "id": "Tidak dapat menampilkan: %1$@",
+      "ja": "表示できませんでした：%1$@",
+      "ko": "표시할 수 없습니다: %1$@",
+      "pt-BR": "Não foi possível exibir: %1$@",
+      "zh-Hans": "排版加载失败：%1$@",
+      "zh-Hant": "排版加載失敗：%1$@"
+    }
+  },
+  "Could not share: %1$@": {
+    "scope": "app",
+    "translations": {
+      "ar": "تعذّرت المشاركة: %1$@",
+      "de": "Teilen fehlgeschlagen: %1$@",
+      "en": "Could not share: %1$@",
+      "es": "No se pudo compartir: %1$@",
+      "fr": "Partage impossible : %1$@",
+      "hi": "साझा नहीं किया जा सका: %1$@",
+      "id": "Tidak dapat membagikan: %1$@",
+      "ja": "共有できませんでした：%1$@",
+      "ko": "공유할 수 없습니다: %1$@",
+      "pt-BR": "Não foi possível compartilhar: %1$@",
+      "zh-Hans": "无法分享：%1$@",
+      "zh-Hant": "無法分享：%1$@"
+    }
+  },
+  "Create read-only token": {
+    "scope": "app",
+    "translations": {
+      "ar": "إنشاء رمز وصول للقراءة فقط",
+      "de": "Token mit Lesezugriff erstellen",
+      "en": "Create read-only token",
+      "es": "Crear token de solo lectura",
+      "fr": "Créer un jeton en lecture seule",
+      "hi": "केवल-पढ़ने का टोकन बनाएँ",
+      "id": "Buat token hanya-baca",
+      "ja": "読み取り専用トークンを作成",
+      "ko": "읽기 전용 토큰 만들기",
+      "pt-BR": "Criar token somente leitura",
+      "zh-Hans": "创建只读 Token",
+      "zh-Hant": "創建只讀 Token"
+    }
+  },
+  "Credentials": {
+    "scope": "app",
+    "translations": {
+      "ar": "بيانات الاعتماد",
+      "de": "Zugangsdaten",
+      "en": "Credentials",
+      "es": "Credenciales",
+      "fr": "Identifiants",
+      "hi": "प्रमाण-पत्र",
+      "id": "Kredensial",
+      "ja": "認証情報",
+      "ko": "인증 정보",
+      "pt-BR": "Credenciais",
+      "zh-Hans": "安全凭据",
+      "zh-Hant": "安全憑據"
+    }
+  },
+  "Dark": {
+    "scope": "app",
+    "translations": {
+      "ar": "داكن",
+      "de": "Dunkel",
+      "en": "Dark",
+      "es": "Oscuro",
+      "fr": "Sombre",
+      "hi": "गहरा",
+      "id": "Gelap",
+      "ja": "ダーク",
+      "ko": "어둡게",
+      "pt-BR": "Escuro",
+      "zh-Hans": "深色",
+      "zh-Hant": "深色"
+    }
+  },
+  "Directory actions": {
+    "scope": "app",
+    "translations": {
+      "ar": "إجراءات المجلد",
+      "de": "Ordneraktionen",
+      "en": "Directory actions",
+      "es": "Acciones del directorio",
+      "fr": "Actions du répertoire",
+      "hi": "फ़ोल्डर के विकल्प",
+      "id": "Tindakan direktori",
+      "ja": "フォルダの操作",
+      "ko": "폴더 작업",
+      "pt-BR": "Ações do diretório",
+      "zh-Hans": "目录操作",
+      "zh-Hant": "目錄操作"
+    }
+  },
+  "Document language": {
+    "scope": "app",
+    "translations": {
+      "ar": "لغة المستند",
+      "de": "Dokumentsprache",
+      "en": "Document language",
+      "es": "Idioma del documento",
+      "fr": "Langue du document",
+      "hi": "दस्तावेज़ की भाषा",
+      "id": "Bahasa dokumen",
+      "ja": "文書の言語",
+      "ko": "문서 언어",
+      "pt-BR": "Idioma do documento",
+      "zh-Hans": "文档语言",
+      "zh-Hant": "文檔語言"
+    }
+  },
+  "Done": {
+    "scope": "app",
+    "translations": {
+      "ar": "تم",
+      "de": "Fertig",
+      "en": "Done",
+      "es": "Listo",
+      "fr": "Terminé",
+      "hi": "पूर्ण",
+      "id": "Selesai",
+      "ja": "完了",
+      "ko": "완료",
+      "pt-BR": "Concluído",
+      "zh-Hans": "完成",
+      "zh-Hant": "完成"
+    }
+  },
+  "Download cancelled": {
+    "scope": "app",
+    "translations": {
+      "ar": "تم إلغاء التنزيل",
+      "de": "Download abgebrochen",
+      "en": "Download cancelled",
+      "es": "Descarga cancelada",
+      "fr": "Téléchargement annulé",
+      "hi": "डाउनलोड रद्द हुआ",
+      "id": "Unduhan dibatalkan",
+      "ja": "ダウンロードをキャンセルしました",
+      "ko": "다운로드 취소됨",
+      "pt-BR": "Download cancelado",
+      "zh-Hans": "下载已取消",
+      "zh-Hant": "下載已取消"
+    }
+  },
+  "Earlier": {
+    "scope": "app",
+    "translations": {
+      "ar": "سابقًا",
+      "de": "Früher",
+      "en": "Earlier",
+      "es": "Anteriores",
+      "fr": "Plus tôt",
+      "hi": "पहले के",
+      "id": "Sebelumnya",
+      "ja": "以前",
+      "ko": "이전",
+      "pt-BR": "Anteriores",
+      "zh-Hans": "更早",
+      "zh-Hant": "更早"
+    }
+  },
+  "Enter a read-only token in Settings first.": {
+    "scope": "core",
+    "translations": {
+      "ar": "أدخل أولًا رمز وصول للقراءة فقط في الإعدادات.",
+      "de": "Gib zuerst ein Token mit Lesezugriff in Einstellungen ein.",
+      "en": "Enter a read-only token in Settings first.",
+      "es": "Primero introduce un token de solo lectura en Ajustes.",
+      "fr": "Saisissez d’abord un jeton en lecture seule dans Réglages.",
+      "hi": "पहले सेटिंग्स में केवल-पढ़ने का टोकन दर्ज करें।",
+      "id": "Masukkan token hanya-baca di Pengaturan terlebih dahulu.",
+      "ja": "まず設定で読み取り専用トークンを入力してください。",
+      "ko": "먼저 설정에서 읽기 전용 토큰을 입력하세요.",
+      "pt-BR": "Primeiro, insira um token somente leitura nos Ajustes.",
+      "zh-Hans": "请先在设置中录入只读 Token。",
+      "zh-Hant": "請先在設置中錄入只讀 Token。"
+    }
+  },
+  "Enter a valid server URL, owner, repository and branch.": {
+    "scope": "core",
+    "translations": {
+      "ar": "أدخل عنوان خادم ومالكًا ومستودعًا وفرعًا صالحًا.",
+      "de": "Gib gültige Werte für Server-URL, Eigentümer, Repository und Branch ein.",
+      "en": "Enter a valid server URL, owner, repository and branch.",
+      "es": "Introduce una URL de servidor, propietario, repositorio y rama válidos.",
+      "fr": "Saisissez une URL de serveur, un propriétaire, un dépôt et une branche valides.",
+      "hi": "मान्य सर्वर URL, मालिक, रिपॉज़िटरी और ब्रांच दर्ज करें।",
+      "id": "Masukkan URL server, pemilik, repositori, dan branch yang valid.",
+      "ja": "有効なサーバーURL、所有者、リポジトリ、ブランチを入力してください。",
+      "ko": "올바른 서버 URL, 소유자, 저장소 및 브랜치를 입력하세요.",
+      "pt-BR": "Informe URL do servidor, proprietário, repositório e branch válidos.",
+      "zh-Hans": "请填写有效的平台地址、Owner、仓库和分支。",
+      "zh-Hant": "請填寫有效的平台地址、Owner、倉庫和分支。"
+    }
+  },
+  "File exceeds 100 MB": {
+    "scope": "app",
+    "translations": {
+      "ar": "يتجاوز الملف 100 MB",
+      "de": "Datei größer als 100 MB",
+      "en": "File exceeds 100 MB",
+      "es": "El archivo supera los 100 MB",
+      "fr": "Le fichier dépasse 100 Mo",
+      "hi": "फ़ाइल 100 MB से बड़ी है",
+      "id": "Berkas melebihi 100 MB",
+      "ja": "ファイルが100 MBを超えています",
+      "ko": "파일이 100 MB를 초과합니다",
+      "pt-BR": "O arquivo excede 100 MB",
+      "zh-Hans": "文件超过 100 MB",
+      "zh-Hant": "檔案超過 100 MB"
+    }
+  },
+  "File verification failed. It was not cached. Please try again.": {
+    "scope": "core",
+    "translations": {
+      "ar": "فشل التحقق من الملف، ولم يُخزّن. يُرجى إعادة المحاولة.",
+      "de": "Die Dateiprüfung ist fehlgeschlagen. Die Datei wurde nicht gespeichert. Versuche es erneut.",
+      "en": "File verification failed. It was not cached. Please try again.",
+      "es": "La verificación del archivo falló. No se guardó en caché. Reinténtalo.",
+      "fr": "La vérification du fichier a échoué. Il n’a pas été mis en cache. Réessayez.",
+      "hi": "फ़ाइल का सत्यापन विफल हुआ। इसे कैश में नहीं रखा गया। फिर कोशिश करें।",
+      "id": "Verifikasi berkas gagal. Berkas tidak disimpan dalam cache. Coba lagi.",
+      "ja": "ファイルの検証に失敗しました。キャッシュには保存されていません。再試行してください。",
+      "ko": "파일 검증에 실패하여 캐시하지 않았습니다. 다시 시도하세요.",
+      "pt-BR": "A verificação do arquivo falhou. Ele não foi salvo no cache. Tente novamente.",
+      "zh-Hans": "文件校验失败，未写入缓存。请重试。",
+      "zh-Hant": "檔案校驗失敗，未寫入快取。請重試。"
+    }
+  },
+  "File visibility": {
+    "scope": "app",
+    "translations": {
+      "ar": "ظهور الملفات",
+      "de": "Dateisichtbarkeit",
+      "en": "File visibility",
+      "es": "Visibilidad de archivos",
+      "fr": "Visibilité des fichiers",
+      "hi": "फ़ाइलों की दृश्यता",
+      "id": "Tampilan berkas",
+      "ja": "ファイルの表示",
+      "ko": "파일 표시",
+      "pt-BR": "Visibilidade dos arquivos",
+      "zh-Hans": "文件显示",
+      "zh-Hant": "檔案顯示"
+    }
+  },
+  "File, repository or branch not found. Check the path and the token's repository access.": {
+    "scope": "core",
+    "translations": {
+      "ar": "الملف أو المستودع أو الفرع غير موجود. تحقق من المسار وصلاحيات الرمز.",
+      "de": "Datei, Repository oder Branch nicht gefunden. Prüfe Pfad und Repository-Zugriff des Tokens.",
+      "en": "File, repository or branch not found. Check the path and the token's repository access.",
+      "es": "No se encontró el archivo, repositorio o rama. Comprueba la ruta y el acceso del token.",
+      "fr": "Fichier, dépôt ou branche introuvable. Vérifiez le chemin et les accès du jeton.",
+      "hi": "फ़ाइल, रिपॉज़िटरी या ब्रांच नहीं मिली। पाथ और टोकन की पहुँच जाँचें।",
+      "id": "Berkas, repositori, atau branch tidak ditemukan. Periksa jalur dan akses repositori token.",
+      "ja": "ファイル、リポジトリ、またはブランチが見つかりません。パスとトークンのアクセス権を確認してください。",
+      "ko": "파일, 저장소 또는 브랜치를 찾을 수 없습니다. 경로와 토큰의 저장소 접근 권한을 확인하세요.",
+      "pt-BR": "Arquivo, repositório ou branch não encontrado. Verifique o caminho e o acesso do token.",
+      "zh-Hans": "未找到文件、仓库或分支。请检查路径及 Token 的仓库授权。",
+      "zh-Hant": "未找到檔案、倉庫或分支。請檢查路徑及 Token 的倉庫授權。"
+    }
+  },
+  "Filename; return to search text": {
+    "scope": "app",
+    "translations": {
+      "ar": "اسم الملف؛ اضغط إدخال لبحث النص",
+      "de": "Dateiname; Return für Textsuche",
+      "en": "Filename; return to search text",
+      "es": "Nombre; Intro para buscar texto",
+      "fr": "Nom ; Entrée pour le texte",
+      "hi": "फ़ाइल नाम; टेक्स्ट के लिए Return",
+      "id": "Nama berkas; Enter untuk teks",
+      "ja": "ファイル名；確定で本文を検索",
+      "ko": "파일명; Return으로 본문 검색",
+      "pt-BR": "Nome; Return para buscar texto",
+      "zh-Hans": "文件名；回车搜索正文",
+      "zh-Hant": "檔案名；回車搜索正文"
+    }
+  },
+  "Files": {
+    "scope": "app",
+    "translations": {
+      "ar": "الملفات",
+      "de": "Dateien",
+      "en": "Files",
+      "es": "Archivos",
+      "fr": "Fichiers",
+      "hi": "फ़ाइलें",
+      "id": "Berkas",
+      "ja": "ファイル",
+      "ko": "파일",
+      "pt-BR": "Arquivos",
+      "zh-Hans": "目录",
+      "zh-Hant": "目錄"
+    }
+  },
+  "Files in this commit are hidden by your visibility settings.": {
+    "scope": "app",
+    "translations": {
+      "ar": "ملفات هذا الالتزام مخفية حسب إعدادات ظهور الملفات.",
+      "de": "Dateien dieses Commits sind durch deine Sichtbarkeitseinstellungen ausgeblendet.",
+      "en": "Files in this commit are hidden by your visibility settings.",
+      "es": "Los archivos de este commit están ocultos por tus ajustes de visibilidad.",
+      "fr": "Les fichiers de ce commit sont masqués par vos réglages de visibilité.",
+      "hi": "आपकी दृश्यता सेटिंग्स के कारण इस कमिट की फ़ाइलें छिपी हैं।",
+      "id": "Berkas dalam commit ini disembunyikan oleh pengaturan tampilan Anda.",
+      "ja": "表示設定により、このコミットのファイルは非表示です。",
+      "ko": "표시 설정에 따라 이 커밋의 파일이 숨겨져 있습니다.",
+      "pt-BR": "Os arquivos deste commit estão ocultos pelos ajustes de visibilidade.",
+      "zh-Hans": "此提交中的文件已按显示设置隐藏。",
+      "zh-Hant": "此提交中的檔案已按顯示設置隱藏。"
+    }
+  },
+  "Files open from the current branch. Deleted files and files outside the current tree cannot be opened.": {
+    "scope": "app",
+    "translations": {
+      "ar": "تُفتح الملفات من الفرع الحالي. لا يمكن فتح الملفات المحذوفة أو غير الموجودة في الشجرة الحالية.",
+      "de": "Dateien werden aus dem aktuellen Branch geöffnet. Gelöschte Dateien und Dateien außerhalb des aktuellen Baums lassen sich nicht öffnen.",
+      "en": "Files open from the current branch. Deleted files and files outside the current tree cannot be opened.",
+      "es": "Los archivos se abren desde la rama actual. No se pueden abrir archivos eliminados o fuera del árbol actual.",
+      "fr": "Les fichiers s’ouvrent depuis la branche actuelle. Les fichiers supprimés ou absents de l’arborescence actuelle ne peuvent pas être ouverts.",
+      "hi": "फ़ाइलें मौजूदा ब्रांच से खुलती हैं। हटाई गई या मौजूदा ट्री से बाहर की फ़ाइलें नहीं खुल सकतीं।",
+      "id": "Berkas dibuka dari branch saat ini. Berkas yang dihapus atau tidak ada di pohon saat ini tidak dapat dibuka.",
+      "ja": "現在のブランチのファイルを開きます。削除済み、または現在のツリーにないファイルは開けません。",
+      "ko": "현재 브랜치의 파일을 엽니다. 삭제되었거나 현재 트리에 없는 파일은 열 수 없습니다.",
+      "pt-BR": "Os arquivos abrem na branch atual. Arquivos excluídos ou fora da árvore atual não podem ser abertos.",
+      "zh-Hans": "文件打开当前分支版本；已删除或不在当前目录树中的文件不可打开。",
+      "zh-Hant": "檔案打開當前分支版本；已刪除或不在當前目錄樹中的檔案不可打開。"
+    }
+  },
+  "Files: %1$ld · %2$@": {
+    "scope": "app",
+    "translations": {
+      "ar": "الملفات: %1$ld · %2$@",
+      "de": "Dateien: %1$ld · %2$@",
+      "en": "Files: %1$ld · %2$@",
+      "es": "Archivos: %1$ld · %2$@",
+      "fr": "Fichiers : %1$ld · %2$@",
+      "hi": "फ़ाइलें: %1$ld · %2$@",
+      "id": "Berkas: %1$ld · %2$@",
+      "ja": "ファイル数：%1$ld · %2$@",
+      "ko": "파일: %1$ld개 · %2$@",
+      "pt-BR": "Arquivos: %1$ld · %2$@",
+      "zh-Hans": "%1$ld 个文件 · %2$@",
+      "zh-Hant": "%1$ld 個檔案 · %2$@"
+    }
+  },
+  "Find books, papers and articles": {
+    "scope": "app",
+    "translations": {
+      "ar": "البحث عن كتب وأبحاث ومقالات",
+      "de": "Bücher, Studien und Artikel finden",
+      "en": "Find books, papers and articles",
+      "es": "Buscar libros, estudios y artículos",
+      "fr": "Trouver livres, études et articles",
+      "hi": "पुस्तकें, शोध और लेख खोजें",
+      "id": "Cari buku, makalah, dan artikel",
+      "ja": "本・論文・記事を探す",
+      "ko": "도서, 논문, 글 찾기",
+      "pt-BR": "Buscar livros, estudos e artigos",
+      "zh-Hans": "查找书籍、论文、文章",
+      "zh-Hant": "查找書籍、論文、文章"
+    }
+  },
+  "Full text": {
+    "scope": "app",
+    "translations": {
+      "ar": "النص الكامل",
+      "de": "Volltext",
+      "en": "Full text",
+      "es": "Texto completo",
+      "fr": "Texte intégral",
+      "hi": "पूरा टेक्स्ट",
+      "id": "Teks lengkap",
+      "ja": "全文",
+      "ko": "전문",
+      "pt-BR": "Texto completo",
+      "zh-Hans": "全文",
+      "zh-Hant": "全文"
+    }
+  },
+  "GitLab URL": {
+    "scope": "app",
+    "translations": {
+      "ar": "عنوان GitLab",
+      "de": "GitLab-URL",
+      "en": "GitLab URL",
+      "es": "URL de GitLab",
+      "fr": "URL GitLab",
+      "hi": "GitLab URL",
+      "id": "URL GitLab",
+      "ja": "GitLabのURL",
+      "ko": "GitLab URL",
+      "pt-BR": "URL do GitLab",
+      "zh-Hans": "GitLab 地址",
+      "zh-Hant": "GitLab 地址"
+    }
+  },
+  "Go": {
+    "scope": "app",
+    "translations": {
+      "ar": "انتقال",
+      "de": "Los",
+      "en": "Go",
+      "es": "Ir",
+      "fr": "Aller",
+      "hi": "जाएँ",
+      "id": "Buka",
+      "ja": "移動",
+      "ko": "이동",
+      "pt-BR": "Ir",
+      "zh-Hans": "跳转",
+      "zh-Hant": "跳轉"
+    }
+  },
+  "Go to page": {
+    "scope": "app",
+    "translations": {
+      "ar": "الانتقال إلى صفحة",
+      "de": "Zu Seite gehen",
+      "en": "Go to page",
+      "es": "Ir a una página",
+      "fr": "Aller à une page",
+      "hi": "पृष्ठ पर जाएँ",
+      "id": "Ke halaman",
+      "ja": "指定ページへ",
+      "ko": "페이지로 이동",
+      "pt-BR": "Ir para página",
+      "zh-Hans": "跳到指定页",
+      "zh-Hant": "跳到指定頁"
+    }
+  },
+  "Grant access only to the repository you need, with Contents set to Read-only. Tokens stay in the device Keychain and never enter web content. Leave blank to keep the saved token.": {
+    "scope": "app",
+    "translations": {
+      "ar": "اسمح بالوصول إلى المستودع المطلوب فقط، واضبط Contents على Read-only. تُحفظ الرموز في سلسلة مفاتيح الجهاز ولا تُمرّر إلى محتوى الويب. اترك الحقل فارغًا للاحتفاظ بالرمز المحفوظ.",
+      "de": "Erlaube nur das benötigte Repository und setze Contents auf Read-only. Tokens bleiben im Schlüsselbund des Geräts und gelangen nicht in Webinhalte. Leer lassen, um das gespeicherte Token zu behalten.",
+      "en": "Grant access only to the repository you need, with Contents set to Read-only. Tokens stay in the device Keychain and never enter web content. Leave blank to keep the saved token.",
+      "es": "Autoriza solo el repositorio necesario y establece Contents en Read-only. Los tokens se guardan en el llavero del dispositivo y no se exponen al contenido web. Deja el campo vacío para conservar el token guardado.",
+      "fr": "Autorisez uniquement le dépôt nécessaire, avec Contents sur Read-only. Les jetons restent dans le trousseau de l’appareil, hors du contenu web. Laissez vide pour conserver le jeton enregistré.",
+      "hi": "केवल आवश्यक रिपॉज़िटरी को अनुमति दें और Contents को Read-only रखें। टोकन डिवाइस के Keychain में रहते हैं और वेब सामग्री को नहीं दिए जाते। सहेजा हुआ टोकन रखने के लिए खाली छोड़ें।",
+      "id": "Izinkan hanya repositori yang diperlukan dan atur Contents ke Read-only. Token disimpan di Keychain perangkat dan tidak masuk ke konten web. Kosongkan untuk mempertahankan token tersimpan.",
+      "ja": "必要なリポジトリのみを許可し、ContentsをRead-onlyに設定してください。トークンは端末のキーチェーンに保存され、Webコンテンツには渡りません。空欄なら保存済みトークンを使います。",
+      "ko": "필요한 저장소만 허용하고 Contents를 Read-only로 설정하세요. 토큰은 기기 키체인에 보관되며 웹 콘텐츠에 노출되지 않습니다. 비워 두면 저장된 토큰을 사용합니다.",
+      "pt-BR": "Autorize apenas o repositório necessário e defina Contents como Read-only. Os tokens ficam nas Chaves do dispositivo e nunca são expostos ao conteúdo web. Deixe em branco para manter o token salvo.",
+      "zh-Hans": "只授权对应仓库，Contents 选择 Read-only。每个仓库的 Token 分别保存在本机 Keychain，不会交给网页。留空沿用该仓库已有凭据。",
+      "zh-Hant": "只授權對應倉庫，Contents 選擇 Read-only。每個倉庫的 Token 分別保存在本機 Keychain，不會交給網頁。留空沿用該倉庫已有憑據。"
+    }
+  },
+  "Help": {
+    "scope": "app",
+    "translations": {
+      "ar": "المساعدة",
+      "de": "Hilfe",
+      "en": "Help",
+      "es": "Ayuda",
+      "fr": "Aide",
+      "hi": "मदद",
+      "id": "Bantuan",
+      "ja": "ヘルプ",
+      "ko": "도움말",
+      "pt-BR": "Ajuda",
+      "zh-Hans": "使用帮助",
+      "zh-Hant": "使用幫助"
+    }
+  },
+  "Help & Privacy": {
+    "scope": "app",
+    "translations": {
+      "ar": "المساعدة والخصوصية",
+      "de": "Hilfe und Datenschutz",
+      "en": "Help & Privacy",
+      "es": "Ayuda y privacidad",
+      "fr": "Aide et confidentialité",
+      "hi": "मदद और गोपनीयता",
+      "id": "Bantuan & privasi",
+      "ja": "ヘルプとプライバシー",
+      "ko": "도움말 및 개인정보",
+      "pt-BR": "Ajuda e privacidade",
+      "zh-Hans": "帮助与隐私",
+      "zh-Hant": "幫助與隱私"
+    }
+  },
+  "Hide dotfiles": {
+    "scope": "app",
+    "translations": {
+      "ar": "إخفاء الملفات التي تبدأ بنقطة",
+      "de": "Dateien mit führendem Punkt ausblenden",
+      "en": "Hide dotfiles",
+      "es": "Ocultar archivos con punto inicial",
+      "fr": "Masquer les fichiers commençant par un point",
+      "hi": "बिंदु से शुरू होने वाली फ़ाइलें छिपाएँ",
+      "id": "Sembunyikan berkas berawalan titik",
+      "ja": "ドットで始まるファイルを非表示",
+      "ko": "점으로 시작하는 파일 숨기기",
+      "pt-BR": "Ocultar arquivos iniciados por ponto",
+      "zh-Hans": "隐藏以点开头的文件",
+      "zh-Hant": "隱藏以點開頭的檔案"
+    }
+  },
+  "Hide files and folders starting with a dot, including .obsidian and its contents. Applies immediately to lists in every repository.": {
+    "scope": "app",
+    "translations": {
+      "ar": "إخفاء الملفات والمجلدات التي تبدأ بنقطة، بما فيها .obsidian ومحتوياته. يُطبّق فورًا على قوائم جميع المستودعات.",
+      "de": "Blendet Dateien und Ordner mit führendem Punkt aus, etwa .obsidian samt Inhalt. Gilt sofort für Listen in allen Repositorys.",
+      "en": "Hide files and folders starting with a dot, including .obsidian and its contents. Applies immediately to lists in every repository.",
+      "es": "Oculta archivos y carpetas que empiezan por un punto, como .obsidian y su contenido. Se aplica al instante a las listas de todos los repositorios.",
+      "fr": "Masque les fichiers et dossiers commençant par un point, dont .obsidian et son contenu. S’applique immédiatement aux listes de tous les dépôts.",
+      "hi": "बिंदु से शुरू होने वाली फ़ाइलें और फ़ोल्डर छिपाएँ, जिनमें .obsidian और उसकी सामग्री भी शामिल है। सभी रिपॉज़िटरी की सूचियों पर तुरंत लागू होता है।",
+      "id": "Sembunyikan berkas dan folder berawalan titik, termasuk .obsidian beserta isinya. Langsung berlaku pada daftar di semua repositori.",
+      "ja": ".obsidianなど、ドットで始まるファイルやフォルダとその内容を非表示にします。すべてのリポジトリの一覧にすぐ反映されます。",
+      "ko": ".obsidian 등 점으로 시작하는 파일과 폴더 및 그 안의 내용을 숨깁니다. 모든 저장소의 목록에 즉시 적용됩니다.",
+      "pt-BR": "Oculta arquivos e pastas iniciados por ponto, como .obsidian e seu conteúdo. Aplica-se imediatamente às listas de todos os repositórios.",
+      "zh-Hans": "同时隐藏 .obsidian 等以点开头的文件夹及其内容。适用于所有仓库的目录、阅读、搜索和最近文件列表，修改立即生效。",
+      "zh-Hant": "同時隱藏 .obsidian 等以點開頭的資料夾及其內容。適用於所有倉庫的目錄、閱讀、搜索和最近檔案列表，修改立即生效。"
+    }
+  },
+  "Image not found": {
+    "scope": "app",
+    "translations": {
+      "ar": "الصورة غير موجودة",
+      "de": "Bild nicht gefunden",
+      "en": "Image not found",
+      "es": "Imagen no encontrada",
+      "fr": "Image introuvable",
+      "hi": "छवि नहीं मिली",
+      "id": "Gambar tidak ditemukan",
+      "ja": "画像が見つかりません",
+      "ko": "이미지를 찾을 수 없음",
+      "pt-BR": "Imagem não encontrada",
+      "zh-Hans": "图片未找到",
+      "zh-Hant": "圖片未找到"
+    }
+  },
+  "Image unavailable. Connect and refresh to retry.": {
+    "scope": "app",
+    "translations": {
+      "ar": "الصورة غير متاحة. اتصل ثم حدّث لإعادة المحاولة.",
+      "de": "Bild nicht verfügbar. Verbinde dich und aktualisiere die Ansicht.",
+      "en": "Image unavailable. Connect and refresh to retry.",
+      "es": "Imagen no disponible. Conéctate y actualiza para reintentar.",
+      "fr": "Image indisponible. Connectez-vous et actualisez pour réessayer.",
+      "hi": "छवि उपलब्ध नहीं है। कनेक्ट करके रीफ़्रेश करें।",
+      "id": "Gambar tidak tersedia. Hubungkan dan segarkan untuk mencoba lagi.",
+      "ja": "画像を表示できません。接続後に更新してください。",
+      "ko": "이미지를 표시할 수 없습니다. 연결한 후 새로고침하세요.",
+      "pt-BR": "Imagem indisponível. Conecte-se e atualize para tentar novamente.",
+      "zh-Hans": "图片暂不可用，联网后刷新重试。",
+      "zh-Hant": "圖片暫不可用，聯網後刷新重試。"
+    }
+  },
+  "Jump to page": {
+    "scope": "app",
+    "translations": {
+      "ar": "القفز إلى صفحة",
+      "de": "Zu Seite springen",
+      "en": "Jump to page",
+      "es": "Saltar a página",
+      "fr": "Accéder à une page",
+      "hi": "सीधे पृष्ठ पर जाएँ",
+      "id": "Lompat ke halaman",
+      "ja": "ページに移動",
+      "ko": "페이지 바로 가기",
+      "pt-BR": "Pular para página",
+      "zh-Hans": "跳转页码",
+      "zh-Hant": "跳轉頁碼"
+    }
+  },
+  "Larger": {
+    "scope": "app",
+    "translations": {
+      "ar": "تكبير",
+      "de": "Größer",
+      "en": "Larger",
+      "es": "Ampliar",
+      "fr": "Agrandir",
+      "hi": "बड़ा करें",
+      "id": "Perbesar",
+      "ja": "大きく",
+      "ko": "크게",
+      "pt-BR": "Aumentar",
+      "zh-Hans": "放大",
+      "zh-Hant": "放大"
+    }
+  },
+  "Last read: %1$@ · %2$@": {
+    "scope": "app",
+    "translations": {
+      "ar": "آخر قراءة: %1$@ · %2$@",
+      "de": "Zuletzt gelesen: %1$@ · %2$@",
+      "en": "Last read: %1$@ · %2$@",
+      "es": "Última lectura: %1$@ · %2$@",
+      "fr": "Dernière lecture : %1$@ · %2$@",
+      "hi": "पिछली बार पढ़ा: %1$@ · %2$@",
+      "id": "Terakhir dibaca: %1$@ · %2$@",
+      "ja": "前回：%1$@ · %2$@",
+      "ko": "마지막 읽기: %1$@ · %2$@",
+      "pt-BR": "Última leitura: %1$@ · %2$@",
+      "zh-Hans": "上次：%1$@ · %2$@",
+      "zh-Hant": "上次：%1$@ · %2$@"
+    }
+  },
+  "Last verified": {
+    "scope": "app",
+    "translations": {
+      "ar": "آخر تحقق",
+      "de": "Zuletzt geprüft",
+      "en": "Last verified",
+      "es": "Última verificación",
+      "fr": "Dernière vérification",
+      "hi": "पिछली जाँच",
+      "id": "Terakhir diverifikasi",
+      "ja": "最終確認",
+      "ko": "마지막 확인",
+      "pt-BR": "Última verificação",
+      "zh-Hans": "上次校验",
+      "zh-Hant": "上次校驗"
+    }
+  },
+  "Leave sample library": {
+    "scope": "app",
+    "translations": {
+      "ar": "مغادرة المكتبة التجريبية",
+      "de": "Beispielbibliothek verlassen",
+      "en": "Leave sample library",
+      "es": "Salir de la biblioteca de ejemplo",
+      "fr": "Quitter la bibliothèque d’exemple",
+      "hi": "नमूना लाइब्रेरी से बाहर जाएँ",
+      "id": "Keluar dari pustaka contoh",
+      "ja": "サンプルライブラリを終了",
+      "ko": "예제 라이브러리 나가기",
+      "pt-BR": "Sair da biblioteca de exemplo",
+      "zh-Hans": "退出示例知识库",
+      "zh-Hant": "退出示例知識庫"
+    }
+  },
+  "Light": {
+    "scope": "app",
+    "translations": {
+      "ar": "فاتح",
+      "de": "Hell",
+      "en": "Light",
+      "es": "Claro",
+      "fr": "Clair",
+      "hi": "हल्का",
+      "id": "Terang",
+      "ja": "ライト",
+      "ko": "밝게",
+      "pt-BR": "Claro",
+      "zh-Hans": "浅色",
+      "zh-Hant": "淺色"
+    }
+  },
+  "Links to another vault are not supported. Switch repositories to open that content.": {
+    "scope": "app",
+    "translations": {
+      "ar": "الروابط إلى مكتبة أخرى غير مدعومة. انتقل إلى المستودع المناسب لفتح المحتوى.",
+      "de": "Links zu anderen Bibliotheken werden nicht unterstützt. Wechsle zum entsprechenden Repository.",
+      "en": "Links to another vault are not supported. Switch repositories to open that content.",
+      "es": "Los enlaces a otra biblioteca no son compatibles. Cambia de repositorio para abrir ese contenido.",
+      "fr": "Les liens vers une autre bibliothèque ne sont pas pris en charge. Changez de dépôt pour ouvrir ce contenu.",
+      "hi": "दूसरी लाइब्रेरी के लिंक समर्थित नहीं हैं। सामग्री खोलने के लिए रिपॉज़िटरी बदलें।",
+      "id": "Tautan ke pustaka lain belum didukung. Beralihlah ke repositori terkait untuk membuka konten tersebut.",
+      "ja": "別のライブラリへのリンクには対応していません。リポジトリを切り替えて開いてください。",
+      "ko": "다른 라이브러리로 연결되는 링크는 지원하지 않습니다. 저장소를 전환한 후 해당 내용을 여세요.",
+      "pt-BR": "Links para outra biblioteca não são compatíveis. Troque de repositório para abrir o conteúdo.",
+      "zh-Hans": "暂不支持跨知识库链接，请切换知识库后打开对应内容。",
+      "zh-Hant": "暫不支持跨知識庫鏈接，請切換知識庫後打開對應內容。"
+    }
+  },
+  "Loading book lists…": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ تحميل قوائم الكتب…",
+      "de": "Bücherlisten werden geladen…",
+      "en": "Loading book lists…",
+      "es": "Cargando listas de libros…",
+      "fr": "Chargement des listes de livres…",
+      "hi": "पुस्तक सूचियाँ लोड हो रही हैं…",
+      "id": "Memuat daftar buku…",
+      "ja": "ブックリストを読み込み中…",
+      "ko": "도서 목록 불러오는 중…",
+      "pt-BR": "Carregando listas de livros…",
+      "zh-Hans": "正在读取书单…",
+      "zh-Hant": "正在讀取書單…"
+    }
+  },
+  "Loading contents": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ تحميل الفهرس",
+      "de": "Inhaltsverzeichnis wird geladen",
+      "en": "Loading contents",
+      "es": "Cargando índice",
+      "fr": "Chargement du sommaire",
+      "hi": "विषय-सूची लोड हो रही है",
+      "id": "Memuat daftar isi",
+      "ja": "目次を読み込み中",
+      "ko": "목차 불러오는 중",
+      "pt-BR": "Carregando sumário",
+      "zh-Hans": "读取章节目录",
+      "zh-Hant": "讀取章節目錄"
+    }
+  },
+  "Loading file list": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ تحميل قائمة الملفات",
+      "de": "Dateiliste wird geladen",
+      "en": "Loading file list",
+      "es": "Cargando lista de archivos",
+      "fr": "Chargement de la liste des fichiers",
+      "hi": "फ़ाइल सूची लोड हो रही है",
+      "id": "Memuat daftar berkas",
+      "ja": "ファイル一覧を読み込み中",
+      "ko": "파일 목록 불러오는 중",
+      "pt-BR": "Carregando lista de arquivos",
+      "zh-Hans": "载入文件列表",
+      "zh-Hant": "載入檔案列表"
+    }
+  },
+  "Loading file list…": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ تحميل قائمة الملفات…",
+      "de": "Dateiliste wird geladen…",
+      "en": "Loading file list…",
+      "es": "Cargando lista de archivos…",
+      "fr": "Chargement de la liste des fichiers…",
+      "hi": "फ़ाइल सूची लोड हो रही है…",
+      "id": "Memuat daftar berkas…",
+      "ja": "ファイル一覧を読み込み中…",
+      "ko": "파일 목록 불러오는 중…",
+      "pt-BR": "Carregando lista de arquivos…",
+      "zh-Hans": "读取文件列表…",
+      "zh-Hant": "讀取檔案列表…"
+    }
+  },
+  "Loading recent commits…": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ تحميل الالتزامات الأخيرة…",
+      "de": "Letzte Commits werden geladen…",
+      "en": "Loading recent commits…",
+      "es": "Cargando commits recientes…",
+      "fr": "Chargement des commits récents…",
+      "hi": "हाल के कमिट लोड हो रहे हैं…",
+      "id": "Memuat commit terbaru…",
+      "ja": "最近のコミットを読み込み中…",
+      "ko": "최근 커밋 불러오는 중…",
+      "pt-BR": "Carregando commits recentes…",
+      "zh-Hans": "读取最近提交…",
+      "zh-Hant": "讀取最近提交…"
+    }
+  },
+  "Loading…": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ التحميل…",
+      "de": "Wird geladen…",
+      "en": "Loading…",
+      "es": "Cargando…",
+      "fr": "Chargement…",
+      "hi": "लोड हो रहा है…",
+      "id": "Memuat…",
+      "ja": "読み込み中…",
+      "ko": "불러오는 중…",
+      "pt-BR": "Carregando…",
+      "zh-Hans": "正在读取…",
+      "zh-Hant": "正在讀取…"
+    }
+  },
+  "Local cache": {
+    "scope": "app",
+    "translations": {
+      "ar": "التخزين المؤقت المحلي",
+      "de": "Lokaler Cache",
+      "en": "Local cache",
+      "es": "Caché local",
+      "fr": "Cache local",
+      "hi": "स्थानीय कैश",
+      "id": "Cache lokal",
+      "ja": "ローカルキャッシュ",
+      "ko": "로컬 캐시",
+      "pt-BR": "Cache local",
+      "zh-Hans": "本机缓存",
+      "zh-Hant": "本機快取"
+    }
+  },
+  "Local cache check · Not connected": {
+    "scope": "app",
+    "translations": {
+      "ar": "فحص التخزين المحلي · غير متصل",
+      "de": "Lokale Cache-Prüfung · Nicht verbunden",
+      "en": "Local cache check · Not connected",
+      "es": "Comprobación de caché local · Sin conexión",
+      "fr": "Vérification du cache local · Hors ligne",
+      "hi": "स्थानीय कैश जाँच · कनेक्ट नहीं है",
+      "id": "Pemeriksaan cache lokal · Tidak terhubung",
+      "ja": "ローカルキャッシュの確認 · 未接続",
+      "ko": "로컬 캐시 확인 · 연결되지 않음",
+      "pt-BR": "Verificação do cache local · Sem conexão",
+      "zh-Hans": "本机缓存验收 · 未连接服务器",
+      "zh-Hant": "本機快取驗收 · 未連接伺服器"
+    }
+  },
+  "Local token removed. Cached files remain available.": {
+    "scope": "app",
+    "translations": {
+      "ar": "تم حذف رمز الوصول المحلي. تظل الملفات المخزنة متاحة.",
+      "de": "Lokales Token entfernt. Der Cache bleibt verfügbar.",
+      "en": "Local token removed. Cached files remain available.",
+      "es": "Token local eliminado. La caché sigue disponible.",
+      "fr": "Jeton local supprimé. Le cache reste disponible.",
+      "hi": "स्थानीय टोकन हटा दिया गया। कैश की फ़ाइलें उपलब्ध हैं।",
+      "id": "Token lokal dihapus. Cache tetap tersedia.",
+      "ja": "端末のトークンを削除しました。キャッシュは引き続き利用できます。",
+      "ko": "기기의 토큰을 제거했습니다. 캐시는 계속 사용할 수 있습니다.",
+      "pt-BR": "Token local removido. O cache continua disponível.",
+      "zh-Hans": "已移除本机 Token，已缓存内容仍可阅读。",
+      "zh-Hant": "已移除本機 Token，已快取內容仍可閱讀。"
+    }
+  },
+  "Manage GitLab tokens": {
+    "scope": "app",
+    "translations": {
+      "ar": "إدارة رموز GitLab",
+      "de": "GitLab-Tokens verwalten",
+      "en": "Manage GitLab tokens",
+      "es": "Gestionar tokens de GitLab",
+      "fr": "Gérer les jetons GitLab",
+      "hi": "GitLab टोकन प्रबंधित करें",
+      "id": "Kelola token GitLab",
+      "ja": "GitLabトークンを管理",
+      "ko": "GitLab 토큰 관리",
+      "pt-BR": "Gerenciar tokens do GitLab",
+      "zh-Hans": "管理 GitLab Token",
+      "zh-Hant": "管理 GitLab Token"
+    }
+  },
+  "Markdown and SVG stay cached. Other attachments are removed by last access time. Text is cached while the app is open for offline search.": {
+    "scope": "app",
+    "translations": {
+      "ar": "تُحفظ ملفات Markdown وSVG. تُحذف المرفقات الأخرى حسب آخر وصول. يُخزّن النص أثناء فتح التطبيق للبحث دون اتصال.",
+      "de": "Markdown und SVG bleiben gespeichert. Andere Anhänge werden nach letztem Zugriff entfernt. Bei geöffneter App wird Text für die Offlinesuche geladen.",
+      "en": "Markdown and SVG stay cached. Other attachments are removed by last access time. Text is cached while the app is open for offline search.",
+      "es": "Markdown y SVG se conservan. Los demás adjuntos se eliminan según su último acceso. Con la app abierta, el texto se descarga para buscar sin conexión.",
+      "fr": "Markdown et SVG sont conservés. Les autres pièces jointes sont supprimées selon leur dernier accès. Le texte est mis en cache quand l’app est ouverte pour permettre la recherche hors ligne.",
+      "hi": "Markdown और SVG रखे जाते हैं। अन्य अटैचमेंट अंतिम उपयोग के क्रम में हटाए जाते हैं। ऐप खुला रहने पर टेक्स्ट कैश होता है ताकि ऑफ़लाइन खोज सकें।",
+      "id": "Markdown dan SVG tetap disimpan. Lampiran lain dihapus berdasarkan akses terakhir. Teks diunduh saat aplikasi terbuka agar dapat dicari secara luring.",
+      "ja": "MarkdownとSVGは保持します。その他の添付ファイルは最終アクセス順に削除します。アプリの使用中に本文を取得し、オフライン検索に備えます。",
+      "ko": "Markdown과 SVG는 보관합니다. 다른 첨부 파일은 마지막 접근 순서에 따라 제거합니다. 앱이 열려 있을 때 본문을 캐시하여 오프라인으로 검색할 수 있습니다.",
+      "pt-BR": "Markdown e SVG são mantidos. Outros anexos são removidos conforme o último acesso. O texto é baixado com o app aberto para permitir busca off-line.",
+      "zh-Hans": "Markdown 与 SVG 保留，其他附件按最近访问时间淘汰。Markdown 在前台自动补全，可离线搜索正文。",
+      "zh-Hant": "Markdown 與 SVG 保留，其他附件按最近訪問時間淘汰。Markdown 在前台自動補全，可離線搜索正文。"
+    }
+  },
+  "Namespace": {
+    "scope": "app",
+    "translations": {
+      "ar": "نطاق الأسماء",
+      "de": "Namensraum",
+      "en": "Namespace",
+      "es": "Espacio de nombres",
+      "fr": "Espace de noms",
+      "hi": "नेमस्पेस",
+      "id": "Namespace",
+      "ja": "名前空間",
+      "ko": "네임스페이스",
+      "pt-BR": "Namespace",
+      "zh-Hans": "命名空间",
+      "zh-Hant": "命名空間"
+    }
+  },
+  "Native Markdown · HTML · PDF\nRead-only GitHub / GitLab access · Tokens stay in Keychain": {
+    "scope": "app",
+    "translations": {
+      "ar": "دعم مدمج لـ Markdown · HTML · PDF\nGitHub / GitLab للقراءة فقط · الرموز في سلسلة المفاتيح",
+      "de": "Markdown · HTML · PDF integriert\nGitHub / GitLab nur lesend · Tokens im Schlüsselbund",
+      "en": "Native Markdown · HTML · PDF\nRead-only GitHub / GitLab access · Tokens stay in Keychain",
+      "es": "Markdown · HTML · PDF integrados\nGitHub / GitLab de solo lectura · Tokens en el llavero",
+      "fr": "Markdown · HTML · PDF intégrés\nGitHub / GitLab en lecture seule · Jetons dans le trousseau",
+      "hi": "Markdown · HTML · PDF का सीधा समर्थन\nGitHub / GitLab केवल पढ़ने के लिए · टोकन Keychain में",
+      "id": "Dukungan Markdown · HTML · PDF\nGitHub / GitLab hanya-baca · Token di Keychain",
+      "ja": "Markdown · HTML · PDFに対応\nGitHub / GitLabは読み取り専用 · トークンはキーチェーンに保存",
+      "ko": "Markdown · HTML · PDF 기본 지원\nGitHub / GitLab 읽기 전용 · 토큰은 키체인에 보관",
+      "pt-BR": "Markdown · HTML · PDF integrados\nGitHub / GitLab somente leitura · Tokens nas Chaves",
+      "zh-Hans": "原生支持 Markdown · HTML · PDF\nGitHub / GitLab 只读访问 · Token 保存在钥匙串",
+      "zh-Hant": "原生支持 Markdown · HTML · PDF\nGitHub / GitLab 只讀訪問 · Token 保存在鑰匙串"
+    }
+  },
+  "Next page": {
+    "scope": "app",
+    "translations": {
+      "ar": "الصفحة التالية",
+      "de": "Nächste Seite",
+      "en": "Next page",
+      "es": "Página siguiente",
+      "fr": "Page suivante",
+      "hi": "अगला पृष्ठ",
+      "id": "Halaman berikutnya",
+      "ja": "次のページ",
+      "ko": "다음 페이지",
+      "pt-BR": "Próxima página",
+      "zh-Hans": "下一页",
+      "zh-Hant": "下一頁"
+    }
+  },
+  "No cached commits. Connect to load the 30 most recent commits.": {
+    "scope": "app",
+    "translations": {
+      "ar": "لا توجد التزامات مخزنة. اتصل لتحميل أحدث 30 التزامًا.",
+      "de": "Keine Commits im Cache. Verbinde dich, um die letzten 30 Commits zu laden.",
+      "en": "No cached commits. Connect to load the 30 most recent commits.",
+      "es": "No hay commits en caché. Conéctate para cargar los 30 más recientes.",
+      "fr": "Aucun commit en cache. Connectez-vous pour charger les 30 plus récents.",
+      "hi": "कैश में कोई कमिट नहीं है। हाल के 30 कमिट लोड करने के लिए कनेक्ट करें।",
+      "id": "Belum ada commit dalam cache. Hubungkan untuk memuat 30 commit terbaru.",
+      "ja": "コミットのキャッシュはありません。接続すると最新30件を取得します。",
+      "ko": "캐시된 커밋이 없습니다. 연결하면 최근 30개를 불러옵니다.",
+      "pt-BR": "Nenhum commit em cache. Conecte-se para carregar os 30 mais recentes.",
+      "zh-Hans": "暂无提交缓存。连接后显示最近 30 条提交。",
+      "zh-Hant": "暫無提交快取。連接後顯示最近 30 條提交。"
+    }
+  },
+  "No files are listed for this book yet. Add links to the original, full text, summary or notes under the book in your book list.": {
+    "scope": "app",
+    "translations": {
+      "ar": "لا توجد ملفات لهذا الكتاب بعد. أضف روابط للأصل أو النص الكامل أو الملخص أو الملاحظات في قائمة الكتب.",
+      "de": "Für dieses Buch sind noch keine Dateien eingetragen. Ergänze Links zum Original, Volltext, zur Kurzfassung oder zu Notizen in der Bücherliste.",
+      "en": "No files are listed for this book yet. Add links to the original, full text, summary or notes under the book in your book list.",
+      "es": "Este libro aún no tiene archivos. Añade enlaces al original, al texto completo, al resumen o a las notas en la lista de libros.",
+      "fr": "Aucun fichier pour ce livre. Ajoutez des liens vers l’original, le texte intégral, le résumé ou les notes dans la liste de livres.",
+      "hi": "इस पुस्तक में अभी फ़ाइलें नहीं हैं। पुस्तक सूची में मूल, पूरा टेक्स्ट, सारांश या नोट के लिंक जोड़ें।",
+      "id": "Belum ada berkas untuk buku ini. Tambahkan tautan ke naskah asli, teks lengkap, ringkasan, atau catatan di daftar buku.",
+      "ja": "この本にはまだファイルがありません。ブックリストに原本、全文、要約、ノートへのリンクを追加してください。",
+      "ko": "이 책에 등록된 파일이 없습니다. 도서 목록에서 원본, 전문, 요약 또는 노트 링크를 추가하세요.",
+      "pt-BR": "Este livro ainda não tem arquivos. Adicione links para o original, texto completo, resumo ou notas na lista de livros.",
+      "zh-Hans": "书单里还没有这本书的文件。整理好原书、全文、精简版或笔记后，在书单里这本书下面加一行即可。",
+      "zh-Hant": "書單里還沒有這本書的檔案。整理好原書、全文、精簡版或筆記後，在書單里這本書下面加一行即可。"
+    }
+  },
+  "No reading content yet": {
+    "scope": "app",
+    "translations": {
+      "ar": "لا يوجد محتوى للقراءة بعد",
+      "de": "Noch keine Leseinhalte",
+      "en": "No reading content yet",
+      "es": "Aún no hay lecturas",
+      "fr": "Aucune lecture pour le moment",
+      "hi": "अभी पढ़ने की सामग्री नहीं है",
+      "id": "Belum ada bacaan",
+      "ja": "読むコンテンツがありません",
+      "ko": "아직 읽을 내용이 없습니다",
+      "pt-BR": "Ainda não há leituras",
+      "zh-Hans": "还没有阅读内容",
+      "zh-Hant": "還沒有閱讀內容"
+    }
+  },
+  "No results": {
+    "scope": "app",
+    "translations": {
+      "ar": "لا توجد نتائج",
+      "de": "Keine Ergebnisse",
+      "en": "No results",
+      "es": "Sin resultados",
+      "fr": "Aucun résultat",
+      "hi": "कोई नतीजा नहीं",
+      "id": "Tidak ada hasil",
+      "ja": "結果が見つかりません",
+      "ko": "결과 없음",
+      "pt-BR": "Nenhum resultado",
+      "zh-Hans": "没有匹配的结果",
+      "zh-Hant": "沒有匹配的結果"
+    }
+  },
+  "No saved libraries": {
+    "scope": "app",
+    "translations": {
+      "ar": "لا توجد مكتبات محفوظة",
+      "de": "Keine gespeicherten Bibliotheken",
+      "en": "No saved libraries",
+      "es": "No hay bibliotecas guardadas",
+      "fr": "Aucune bibliothèque enregistrée",
+      "hi": "कोई लाइब्रेरी सहेजी नहीं गई है",
+      "id": "Tidak ada pustaka tersimpan",
+      "ja": "保存済みライブラリはありません",
+      "ko": "저장된 라이브러리가 없습니다",
+      "pt-BR": "Nenhuma biblioteca salva",
+      "zh-Hans": "没有已保存的知识库",
+      "zh-Hant": "沒有已保存的知識庫"
+    }
+  },
+  "No token saved for this repository. Cached files remain available.": {
+    "scope": "app",
+    "translations": {
+      "ar": "لا يوجد رمز وصول محفوظ لهذا المستودع. تظل الملفات المخزنة متاحة.",
+      "de": "Kein Token für dieses Repository gespeichert. Der Cache bleibt lesbar.",
+      "en": "No token saved for this repository. Cached files remain available.",
+      "es": "No hay un token guardado para este repositorio. Puedes leer la caché.",
+      "fr": "Aucun jeton enregistré pour ce dépôt. Les fichiers en cache restent disponibles.",
+      "hi": "इस रिपॉज़िटरी का टोकन सहेजा नहीं गया है। कैश की फ़ाइलें पढ़ सकते हैं।",
+      "id": "Belum ada token tersimpan untuk repositori ini. Berkas dalam cache tetap dapat dibaca.",
+      "ja": "このリポジトリのトークンは未保存です。キャッシュは引き続き読めます。",
+      "ko": "이 저장소에 저장된 토큰이 없습니다. 캐시된 파일은 읽을 수 있습니다.",
+      "pt-BR": "Nenhum token salvo para este repositório. O cache continua disponível.",
+      "zh-Hans": "此知识库未保存 Token，可阅读已有缓存。",
+      "zh-Hant": "此知識庫未保存 Token，可閱讀已有快取。"
+    }
+  },
+  "Not found": {
+    "scope": "app",
+    "translations": {
+      "ar": "غير موجود",
+      "de": "Nicht gefunden",
+      "en": "Not found",
+      "es": "No encontrado",
+      "fr": "Introuvable",
+      "hi": "नहीं मिला",
+      "id": "Tidak ditemukan",
+      "ja": "見つかりません",
+      "ko": "찾을 수 없음",
+      "pt-BR": "Não encontrado",
+      "zh-Hans": "未找到",
+      "zh-Hant": "未找到"
+    }
+  },
+  "Not found: %1$@": {
+    "scope": "app",
+    "translations": {
+      "ar": "غير موجود: %1$@",
+      "de": "Nicht gefunden: %1$@",
+      "en": "Not found: %1$@",
+      "es": "No se encontró: %1$@",
+      "fr": "Introuvable : %1$@",
+      "hi": "नहीं मिला: %1$@",
+      "id": "Tidak ditemukan: %1$@",
+      "ja": "見つかりません：%1$@",
+      "ko": "찾을 수 없음: %1$@",
+      "pt-BR": "Não encontrado: %1$@",
+      "zh-Hans": "未找到：%1$@",
+      "zh-Hant": "未找到：%1$@"
+    }
+  },
+  "Not in a book list": {
+    "scope": "app",
+    "translations": {
+      "ar": "خارج قوائم الكتب",
+      "de": "In keiner Bücherliste",
+      "en": "Not in a book list",
+      "es": "Fuera de las listas",
+      "fr": "Hors des listes de livres",
+      "hi": "पुस्तक सूची से बाहर",
+      "id": "Di luar daftar buku",
+      "ja": "リストにないファイル",
+      "ko": "도서 목록에 없는 파일",
+      "pt-BR": "Fora das listas",
+      "zh-Hans": "未列入书单",
+      "zh-Hant": "未列入書單"
+    }
+  },
+  "Note actions": {
+    "scope": "app",
+    "translations": {
+      "ar": "إجراءات الملاحظة",
+      "de": "Notizaktionen",
+      "en": "Note actions",
+      "es": "Acciones de la nota",
+      "fr": "Actions de la note",
+      "hi": "नोट के विकल्प",
+      "id": "Tindakan catatan",
+      "ja": "ノートの操作",
+      "ko": "노트 작업",
+      "pt-BR": "Ações da nota",
+      "zh-Hans": "笔记操作",
+      "zh-Hant": "筆記操作"
+    }
+  },
+  "Notice": {
+    "scope": "app",
+    "translations": {
+      "ar": "تنبيه",
+      "de": "Hinweis",
+      "en": "Notice",
+      "es": "Aviso",
+      "fr": "Information",
+      "hi": "सूचना",
+      "id": "Pemberitahuan",
+      "ja": "お知らせ",
+      "ko": "알림",
+      "pt-BR": "Aviso",
+      "zh-Hans": "提示",
+      "zh-Hant": "提示"
+    }
+  },
+  "OK": {
+    "scope": "app",
+    "translations": {
+      "ar": "موافق",
+      "de": "OK",
+      "en": "OK",
+      "es": "Aceptar",
+      "fr": "OK",
+      "hi": "ठीक है",
+      "id": "OK",
+      "ja": "OK",
+      "ko": "확인",
+      "pt-BR": "OK",
+      "zh-Hans": "好",
+      "zh-Hant": "好"
+    }
+  },
+  "Offline · ": {
+    "scope": "app",
+    "translations": {
+      "ar": "دون اتصال · ",
+      "de": "Offline · ",
+      "en": "Offline · ",
+      "es": "Sin conexión · ",
+      "fr": "Hors ligne · ",
+      "hi": "ऑफ़लाइन · ",
+      "id": "Luring · ",
+      "ja": "オフライン · ",
+      "ko": "오프라인 · ",
+      "pt-BR": "Off-line · ",
+      "zh-Hans": "离线 · ",
+      "zh-Hant": "離線 · "
+    }
+  },
+  "Online version": {
+    "scope": "app",
+    "translations": {
+      "ar": "النسخة عبر الإنترنت",
+      "de": "Onlineversion",
+      "en": "Online version",
+      "es": "Versión en línea",
+      "fr": "Version en ligne",
+      "hi": "ऑनलाइन संस्करण",
+      "id": "Versi daring",
+      "ja": "オンライン版",
+      "ko": "온라인 버전",
+      "pt-BR": "Versão on-line",
+      "zh-Hans": "查看在线版本 / Online version",
+      "zh-Hant": "查看在線版本 / Online version"
+    }
+  },
+  "Open iOS Settings": {
+    "scope": "app",
+    "translations": {
+      "ar": "فتح إعدادات iOS",
+      "de": "iOS-Einstellungen öffnen",
+      "en": "Open iOS Settings",
+      "es": "Abrir Ajustes de iOS",
+      "fr": "Ouvrir les Réglages iOS",
+      "hi": "iOS सेटिंग्स खोलें",
+      "id": "Buka Pengaturan iOS",
+      "ja": "iOSの設定を開く",
+      "ko": "iOS 설정 열기",
+      "pt-BR": "Abrir Ajustes do iOS",
+      "zh-Hans": "打开 iOS 设置",
+      "zh-Hant": "打開 iOS 設置"
+    }
+  },
+  "Open in %1$@": {
+    "scope": "app",
+    "translations": {
+      "ar": "فتح في %1$@",
+      "de": "In %1$@ öffnen",
+      "en": "Open in %1$@",
+      "es": "Abrir en %1$@",
+      "fr": "Ouvrir sur %1$@",
+      "hi": "%1$@ में खोलें",
+      "id": "Buka di %1$@",
+      "ja": "%1$@で開く",
+      "ko": "%1$@에서 열기",
+      "pt-BR": "Abrir no %1$@",
+      "zh-Hans": "在 %1$@ 打开",
+      "zh-Hant": "在 %1$@ 打開"
+    }
+  },
+  "Open in reader": {
+    "scope": "app",
+    "translations": {
+      "ar": "فتح في القارئ",
+      "de": "Im Leser öffnen",
+      "en": "Open in reader",
+      "es": "Abrir en el lector",
+      "fr": "Ouvrir dans le lecteur",
+      "hi": "रीडर में खोलें",
+      "id": "Buka di pembaca",
+      "ja": "リーダーで開く",
+      "ko": "리더에서 열기",
+      "pt-BR": "Abrir no leitor",
+      "zh-Hans": "用阅读器打开",
+      "zh-Hant": "用閱讀器打開"
+    }
+  },
+  "Open in repository": {
+    "scope": "app",
+    "translations": {
+      "ar": "فتح في المستودع",
+      "de": "Im Repository öffnen",
+      "en": "Open in repository",
+      "es": "Abrir en el repositorio",
+      "fr": "Ouvrir dans le dépôt",
+      "hi": "रिपॉज़िटरी में खोलें",
+      "id": "Buka di repositori",
+      "ja": "リポジトリで開く",
+      "ko": "저장소에서 열기",
+      "pt-BR": "Abrir no repositório",
+      "zh-Hans": "在仓库中打开",
+      "zh-Hant": "在倉庫中打開"
+    }
+  },
+  "Opened cached files. Checking for updates…": {
+    "scope": "app",
+    "translations": {
+      "ar": "تم فتح الملفات المخزنة. جارٍ البحث عن تحديثات…",
+      "de": "Cache geöffnet. Suche nach Updates…",
+      "en": "Opened cached files. Checking for updates…",
+      "es": "Caché abierta. Buscando actualizaciones…",
+      "fr": "Cache ouvert. Recherche de mises à jour…",
+      "hi": "कैश खोला गया। अपडेट जाँचे जा रहे हैं…",
+      "id": "Cache dibuka. Memeriksa pembaruan…",
+      "ja": "キャッシュを開きました。更新を確認中…",
+      "ko": "캐시를 열었습니다. 업데이트 확인 중…",
+      "pt-BR": "Cache aberto. Buscando atualizações…",
+      "zh-Hans": "已打开本机缓存，正在检查更新…",
+      "zh-Hant": "已打開本機快取，正在檢查更新…"
+    }
+  },
+  "Opening PDF…": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ فتح PDF…",
+      "de": "PDF wird geöffnet…",
+      "en": "Opening PDF…",
+      "es": "Abriendo PDF…",
+      "fr": "Ouverture du PDF…",
+      "hi": "PDF खुल रहा है…",
+      "id": "Membuka PDF…",
+      "ja": "PDFを開いています…",
+      "ko": "PDF 여는 중…",
+      "pt-BR": "Abrindo PDF…",
+      "zh-Hans": "正在打开 PDF…",
+      "zh-Hant": "正在打開 PDF…"
+    }
+  },
+  "Opening heading": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ فتح العنوان",
+      "de": "Überschrift wird geöffnet",
+      "en": "Opening heading",
+      "es": "Abriendo encabezado",
+      "fr": "Ouverture du titre",
+      "hi": "शीर्षक खुल रहा है",
+      "id": "Membuka judul",
+      "ja": "見出しを開いています",
+      "ko": "제목 여는 중",
+      "pt-BR": "Abrindo título",
+      "zh-Hans": "跳转标题",
+      "zh-Hant": "跳轉標題"
+    }
+  },
+  "Opening library…": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ فتح المكتبة…",
+      "de": "Bibliothek wird geöffnet…",
+      "en": "Opening library…",
+      "es": "Abriendo biblioteca…",
+      "fr": "Ouverture de la bibliothèque…",
+      "hi": "लाइब्रेरी खुल रही है…",
+      "id": "Membuka pustaka…",
+      "ja": "ライブラリを開いています…",
+      "ko": "라이브러리 여는 중…",
+      "pt-BR": "Abrindo biblioteca…",
+      "zh-Hans": "打开知识库…",
+      "zh-Hant": "打開知識庫…"
+    }
+  },
+  "Opening reader…": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ فتح القارئ…",
+      "de": "Leser wird geöffnet…",
+      "en": "Opening reader…",
+      "es": "Abriendo lector…",
+      "fr": "Ouverture du lecteur…",
+      "hi": "रीडर खुल रहा है…",
+      "id": "Membuka pembaca…",
+      "ja": "リーダーを開いています…",
+      "ko": "리더 여는 중…",
+      "pt-BR": "Abrindo leitor…",
+      "zh-Hans": "正在打开阅读器…",
+      "zh-Hant": "正在打開閱讀器…"
+    }
+  },
+  "Opening section": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ فتح القسم",
+      "de": "Abschnitt wird geöffnet",
+      "en": "Opening section",
+      "es": "Abriendo sección",
+      "fr": "Ouverture de la section",
+      "hi": "भाग खुल रहा है",
+      "id": "Membuka bagian",
+      "ja": "章を開いています",
+      "ko": "장 여는 중",
+      "pt-BR": "Abrindo seção",
+      "zh-Hans": "跳转章节",
+      "zh-Hant": "跳轉章節"
+    }
+  },
+  "Organize knowledge with Claude, Codex and other tools. Read it wherever you are.": {
+    "scope": "app",
+    "translations": {
+      "ar": "نظّم معرفتك باستخدام Claude وCodex وأدوات أخرى، واقرأها أينما كنت.",
+      "de": "Organisiere Wissen mit Claude, Codex und anderen Tools. Lies es, wo du gerade bist.",
+      "en": "Organize knowledge with Claude, Codex and other tools. Read it wherever you are.",
+      "es": "Organiza tu conocimiento con Claude, Codex y otras herramientas. Lee donde estés.",
+      "fr": "Organisez vos connaissances avec Claude, Codex et d’autres outils. Lisez où que vous soyez.",
+      "hi": "Claude, Codex और अन्य टूल से ज्ञान व्यवस्थित करें। जहाँ हों, वहीं पढ़ें।",
+      "id": "Atur pengetahuan dengan Claude, Codex, dan alat lainnya. Baca di mana pun Anda berada.",
+      "ja": "ClaudeやCodexなどで知識を整理し、どこにいても読めます。",
+      "ko": "Claude, Codex 등의 도구로 지식을 정리하고 어디서든 읽으세요.",
+      "pt-BR": "Organize conhecimento com Claude, Codex e outras ferramentas. Leia onde estiver.",
+      "zh-Hans": "用 Claude、Codex 等工具整理知识，随时随地阅读。",
+      "zh-Hant": "用 Claude、Codex 等工具整理知識，隨時隨地閱讀。"
+    }
+  },
+  "Original": {
+    "scope": "app",
+    "translations": {
+      "ar": "الأصل",
+      "de": "Original",
+      "en": "Original",
+      "es": "Original",
+      "fr": "Original",
+      "hi": "मूल",
+      "id": "Asli",
+      "ja": "原本",
+      "ko": "원본",
+      "pt-BR": "Original",
+      "zh-Hans": "原书",
+      "zh-Hant": "原書"
+    }
+  },
+  "Other": {
+    "scope": "app",
+    "translations": {
+      "ar": "أخرى",
+      "de": "Sonstiges",
+      "en": "Other",
+      "es": "Otros",
+      "fr": "Autres",
+      "hi": "अन्य",
+      "id": "Lainnya",
+      "ja": "その他",
+      "ko": "기타",
+      "pt-BR": "Outros",
+      "zh-Hans": "其他",
+      "zh-Hant": "其他"
+    }
+  },
+  "Owner": {
+    "scope": "app",
+    "translations": {
+      "ar": "المالك",
+      "de": "Eigentümer",
+      "en": "Owner",
+      "es": "Propietario",
+      "fr": "Propriétaire",
+      "hi": "मालिक",
+      "id": "Pemilik",
+      "ja": "所有者",
+      "ko": "소유자",
+      "pt-BR": "Proprietário",
+      "zh-Hans": "Owner",
+      "zh-Hant": "Owner"
+    }
+  },
+  "PDF contents": {
+    "scope": "app",
+    "translations": {
+      "ar": "فهرس PDF",
+      "de": "PDF-Inhalt",
+      "en": "PDF contents",
+      "es": "Índice del PDF",
+      "fr": "Sommaire du PDF",
+      "hi": "PDF विषय-सूची",
+      "id": "Daftar isi PDF",
+      "ja": "PDFの目次",
+      "ko": "PDF 목차",
+      "pt-BR": "Sumário do PDF",
+      "zh-Hans": "PDF 目录",
+      "zh-Hant": "PDF 目錄"
+    }
+  },
+  "Page %1$ld": {
+    "scope": "app",
+    "translations": {
+      "ar": "الصفحة %1$ld",
+      "de": "Seite %1$ld",
+      "en": "Page %1$ld",
+      "es": "Página %1$ld",
+      "fr": "Page %1$ld",
+      "hi": "पृष्ठ %1$ld",
+      "id": "Halaman %1$ld",
+      "ja": "%1$ldページ",
+      "ko": "%1$ld페이지",
+      "pt-BR": "Página %1$ld",
+      "zh-Hans": "第 %1$ld 页",
+      "zh-Hant": "第 %1$ld 頁"
+    }
+  },
+  "Page %1$ld of %2$ld": {
+    "scope": "app",
+    "translations": {
+      "ar": "الصفحة %1$ld من %2$ld",
+      "de": "Seite %1$ld von %2$ld",
+      "en": "Page %1$ld of %2$ld",
+      "es": "Página %1$ld de %2$ld",
+      "fr": "Page %1$ld sur %2$ld",
+      "hi": "पृष्ठ %1$ld / %2$ld",
+      "id": "Halaman %1$ld dari %2$ld",
+      "ja": "%1$ld / %2$ldページ",
+      "ko": "%1$ld / %2$ld페이지",
+      "pt-BR": "Página %1$ld de %2$ld",
+      "zh-Hans": "第 %1$ld / %2$ld 页",
+      "zh-Hant": "第 %1$ld / %2$ld 頁"
+    }
+  },
+  "Page number": {
+    "scope": "app",
+    "translations": {
+      "ar": "رقم الصفحة",
+      "de": "Seitenzahl",
+      "en": "Page number",
+      "es": "Número de página",
+      "fr": "Numéro de page",
+      "hi": "पृष्ठ संख्या",
+      "id": "Nomor halaman",
+      "ja": "ページ番号",
+      "ko": "페이지 번호",
+      "pt-BR": "Número da página",
+      "zh-Hans": "页码",
+      "zh-Hant": "頁碼"
+    }
+  },
+  "Paste a read-only token": {
+    "scope": "app",
+    "translations": {
+      "ar": "ألصق رمز وصول للقراءة فقط",
+      "de": "Token mit Lesezugriff einfügen",
+      "en": "Paste a read-only token",
+      "es": "Pega un token de solo lectura",
+      "fr": "Collez un jeton en lecture seule",
+      "hi": "केवल-पढ़ने का टोकन पेस्ट करें",
+      "id": "Tempel token hanya-baca",
+      "ja": "読み取り専用トークンを貼り付け",
+      "ko": "읽기 전용 토큰 붙여넣기",
+      "pt-BR": "Cole um token somente leitura",
+      "zh-Hans": "粘贴只读 Token",
+      "zh-Hant": "粘貼只讀 Token"
+    }
+  },
+  "Pause caching": {
+    "scope": "app",
+    "translations": {
+      "ar": "إيقاف التخزين مؤقتًا",
+      "de": "Zwischenspeichern pausieren",
+      "en": "Pause caching",
+      "es": "Pausar descarga",
+      "fr": "Suspendre le téléchargement",
+      "hi": "कैश रोकें",
+      "id": "Jeda pengunduhan",
+      "ja": "キャッシュを一時停止",
+      "ko": "캐시 일시 정지",
+      "pt-BR": "Pausar cache",
+      "zh-Hans": "暂停补全",
+      "zh-Hant": "暫停補全"
+    }
+  },
+  "Preparing preview…": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ تجهيز المعاينة…",
+      "de": "Vorschau wird vorbereitet…",
+      "en": "Preparing preview…",
+      "es": "Preparando vista previa…",
+      "fr": "Préparation de l’aperçu…",
+      "hi": "प्रीव्यू तैयार हो रहा है…",
+      "id": "Menyiapkan pratinjau…",
+      "ja": "プレビューを準備中…",
+      "ko": "미리보기 준비 중…",
+      "pt-BR": "Preparando prévia…",
+      "zh-Hans": "正在准备预览…",
+      "zh-Hant": "正在準備預覽…"
+    }
+  },
+  "Preview unavailable": {
+    "scope": "app",
+    "translations": {
+      "ar": "المعاينة غير متاحة",
+      "de": "Vorschau nicht verfügbar",
+      "en": "Preview unavailable",
+      "es": "Vista previa no disponible",
+      "fr": "Aperçu indisponible",
+      "hi": "प्रीव्यू उपलब्ध नहीं",
+      "id": "Pratinjau tidak tersedia",
+      "ja": "プレビューできません",
+      "ko": "미리보기 사용 불가",
+      "pt-BR": "Prévia indisponível",
+      "zh-Hans": "无法预览",
+      "zh-Hant": "無法預覽"
+    }
+  },
+  "Previous page": {
+    "scope": "app",
+    "translations": {
+      "ar": "الصفحة السابقة",
+      "de": "Vorherige Seite",
+      "en": "Previous page",
+      "es": "Página anterior",
+      "fr": "Page précédente",
+      "hi": "पिछला पृष्ठ",
+      "id": "Halaman sebelumnya",
+      "ja": "前のページ",
+      "ko": "이전 페이지",
+      "pt-BR": "Página anterior",
+      "zh-Hans": "上一页",
+      "zh-Hant": "上一頁"
+    }
+  },
+  "Privacy Policy": {
+    "scope": "app",
+    "translations": {
+      "ar": "سياسة الخصوصية",
+      "de": "Datenschutzerklärung",
+      "en": "Privacy Policy",
+      "es": "Política de privacidad",
+      "fr": "Politique de confidentialité",
+      "hi": "गोपनीयता नीति",
+      "id": "Kebijakan Privasi",
+      "ja": "プライバシーポリシー",
+      "ko": "개인정보 처리방침",
+      "pt-BR": "Política de Privacidade",
+      "zh-Hans": "隐私政策",
+      "zh-Hant": "隱私政策"
+    }
+  },
+  "Projects": {
+    "scope": "app",
+    "translations": {
+      "ar": "المشروعات",
+      "de": "Projekte",
+      "en": "Projects",
+      "es": "Proyectos",
+      "fr": "Projets",
+      "hi": "प्रोजेक्ट",
+      "id": "Proyek",
+      "ja": "プロジェクト",
+      "ko": "프로젝트",
+      "pt-BR": "Projetos",
+      "zh-Hans": "项目",
+      "zh-Hant": "項目"
+    }
+  },
+  "Properties": {
+    "scope": "app",
+    "translations": {
+      "ar": "الخصائص",
+      "de": "Eigenschaften",
+      "en": "Properties",
+      "es": "Propiedades",
+      "fr": "Propriétés",
+      "hi": "गुण",
+      "id": "Properti",
+      "ja": "プロパティ",
+      "ko": "속성",
+      "pt-BR": "Propriedades",
+      "zh-Hans": "属性",
+      "zh-Hant": "屬性"
+    }
+  },
+  "Provider": {
+    "scope": "app",
+    "translations": {
+      "ar": "مزوّد الخدمة",
+      "de": "Anbieter",
+      "en": "Provider",
+      "es": "Proveedor",
+      "fr": "Service",
+      "hi": "सेवा प्रदाता",
+      "id": "Penyedia",
+      "ja": "サービス",
+      "ko": "서비스",
+      "pt-BR": "Provedor",
+      "zh-Hans": "平台",
+      "zh-Hant": "平台"
+    }
+  },
+  "Read-only · No developer server": {
+    "scope": "app",
+    "translations": {
+      "ar": "للقراءة فقط · بلا خادم للمطوّر",
+      "de": "Nur Lesen · Kein Entwicklerserver",
+      "en": "Read-only · No developer server",
+      "es": "Solo lectura · Sin servidor del desarrollador",
+      "fr": "Lecture seule · Sans serveur du développeur",
+      "hi": "केवल पढ़ने के लिए · डेवलपर का सर्वर नहीं",
+      "id": "Hanya baca · Tanpa server pengembang",
+      "ja": "読み取り専用 · 開発者のサーバーなし",
+      "ko": "읽기 전용 · 개발자 서버 없음",
+      "pt-BR": "Somente leitura · Sem servidor do desenvolvedor",
+      "zh-Hans": "只读 · 无服务器",
+      "zh-Hant": "只讀 · 無伺服器"
+    }
+  },
+  "Read: %1$ld%%": {
+    "scope": "app",
+    "translations": {
+      "ar": "تمت قراءة: %1$ld%%",
+      "de": "Gelesen: %1$ld%%",
+      "en": "Read: %1$ld%%",
+      "es": "Leído: %1$ld%%",
+      "fr": "Lu : %1$ld%%",
+      "hi": "पढ़ा गया: %1$ld%%",
+      "id": "Dibaca: %1$ld%%",
+      "ja": "読了：%1$ld%%",
+      "ko": "읽음: %1$ld%%",
+      "pt-BR": "Lido: %1$ld%%",
+      "zh-Hans": "已读 %1$ld%%",
+      "zh-Hant": "已讀 %1$ld%%"
+    }
+  },
+  "Reader": {
+    "scope": "app",
+    "translations": {
+      "ar": "القارئ",
+      "de": "Leser",
+      "en": "Reader",
+      "es": "Lector",
+      "fr": "Lecteur",
+      "hi": "रीडर",
+      "id": "Pembaca",
+      "ja": "リーダー",
+      "ko": "리더",
+      "pt-BR": "Leitor",
+      "zh-Hans": "阅读器",
+      "zh-Hant": "閱讀器"
+    }
+  },
+  "Reading": {
+    "scope": "app",
+    "translations": {
+      "ar": "القراءة",
+      "de": "Lesen",
+      "en": "Reading",
+      "es": "Lectura",
+      "fr": "Lecture",
+      "hi": "पढ़ें",
+      "id": "Bacaan",
+      "ja": "読書",
+      "ko": "읽기",
+      "pt-BR": "Leitura",
+      "zh-Hans": "阅读",
+      "zh-Hant": "閱讀"
+    }
+  },
+  "Reading appearance": {
+    "scope": "app",
+    "translations": {
+      "ar": "مظهر القراءة",
+      "de": "Lesedarstellung",
+      "en": "Reading appearance",
+      "es": "Apariencia de lectura",
+      "fr": "Apparence de lecture",
+      "hi": "पढ़ने का रूप",
+      "id": "Tampilan bacaan",
+      "ja": "読書の表示設定",
+      "ko": "읽기 모양",
+      "pt-BR": "Aparência de leitura",
+      "zh-Hans": "阅读排版",
+      "zh-Hant": "閱讀排版"
+    }
+  },
+  "Reading notes": {
+    "scope": "app",
+    "translations": {
+      "ar": "ملاحظات القراءة",
+      "de": "Lesenotizen",
+      "en": "Reading notes",
+      "es": "Notas de lectura",
+      "fr": "Notes de lecture",
+      "hi": "पढ़ने के नोट",
+      "id": "Catatan bacaan",
+      "ja": "読書ノート",
+      "ko": "독서 노트",
+      "pt-BR": "Notas de leitura",
+      "zh-Hans": "读书笔记",
+      "zh-Hant": "讀書筆記"
+    }
+  },
+  "Recent": {
+    "scope": "app",
+    "translations": {
+      "ar": "الأحدث",
+      "de": "Zuletzt",
+      "en": "Recent",
+      "es": "Recientes",
+      "fr": "Récents",
+      "hi": "हाल के",
+      "id": "Terbaru",
+      "ja": "最近",
+      "ko": "최근",
+      "pt-BR": "Recentes",
+      "zh-Hans": "最近",
+      "zh-Hant": "最近"
+    }
+  },
+  "Recently read": {
+    "scope": "app",
+    "translations": {
+      "ar": "قراءات حديثة",
+      "de": "Zuletzt gelesen",
+      "en": "Recently read",
+      "es": "Lecturas recientes",
+      "fr": "Lectures récentes",
+      "hi": "हाल में पढ़ा",
+      "id": "Terakhir dibaca",
+      "ja": "最近読んだもの",
+      "ko": "최근 읽은 항목",
+      "pt-BR": "Leituras recentes",
+      "zh-Hans": "最近阅读",
+      "zh-Hant": "最近閱讀"
+    }
+  },
+  "Reflowing": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ إعادة تنسيق النص",
+      "de": "Text wird neu umbrochen",
+      "en": "Reflowing",
+      "es": "Ajustando el texto",
+      "fr": "Remise en page",
+      "hi": "टेक्स्ट फिर से व्यवस्थित हो रहा है",
+      "id": "Menata ulang teks",
+      "ja": "再レイアウト中",
+      "ko": "텍스트 재배치 중",
+      "pt-BR": "Reorganizando o texto",
+      "zh-Hans": "重新排版",
+      "zh-Hant": "重新排版"
+    }
+  },
+  "Refresh": {
+    "scope": "app",
+    "translations": {
+      "ar": "تحديث",
+      "de": "Aktualisieren",
+      "en": "Refresh",
+      "es": "Actualizar",
+      "fr": "Actualiser",
+      "hi": "रीफ़्रेश करें",
+      "id": "Segarkan",
+      "ja": "更新",
+      "ko": "새로고침",
+      "pt-BR": "Atualizar",
+      "zh-Hans": "刷新",
+      "zh-Hant": "刷新"
+    }
+  },
+  "Remove local token": {
+    "scope": "app",
+    "translations": {
+      "ar": "حذف رمز الوصول المحلي",
+      "de": "Lokales Token entfernen",
+      "en": "Remove local token",
+      "es": "Eliminar token local",
+      "fr": "Supprimer le jeton local",
+      "hi": "स्थानीय टोकन हटाएँ",
+      "id": "Hapus token lokal",
+      "ja": "端末のトークンを削除",
+      "ko": "기기의 토큰 제거",
+      "pt-BR": "Remover token local",
+      "zh-Hans": "移除本机 Token",
+      "zh-Hant": "移除本機 Token"
+    }
+  },
+  "Remove this repository's local token?": {
+    "scope": "app",
+    "translations": {
+      "ar": "هل تريد حذف رمز الوصول المحلي لهذا المستودع؟",
+      "de": "Lokales Token dieses Repositorys entfernen?",
+      "en": "Remove this repository's local token?",
+      "es": "¿Eliminar el token local de este repositorio?",
+      "fr": "Supprimer le jeton local de ce dépôt ?",
+      "hi": "इस रिपॉज़िटरी का स्थानीय टोकन हटाएँ?",
+      "id": "Hapus token lokal repositori ini?",
+      "ja": "このリポジトリの端末内トークンを削除しますか？",
+      "ko": "이 저장소의 기기 내 토큰을 제거할까요?",
+      "pt-BR": "Remover o token local deste repositório?",
+      "zh-Hans": "移除这个知识库的本机 Token？",
+      "zh-Hant": "移除這個知識庫的本機 Token？"
+    }
+  },
+  "Remove token": {
+    "scope": "app",
+    "translations": {
+      "ar": "حذف الرمز",
+      "de": "Token entfernen",
+      "en": "Remove token",
+      "es": "Eliminar token",
+      "fr": "Supprimer le jeton",
+      "hi": "टोकन हटाएँ",
+      "id": "Hapus token",
+      "ja": "トークンを削除",
+      "ko": "토큰 제거",
+      "pt-BR": "Remover token",
+      "zh-Hans": "移除 Token",
+      "zh-Hant": "移除 Token"
+    }
+  },
+  "Rendering": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ عرض المحتوى",
+      "de": "Inhalt wird dargestellt",
+      "en": "Rendering",
+      "es": "Mostrando contenido",
+      "fr": "Affichage du contenu",
+      "hi": "सामग्री दिखाई जा रही है",
+      "id": "Menampilkan konten",
+      "ja": "内容を表示中",
+      "ko": "내용 표시 중",
+      "pt-BR": "Exibindo conteúdo",
+      "zh-Hans": "排版",
+      "zh-Hant": "排版"
+    }
+  },
+  "Repository": {
+    "scope": "app",
+    "translations": {
+      "ar": "المستودع",
+      "de": "Repository",
+      "en": "Repository",
+      "es": "Repositorio",
+      "fr": "Dépôt",
+      "hi": "रिपॉज़िटरी",
+      "id": "Repositori",
+      "ja": "リポジトリ",
+      "ko": "저장소",
+      "pt-BR": "Repositório",
+      "zh-Hans": "Repository",
+      "zh-Hant": "Repository"
+    }
+  },
+  "Repository connection": {
+    "scope": "app",
+    "translations": {
+      "ar": "الاتصال بالمستودع",
+      "de": "Repository-Verbindung",
+      "en": "Repository connection",
+      "es": "Conexión al repositorio",
+      "fr": "Connexion au dépôt",
+      "hi": "रिपॉज़िटरी कनेक्शन",
+      "id": "Koneksi repositori",
+      "ja": "リポジトリへの接続",
+      "ko": "저장소 연결",
+      "pt-BR": "Conexão com repositório",
+      "zh-Hans": "仓库连接",
+      "zh-Hant": "倉庫連接"
+    }
+  },
+  "Repository request failed (%1$ld). Cached files remain available.": {
+    "scope": "core",
+    "translations": {
+      "ar": "فشل طلب المستودع (%1$ld). تظل الملفات المخزنة متاحة.",
+      "de": "Repository-Anfrage fehlgeschlagen (%1$ld). Der Cache bleibt verfügbar.",
+      "en": "Repository request failed (%1$ld). Cached files remain available.",
+      "es": "La solicitud al repositorio falló (%1$ld). La caché sigue disponible.",
+      "fr": "La requête au dépôt a échoué (%1$ld). Le cache reste disponible.",
+      "hi": "रिपॉज़िटरी अनुरोध विफल हुआ (%1$ld)। कैश की फ़ाइलें पढ़ सकते हैं।",
+      "id": "Permintaan repositori gagal (%1$ld). Cache tetap dapat dibaca.",
+      "ja": "リポジトリへのリクエストに失敗しました（%1$ld）。キャッシュは引き続き読めます。",
+      "ko": "저장소 요청에 실패했습니다(%1$ld). 캐시된 파일은 읽을 수 있습니다.",
+      "pt-BR": "A solicitação ao repositório falhou (%1$ld). O cache continua disponível.",
+      "zh-Hans": "仓库服务请求失败（%1$ld），缓存仍可阅读。",
+      "zh-Hant": "倉庫服務請求失敗（%1$ld），快取仍可閱讀。"
+    }
+  },
+  "Restoring position": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ استعادة موضع القراءة",
+      "de": "Leseposition wird wiederhergestellt",
+      "en": "Restoring position",
+      "es": "Restaurando la posición",
+      "fr": "Restauration de la position",
+      "hi": "पढ़ने की जगह बहाल हो रही है",
+      "id": "Memulihkan posisi baca",
+      "ja": "読書位置を復元中",
+      "ko": "읽던 위치 복원 중",
+      "pt-BR": "Restaurando posição",
+      "zh-Hans": "恢复位置",
+      "zh-Hant": "恢復位置"
+    }
+  },
+  "Resume caching": {
+    "scope": "app",
+    "translations": {
+      "ar": "استئناف التخزين",
+      "de": "Zwischenspeichern fortsetzen",
+      "en": "Resume caching",
+      "es": "Reanudar descarga",
+      "fr": "Reprendre le téléchargement",
+      "hi": "कैश फिर शुरू करें",
+      "id": "Lanjutkan pengunduhan",
+      "ja": "キャッシュを再開",
+      "ko": "캐시 계속하기",
+      "pt-BR": "Retomar cache",
+      "zh-Hans": "继续补全",
+      "zh-Hant": "繼續補全"
+    }
+  },
+  "Resume reading": {
+    "scope": "app",
+    "translations": {
+      "ar": "استئناف القراءة",
+      "de": "Lesen fortsetzen",
+      "en": "Resume reading",
+      "es": "Reanudar lectura",
+      "fr": "Reprendre la lecture",
+      "hi": "वहीं से पढ़ें",
+      "id": "Lanjutkan bacaan",
+      "ja": "前回の続きから読む",
+      "ko": "읽던 곳부터 계속",
+      "pt-BR": "Retomar leitura",
+      "zh-Hans": "接着上次阅读",
+      "zh-Hant": "接著上次閱讀"
+    }
+  },
+  "Retry": {
+    "scope": "app",
+    "translations": {
+      "ar": "إعادة المحاولة",
+      "de": "Erneut versuchen",
+      "en": "Retry",
+      "es": "Reintentar",
+      "fr": "Réessayer",
+      "hi": "फिर कोशिश करें",
+      "id": "Coba lagi",
+      "ja": "再試行",
+      "ko": "다시 시도",
+      "pt-BR": "Tentar novamente",
+      "zh-Hans": "重试",
+      "zh-Hant": "重試"
+    }
+  },
+  "Retry file list": {
+    "scope": "app",
+    "translations": {
+      "ar": "إعادة تحميل قائمة الملفات",
+      "de": "Dateiliste erneut laden",
+      "en": "Retry file list",
+      "es": "Reintentar lista de archivos",
+      "fr": "Recharger la liste des fichiers",
+      "hi": "फ़ाइल सूची फिर लोड करें",
+      "id": "Muat ulang daftar berkas",
+      "ja": "ファイル一覧を再読み込み",
+      "ko": "파일 목록 다시 불러오기",
+      "pt-BR": "Recarregar lista de arquivos",
+      "zh-Hans": "重试文件列表",
+      "zh-Hant": "重試檔案列表"
+    }
+  },
+  "Reviews": {
+    "scope": "app",
+    "translations": {
+      "ar": "مراجعات",
+      "de": "Rezensionen",
+      "en": "Reviews",
+      "es": "Reseñas",
+      "fr": "Critiques",
+      "hi": "समीक्षाएँ",
+      "id": "Ulasan",
+      "ja": "レビュー",
+      "ko": "서평",
+      "pt-BR": "Resenhas",
+      "zh-Hans": "评论",
+      "zh-Hant": "評論"
+    }
+  },
+  "Sample library · Connect your repository in Settings": {
+    "scope": "app",
+    "translations": {
+      "ar": "مكتبة تجريبية · اربط مستودعك من الإعدادات",
+      "de": "Beispielbibliothek · Repository in Einstellungen verbinden",
+      "en": "Sample library · Connect your repository in Settings",
+      "es": "Biblioteca de ejemplo · Conecta tu repositorio en Ajustes",
+      "fr": "Bibliothèque d’exemple · Connectez votre dépôt dans Réglages",
+      "hi": "नमूना लाइब्रेरी · सेटिंग्स में अपनी रिपॉज़िटरी जोड़ें",
+      "id": "Pustaka contoh · Hubungkan repositori Anda di Pengaturan",
+      "ja": "サンプルライブラリ · 設定からリポジトリを接続できます",
+      "ko": "예제 라이브러리 · 설정에서 저장소를 연결하세요",
+      "pt-BR": "Biblioteca de exemplo · Conecte seu repositório nos Ajustes",
+      "zh-Hans": "演示资料 · 可在设置中连接仓库",
+      "zh-Hant": "演示資料 · 可在設置中連接倉庫"
+    }
+  },
+  "Save & verify": {
+    "scope": "app",
+    "translations": {
+      "ar": "حفظ وتحقق",
+      "de": "Speichern und prüfen",
+      "en": "Save & verify",
+      "es": "Guardar y verificar",
+      "fr": "Enregistrer et vérifier",
+      "hi": "सहेजें और जाँचें",
+      "id": "Simpan & verifikasi",
+      "ja": "保存して確認",
+      "ko": "저장 및 확인",
+      "pt-BR": "Salvar e verificar",
+      "zh-Hans": "保存并校验",
+      "zh-Hant": "保存並校驗"
+    }
+  },
+  "Saved libraries": {
+    "scope": "app",
+    "translations": {
+      "ar": "المكتبات المحفوظة",
+      "de": "Gespeicherte Bibliotheken",
+      "en": "Saved libraries",
+      "es": "Bibliotecas guardadas",
+      "fr": "Bibliothèques enregistrées",
+      "hi": "सहेजी गई लाइब्रेरी",
+      "id": "Pustaka tersimpan",
+      "ja": "保存済みライブラリ",
+      "ko": "저장된 라이브러리",
+      "pt-BR": "Bibliotecas salvas",
+      "zh-Hans": "已保存知识库",
+      "zh-Hant": "已保存知識庫"
+    }
+  },
+  "Saving position": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ حفظ الموضع",
+      "de": "Position wird gespeichert",
+      "en": "Saving position",
+      "es": "Guardando posición",
+      "fr": "Enregistrement de la position",
+      "hi": "पढ़ने की जगह सहेजी जा रही है",
+      "id": "Menyimpan posisi",
+      "ja": "読書位置を保存中",
+      "ko": "읽던 위치 저장 중",
+      "pt-BR": "Salvando posição",
+      "zh-Hans": "记录位置",
+      "zh-Hant": "記錄位置"
+    }
+  },
+  "Search": {
+    "scope": "app",
+    "translations": {
+      "ar": "بحث",
+      "de": "Suchen",
+      "en": "Search",
+      "es": "Buscar",
+      "fr": "Rechercher",
+      "hi": "खोजें",
+      "id": "Cari",
+      "ja": "検索",
+      "ko": "검색",
+      "pt-BR": "Buscar",
+      "zh-Hans": "搜索",
+      "zh-Hant": "搜索"
+    }
+  },
+  "Search text": {
+    "scope": "app",
+    "translations": {
+      "ar": "البحث في النص",
+      "de": "Text durchsuchen",
+      "en": "Search text",
+      "es": "Buscar en el texto",
+      "fr": "Rechercher dans le texte",
+      "hi": "टेक्स्ट में खोजें",
+      "id": "Cari dalam teks",
+      "ja": "本文を検索",
+      "ko": "본문 검색",
+      "pt-BR": "Buscar no texto",
+      "zh-Hans": "搜索正文",
+      "zh-Hant": "搜索正文"
+    }
+  },
+  "Searching names and text": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ البحث في الأسماء والنصوص",
+      "de": "Suche in Namen und Text",
+      "en": "Searching names and text",
+      "es": "Buscando nombres y texto",
+      "fr": "Recherche dans les noms et le texte",
+      "hi": "नाम और टेक्स्ट में खोज जारी है",
+      "id": "Mencari nama dan teks",
+      "ja": "ファイル名と本文を検索中",
+      "ko": "파일명과 본문 검색 중",
+      "pt-BR": "Buscando nomes e texto",
+      "zh-Hans": "正在搜索文件名与正文",
+      "zh-Hant": "正在搜索檔案名與正文"
+    }
+  },
+  "Sepia": {
+    "scope": "app",
+    "translations": {
+      "ar": "بني فاتح",
+      "de": "Sepia",
+      "en": "Sepia",
+      "es": "Sepia",
+      "fr": "Sépia",
+      "hi": "सीपिया",
+      "id": "Sepia",
+      "ja": "セピア",
+      "ko": "세피아",
+      "pt-BR": "Sépia",
+      "zh-Hans": "护眼纸",
+      "zh-Hant": "護眼紙"
+    }
+  },
+  "Settings": {
+    "scope": "app",
+    "translations": {
+      "ar": "الإعدادات",
+      "de": "Einstellungen",
+      "en": "Settings",
+      "es": "Ajustes",
+      "fr": "Réglages",
+      "hi": "सेटिंग्स",
+      "id": "Pengaturan",
+      "ja": "設定",
+      "ko": "설정",
+      "pt-BR": "Ajustes",
+      "zh-Hans": "设置",
+      "zh-Hant": "設置"
+    }
+  },
+  "Setup guide & support": {
+    "scope": "app",
+    "translations": {
+      "ar": "دليل الاتصال والدعم",
+      "de": "Einrichtung und Support",
+      "en": "Setup guide & support",
+      "es": "Guía de conexión y soporte",
+      "fr": "Guide de connexion et assistance",
+      "hi": "कनेक्शन गाइड और सहायता",
+      "id": "Panduan koneksi & dukungan",
+      "ja": "接続ガイドとサポート",
+      "ko": "연결 가이드 및 지원",
+      "pt-BR": "Guia de conexão e suporte",
+      "zh-Hans": "连接指南与支持",
+      "zh-Hant": "連接指南與支持"
+    }
+  },
+  "Share": {
+    "scope": "app",
+    "translations": {
+      "ar": "مشاركة",
+      "de": "Teilen",
+      "en": "Share",
+      "es": "Compartir",
+      "fr": "Partager",
+      "hi": "साझा करें",
+      "id": "Bagikan",
+      "ja": "共有",
+      "ko": "공유",
+      "pt-BR": "Compartilhar",
+      "zh-Hans": "分享",
+      "zh-Hant": "分享"
+    }
+  },
+  "Smaller": {
+    "scope": "app",
+    "translations": {
+      "ar": "تصغير",
+      "de": "Kleiner",
+      "en": "Smaller",
+      "es": "Reducir",
+      "fr": "Réduire",
+      "hi": "छोटा करें",
+      "id": "Perkecil",
+      "ja": "小さく",
+      "ko": "작게",
+      "pt-BR": "Diminuir",
+      "zh-Hans": "缩小",
+      "zh-Hant": "縮小"
+    }
+  },
+  "Some book lists could not be loaded: %1$@": {
+    "scope": "app",
+    "translations": {
+      "ar": "تعذّر تحميل بعض قوائم الكتب: %1$@",
+      "de": "Einige Bücherlisten konnten nicht geladen werden: %1$@",
+      "en": "Some book lists could not be loaded: %1$@",
+      "es": "No se pudieron cargar algunas listas: %1$@",
+      "fr": "Certaines listes n’ont pas pu être chargées : %1$@",
+      "hi": "कुछ पुस्तक सूचियाँ लोड नहीं हो सकीं: %1$@",
+      "id": "Sebagian daftar buku tidak dapat dimuat: %1$@",
+      "ja": "一部のブックリストを読み込めませんでした：%1$@",
+      "ko": "일부 도서 목록을 불러오지 못했습니다: %1$@",
+      "pt-BR": "Não foi possível carregar algumas listas: %1$@",
+      "zh-Hans": "部分书单暂未载入：%1$@",
+      "zh-Hant": "部分書單暫未載入：%1$@"
+    }
+  },
+  "Stops online sync but keeps cached files and reading progress. To revoke access completely, also revoke the token on GitHub or GitLab.": {
+    "scope": "app",
+    "translations": {
+      "ar": "يوقف المزامنة عبر الإنترنت مع الاحتفاظ بالملفات وموضع القراءة. لإلغاء الوصول بالكامل، ألغِ الرمز أيضًا في GitHub أو GitLab.",
+      "de": "Beendet die Onlinesynchronisierung, behält aber Cache und Lesefortschritt. Widerrufe das Token zusätzlich bei GitHub oder GitLab, um den Zugriff vollständig zu entziehen.",
+      "en": "Stops online sync but keeps cached files and reading progress. To revoke access completely, also revoke the token on GitHub or GitLab.",
+      "es": "Se detiene la sincronización, pero se conservan la caché y el progreso de lectura. Para revocar el acceso por completo, revoca también el token en GitHub o GitLab.",
+      "fr": "Arrête la synchronisation, mais conserve le cache et la progression. Pour révoquer totalement l’accès, révoquez aussi le jeton sur GitHub ou GitLab.",
+      "hi": "ऑनलाइन सिंक रुकता है, लेकिन कैश और पढ़ने की प्रगति बनी रहती है। पहुँच पूरी तरह रद्द करने के लिए GitHub या GitLab पर भी टोकन रद्द करें।",
+      "id": "Menghentikan sinkronisasi daring, tetapi mempertahankan cache dan progres baca. Untuk mencabut akses sepenuhnya, cabut juga token di GitHub atau GitLab.",
+      "ja": "同期を停止しますが、キャッシュと読書位置は保持します。アクセスを完全に取り消すには、GitHubまたはGitLabでもトークンを失効させてください。",
+      "ko": "온라인 동기화를 중단하지만 캐시와 읽기 진행률은 유지합니다. 접근 권한을 완전히 없애려면 GitHub나 GitLab에서도 토큰을 취소하세요.",
+      "pt-BR": "Interrompe a sincronização, mas mantém o cache e o progresso de leitura. Para revogar o acesso completamente, revogue também o token no GitHub ou GitLab.",
+      "zh-Hans": "停止联网同步，保留本机缓存和阅读进度。要彻底撤销访问，请同时在 GitHub 或 GitLab 中撤销 Token。",
+      "zh-Hant": "停止聯網同步，保留本機快取和閱讀進度。要徹底撤銷訪問，請同時在 GitHub 或 GitLab 中撤銷 Token。"
+    }
+  },
+  "Storage used": {
+    "scope": "app",
+    "translations": {
+      "ar": "المساحة المستخدمة",
+      "de": "Belegter Speicher",
+      "en": "Storage used",
+      "es": "Espacio utilizado",
+      "fr": "Espace utilisé",
+      "hi": "इस्तेमाल की गई जगह",
+      "id": "Penyimpanan terpakai",
+      "ja": "使用容量",
+      "ko": "사용 공간",
+      "pt-BR": "Espaço utilizado",
+      "zh-Hans": "文件占用",
+      "zh-Hant": "檔案佔用"
+    }
+  },
+  "Summary": {
+    "scope": "app",
+    "translations": {
+      "ar": "ملخص",
+      "de": "Kurzfassung",
+      "en": "Summary",
+      "es": "Resumen",
+      "fr": "Résumé",
+      "hi": "सारांश",
+      "id": "Ringkasan",
+      "ja": "要約",
+      "ko": "요약",
+      "pt-BR": "Resumo",
+      "zh-Hans": "精简版",
+      "zh-Hant": "精簡版"
+    }
+  },
+  "Switch library": {
+    "scope": "app",
+    "translations": {
+      "ar": "تبديل المكتبة",
+      "de": "Bibliothek wechseln",
+      "en": "Switch library",
+      "es": "Cambiar biblioteca",
+      "fr": "Changer de bibliothèque",
+      "hi": "लाइब्रेरी बदलें",
+      "id": "Ganti pustaka",
+      "ja": "ライブラリを切り替え",
+      "ko": "라이브러리 전환",
+      "pt-BR": "Trocar biblioteca",
+      "zh-Hans": "切换知识库",
+      "zh-Hant": "切換知識庫"
+    }
+  },
+  "System": {
+    "scope": "app",
+    "translations": {
+      "ar": "النظام",
+      "de": "System",
+      "en": "System",
+      "es": "Sistema",
+      "fr": "Système",
+      "hi": "सिस्टम",
+      "id": "Sistem",
+      "ja": "システム",
+      "ko": "시스템",
+      "pt-BR": "Sistema",
+      "zh-Hans": "跟随系统",
+      "zh-Hant": "跟隨系統"
+    }
+  },
+  "Text cached": {
+    "scope": "app",
+    "translations": {
+      "ar": "النصوص المخزنة",
+      "de": "Text im Cache",
+      "en": "Text cached",
+      "es": "Texto en caché",
+      "fr": "Texte en cache",
+      "hi": "कैश किया गया टेक्स्ट",
+      "id": "Teks dalam cache",
+      "ja": "本文のキャッシュ",
+      "ko": "캐시된 본문",
+      "pt-BR": "Texto em cache",
+      "zh-Hans": "正文补全",
+      "zh-Hant": "正文補全"
+    }
+  },
+  "Text cached: %1$ld/%2$ld": {
+    "scope": "app",
+    "translations": {
+      "ar": "النصوص المخزنة: %1$ld/%2$ld",
+      "de": "Text im Cache: %1$ld/%2$ld",
+      "en": "Text cached: %1$ld/%2$ld",
+      "es": "Texto en caché: %1$ld/%2$ld",
+      "fr": "Texte en cache : %1$ld/%2$ld",
+      "hi": "कैश टेक्स्ट: %1$ld/%2$ld",
+      "id": "Teks dalam cache: %1$ld/%2$ld",
+      "ja": "本文キャッシュ：%1$ld/%2$ld",
+      "ko": "캐시된 본문: %1$ld/%2$ld",
+      "pt-BR": "Texto em cache: %1$ld/%2$ld",
+      "zh-Hans": "正文已补全 %1$ld/%2$ld",
+      "zh-Hant": "正文已補全 %1$ld/%2$ld"
+    }
+  },
+  "Text size": {
+    "scope": "app",
+    "translations": {
+      "ar": "حجم النص",
+      "de": "Schriftgröße",
+      "en": "Text size",
+      "es": "Tamaño del texto",
+      "fr": "Taille du texte",
+      "hi": "टेक्स्ट का आकार",
+      "id": "Ukuran teks",
+      "ja": "文字サイズ",
+      "ko": "글자 크기",
+      "pt-BR": "Tamanho do texto",
+      "zh-Hans": "字号",
+      "zh-Hant": "字號"
+    }
+  },
+  "The attachment has not finished downloading.": {
+    "scope": "app",
+    "translations": {
+      "ar": "لم يكتمل تنزيل المرفق بعد.",
+      "de": "Der Anhang ist noch nicht vollständig heruntergeladen.",
+      "en": "The attachment has not finished downloading.",
+      "es": "El adjunto aún no se ha descargado por completo.",
+      "fr": "Le téléchargement de la pièce jointe n’est pas terminé.",
+      "hi": "अटैचमेंट अभी पूरा डाउनलोड नहीं हुआ है।",
+      "id": "Lampiran belum selesai diunduh.",
+      "ja": "添付ファイルのダウンロードはまだ完了していません。",
+      "ko": "첨부 파일 다운로드가 아직 끝나지 않았습니다.",
+      "pt-BR": "O anexo ainda não terminou de baixar.",
+      "zh-Hans": "附件尚未下载完成。",
+      "zh-Hant": "附件尚未下載完成。"
+    }
+  },
+  "The file exceeds 100 MB. Open it on the repository website.": {
+    "scope": "core",
+    "translations": {
+      "ar": "يتجاوز الملف 100 MB. افتحه على موقع المستودع.",
+      "de": "Die Datei ist größer als 100 MB. Öffne sie auf der Repository-Webseite.",
+      "en": "The file exceeds 100 MB. Open it on the repository website.",
+      "es": "El archivo supera los 100 MB. Ábrelo en la web del repositorio.",
+      "fr": "Le fichier dépasse 100 Mo. Ouvrez-le sur le site du dépôt.",
+      "hi": "फ़ाइल 100 MB से बड़ी है। इसे रिपॉज़िटरी की वेबसाइट पर खोलें।",
+      "id": "Berkas melebihi 100 MB. Buka di situs repositori.",
+      "ja": "ファイルが100 MBを超えています。リポジトリのWebサイトで開いてください。",
+      "ko": "파일이 100 MB를 초과합니다. 저장소 웹사이트에서 여세요.",
+      "pt-BR": "O arquivo excede 100 MB. Abra-o no site do repositório.",
+      "zh-Hans": "文件超过 100 MB，请在仓库网页打开。",
+      "zh-Hant": "檔案超過 100 MB，請在倉庫網頁打開。"
+    }
+  },
+  "The repository address could not be resolved. Check the hostname and network. Cached files remain available.": {
+    "scope": "core",
+    "translations": {
+      "ar": "تعذّر تحديد عنوان المستودع. تحقق من اسم المضيف والشبكة. تظل الملفات المخزنة متاحة.",
+      "de": "Die Repository-Adresse konnte nicht aufgelöst werden. Prüfe Hostname und Netzwerk. Der Cache bleibt verfügbar.",
+      "en": "The repository address could not be resolved. Check the hostname and network. Cached files remain available.",
+      "es": "No se pudo resolver la dirección del repositorio. Comprueba el servidor y la red. La caché sigue disponible.",
+      "fr": "L’adresse du dépôt n’a pas pu être résolue. Vérifiez le nom d’hôte et le réseau. Le cache reste disponible.",
+      "hi": "रिपॉज़िटरी का पता नहीं मिल सका। होस्ट नाम और नेटवर्क जाँचें। कैश की फ़ाइलें पढ़ सकते हैं।",
+      "id": "Alamat repositori tidak dapat ditemukan. Periksa nama host dan jaringan. Cache tetap dapat dibaca.",
+      "ja": "リポジトリのアドレスを解決できません。ホスト名とネットワークを確認してください。キャッシュは引き続き読めます。",
+      "ko": "저장소 주소를 확인할 수 없습니다. 호스트 이름과 네트워크를 확인하세요. 캐시된 파일은 읽을 수 있습니다.",
+      "pt-BR": "Não foi possível resolver o endereço do repositório. Verifique o servidor e a rede. O cache continua disponível.",
+      "zh-Hans": "无法解析仓库服务地址，请检查域名与网络。已缓存内容仍可阅读。",
+      "zh-Hant": "無法解析倉庫服務地址，請檢查域名與網路。已快取內容仍可閱讀。"
+    }
+  },
+  "The repository connection timed out. Check your network and retry. Cached files remain available.": {
+    "scope": "core",
+    "translations": {
+      "ar": "انتهت مهلة الاتصال بالمستودع. تحقق من الشبكة وأعد المحاولة. تظل الملفات المخزنة متاحة.",
+      "de": "Zeitüberschreitung beim Repository. Prüfe das Netzwerk und versuche es erneut. Der Cache bleibt verfügbar.",
+      "en": "The repository connection timed out. Check your network and retry. Cached files remain available.",
+      "es": "La conexión al repositorio agotó el tiempo de espera. Comprueba la red y reintenta. La caché sigue disponible.",
+      "fr": "La connexion au dépôt a expiré. Vérifiez le réseau et réessayez. Le cache reste disponible.",
+      "hi": "रिपॉज़िटरी कनेक्शन का समय समाप्त हुआ। नेटवर्क जाँचकर फिर कोशिश करें। कैश की फ़ाइलें पढ़ सकते हैं।",
+      "id": "Koneksi repositori kehabisan waktu. Periksa jaringan dan coba lagi. Cache tetap dapat dibaca.",
+      "ja": "接続がタイムアウトしました。ネットワークを確認して再試行してください。キャッシュは引き続き読めます。",
+      "ko": "저장소 연결 시간이 초과되었습니다. 네트워크를 확인하고 다시 시도하세요. 캐시된 파일은 읽을 수 있습니다.",
+      "pt-BR": "A conexão com o repositório expirou. Verifique a rede e tente novamente. O cache continua disponível.",
+      "zh-Hans": "连接仓库服务超时，请检查网络后重试。已缓存内容仍可阅读。",
+      "zh-Hant": "連接倉庫服務超時，請檢查網路後重試。已快取內容仍可閱讀。"
+    }
+  },
+  "The repository connection was lost. Please retry. Cached files remain available.": {
+    "scope": "core",
+    "translations": {
+      "ar": "انقطع الاتصال بالمستودع. أعد المحاولة. تظل الملفات المخزنة متاحة.",
+      "de": "Die Repository-Verbindung wurde unterbrochen. Versuche es erneut. Der Cache bleibt verfügbar.",
+      "en": "The repository connection was lost. Please retry. Cached files remain available.",
+      "es": "Se perdió la conexión al repositorio. Reintenta. La caché sigue disponible.",
+      "fr": "La connexion au dépôt a été interrompue. Réessayez. Le cache reste disponible.",
+      "hi": "रिपॉज़िटरी से कनेक्शन टूट गया। फिर कोशिश करें। कैश की फ़ाइलें पढ़ सकते हैं।",
+      "id": "Koneksi ke repositori terputus. Coba lagi. Cache tetap dapat dibaca.",
+      "ja": "リポジトリとの接続が切れました。再試行してください。キャッシュは引き続き読めます。",
+      "ko": "저장소 연결이 끊겼습니다. 다시 시도하세요. 캐시된 파일은 읽을 수 있습니다.",
+      "pt-BR": "A conexão com o repositório caiu. Tente novamente. O cache continua disponível.",
+      "zh-Hans": "与仓库服务的网络连接中断，请重试。已缓存内容仍可阅读。",
+      "zh-Hant": "與倉庫服務的網路連接中斷，請重試。已快取內容仍可閱讀。"
+    }
+  },
+  "The repository returned an incomplete file tree. Your last complete cache was kept.": {
+    "scope": "core",
+    "translations": {
+      "ar": "أعاد المستودع شجرة ملفات غير مكتملة. تم الاحتفاظ بآخر نسخة كاملة مخزنة.",
+      "de": "Das Repository lieferte einen unvollständigen Dateibaum. Der letzte vollständige Cache bleibt erhalten.",
+      "en": "The repository returned an incomplete file tree. Your last complete cache was kept.",
+      "es": "El repositorio devolvió un árbol incompleto. Se ha conservado la última caché completa.",
+      "fr": "Le dépôt a renvoyé une arborescence incomplète. Le dernier cache complet est conservé.",
+      "hi": "रिपॉज़िटरी ने अधूरा फ़ाइल ट्री लौटाया। पिछला पूरा कैश सुरक्षित है।",
+      "id": "Repositori mengembalikan pohon berkas yang tidak lengkap. Cache lengkap terakhir dipertahankan.",
+      "ja": "不完全なファイルツリーが返されました。前回の完全なキャッシュを保持しました。",
+      "ko": "저장소가 불완전한 파일 트리를 반환했습니다. 이전의 완전한 캐시를 유지했습니다.",
+      "pt-BR": "O repositório retornou uma árvore incompleta. O último cache completo foi mantido.",
+      "zh-Hans": "仓库目录未完整返回，已保留上次完整缓存。",
+      "zh-Hant": "倉庫目錄未完整返回，已保留上次完整快取。"
+    }
+  },
+  "The secure connection could not be verified. Check the server certificate, device date and network. Cached files remain available.": {
+    "scope": "core",
+    "translations": {
+      "ar": "تعذّر التحقق من الاتصال الآمن. تحقق من الشهادة وتاريخ الجهاز والشبكة. تظل الملفات المخزنة متاحة.",
+      "de": "Die sichere Verbindung konnte nicht geprüft werden. Prüfe Zertifikat, Gerätedatum und Netzwerk. Der Cache bleibt verfügbar.",
+      "en": "The secure connection could not be verified. Check the server certificate, device date and network. Cached files remain available.",
+      "es": "No se pudo verificar la conexión segura. Comprueba el certificado, la fecha del dispositivo y la red. La caché sigue disponible.",
+      "fr": "La connexion sécurisée n’a pas pu être vérifiée. Vérifiez le certificat, la date de l’appareil et le réseau. Le cache reste disponible.",
+      "hi": "सुरक्षित कनेक्शन सत्यापित नहीं हुआ। सर्वर प्रमाणपत्र, डिवाइस की तारीख और नेटवर्क जाँचें। कैश की फ़ाइलें पढ़ सकते हैं।",
+      "id": "Koneksi aman tidak dapat diverifikasi. Periksa sertifikat server, tanggal perangkat, dan jaringan. Cache tetap dapat dibaca.",
+      "ja": "安全な接続を確認できません。証明書、端末の日付、ネットワークを確認してください。キャッシュは引き続き読めます。",
+      "ko": "보안 연결을 검증할 수 없습니다. 서버 인증서, 기기 날짜와 네트워크를 확인하세요. 캐시된 파일은 읽을 수 있습니다.",
+      "pt-BR": "Não foi possível verificar a conexão segura. Verifique o certificado, a data do dispositivo e a rede. O cache continua disponível.",
+      "zh-Hans": "无法验证仓库服务的安全连接，请检查服务证书、设备日期和网络。已缓存内容仍可阅读。",
+      "zh-Hant": "無法驗證倉庫服務的安全連接，請檢查服務證書、設備日期和網路。已快取內容仍可閱讀。"
+    }
+  },
+  "The service is temporarily limiting requests. Please try again later.": {
+    "scope": "core",
+    "translations": {
+      "ar": "تحدّ الخدمة من الطلبات مؤقتًا. يُرجى المحاولة لاحقًا.",
+      "de": "Der Dienst begrenzt vorübergehend die Anfragen. Versuche es später erneut.",
+      "en": "The service is temporarily limiting requests. Please try again later.",
+      "es": "El servicio limita temporalmente las solicitudes. Inténtalo más tarde.",
+      "fr": "Le service limite temporairement les requêtes. Réessayez plus tard.",
+      "hi": "सेवा कुछ समय के लिए अनुरोध सीमित कर रही है। बाद में कोशिश करें।",
+      "id": "Layanan membatasi permintaan sementara. Coba lagi nanti.",
+      "ja": "サービスが一時的にリクエストを制限しています。後で再試行してください。",
+      "ko": "서비스에서 일시적으로 요청을 제한하고 있습니다. 나중에 다시 시도하세요.",
+      "pt-BR": "O serviço está limitando solicitações temporariamente. Tente mais tarde.",
+      "zh-Hans": "仓库服务暂时限制请求，请稍后重试。",
+      "zh-Hant": "倉庫服務暫時限制請求，請稍後重試。"
+    }
+  },
+  "The service may limit this change list. Open the repository website for the full changes.": {
+    "scope": "app",
+    "translations": {
+      "ar": "قد تحدّ الخدمة من قائمة التغييرات. افتح موقع المستودع لعرض التغييرات كاملة.",
+      "de": "Der Dienst kann diese Änderungsliste begrenzen. Alle Änderungen findest du auf der Repository-Webseite.",
+      "en": "The service may limit this change list. Open the repository website for the full changes.",
+      "es": "El servicio puede limitar esta lista de cambios. Consulta la web del repositorio para verla completa.",
+      "fr": "Le service peut limiter cette liste de modifications. Consultez le site du dépôt pour la liste complète.",
+      "hi": "सेवा इस बदलाव सूची को सीमित कर सकती है। सभी बदलावों के लिए रिपॉज़िटरी की वेबसाइट खोलें।",
+      "id": "Layanan mungkin membatasi daftar perubahan ini. Buka situs repositori untuk melihat daftar lengkap.",
+      "ja": "サービスにより変更一覧が制限される場合があります。完全な内容はリポジトリのWebサイトで確認してください。",
+      "ko": "서비스에서 변경 목록을 제한할 수 있습니다. 전체 변경 사항은 저장소 웹사이트에서 확인하세요.",
+      "pt-BR": "O serviço pode limitar esta lista de alterações. Consulte o site do repositório para ver todas.",
+      "zh-Hans": "服务端可能限制变更清单或内容；完整变更以仓库网页为准。",
+      "zh-Hant": "服務端可能限制變更清單或內容；完整變更以倉庫網頁為準。"
+    }
+  },
+  "The service's request limit was reached. Try again after %1$@.": {
+    "scope": "core",
+    "translations": {
+      "ar": "تم بلوغ حد الطلبات. حاول مجددًا بعد %1$@.",
+      "de": "Das Anfragelimit ist erreicht. Versuche es nach %1$@ erneut.",
+      "en": "The service's request limit was reached. Try again after %1$@.",
+      "es": "Se ha alcanzado el límite de solicitudes. Reintenta después de %1$@.",
+      "fr": "La limite de requêtes a été atteinte. Réessayez après %1$@.",
+      "hi": "सेवा की अनुरोध सीमा पूरी हो गई है। %1$@ के बाद कोशिश करें।",
+      "id": "Batas permintaan layanan tercapai. Coba lagi setelah %1$@.",
+      "ja": "リクエスト上限に達しました。%1$@以降に再試行してください。",
+      "ko": "요청 한도에 도달했습니다. %1$@ 이후에 다시 시도하세요.",
+      "pt-BR": "O limite de solicitações foi atingido. Tente após %1$@.",
+      "zh-Hans": "仓库服务请求额度已用完，%1$@ 后可重试。",
+      "zh-Hant": "倉庫服務請求額度已用完，%1$@ 後可重試。"
+    }
+  },
+  "The token is invalid or expired. Enter it again in Settings.": {
+    "scope": "core",
+    "translations": {
+      "ar": "رمز الوصول غير صالح أو انتهت صلاحيته. أدخله مجددًا في الإعدادات.",
+      "de": "Das Token ist ungültig oder abgelaufen. Gib es in Einstellungen erneut ein.",
+      "en": "The token is invalid or expired. Enter it again in Settings.",
+      "es": "El token no es válido o ha caducado. Introdúcelo de nuevo en Ajustes.",
+      "fr": "Le jeton est invalide ou expiré. Saisissez-le à nouveau dans Réglages.",
+      "hi": "टोकन अमान्य है या समाप्त हो गया है। सेटिंग्स में दोबारा दर्ज करें।",
+      "id": "Token tidak valid atau kedaluwarsa. Masukkan lagi di Pengaturan.",
+      "ja": "トークンが無効または期限切れです。設定で再入力してください。",
+      "ko": "토큰이 잘못되었거나 만료되었습니다. 설정에서 다시 입력하세요.",
+      "pt-BR": "O token é inválido ou expirou. Insira-o novamente nos Ajustes.",
+      "zh-Hans": "Token 无效或已过期，请在设置中重新录入。",
+      "zh-Hant": "Token 無效或已過期，請在設置中重新錄入。"
+    }
+  },
+  "Theme": {
+    "scope": "app",
+    "translations": {
+      "ar": "السمة",
+      "de": "Design",
+      "en": "Theme",
+      "es": "Tema",
+      "fr": "Thème",
+      "hi": "थीम",
+      "id": "Tema",
+      "ja": "テーマ",
+      "ko": "테마",
+      "pt-BR": "Tema",
+      "zh-Hans": "主题",
+      "zh-Hant": "主題"
+    }
+  },
+  "There is no article text to share. Make sure the article has finished loading.": {
+    "scope": "app",
+    "translations": {
+      "ar": "لا يوجد نص للمشاركة. تأكد من اكتمال تحميل المقال.",
+      "de": "Kein Artikeltext zum Teilen vorhanden. Prüfe, ob der Artikel vollständig geladen ist.",
+      "en": "There is no article text to share. Make sure the article has finished loading.",
+      "es": "No hay texto para compartir. Comprueba que el artículo haya terminado de cargar.",
+      "fr": "Aucun texte à partager. Vérifiez que le chargement de l’article est terminé.",
+      "hi": "साझा करने के लिए लेख का टेक्स्ट नहीं है। जाँचें कि लेख पूरा लोड हो गया है।",
+      "id": "Tidak ada teks artikel untuk dibagikan. Pastikan artikel sudah selesai dimuat.",
+      "ja": "共有できる本文がありません。記事の読み込みが完了しているか確認してください。",
+      "ko": "공유할 본문이 없습니다. 글이 모두 로드되었는지 확인하세요.",
+      "pt-BR": "Não há texto para compartilhar. Verifique se o artigo terminou de carregar.",
+      "zh-Hans": "这篇文章没有可分享的正文，请确认文章已加载完成。",
+      "zh-Hant": "這篇文章沒有可分享的正文，請確認文章已加載完成。"
+    }
+  },
+  "This PDF has no table of contents. Jump to a page instead.": {
+    "scope": "app",
+    "translations": {
+      "ar": "لا يحتوي هذا الملف على فهرس. انتقل مباشرة إلى رقم الصفحة.",
+      "de": "Dieses PDF hat kein Inhaltsverzeichnis. Springe stattdessen zu einer Seitenzahl.",
+      "en": "This PDF has no table of contents. Jump to a page instead.",
+      "es": "Este PDF no tiene índice. Puedes ir a una página por su número.",
+      "fr": "Ce PDF n’a pas de sommaire. Accédez directement à une page.",
+      "hi": "इस PDF में विषय-सूची नहीं है। पृष्ठ संख्या से सीधे जाएँ।",
+      "id": "PDF ini tidak memiliki daftar isi. Lompat langsung ke nomor halaman.",
+      "ja": "このPDFには目次がありません。ページ番号で移動できます。",
+      "ko": "이 PDF에는 목차가 없습니다. 페이지 번호로 이동할 수 있습니다.",
+      "pt-BR": "Este PDF não tem sumário. Vá diretamente para um número de página.",
+      "zh-Hans": "这份 PDF 没有章节目录，可以按页码跳转。",
+      "zh-Hant": "這份 PDF 沒有章節目錄，可以按頁碼跳轉。"
+    }
+  },
+  "This document could not be loaded. Please open the online version.": {
+    "scope": "app",
+    "translations": {
+      "ar": "تعذّر تحميل هذا المستند. يُرجى فتح النسخة عبر الإنترنت.",
+      "de": "Dieses Dokument konnte nicht geladen werden. Bitte öffne die Onlineversion.",
+      "en": "This document could not be loaded. Please open the online version.",
+      "es": "No se pudo cargar este documento. Abre la versión en línea.",
+      "fr": "Ce document n’a pas pu être chargé. Ouvrez la version en ligne.",
+      "hi": "यह दस्तावेज़ लोड नहीं हो सका। ऑनलाइन संस्करण खोलें।",
+      "id": "Dokumen ini tidak dapat dimuat. Silakan buka versi daring.",
+      "ja": "文書を読み込めませんでした。オンライン版をご覧ください。",
+      "ko": "문서를 불러올 수 없습니다. 온라인 버전을 확인하세요.",
+      "pt-BR": "Não foi possível carregar o documento. Abra a versão on-line.",
+      "zh-Hans": "文档暂时无法读取，请查看在线版本。",
+      "zh-Hant": "文檔暫時無法讀取，請查看在線版本。"
+    }
+  },
+  "This document is available in English and Simplified Chinese.": {
+    "scope": "app",
+    "translations": {
+      "ar": "يتوفر هذا المستند بالإنجليزية والصينية المبسطة.",
+      "de": "Dieses Dokument ist auf Englisch und vereinfachtem Chinesisch verfügbar.",
+      "en": "This document is available in English and Simplified Chinese.",
+      "es": "Este documento está disponible en inglés y chino simplificado.",
+      "fr": "Ce document est disponible en anglais et en chinois simplifié.",
+      "hi": "यह दस्तावेज़ अंग्रेज़ी और सरल चीनी में उपलब्ध है।",
+      "id": "Dokumen ini tersedia dalam bahasa Inggris dan Tionghoa Sederhana.",
+      "ja": "この文書は英語と簡体字中国語で提供しています。",
+      "ko": "이 문서는 영어와 중국어 간체로 제공됩니다.",
+      "pt-BR": "Este documento está disponível em inglês e chinês simplificado.",
+      "zh-Hans": "本文档提供英语和简体中文版本。",
+      "zh-Hant": "本文檔提供英語和簡體中文版本。"
+    }
+  },
+  "This note could not be found.": {
+    "scope": "app",
+    "translations": {
+      "ar": "لم يتم العثور على هذه الملاحظة.",
+      "de": "Diese Notiz wurde nicht gefunden.",
+      "en": "This note could not be found.",
+      "es": "No se encontró esta nota.",
+      "fr": "Cette note est introuvable.",
+      "hi": "यह नोट नहीं मिला।",
+      "id": "Catatan ini tidak ditemukan.",
+      "ja": "このノートは見つかりませんでした。",
+      "ko": "이 노트를 찾을 수 없습니다.",
+      "pt-BR": "Esta nota não foi encontrada.",
+      "zh-Hans": "未找到这篇笔记。",
+      "zh-Hant": "未找到這篇筆記。"
+    }
+  },
+  "This week": {
+    "scope": "app",
+    "translations": {
+      "ar": "هذا الأسبوع",
+      "de": "Diese Woche",
+      "en": "This week",
+      "es": "Esta semana",
+      "fr": "Cette semaine",
+      "hi": "इस सप्ताह",
+      "id": "Minggu ini",
+      "ja": "今週",
+      "ko": "이번 주",
+      "pt-BR": "Esta semana",
+      "zh-Hans": "本周",
+      "zh-Hant": "本週"
+    }
+  },
+  "Today": {
+    "scope": "app",
+    "translations": {
+      "ar": "اليوم",
+      "de": "Heute",
+      "en": "Today",
+      "es": "Hoy",
+      "fr": "Aujourd’hui",
+      "hi": "आज",
+      "id": "Hari ini",
+      "ja": "今日",
+      "ko": "오늘",
+      "pt-BR": "Hoje",
+      "zh-Hans": "今天",
+      "zh-Hant": "今天"
+    }
+  },
+  "Try sample library": {
+    "scope": "app",
+    "translations": {
+      "ar": "تجربة المكتبة النموذجية",
+      "de": "Beispielbibliothek ausprobieren",
+      "en": "Try sample library",
+      "es": "Probar biblioteca de ejemplo",
+      "fr": "Essayer la bibliothèque d’exemple",
+      "hi": "नमूना लाइब्रेरी आज़माएँ",
+      "id": "Coba pustaka contoh",
+      "ja": "サンプルライブラリを試す",
+      "ko": "예제 라이브러리 사용해 보기",
+      "pt-BR": "Testar biblioteca de exemplo",
+      "zh-Hans": "体验示例知识库",
+      "zh-Hant": "體驗示例知識庫"
+    }
+  },
+  "Up to date": {
+    "scope": "app",
+    "translations": {
+      "ar": "كل شيء محدّث",
+      "de": "Auf dem neuesten Stand",
+      "en": "Up to date",
+      "es": "Todo actualizado",
+      "fr": "À jour",
+      "hi": "सब कुछ अपडेट है",
+      "id": "Sudah terbaru",
+      "ja": "最新の状態です",
+      "ko": "최신 상태입니다",
+      "pt-BR": "Tudo atualizado",
+      "zh-Hans": "已是最新",
+      "zh-Hant": "已是最新"
+    }
+  },
+  "Updated files: %1$ld": {
+    "scope": "app",
+    "translations": {
+      "ar": "الملفات المحدّثة: %1$ld",
+      "de": "Aktualisierte Dateien: %1$ld",
+      "en": "Updated files: %1$ld",
+      "es": "Archivos actualizados: %1$ld",
+      "fr": "Fichiers mis à jour : %1$ld",
+      "hi": "अपडेट की गई फ़ाइलें: %1$ld",
+      "id": "Berkas diperbarui: %1$ld",
+      "ja": "更新したファイル数：%1$ld",
+      "ko": "업데이트한 파일: %1$ld개",
+      "pt-BR": "Arquivos atualizados: %1$ld",
+      "zh-Hans": "已更新 %1$ld 个文件",
+      "zh-Hant": "已更新 %1$ld 個檔案"
+    }
+  },
+  "Use GitLab read_api access, preferably a token limited to this project. Namespaces can include group/subgroup. Self-hosted servers require HTTPS. Each project's token stays in Keychain.": {
+    "scope": "app",
+    "translations": {
+      "ar": "استخدم صلاحية read_api في GitLab، ويفضّل رمزًا مخصصًا لهذا المشروع. يمكن أن يتضمن نطاق الأسماء group/subgroup. تتطلب الخوادم الخاصة HTTPS. يُحفظ كل رمز في سلسلة المفاتيح.",
+      "de": "Nutze GitLab read_api, möglichst mit einem auf das Projekt begrenzten Token. Namensräume dürfen Gruppe/Untergruppe enthalten. Eigene Server benötigen HTTPS. Jedes Token bleibt im Schlüsselbund.",
+      "en": "Use GitLab read_api access, preferably a token limited to this project. Namespaces can include group/subgroup. Self-hosted servers require HTTPS. Each project's token stays in Keychain.",
+      "es": "Usa el permiso read_api de GitLab, preferiblemente con un token limitado al proyecto. El espacio de nombres admite grupo/subgrupo. Los servidores propios requieren HTTPS. Cada token se guarda en el llavero.",
+      "fr": "Utilisez l’autorisation GitLab read_api, de préférence avec un jeton limité au projet. Les espaces de noms acceptent groupe/sous-groupe. Les serveurs personnels exigent HTTPS. Chaque jeton reste dans le trousseau.",
+      "hi": "GitLab की read_api अनुमति इस्तेमाल करें। हो सके तो केवल इस प्रोजेक्ट का टोकन चुनें। नेमस्पेस में group/subgroup हो सकता है। निजी सर्वर के लिए HTTPS आवश्यक है। हर टोकन Keychain में रहता है।",
+      "id": "Gunakan izin GitLab read_api, sebaiknya dengan token khusus proyek ini. Namespace dapat berisi grup/subgrup. Server mandiri memerlukan HTTPS. Setiap token disimpan di Keychain.",
+      "ja": "GitLabではread_api権限を使い、可能なら対象プロジェクト限定のトークンを選んでください。名前空間はgroup/subgroup形式に対応します。独自サーバーにはHTTPSが必要です。トークンは個別にキーチェーンに保存されます。",
+      "ko": "GitLab read_api 권한을 사용하고, 가능하면 해당 프로젝트로 제한된 토큰을 선택하세요. 네임스페이스는 group/subgroup을 지원합니다. 자체 서버는 HTTPS가 필요하며 토큰은 키체인에 개별 저장됩니다.",
+      "pt-BR": "Use a permissão read_api do GitLab, de preferência com um token limitado ao projeto. Namespaces aceitam grupo/subgrupo. Servidores próprios exigem HTTPS. Cada token fica nas Chaves.",
+      "zh-Hans": "GitLab 使用 read_api 只读权限；如可用，优先使用仅授权此项目的 Access Token。命名空间可含多级 group/subgroup。自建地址需使用 HTTPS。凭据按服务与项目独立保存在 Keychain。",
+      "zh-Hant": "GitLab 使用 read_api 只讀權限；如可用，優先使用僅授權此項目的 Access Token。命名空間可含多級 group/subgroup。自建地址需使用 HTTPS。憑據按服務與項目獨立保存在 Keychain。"
+    }
+  },
+  "Version": {
+    "scope": "app",
+    "translations": {
+      "ar": "الإصدار",
+      "de": "Version",
+      "en": "Version",
+      "es": "Versión",
+      "fr": "Version",
+      "hi": "संस्करण",
+      "id": "Versi",
+      "ja": "バージョン",
+      "ko": "버전",
+      "pt-BR": "Versão",
+      "zh-Hans": "版本",
+      "zh-Hant": "版本"
+    }
+  },
+  "View commit on %1$@": {
+    "scope": "app",
+    "translations": {
+      "ar": "عرض الالتزام في %1$@",
+      "de": "Commit in %1$@ ansehen",
+      "en": "View commit on %1$@",
+      "es": "Ver commit en %1$@",
+      "fr": "Voir le commit sur %1$@",
+      "hi": "%1$@ पर कमिट देखें",
+      "id": "Lihat commit di %1$@",
+      "ja": "%1$@でコミットを表示",
+      "ko": "%1$@에서 커밋 보기",
+      "pt-BR": "Ver commit no %1$@",
+      "zh-Hans": "在 %1$@ 查看提交",
+      "zh-Hant": "在 %1$@ 查看提交"
+    }
+  },
+  "Wait for the article to finish loading before sharing.": {
+    "scope": "app",
+    "translations": {
+      "ar": "انتظر حتى يكتمل تحميل المقال قبل مشاركته.",
+      "de": "Warte vor dem Teilen, bis der Artikel vollständig geladen ist.",
+      "en": "Wait for the article to finish loading before sharing.",
+      "es": "Espera a que el artículo termine de cargar antes de compartirlo.",
+      "fr": "Attendez la fin du chargement de l’article avant de le partager.",
+      "hi": "साझा करने से पहले लेख का लोड पूरा होने दें।",
+      "id": "Tunggu hingga artikel selesai dimuat sebelum membagikannya.",
+      "ja": "記事の読み込みが完了してから共有してください。",
+      "ko": "글이 모두 로드된 후 공유하세요.",
+      "pt-BR": "Aguarde o artigo terminar de carregar antes de compartilhar.",
+      "zh-Hans": "请等文章加载完成后再分享。",
+      "zh-Hant": "請等文章加載完成後再分享。"
+    }
+  },
+  "Waiting for fonts": {
+    "scope": "app",
+    "translations": {
+      "ar": "جارٍ انتظار الخطوط",
+      "de": "Warten auf Schriftarten",
+      "en": "Waiting for fonts",
+      "es": "Esperando las fuentes",
+      "fr": "Chargement des polices",
+      "hi": "फ़ॉन्ट की प्रतीक्षा है",
+      "id": "Menunggu font",
+      "ja": "フォントを待機中",
+      "ko": "글꼴 기다리는 중",
+      "pt-BR": "Aguardando fontes",
+      "zh-Hans": "等待字体",
+      "zh-Hant": "等待字體"
+    }
+  },
+  "You can download it again later.": {
+    "scope": "app",
+    "translations": {
+      "ar": "يمكنك تنزيله مجددًا لاحقًا.",
+      "de": "Du kannst die Datei später erneut herunterladen.",
+      "en": "You can download it again later.",
+      "es": "Puedes volver a descargarlo más tarde.",
+      "fr": "Vous pourrez le télécharger à nouveau plus tard.",
+      "hi": "आप इसे बाद में फिर डाउनलोड कर सकते हैं।",
+      "id": "Anda dapat mengunduhnya lagi nanti.",
+      "ja": "後で再ダウンロードできます。",
+      "ko": "나중에 다시 다운로드할 수 있습니다.",
+      "pt-BR": "Você pode baixar novamente mais tarde.",
+      "zh-Hans": "可以稍后重新下载。",
+      "zh-Hant": "可以稍後重新下載。"
+    }
+  },
+  "Your AI-native knowledge reader": {
+    "scope": "app",
+    "translations": {
+      "ar": "قارئ معرفتك في عصر الذكاء الاصطناعي",
+      "de": "Dein Wissensleser für das KI-Zeitalter",
+      "en": "Your AI-native knowledge reader",
+      "es": "Tu lector de conocimiento para la era de la IA",
+      "fr": "Votre lecteur de connaissances à l’ère de l’IA",
+      "hi": "AI युग में आपका ज्ञान रीडर",
+      "id": "Pembaca pengetahuan Anda di era AI",
+      "ja": "AI時代のナレッジリーダー",
+      "ko": "AI 시대의 지식 리더",
+      "pt-BR": "Seu leitor de conhecimento para a era da IA",
+      "zh-Hans": "AI 时代的随身知识库",
+      "zh-Hant": "AI 時代的隨身知識庫"
+    }
+  },
+  "Your device is offline. Check Wi-Fi, mobile data and this app's network permissions. Cached files remain available.": {
+    "scope": "core",
+    "translations": {
+      "ar": "الجهاز غير متصل. تحقق من Wi-Fi والبيانات الخلوية وأذونات الشبكة للتطبيق. تظل الملفات المخزنة متاحة.",
+      "de": "Das Gerät ist offline. Prüfe WLAN, mobile Daten und Netzwerkrechte der App. Der Cache bleibt verfügbar.",
+      "en": "Your device is offline. Check Wi-Fi, mobile data and this app's network permissions. Cached files remain available.",
+      "es": "El dispositivo está sin conexión. Comprueba Wi-Fi, datos móviles y los permisos de red de la app. La caché sigue disponible.",
+      "fr": "L’appareil est hors ligne. Vérifiez le Wi-Fi, les données mobiles et les autorisations réseau de l’app. Le cache reste disponible.",
+      "hi": "डिवाइस ऑफ़लाइन है। Wi-Fi, मोबाइल डेटा और ऐप की नेटवर्क अनुमतियाँ जाँचें। कैश की फ़ाइलें पढ़ सकते हैं।",
+      "id": "Perangkat Anda luring. Periksa Wi-Fi, data seluler, dan izin jaringan aplikasi. Cache tetap dapat dibaca.",
+      "ja": "端末はオフラインです。Wi-Fi、モバイル通信、アプリのネットワーク権限を確認してください。キャッシュは引き続き読めます。",
+      "ko": "기기가 오프라인입니다. Wi-Fi, 셀룰러 데이터와 앱의 네트워크 권한을 확인하세요. 캐시된 파일은 읽을 수 있습니다.",
+      "pt-BR": "O dispositivo está off-line. Verifique Wi-Fi, dados móveis e permissões de rede do app. O cache continua disponível.",
+      "zh-Hans": "系统报告设备离线。请检查 Wi-Fi、蜂窝数据及本 App 的联网权限。已缓存内容仍可阅读。",
+      "zh-Hant": "系統報告設備離線。請檢查 Wi-Fi、蜂窩數據及本 App 的聯網權限。已快取內容仍可閱讀。"
+    }
+  },
+  "Your reading position could not be saved. Please try again later.": {
+    "scope": "app",
+    "translations": {
+      "ar": "تعذّر حفظ موضع القراءة. يُرجى المحاولة لاحقًا.",
+      "de": "Die Leseposition konnte nicht gespeichert werden. Versuche es später erneut.",
+      "en": "Your reading position could not be saved. Please try again later.",
+      "es": "No se pudo guardar la posición de lectura. Inténtalo más tarde.",
+      "fr": "La position de lecture n’a pas pu être enregistrée. Réessayez plus tard.",
+      "hi": "पढ़ने की जगह सहेजी नहीं जा सकी। बाद में फिर कोशिश करें।",
+      "id": "Posisi baca tidak dapat disimpan. Coba lagi nanti.",
+      "ja": "読書位置を保存できませんでした。後で再試行してください。",
+      "ko": "읽던 위치를 저장하지 못했습니다. 나중에 다시 시도하세요.",
+      "pt-BR": "Não foi possível salvar a posição de leitura. Tente mais tarde.",
+      "zh-Hans": "阅读位置暂未保存，请稍后重试。",
+      "zh-Hant": "閱讀位置暫未保存，請稍後重試。"
+    }
+  },
+  "Your reading position is saved automatically on this device.": {
+    "scope": "app",
+    "translations": {
+      "ar": "يُحفظ موضع القراءة تلقائيًا على هذا الجهاز.",
+      "de": "Die Leseposition wird automatisch auf diesem Gerät gespeichert.",
+      "en": "Your reading position is saved automatically on this device.",
+      "es": "La posición de lectura se guarda automáticamente en este dispositivo.",
+      "fr": "Votre position de lecture est enregistrée automatiquement sur cet appareil.",
+      "hi": "पढ़ने की जगह इस डिवाइस पर अपने आप सहेजी जाती है।",
+      "id": "Posisi baca disimpan otomatis di perangkat ini.",
+      "ja": "読書位置はこの端末に自動保存されます。",
+      "ko": "읽던 위치는 이 기기에 자동으로 저장됩니다.",
+      "pt-BR": "A posição de leitura é salva automaticamente neste dispositivo.",
+      "zh-Hans": "阅读位置会自动保存在这台设备上。",
+      "zh-Hant": "閱讀位置會自動保存在這台設備上。"
+    }
+  }
+}

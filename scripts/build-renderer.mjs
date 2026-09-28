@@ -19,8 +19,20 @@ const cjkCSS=[...fontCSS.matchAll(/@font-face\s*\{([\s\S]*?)\}/g)].map(([,body])
  });
  return ranges.length?'@font-face {'+body.replaceAll('Noto Sans SC Variable','Vault CJK').replace(match[0],'unicode-range: '+ranges.join(',')+';')+'}':'';
 }).join('\n');
-await writeFile(out+'/vendor/fonts.css',fontCSS+'\n'+cjkCSS);
-const deps=['@fontsource-variable/noto-sans-sc','markdown-it','dompurify','markdown-it-footnote','markdown-it-task-lists','entities','linkify-it','mdurl','punycode.js','uc.micro'];
+// Bundle script-specific faces so Arabic and Hindi remain readable offline even
+// when WebKit's system fallback does not supply those glyphs. Keep Latin/code fonts unchanged.
+let scriptCSS='';
+for (const script of ['arabic','devanagari']) {
+ const dep='@fontsource-variable/noto-sans-'+script;
+ const css=await readFile('node_modules/'+dep+'/index.css','utf8');
+ const face=[...css.matchAll(/@font-face\s*\{[\s\S]*?\}/g)].map(match=>match[0]).find(face=>face.includes('-'+script+'-wght-normal.woff2'));
+ if(!face) throw new Error('Missing script face for '+dep);
+ const file=face.match(/url\(\.\/files\/([^\)]+)\)/)[1];
+ await copyFile('node_modules/'+dep+'/files/'+file,out+'/vendor/fonts/'+file);
+ scriptCSS+='\n'+face.replaceAll('./files/','./fonts/');
+}
+await writeFile(out+'/vendor/fonts.css',fontCSS+'\n'+cjkCSS+scriptCSS);
+const deps=['@fontsource-variable/noto-sans-sc','@fontsource-variable/noto-sans-arabic','@fontsource-variable/noto-sans-devanagari','markdown-it','dompurify','markdown-it-footnote','markdown-it-task-lists','entities','linkify-it','mdurl','punycode.js','uc.micro'];
 let notices='';
 for (const dep of deps) {
  const p=JSON.parse(await readFile('node_modules/'+dep+'/package.json','utf8'));

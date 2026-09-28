@@ -20,7 +20,7 @@ Search filenames and cached Markdown text. Browse recent commits to find new or 
 Try it before connecting
 The built-in sample library needs no account. Your own repository requires a GitHub or GitLab account and a read-only token. Tokens stay in the device Keychain and are never exposed to the web renderer.
 
-Free, with no ads, purchases or subscriptions. Reading progress stays on this device. Some HTML and external images require a network connection. Obsidian plugins and Git LFS file contents are not supported. The app has no built-in AI chat, generation or editing. The initial interface is primarily Simplified Chinese, with an English setup guide.
+Free, with no ads, purchases or subscriptions. Reading progress stays on this device. Some HTML and external images require a network connection. Obsidian plugins and Git LFS file contents are not supported. The app has no built-in AI chat, generation or editing. The interface follows your language, with English as the fallback. It supports English, Simplified and Traditional Chinese, Japanese, Korean, Spanish, Brazilian Portuguese, French, German, Arabic, Hindi and Indonesian. Your documents keep their original language. Samples and the full help and privacy documents are provided in English and Chinese.
 
 Support: https://github.com/dwroy/vault-reader/issues
 Privacy: https://github.com/dwroy/vault-reader/blob/main/docs/PRIVACY.md

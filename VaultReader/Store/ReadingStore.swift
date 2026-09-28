@@ -34,6 +34,6 @@ import VaultCore
             try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
             try JSONEncoder().encode(history).write(to: url, options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication])
             saveError = nil
-        } catch { saveError = "阅读位置暂未保存，请稍后重试。" }
+        } catch { saveError = L10n.text("Your reading position could not be saved. Please try again later.") }
     }
 }

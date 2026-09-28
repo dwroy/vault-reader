@@ -25,12 +25,12 @@ struct NoteView: View {
                 RendererWebView(state: state, session: book?.viewport ?? readerSession, markdown: markdown, path: route.path, anchor: route.anchor, onOpen: open, onPreview: showPreview, onError: { actionError = $0 }, readingOptions: book?.record)
             } else if let loadError {
                 ContentUnavailableView {
-                    Label("暂时无法打开", systemImage: "doc.text.magnifyingglass")
+                    Label(L10n.text("Could not open file"), systemImage: "doc.text.magnifyingglass")
                 } description: { Text(loadError) } actions: {
-                    Button("重试") { Task { await load() } }.buttonStyle(.bordered)
-                    Button("设置") { state.showSettings = true }
+                    Button(L10n.text("Retry")) { Task { await load() } }.buttonStyle(.bordered)
+                    Button(L10n.text("Settings")) { state.showSettings = true }
                 }
-            } else { ProgressView("正在读取…") }
+            } else { ProgressView(L10n.text("Loading…")) }
         }
         .safeAreaInset(edge: .top, spacing: 0) { if !readingBook { StatusBanner(state: state) } }
         .safeAreaInset(edge: .bottom, spacing: 0) { if let book { ReadingControls(book: book) } }
@@ -45,17 +45,17 @@ struct NoteView: View {
         .sheet(item: $video) { VideoSheet(url: $0.url) }
         .sheet(item: $external) { SafariView(url: $0.url) }
         .sheet(item: $shareContent) { NoteShareSheet(content: $0) }
-        .alert("提示", isPresented: Binding(get: { actionError != nil }, set: { if !$0 { actionError = nil } })) { Button("好", role: .cancel) {} } message: { Text(actionError ?? "") }
+        .alert(L10n.text("Notice"), isPresented: Binding(get: { actionError != nil }, set: { if !$0 { actionError = nil } })) { Button(L10n.text("OK"), role: .cancel) {} } message: { Text(actionError ?? "") }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
-                    if !readingBook { Button("用阅读器打开", systemImage: "book") { navigate(.note(NoteRoute(path: route.path, anchor: route.anchor, reading: true))) } }
-                    Button("分享", systemImage: "square.and.arrow.up", action: share)
+                    if !readingBook { Button(L10n.text("Open in reader"), systemImage: "book") { navigate(.note(NoteRoute(path: route.path, anchor: route.anchor, reading: true))) } }
+                    Button(L10n.text("Share"), systemImage: "square.and.arrow.up", action: share)
                         .disabled(markdown == nil || shareTask != nil)
-                    Button("复制路径", systemImage: "doc.on.doc") { UIPasteboard.general.string = route.path }
-                    Button("在 \(state.config.provider.title) 打开", systemImage: "safari") { external = PreviewItem(url: state.config.fileURL(path: route.path)) }
-                    Button("刷新", systemImage: "arrow.clockwise") { Task { await state.refresh(); await load() } }
-                } label: { Image(systemName: "ellipsis.circle") }.accessibilityLabel("笔记操作")
+                    Button(L10n.text("Copy path"), systemImage: "doc.on.doc") { UIPasteboard.general.string = route.path }
+                    Button(L10n.format("Open in %1$@", state.config.provider.title), systemImage: "safari") { external = PreviewItem(url: state.config.fileURL(path: route.path)) }
+                    Button(L10n.text("Refresh"), systemImage: "arrow.clockwise") { Task { await state.refresh(); await load() } }
+                } label: { Image(systemName: "ellipsis.circle") }.accessibilityLabel(L10n.text("Note actions")).accessibilityIdentifier("noteActions")
             }
         }
         .onAppear { (book?.viewport ?? readerSession).resume() }
@@ -65,7 +65,7 @@ struct NoteView: View {
     private func share() {
         guard shareTask == nil else { return }
         guard let web = (book?.viewport ?? readerSession).container?.web else {
-            actionError = "请等文章加载完成后再分享。"; return
+            actionError = L10n.text("Wait for the article to finish loading before sharing."); return
         }
         shareTask = Task { @MainActor in
             defer { shareTask = nil }
@@ -74,7 +74,7 @@ struct NoteView: View {
                 try Task.checkCancellation()
                 shareContent = content
             } catch is CancellationError {} catch {
-                if !Task.isCancelled { actionError = "无法分享：\(error.localizedDescription)" }
+                if !Task.isCancelled { actionError = L10n.format("Could not share: %1$@", error.localizedDescription) }
             }
         }
     }
@@ -92,7 +92,7 @@ struct NoteView: View {
     private func open(_ url: URL) {
         if url.scheme == "vault", url.host == "f" {
             let path = String(url.path.dropFirst())
-            guard let entry = state.index.files[path] else { actionError = "未找到这篇笔记。"; return }
+            guard let entry = state.index.files[path] else { actionError = L10n.text("This note could not be found."); return }
             if entry.isMarkdown { navigate(.note(NoteRoute(path: path, anchor: url.fragment?.removingPercentEncoding ?? "", reading: readingBook))) }
             else if entry.isHTML || entry.ext == "pdf" { navigate(.file(path)) }
             else { showPreview(path) }
@@ -100,7 +100,7 @@ struct NoteView: View {
             if ["mp4", "mov", "m4v"].contains(url.pathExtension.lowercased()) { video = PreviewItem(url: url) }
             else { external = PreviewItem(url: url) }
         }
-        else if url.scheme == "obsidian" { actionError = "这是另一个 vault 的链接。多仓库支持将在后续版本加入。" }
+        else if url.scheme == "obsidian" { actionError = L10n.text("Links to another vault are not supported. Switch repositories to open that content.") }
         else if url.scheme == "mailto" { UIApplication.shared.open(url) }
     }
     private func showPreview(_ path: String) {

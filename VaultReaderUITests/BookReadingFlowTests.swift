@@ -16,7 +16,7 @@ final class BookReadingFlowTests: XCTestCase {
         XCTAssertTrue(link.waitForExistence(timeout: 5)); link.tap()
     }
     @MainActor func testMarkdownContinuesAfterRelaunchAndReflowsAtSameChapter() {
-        let app = XCUIApplication(); app.launchArguments = ["--demo", "--reset-reading"]; app.launch()
+        let app = XCUIApplication(); app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "--demo", "--reset-reading"]; app.launch()
         openProject(app); openBook("夜航手记", app: app)
         openFile("read/夜航手记/夜航手记-原文.md", app: app)
         XCTAssertTrue(app.buttons["readingContents"].waitForExistence(timeout: 15)); app.buttons["readingContents"].tap()
@@ -25,7 +25,7 @@ final class BookReadingFlowTests: XCTestCase {
         let saved = expectation(for: NSPredicate(format: "label != '0%%'"), evaluatedWith: progress)
         wait(for: [saved], timeout: 6)
         XCTAssertTrue(app.webViews.staticTexts["第二章 灯塔"].firstMatch.isHittable)
-        app.terminate(); app.launchArguments = ["--demo"]; app.launch()
+        app.terminate(); app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "--demo"]; app.launch()
         XCTAssertTrue(app.tabBars.buttons["阅读"].waitForExistence(timeout: 15)); app.tabBars.buttons["阅读"].tap()
         XCTAssertTrue(app.buttons["continueReading"].waitForExistence(timeout: 5)); app.buttons["continueReading"].tap()
         XCTAssertTrue(app.buttons["readingContents"].waitForExistence(timeout: 15))
@@ -49,14 +49,14 @@ final class BookReadingFlowTests: XCTestCase {
         XCTAssertFalse(app.buttons["continueReading-2"].exists, "only Markdown actually read is listed")
     }
     @MainActor func testPDFRestoresPageAndProjectsStaySeparate() {
-        let app = XCUIApplication(); app.launchArguments = ["--demo", "--reset-reading"]; app.launch()
+        let app = XCUIApplication(); app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "--demo", "--reset-reading"]; app.launch()
         openProject(app); openBook("夜航手记", app: app); openFile("files/夜航手记.pdf", app: app)
         XCTAssertTrue(app.buttons["pdfPage"].waitForExistence(timeout: 15))
         app.buttons["下一页"].tap(); app.buttons["下一页"].tap()
         let page = app.buttons["pdfPage"]
         let page3 = expectation(for: NSPredicate(format: "label == '第 3 / 5 页'"), evaluatedWith: page)
         wait(for: [page3], timeout: 6)
-        app.terminate(); app.launchArguments = ["--demo"]; app.launch()
+        app.terminate(); app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "--demo"]; app.launch()
         XCTAssertTrue(app.tabBars.buttons["阅读"].waitForExistence(timeout: 15)); app.tabBars.buttons["阅读"].tap()
         XCTAssertTrue(app.buttons["reading-project-example/synthetic-vault-main"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.buttons["continueReading"].exists, "imported PDFs stay out of recent reading")

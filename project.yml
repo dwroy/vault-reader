@@ -1,6 +1,6 @@
 name: VaultReader
 options:
-  developmentLanguage: zh-Hans
+  developmentLanguage: en
   deploymentTarget:
     iOS: '18.0'
 settings:
@@ -16,7 +16,7 @@ settings:
     INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.productivity
     INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
     MARKETING_VERSION: 1.0.0
-    CURRENT_PROJECT_VERSION: 14
+    CURRENT_PROJECT_VERSION: 15
 packages:
   VaultCore:
     path: packages/VaultCore
@@ -33,6 +33,8 @@ targets:
         type: folder
         buildPhase: resources
       - path: VaultReader/Resources/PrivacyInfo.xcprivacy
+        buildPhase: resources
+      - path: VaultReader/Resources/Localization
         buildPhase: resources
       - path: docs/PRIVACY.md
         buildPhase: resources

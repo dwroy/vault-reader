@@ -7,13 +7,22 @@ import { createTree, encodePath, headingID } from './tree.js';
 const resourceURL = path => (window.VaultHost?.resourceBaseURL || 'vault://file/') + encodePath(path);
 let tree = createTree([]), currentPath = '', lastContent = '', lastPath = '';
 let readingHeadings = [];
+const english = Object.freeze({ language: 'en', notFound: 'Not found', anotherVault: 'Another vault', imageNotFound: 'Image not found', properties: 'Properties', imageUnavailable: 'Image unavailable. Connect and refresh to retry.' });
+let labels = {...english};
+const setLocalization = values => {
+  const next = {...english};
+  for (const key of Object.keys(english)) if (typeof values?.[key] === 'string' && values[key].length < 1000) next[key] = values[key];
+  if (JSON.stringify(next) !== JSON.stringify(labels)) lastContent = null;
+  labels = next;
+  document.documentElement.lang = /^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/.test(labels.language) ? labels.language : 'en';
+};
 const md = new MarkdownIt({ html: true, linkify: false, typographer: false }).use(footnote).use(taskLists, { enabled: false });
 const escape = md.utils.escapeHtml;
 function fileURL(path, anchor = '') { return `vault://f/${encodePath(path)}${anchor ? '#' + encodeURIComponent(headingID(anchor)) : ''}`; }
 function emit(name, body) { window.VaultHost?.postMessage(name, body); }
 function wikiHTML(target, label, embed) {
   const result = tree.resolve(target, currentPath);
-  if (!result.path) return `<span class="dead-link" title="未找到：${escape(target)}">${escape(label || target)}</span>`;
+  if (!result.path) return `<span class="dead-link" title="${escape(labels.notFound)}: ${escape(target)}">${escape(label || target)}</span>`;
   const path = result.path;
   if (embed && /\.(png|jpe?g|gif|webp|svg|heic|avif)$/i.test(path)) {
     const width = /^\d+$/.test(label) ? Math.min(4096, Number(label)) : null;
@@ -50,8 +59,8 @@ md.renderer.rules.link_open = (tokens, i, options, env, self) => {
   if (!/^[a-z][a-z\d+.-]*:/i.test(href)) {
     const result = tree.relative(href, currentPath);
     if (result.path) token.attrSet('href', fileURL(result.path, result.anchor));
-    else { token.attrSet('class', 'dead-link'); token.attrSet('title', '未找到'); token.attrSet('href', '#missing'); }
-  } else if (!href.startsWith('vault:')) { token.attrSet('class', 'external'); if (href.startsWith('obsidian:')) token.attrSet('title', '另一 vault'); }
+    else { token.attrSet('class', 'dead-link'); token.attrSet('title', labels.notFound); token.attrSet('href', '#missing'); }
+  } else if (!href.startsWith('vault:')) { token.attrSet('class', 'external'); if (href.startsWith('obsidian:')) token.attrSet('title', labels.anotherVault); }
   return defaultLink(tokens, i, options, env, self);
 };
 const defaultImage = md.renderer.rules.image;
@@ -59,7 +68,7 @@ md.renderer.rules.image = (tokens, i, options, env, self) => {
   const token = tokens[i], source = token.attrGet('src') || '';
   if (!/^https:\/\//i.test(source)) {
     const result = tree.relative(source, currentPath);
-    if (!result.path) return '<span class="dead-link">图片未找到</span>';
+    if (!result.path) return `<span class="dead-link">${escape(labels.imageNotFound)}</span>`;
     token.attrSet('src', resourceURL(result.path)); token.attrSet('data-path', result.path);
   }
   token.attrSet('loading', 'lazy');
@@ -104,13 +113,20 @@ const render = (source, path, fontScale = 1, colorScheme = 'light') => {
   document.documentElement.dataset.theme = colorScheme;
   if (source !== lastContent || path !== lastPath) {
     const metadata = tags.length ? `<div class="tags">${tags.map(t => `<span>${escape(t)}</span>`).join('')}</div>` : '';
-    const props = properties ? `<details class="properties"><summary>属性</summary><pre>${escape(properties)}</pre></details>` : '';
+    const props = properties ? `<details class="properties"><summary dir="${labels.language === 'ar' ? 'rtl' : 'ltr'}">${escape(labels.properties)}</summary><pre>${escape(properties)}</pre></details>` : '';
     document.getElementById('content').innerHTML = DOMPurify.sanitize(metadata + props + md.render(content), {
       USE_PROFILES: { html: true }, ADD_ATTR: ['data-path', 'loading'],
       ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|obsidian|vault):|#)/i,
       FORBID_TAGS: ['script', 'style', 'iframe', 'object', 'embed', 'form', 'video', 'audio'],
       FORBID_ATTR: ['srcset']
     });
+    // UI language must not reverse Latin documents, paths or code; each prose block detects its own direction.
+    document.getElementById('content').dir = 'auto';
+    for (const element of document.querySelectorAll('#content > .properties > summary')) element.dir = labels.language === 'ar' ? 'rtl' : 'ltr';
+    for (const element of document.querySelectorAll('#content p,#content h1,#content h2,#content h3,#content h4,#content h5,#content h6,#content li,#content td,#content th,#content blockquote')) {
+      if (!element.hasAttribute('dir')) element.dir = 'auto';
+    }
+    for (const element of document.querySelectorAll('#content pre,#content code')) element.dir = 'ltr';
     const occurrences = new Map();
     readingHeadings = [...document.querySelectorAll('#content h1,#content h2,#content h3,#content h4,#content h5,#content h6')].map(element => {
       const base = element.id || headingID(element.textContent), occurrence = occurrences.get(base) || 0;
@@ -137,7 +153,7 @@ document.addEventListener('click', event => {
   emit('open', { href });
 });
 document.addEventListener('error', event => {
-  if (event.target.tagName === 'IMG') { event.target.alt = '图片暂不可用，联网后刷新重试'; event.target.classList.add('image-error'); }
+  if (event.target.tagName === 'IMG') { event.target.alt = labels.imageUnavailable; event.target.classList.add('image-error'); }
 }, true);
 
 const unit = n => Number.isFinite(n) ? Math.max(0, Math.min(1, n)) : 0;
@@ -164,4 +180,4 @@ const restorePosition = position => {
 };
 const scrollToSection = id => { const item = readingHeadings.find(item => item.id === id); if (item) window.scrollTo(0, Math.max(0,topOf(item))); };
 const setReadingMode = enabled => { document.documentElement.dataset.reading = enabled ? 'book' : ''; };
-window.VaultReader = Object.freeze({ version: 2, setTree, render, scrollToAnchor, outline, capturePosition, restorePosition, scrollToSection, setReadingMode });
+window.VaultReader = Object.freeze({ version: 2, setLocalization, setTree, render, scrollToAnchor, outline, capturePosition, restorePosition, scrollToSection, setReadingMode });

@@ -11,6 +11,25 @@ function page(base='vault://file/') {
   dom.window.eval(bundle);
   return {dom,api:dom.window.VaultReader,document:dom.window.document,messages};
 }
+test('localized reader chrome preserves mixed-language prose and code direction',()=>{
+  const {dom,api,document}=page();
+  const source='---\ntags: [test]\n---\n# English title\n\nنص عربي\n\n```js\nconst path = "a/b";\n```\n\n[[missing]]\n\n![[missing.png]]';
+  api.setLocalization({language:'ar',properties:'الخصائص',notFound:'غير موجود',imageNotFound:'الصورة غير موجودة'});
+  api.render(source,'README.md');
+  assert.equal(document.documentElement.lang,'ar');
+  assert.equal(document.querySelector('.properties summary').textContent,'الخصائص');
+  assert.equal(document.querySelector('.properties summary').dir,'rtl');
+  assert.equal(document.querySelector('h1').textContent,'English title');
+  assert.equal(document.querySelector('h1').dir,'auto');
+  assert.equal(document.querySelector('pre code').dir,'ltr');
+  assert.match(document.querySelector('.dead-link').title,/غير موجود/);
+  api.setLocalization({language:'en',properties:'<img src=x onerror=alert(1)>'});
+  api.render(source,'README.md');
+  assert.equal(document.querySelector('.properties summary').textContent,'<img src=x onerror=alert(1)>');
+  assert.equal(document.querySelector('.properties summary img'),null);
+  assert.equal(document.querySelector('h1').textContent,'English title');
+  dom.window.close();
+});
 test('same bundle supports both iOS scheme and Android HTTPS resource hosts',()=>{
   for(const base of ['vault://file/','https://appassets.androidplatform.net/vault/files/']) {
     const {dom,api,document,messages}=page(base);

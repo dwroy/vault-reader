@@ -17,7 +17,7 @@ struct BrandIdentity: View {
             BrandMark(size: markSize)
             VStack(alignment: .leading, spacing: 3) {
                 Text("Vault Reader").font(.title3.weight(.semibold))
-                Text("AI 时代的随身知识库").font(.caption).foregroundStyle(.secondary)
+                Text(L10n.text("Your AI-native knowledge reader")).font(.caption).foregroundStyle(.secondary)
             }
         }
         .accessibilityElement(children: .combine)

@@ -1,0 +1,19 @@
+AI Native. Listo para leer.
+Tu biblioteca de conocimiento con soporte integrado para Markdown, HTML y PDF.
+
+Organiza notas e informes con herramientas externas como Claude Code o Codex. Léelos en tu iPhone o iPad con Vault Reader. Conecta GitHub, GitLab.com o tu propio GitLab mediante HTTPS. El acceso es de solo lectura: nunca modifica los archivos originales.
+
+• Markdown: notas, documentos, wikilinks, imágenes incrustadas, tablas y código.
+• HTML: informes y documentos interactivos.
+• PDF: libros y estudios con el lector nativo y reanudación de página.
+
+Ajusta el tamaño del texto y el tema, navega por el índice y cambia entre repositorios. Busca nombres de archivo y texto Markdown en caché. Consulta los commits recientes para encontrar novedades. Los archivos en caché están disponibles sin conexión; la posición de lectura se guarda en este dispositivo.
+
+Prueba la biblioteca de ejemplo sin cuenta. Para conectar tu repositorio necesitas un token de solo lectura, guardado en el llavero del dispositivo y nunca expuesto al contenido web.
+
+Gratis, sin anuncios, compras ni suscripciones. No incluye chat, generación ni edición con IA. El progreso no se sincroniza entre dispositivos. Algunos recursos HTML e imágenes externas requieren conexión. No admite plugins de Obsidian ni el contenido de archivos Git LFS.
+
+Interfaz en 12 idiomas, incluido español, con inglés como alternativa predeterminada. Tus documentos conservan su idioma. Los ejemplos y los documentos completos de ayuda y privacidad están en inglés y chino.
+
+Support: https://github.com/dwroy/vault-reader/issues
+Privacy: https://github.com/dwroy/vault-reader/blob/main/docs/PRIVACY.md

@@ -5,7 +5,7 @@
 - Store name: Vault Reader: AI Native
 - Bundle ID: com.dwroy.vaultreader
 - Apple app record: 6816816892 in Wei Dong's individual developer account
-- Candidate: 1.0.0 (14), iOS/iPadOS 18+
+- Candidate: 1.0.0 (15), iOS/iPadOS 18+
 - Category: Productivity
 - Price: free; no ads, subscriptions or purchases
 - Launch date: not set
@@ -18,7 +18,7 @@ For people who keep a Markdown/HTML/PDF knowledge base in GitHub or GitLab, incl
 
 ## Audience and activation
 
-Initial audience: people already comfortable with Git repositories and read-only access tokens. A public offline sample library lets everyone try the reading experience before connecting. The app interface is primarily Simplified Chinese; English setup and store copy are available. Broader interface localization is not part of this release.
+Initial audience: people already comfortable with Git repositories and read-only access tokens. A public offline sample library lets everyone try the reading experience before connecting. English is the default/fallback language. The owner approved 12 interface languages: English, Simplified Chinese, Traditional Chinese, Japanese, Korean, Spanish, Brazilian Portuguese, French, German, Arabic, Hindi and Indonesian. UI follows system or per-app language preferences; Arabic uses right-to-left navigation. Repository files retain their original language. Full help/privacy documents remain English and Simplified Chinese. Store copy is prepared for the same 12 languages.
 
 ## Launch choices confirmed by the owner
 
@@ -26,7 +26,7 @@ Initial audience: people already comfortable with Git repositories and read-only
 - Free first release to validate real use.
 - Exclude China mainland and EU territories initially; retain Chinese language support.
 - EU distribution can be revisited after the owner completes the trader-status requirements.
-- Ship the existing iPhone/iPad build now; defer dedicated iPad split navigation and large-screen layout improvements to the next version. Do not claim an optimized iPad layout in this release.
+- Ship the localized iPhone/iPad build; defer dedicated iPad split navigation and large-screen layout improvements to the next version. Do not claim an optimized iPad layout in this release.
 
 ## Goals and constraints
 

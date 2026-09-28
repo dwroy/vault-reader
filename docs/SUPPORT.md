@@ -1,5 +1,9 @@
 # Vault Reader 使用帮助 / Support
 
+## 应用语言
+
+应用支持英语（默认回退）、简体中文、繁体中文、日语、韩语、西班牙语、巴西葡萄牙语、法语、德语、阿拉伯语、印地语和印尼语，跟随系统偏好。可在 iOS 设置中切换应用语言。仓库资料保持原文；隐私政策与完整帮助提供英语和简体中文版本。
+
 ## 先体验，再连接
 
 欢迎页点击“体验示例知识库”，即可离线体验目录、双链、搜索、阅读书架、PDF、HTML 和阅读进度。示例完全虚构；不会连接你的仓库，也不会覆盖已保存的连接。目录右上角菜单 → 设置 → “退出示例知识库”可回到原来的仓库或欢迎页。
@@ -30,7 +34,7 @@
 
 ## English quick start
 
-Tap “体验示例知识库” (Try sample library) on the welcome screen to explore without an account or network connection. The samples are synthetic and separate from your saved connections. Use Directory → menu → Settings → “退出示例知识库” (Exit samples) to return. The first release's app interface is primarily Simplified Chinese; this guide and store description are also available in English.
+Tap “Try sample library” on the welcome screen to explore without an account or network connection. The samples are synthetic and separate from your saved connections. Use Files → menu → Settings → “Leave sample library” to return. The app follows your preferred language and falls back to English. It supports English, Simplified and Traditional Chinese, Japanese, Korean, Spanish, Brazilian Portuguese, French, German, Arabic, Hindi and Indonesian. Change the app language in iOS Settings. Repository documents keep their original language; the reviewed help and privacy documents are available in English and Simplified Chinese.
 
 ## Connect your repository
 
@@ -38,7 +42,7 @@ GitHub: create a fine-grained token limited to selected repositories with Conten
 
 ## Read and resume
 
-Browse Directory, Reading, Recent and Search. Cached documents are available offline; uncached attachments and third-party HTML resources may require a network connection. Reading progress is local to this device. Downloads are limited to 100 MiB per file. Git LFS pointer files and Obsidian plugins are not supported as full content or plugin execution.
+Browse Files, Reading, Recent and Search. Cached documents are available offline; uncached attachments and third-party HTML resources may require a network connection. Reading progress is local to this device. Downloads are limited to 100 MiB per file. Git LFS pointer files and Obsidian plugins are not supported as full content or plugin execution.
 
 ## Get help
 

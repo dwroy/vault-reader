@@ -1,0 +1,26 @@
+AI Native，隨手開讀。
+原生支援 Markdown、HTML、PDF，把 AI 生成與整理的知識庫帶在身邊。
+
+在電腦上用 Claude Code、Codex 等 AI 工具整理筆記、生成報告、歸納閱讀資料，在 iPhone 和 iPad 上用 Vault Reader 隨時閱讀、快速查找、接著讀。
+
+為 AI 時代的知識庫而設計
+知識以檔案的形式存在，AI 工具在應用之外整理檔案，Vault Reader 連接你的 GitHub 或 GitLab 倉庫，專注閱讀體驗。只讀訪問，不會修改你的原始檔案。
+
+Markdown、HTML、PDF，原生支援
+• Markdown：閱讀筆記、文檔與講義，支援常用雙鏈、嵌入、表格與代碼塊。
+• HTML：打開 AI 生成的報告、閱讀頁面和交互內容。
+• PDF：閱讀書籍、論文和原始資料，用原生 PDF 閱讀器翻頁和續讀。
+
+隨時打開，接著讀
+調整字號與閱讀主題，使用標題目錄找到章節。閱讀位置保存在本機，已快取的檔案可以離線閱讀。
+
+找到需要的那一頁
+搜索檔案名和已快取的 Markdown 正文，從最近提交中查看新生成或更新的內容。在多個知識庫之間切換。
+
+先體驗，再連接
+無需賬號即可打開內置示例。連接自己的倉庫需要 GitHub 或 GitLab 賬號與只讀 Token；Token 保存在設備鑰匙串，不進入網頁渲染層。
+
+免費，無廣告、內購或訂閱。閱讀進度暫不跨設備同步；部分 HTML 和外部圖片需要聯網，Obsidian 插件及 Git LFS 檔案內容不受支援。應用不提供內置 AI 聊天、生成或編輯。界面支援英語、簡體中文、繁體中文、日語、韓語、西班牙語、巴西葡萄牙語、法語、德語、阿拉伯語、印地語和印尼語，跟隨系統偏好，未支援的語言回退英語。資料保留原文；示例及完整幫助、隱私文檔提供英語和中文版本。
+
+支援：https://github.com/dwroy/vault-reader/issues
+隱私政策：https://github.com/dwroy/vault-reader/blob/main/docs/PRIVACY.md
