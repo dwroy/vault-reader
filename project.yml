@@ -11,9 +11,11 @@ settings:
     GENERATE_INFOPLIST_FILE: YES
     INFOPLIST_KEY_UILaunchScreen_Generation: YES
     INFOPLIST_KEY_CFBundleDisplayName: Vault Reader
+    INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
+    INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.productivity
     INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
-    MARKETING_VERSION: 0.2.0
-    CURRENT_PROJECT_VERSION: 13
+    MARKETING_VERSION: 1.0.0
+    CURRENT_PROJECT_VERSION: 14
 packages:
   VaultCore:
     path: packages/VaultCore
@@ -28,6 +30,12 @@ targets:
         excludes: [Resources]
       - path: VaultReader/Resources/renderer
         type: folder
+        buildPhase: resources
+      - path: VaultReader/Resources/PrivacyInfo.xcprivacy
+        buildPhase: resources
+      - path: docs/PRIVACY.md
+        buildPhase: resources
+      - path: docs/SUPPORT.md
         buildPhase: resources
     settings:
       base:
@@ -53,6 +61,13 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.dwroy.vaultreader.uitests
 schemes:
+  VaultReaderRelease:
+    build:
+      targets:
+        VaultReader: all
+    test:
+      config: Release
+      targets: [VaultReaderUITests]
   VaultReader:
     build:
       targets:

@@ -1,0 +1,22 @@
+Agent 整理，随手开读。
+
+用 Claude Code、Codex 等工具在 Git 仓库中整理知识，在 iPhone 和 iPad 上随时阅读。Vault Reader 只读取你授权的仓库，不会回写或修改文件。
+
+你的纯文本知识库
+• 连接 GitHub、GitLab.com 或使用 HTTPS 的自建 GitLab，保存多个仓库并快速切换。
+• 阅读 Markdown、HTML、PDF 和图片；支持常用 Obsidian 双链与嵌入。
+• 从最近提交中查看发生变化的文件。
+
+专注阅读
+• 目录、阅读书架、文件名搜索和已缓存 Markdown 全文搜索。
+• 标题目录、字号调整与四种阅读主题。
+• 本机记录阅读位置，下次接着读。
+• 已缓存文件可离线阅读。
+
+先体验，再连接
+无需账号即可打开应用内的示例知识库。连接你自己的仓库需要 GitHub 或 GitLab 账号与相应的只读 Token。Token 保存在设备钥匙串，不进入网页渲染层。
+
+无广告，无内购，无订阅。应用不提供内置 AI 聊天、编辑或内容生成；AI 工具在应用之外维护文件。阅读进度仅保存在本机。部分 HTML 和外部图片需要联网，Obsidian 插件及 Git LFS 文件内容不受支持。
+
+支持：https://github.com/dwroy/vault-reader/issues
+隐私政策：https://github.com/dwroy/vault-reader/blob/main/docs/PRIVACY.md

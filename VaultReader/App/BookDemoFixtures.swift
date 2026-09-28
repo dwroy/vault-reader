@@ -1,4 +1,3 @@
-#if DEBUG
 import UIKit
 
 @MainActor enum BookDemoFixtures {
@@ -23,4 +22,3 @@ import UIKit
         }
     }
 }
-#endif

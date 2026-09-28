@@ -92,3 +92,9 @@ Markdown positions are persisted on settled scroll and release; page changes per
 ## File display preferences
 
 The native observable `FileDisplayPreferences` persists `hideDotFiles` in UserDefaults, defaulting to false. The list predicate checks every repository-relative path component, so a dot-prefixed directory also hides its descendants. Directory counts, reading catalogs/history, search results and commit-file rows use this preference. Filtering happens at presentation boundaries; the complete repository index, cache and link resolution remain available.
+
+## App Store preparation — 2026-09-28
+
+The owner authorized a free individual-account release outside China mainland and the EU. Release now exposes the synthetic sample library from Welcome and Settings. Sample mode persists as a separate flag; the real repository profile/library and Keychain remain untouched. Samples use a `VaultReaderSamples` cache root, a separate reading-progress key prefix and a separate HTML-origin namespace. Exiting restores the saved connection, or Welcome when none exists. Successful real connection ends sample mode. Debug launch/environment injection remains excluded from Release.
+
+Privacy and connection/support Markdown are bundled from `docs/PRIVACY.md` and `docs/SUPPORT.md`, accessible offline both before setup and in Settings. The settings version is read from the built bundle. Users can explicitly remove the active repository's local token while keeping cached content and reading progress; service-side revocation remains at GitHub/GitLab. The required-reason API manifest covers app-only preferences, in-container file metadata and elapsed-time measurement. Public metadata and release gates live in `docs/app-store/RELEASE.md`.

@@ -1,0 +1,1 @@
+Agent 整理，随手开读。连接 GitHub 或 GitLab，把 Markdown、HTML 与 PDF 知识库带在身边。阅读、搜索、接着读；无需登录即可体验示例知识库。

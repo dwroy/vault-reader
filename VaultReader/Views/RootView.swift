@@ -13,6 +13,7 @@ struct RootView: View {
     @State private var searchPath: [ReaderRoute] = []
     @State private var directoryPath: [ReaderRoute] = []
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.colorScheme) private var colorScheme
     var body: some View {
         Group {
             if !state.ready { ProgressView("打开知识库…") }
@@ -64,7 +65,7 @@ struct RootView: View {
 
             }
         }
-        .tint(Color(red: 0.11, green: 0.37, blue: 0.29))
+        .tint(colorScheme == .dark ? Color(red: 0.55, green: 0.80, blue: 0.68) : Color(red: 0.11, green: 0.37, blue: 0.29))
         .sheet(isPresented: $state.showSettings) { SettingsView(state: state) }
         .task {
             await state.start(); if !state.needsSetup { state.startPrefetch() }
@@ -99,18 +100,35 @@ struct RootView: View {
 
 struct WelcomeView: View {
     @Bindable var state: AppState
+    @State private var openingSamples = false
+    @Environment(\.colorScheme) private var colorScheme
     var body: some View {
         NavigationStack {
+            ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 Spacer()
                 BrandIdentity(markSize: 68)
                 Text("Agent 整理，\n随手开读。").font(.system(size: 38, weight: .semibold, design: .serif)).lineSpacing(6)
                 Text("用 Claude、Codex 等工具维护知识，\n在手机上随时阅读。").font(.body).foregroundStyle(.secondary).lineSpacing(6)
                 if let error = state.error { Text(error).font(.callout).foregroundStyle(.red) }
-                Button { state.showSettings = true } label: { Label("连接知识库", systemImage: "arrow.right").frame(maxWidth: .infinity).padding(.vertical, 8) }.buttonStyle(.borderedProminent)
+                Button { state.showSettings = true } label: { Label("连接知识库", systemImage: "arrow.right").frame(maxWidth: .infinity).padding(.vertical, 8).foregroundStyle(colorScheme == .dark ? Color.black : Color.white) }.buttonStyle(.borderedProminent)
+                Button {
+                    openingSamples = true
+                    Task {
+                        defer { openingSamples = false }
+                        do { try await state.startSamples() } catch { state.error = error.localizedDescription }
+                    }
+                } label: { Label("体验示例知识库", systemImage: "book").frame(maxWidth: .infinity).padding(.vertical, 6) }
+                    .buttonStyle(.bordered).disabled(openingSamples).accessibilityIdentifier("openSamples")
                 Text("原生支持 Git · Markdown · HTML\nGitHub / GitLab 只读访问 · Token 保存在设备钥匙串").font(.caption).foregroundStyle(.secondary).lineSpacing(4)
+                HStack {
+                    NavigationLink("使用帮助") { AppDocumentView(document: .support) }
+                    Spacer()
+                    NavigationLink("隐私政策") { AppDocumentView(document: .privacy) }
+                }.font(.footnote)
                 Spacer(); Spacer()
-            }.padding(30).navigationTitle("Vault Reader").navigationBarTitleDisplayMode(.inline)
+            }.frame(maxWidth: 600).frame(maxWidth: .infinity).padding(30).navigationTitle("Vault Reader").navigationBarTitleDisplayMode(.inline)
+            }
         }
     }
 }

@@ -69,3 +69,9 @@ Markdown reading provides a heading directory, adjustable font size, system/ligh
 Reading history and preferences stay on the device, independently keyed by repository, branch and file. Different editions never share a bookmark. The latest opened document is available through **Continue reading**. Cached content remains readable offline subject to the existing cache policy. The app does not write progress back to Git, import external websites, decrypt protected PDFs or add EPUB support in this change.
 
 Settings → **File display → Hide files starting with a dot** hides dot-prefixed files and folders (including their descendants) in Directory, Reading, Search and recent commit file lists. It defaults to off, applies to all saved projects, takes effect immediately and persists on this device.
+
+## App Store candidate
+
+Release 1.0.0 preparation is tracked in [docs/app-store/RELEASE.md](docs/app-store/RELEASE.md). The welcome screen offers an offline sample library in production builds; Settings can exit it without replacing saved connections. [Privacy](docs/PRIVACY.md) and [support](docs/SUPPORT.md) are also bundled for offline reading. This is preparation, not a claim that the app is uploaded or approved.
+
+Use `python3 scripts/check-app-store.py --app /path/to/VaultReader.app` to validate packaged policy files, manifest, version and store text. Add `--check-urls` after publishing the documentation. The `VaultReaderRelease` scheme runs UI tests against Release; restrict it to `VaultReaderUITests/AppStoreFlowTests` for the public onboarding path (other existing UI tests use debug-only launch flags).

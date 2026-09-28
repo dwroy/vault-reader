@@ -55,6 +55,7 @@ final class ReadingFlowTests: XCTestCase {
         XCTAssertLessThan(refresh.frame.minY, settings.frame.minY)
         let menu = XCTAttachment(screenshot: app.screenshot()); menu.name = "directory-menu"; menu.lifetime = .keepAlways; add(menu)
         settings.tap()
+        revealToken(app)
         XCTAssertTrue(app.secureTextFields["token"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.buttons["完成"].exists)
         XCTAssertFalse(app.textFields["首页"].exists)
@@ -67,6 +68,7 @@ final class ReadingFlowTests: XCTestCase {
     @MainActor func testInvalidTokenShowsRecoverableError() throws {
         let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
         openSettings(app)
+        revealToken(app)
         let token = app.secureTextFields["token"].firstMatch
         XCTAssertTrue(token.waitForExistence(timeout: 5)); token.tap(); token.typeText("invalid-vault-reader-test-token")
         app.buttons["saveConnection"].tap()
@@ -130,6 +132,12 @@ final class ReadingFlowTests: XCTestCase {
     @MainActor private func openSettings(_ app: XCUIApplication) {
         XCTAssertTrue(app.buttons["目录操作"].waitForExistence(timeout: 15)); app.buttons["目录操作"].tap()
         XCTAssertTrue(app.buttons["设置"].waitForExistence(timeout: 5)); app.buttons["设置"].tap()
+    }
+    @MainActor private func revealToken(_ app: XCUIApplication) {
+        for _ in 0..<4 {
+            if app.secureTextFields["token"].isHittable { return }
+            app.swipeUp()
+        }
     }
 
 }

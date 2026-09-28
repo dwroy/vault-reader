@@ -1,0 +1,15 @@
+Vault Reader is a native, read-only viewer for a user's GitHub/GitLab repositories. It has no app account, purchases, subscriptions, advertisements or built-in AI service. AI tools mentioned in the description are external tools that may maintain a user's files; the app does not call their APIs or transmit content to them.
+
+The app interface is primarily Simplified Chinese. An English setup guide and privacy policy are available inside the app.
+
+To review without credentials:
+1. On the welcome screen, tap “体验示例知识库” (Try sample library).
+2. The Directory tab shows synthetic bundled notes. Open README.md, follow wikilinks, and open the sample image. These files contain no personal information.
+3. Open Reading (阅读), then example/synthetic-vault, then 夜航手记. The original PDF and Markdown editions exercise reading controls and local resume.
+4. Search (搜索) can search filenames and cached Markdown body text. Recent (最近) shows synthetic commit examples. The second sample repository is available from the Directory project switcher.
+5. In a Markdown note, the upper-right menu offers Share (分享) using the native share sheet.
+6. Terminate and relaunch: the sample library remains available. In Directory → upper-right menu → Settings (设置), “退出示例知识库” exits the samples. Privacy Policy (隐私政策) and Support (连接指南与支持) are readable offline.
+
+The sample library is a public product feature available to all users in the submitted Release binary. It makes no network requests to GitHub/GitLab. Optional repository connection uses a read-only token entered by the user into Keychain and never exposed to web content. We can arrange a dedicated synthetic repository for live synchronization review if needed; no personal repository credentials are included here.
+
+Please review the actual App Store Connect contact details before submitting these notes. Contact details are maintained in App Store Connect, not committed to source control.

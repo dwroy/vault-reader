@@ -6,8 +6,8 @@ import VaultCore
 struct HTMLLocation {
     let host: String
     let url: URL
-    init(config: RepositoryConfig, path: String) {
-        host = "html-" + MetaStore.key(config.identity + "\0" + config.branch + "\0" + path)
+    init(config: RepositoryConfig, path: String, isSample: Bool = false) {
+        host = "html-" + MetaStore.key((isSample ? "sample:" : "") + config.identity + "\0" + config.branch + "\0" + path)
         url = URL(string: "vault://" + host + "/")!.appendingPathComponent(path)
     }
     func path(for url: URL) -> String? {
@@ -62,7 +62,7 @@ struct HTMLFileWebView: UIViewRepresentable {
         session.container = container
         container.create = { [weak coordinator] in
             guard let coordinator else { return nil }
-            let location = HTMLLocation(config: state.config, path: path)
+            let location = HTMLLocation(config: state.config, path: path, isSample: state.demo)
             let web = WKWebView(frame: .zero, configuration: Self.configuration(location: location, read: { try await state.file($0) }))
             coordinator.restoring = true
             web.navigationDelegate = coordinator; web.uiDelegate = coordinator; web.scrollView.delegate = coordinator
@@ -82,7 +82,7 @@ struct HTMLFileWebView: UIViewRepresentable {
         init(_ parent: HTMLFileWebView) { self.parent = parent }
         func webView(_ webView: WKWebView, decidePolicyFor action: WKNavigationAction, decisionHandler: @escaping @MainActor @Sendable (WKNavigationActionPolicy) -> Void) {
             guard let url = action.request.url else { decisionHandler(.cancel); return }
-            let location = HTMLLocation(config: parent.state.config, path: parent.path)
+            let location = HTMLLocation(config: parent.state.config, path: parent.path, isSample: parent.state.demo)
             if let path = location.path(for: url), path == parent.path, action.targetFrame?.isMainFrame != false {
                 decisionHandler(.allow)
             } else {

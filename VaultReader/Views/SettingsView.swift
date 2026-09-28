@@ -8,10 +8,26 @@ struct SettingsView: View {
     @State private var token = ""
     @State private var error: String?
     @State private var saving = false
+    @State private var confirmingForgetToken = false
     var body: some View {
         @Bindable var fileDisplay = state.fileDisplay
         NavigationStack {
             Form {
+                Section("帮助与隐私") {
+                    NavigationLink("连接指南与支持") { AppDocumentView(document: .support) }.accessibilityIdentifier("supportDocument")
+                    NavigationLink("隐私政策") { AppDocumentView(document: .privacy) }.accessibilityIdentifier("privacyDocument")
+                    if state.demo {
+                        Button("退出示例知识库") { Task { await state.leaveSamples(); dismiss() } }.accessibilityIdentifier("leaveSamples")
+                    } else {
+                        Button("体验示例知识库") {
+                            saving = true
+                            Task {
+                                defer { saving = false }
+                                do { try await state.startSamples(); dismiss() } catch { self.error = error.localizedDescription }
+                            }
+                        }.accessibilityIdentifier("openSamples")
+                    }
+                }
                 Section {
                     Toggle("隐藏以点开头的文件", isOn: $fileDisplay.hideDotFiles)
                         .accessibilityIdentifier("hideDotFiles")
@@ -48,6 +64,9 @@ struct SettingsView: View {
                     }
                     if let date = state.tokenEnteredAt { LabeledContent("录入日期", value: date.formatted(date: .abbreviated, time: .omitted)) }
                     if let date = state.lastValidatedAt { LabeledContent("上次校验", value: date.formatted(date: .abbreviated, time: .shortened)) }
+                    if !state.demo && state.tokenEnteredAt != nil {
+                        Button("移除本机 Token", role: .destructive) { confirmingForgetToken = true }
+                    }
                 } header: { Text("安全凭据") } footer: {
                     Text(config.provider == .github
                          ? "只授权对应仓库，Contents 选择 Read-only。每个仓库的 Token 分别保存在本机 Keychain，不会交给网页。留空沿用该仓库已有凭据。"
@@ -74,7 +93,7 @@ struct SettingsView: View {
                 }
                 Section {
                     BrandIdentity(markSize: 44).padding(.vertical, 6)
-                    LabeledContent("版本", value: "0.2.0 · M1b")
+                    LabeledContent("版本", value: AppDocumentView.version)
                     Text("只读 · 无服务器").foregroundStyle(.secondary)
                 }
             }
@@ -84,6 +103,11 @@ struct SettingsView: View {
             }
             .disabled(saving)
             .interactiveDismissDisabled(saving)
+            .confirmationDialog("移除这个知识库的本机 Token？", isPresented: $confirmingForgetToken, titleVisibility: .visible) {
+                Button("移除 Token", role: .destructive) {
+                    do { try state.forgetCredential(); token = "" } catch { self.error = error.localizedDescription }
+                }
+            } message: { Text("停止联网同步，保留本机缓存和阅读进度。要彻底撤销访问，请同时在 GitHub 或 GitLab 中撤销 Token。") }
             .onChange(of: config.identity) { _, _ in token = "" }
             .onAppear { if state.addingRepository { newRepository() } else { config = state.config }; Task { await state.updateUsage() } }
         }

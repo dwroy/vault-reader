@@ -1,0 +1,26 @@
+Agents organize. You read anywhere.
+
+Use tools such as Claude Code or Codex to organize knowledge in a Git repository, then read it on your iPhone or iPad. Vault Reader is read-only and never writes back to your repository.
+
+Your plain-text knowledge base
+• Connect GitHub, GitLab.com or an HTTPS self-managed GitLab service.
+• Save multiple repositories and switch between them.
+• Read Markdown, HTML, PDFs and images, with common Obsidian wikilinks and embeds.
+• See changed files in recent commits.
+
+Built for reading
+• Browse directories and a reading shelf.
+• Search filenames and cached Markdown text.
+• Adjust text size, choose a reading theme and navigate headings.
+• Resume from locally saved reading positions.
+• Read cached files offline.
+
+Try it first
+Open the built-in synthetic sample library without signing in. Connecting your own repository requires a GitHub or GitLab account and a read-only token. Tokens stay in the device Keychain and never enter the web renderer.
+
+Free, with no ads, in-app purchases or subscriptions. The app does not include AI chat, editing or content generation: AI tools maintain your files outside the app. Reading progress stays on this device. Some HTML and external images require a network connection. Obsidian plugins and Git LFS file contents are not supported.
+
+The first release's app interface is primarily Simplified Chinese. An English setup guide is included.
+
+Support: https://github.com/dwroy/vault-reader/issues
+Privacy: https://github.com/dwroy/vault-reader/blob/main/docs/PRIVACY.md

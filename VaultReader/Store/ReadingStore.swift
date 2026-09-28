@@ -5,14 +5,16 @@ import VaultCore
 /// One file per repository/branch. A captured store remains tied to its original vault during navigation.
 @MainActor @Observable final class ReadingStore {
     let key: String
+    let isSample: Bool
     private(set) var saveError: String?
     private(set) var history: ReadingHistory
     private let url: URL
     private var pending: Task<Void, Never>?
-    init(config: RepositoryConfig, root: URL? = nil) {
+    init(config: RepositoryConfig, root: URL? = nil, isSample: Bool = false) {
         key = config.storageKey
+        self.isSample = isSample
         let base = root ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("ReadingProgress")
-        url = base.appendingPathComponent(MetaStore.key(key) + ".json")
+        url = base.appendingPathComponent(MetaStore.key((isSample ? "sample:" : "") + key) + ".json")
         history = (try? Data(contentsOf: url)).flatMap { try? JSONDecoder().decode(ReadingHistory.self, from: $0) } ?? ReadingHistory()
     }
     func record(_ record: ReadingRecord, immediately: Bool = false) {

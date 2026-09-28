@@ -47,24 +47,30 @@ final class AppState {
 
     init() {
         let saved = UserDefaults.standard.data(forKey: "repository").flatMap { try? JSONDecoder().decode(RepositoryConfig.self, from: $0) }
-        config = saved ?? RepositoryConfig()
-        reading = ReadingStore(config: saved ?? RepositoryConfig())
+        let initial = saved ?? Self.emptyConnection()
+        config = initial
+        reading = ReadingStore(config: initial)
         library = UserDefaults.standard.data(forKey: "repositoryLibrary").flatMap { try? JSONDecoder().decode(RepositoryLibrary.self, from: $0) } ?? RepositoryLibrary()
         if let saved { library.remember(saved) }
         storedLibrary = library
+    }
+    static func emptyConnection() -> RepositoryConfig {
+        var config = RepositoryConfig(); config.owner = ""; config.repo = ""
+        return config
     }
     func start() async {
         guard !ready else { return }
         do {
             #if DEBUG
-            if ProcessInfo.processInfo.arguments.contains("--demo") { config = RepositoryConfig(); config.owner = "example"; config.repo = "synthetic-vault"; config.branch = "main"; config.home = "README.md" }
+            if ProcessInfo.processInfo.arguments.contains("--demo") {
+                try await startSamples(persist: false)
+                if ProcessInfo.processInfo.arguments.contains("--reset-reading") { reading.clearDemoProgress() }
+                return
+            }
             #endif
+            if UserDefaults.standard.bool(forKey: "sampleLibraryActive") { try await startSamples(); return }
             try await prepare()
             #if DEBUG
-            if ProcessInfo.processInfo.arguments.contains("--demo") {
-                if ProcessInfo.processInfo.arguments.contains("--reset-reading") { reading.clearDemoProgress() }
-                try await loadDemo(); ready = true; return
-            }
             if ProcessInfo.processInfo.arguments.contains("--cached-vault") {
                 library.remember(config)
                 needsSetup = false; demo = true; notice = "本机缓存验收 · 未连接服务器"; ready = true; return
@@ -83,14 +89,14 @@ final class AppState {
     }
     private func prepare() async throws {
         reading.flush()
-        if reading.key != config.storageKey { reading = ReadingStore(config: config) }
+        if reading.key != config.storageKey || reading.isSample != demo { reading = ReadingStore(config: config, isSample: demo) }
         stopPrefetch()
         epoch = UUID(); isRefreshing = false
         index = VaultIndex(); treeSHA = ""; blobs = nil; meta = nil; snapshot = nil
         searchIndex = SearchIndex(); prefetchCompleted = 0; prefetchTotal = 0
         recentRequest = UUID(); loadingRecent = false; recentError = nil; recent = []
         let root = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("VaultReader").appendingPathComponent(MetaStore.key(config.identity))
+            .appendingPathComponent(demo ? "VaultReaderSamples" : "VaultReader").appendingPathComponent(MetaStore.key(config.identity))
         blobs = try BlobStore(root: root.appendingPathComponent("blobs"))
         meta = try MetaStore(root: root.appendingPathComponent("meta").appendingPathComponent(MetaStore.key(config.branch)))
         snapshot = try await meta?.read("branch", as: BranchSnapshot.self)
@@ -126,6 +132,7 @@ final class AppState {
         UserDefaults.standard.set(try JSONEncoder().encode(library), forKey: "repositoryLibrary")
         addingRepository = false
         config = candidate; client = newClient; demo = false
+        UserDefaults.standard.removeObject(forKey: "sampleLibraryActive")
         try await prepare()
         try await meta?.write(tree, name: "tree"); try await meta?.write(branch, name: "branch")
         snapshot = branch; index = VaultIndex(tree.tree); treeSHA = tree.sha
@@ -305,11 +312,42 @@ final class AppState {
         }
         isOffline = true; notice = error.localizedDescription
     }
+    /// Samples use their own cache, reading progress and HTML origins. Saved connections are untouched.
+    func startSamples(persist: Bool = true) async throws {
+        guard !switchingRepository else { return }
+        switchingRepository = true; ready = false
+        defer { switchingRepository = false; ready = true }
+        client = nil; error = nil; notice = nil; isOffline = false; demo = true
+        config = RepositoryConfig(); config.owner = "example"; config.repo = "synthetic-vault"
+        try await prepare()
+        try await loadDemo()
+        if persist { UserDefaults.standard.set(true, forKey: "sampleLibraryActive") }
+        addingRepository = false; showSettings = false
+        startPrefetch()
+    }
+    func leaveSamples() async {
+        guard demo, !switchingRepository else { return }
+        stopPrefetch(); reading.flush()
+        UserDefaults.standard.removeObject(forKey: "sampleLibraryActive")
+        demo = false; client = nil; ready = false; needsSetup = true
+        showSettings = false; addingRepository = false; error = nil; notice = nil
+        library = storedLibrary
+        config = UserDefaults.standard.data(forKey: "repository").flatMap { try? JSONDecoder().decode(RepositoryConfig.self, from: $0) } ?? Self.emptyConnection()
+        await start()
+    }
+    func forgetCredential() throws {
+        guard !demo else { return }
+        try Keychain.delete(config.identity)
+        UserDefaults.standard.removeObject(forKey: "entered.\(config.identity)")
+        UserDefaults.standard.removeObject(forKey: "validated.\(config.identity)")
+        stopPrefetch(); epoch = UUID(); client = nil; isRefreshing = false
+        needsSetup = true; isOffline = true; notice = "已移除本机 Token，已缓存内容仍可阅读。"
+    }
     #if DEBUG
     func startDemoForTesting() async throws {
-        config = RepositoryConfig(); config.owner = "example"; config.repo = "synthetic-vault"; config.branch = "main"; config.home = "README.md"
-        try await prepare(); try await loadDemo(); ready = true; startPrefetch()
+        try await startSamples(persist: false)
     }
+    #endif
     private func loadDemo() async throws {
         // Only synthetic examples are included in the binary; no private vault content.
         var samples: [(String, String)] = [
@@ -343,7 +381,7 @@ final class AppState {
         var second = config; second.repo = "synthetic-other"
         library = RepositoryLibrary([config, second])
         let secondRoot = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("VaultReader").appendingPathComponent(MetaStore.key(second.identity))
+            .appendingPathComponent("VaultReaderSamples").appendingPathComponent(MetaStore.key(second.identity))
         let secondBlobs = try BlobStore(root: secondRoot.appendingPathComponent("blobs"))
         let secondMeta = try MetaStore(root: secondRoot.appendingPathComponent("meta").appendingPathComponent(MetaStore.key(second.branch)))
         let secondText = Data("# 第二个知识库\n\n这是另一份独立缓存，不包含第一库的银杏笔记。".utf8)
@@ -362,5 +400,4 @@ final class AppState {
     static let demoHTML = """
     <!doctype html><html><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{font:22px -apple-system;padding:24px;color-scheme:light dark}button{font:inherit;padding:15px;margin:10px}</style><h1>独立阅读器</h1><p id="page"></p><button onclick="n++;save()">Next page</button><button onclick="n=1;save()">Reset</button><script>let n=Number(localStorage.getItem('page')||1);function save(){localStorage.setItem('page',n);document.getElementById('page').textContent='Page '+n}save()</script></html>
     """
-    #endif
 }
