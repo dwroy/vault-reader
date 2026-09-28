@@ -1,1 +1,1 @@
-markdown,knowledge,notes,reader,git,html,wikilink,offline,documents,pdf,read,agent
+git,knowledge,notes,document,offline,wikilink,search,book,paper,article,resume,agent

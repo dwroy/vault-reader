@@ -2,17 +2,17 @@
 
 ## App overview
 
-- Name: Vault Reader
+- Store name: Vault Reader: AI Native
 - Bundle ID: com.dwroy.vaultreader
-- Apple app record: pending creation in Wei Dong's individual developer account
+- Apple app record: 6816816892 in Wei Dong's individual developer account
 - Candidate: 1.0.0 (14), iOS/iPadOS 18+
-- Category: Productivity (proposed)
+- Category: Productivity
 - Price: free; no ads, subscriptions or purchases
 - Launch date: not set
 
 ## Value proposition
 
-Agent 整理，随手开读。Agents organize. You read anywhere.
+AI Native，随手开读。Native Markdown, HTML and PDF support.
 
 For people who keep a Markdown/HTML/PDF knowledge base in GitHub or GitLab, including repositories maintained by AI coding tools, Vault Reader provides native mobile browsing, search and local reading resume. The app is read-only. It has no in-app AI chat/editor and does not host a user's vault.
 
@@ -26,6 +26,7 @@ Initial audience: people already comfortable with Git repositories and read-only
 - Free first release to validate real use.
 - Exclude China mainland and EU territories initially; retain Chinese language support.
 - EU distribution can be revisited after the owner completes the trader-status requirements.
+- Ship the existing iPhone/iPad build now; defer dedicated iPad split navigation and large-screen layout improvements to the next version. Do not claim an optimized iPad layout in this release.
 
 ## Goals and constraints
 

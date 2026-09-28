@@ -1,1 +1,1 @@
-AI 时代的随身知识库
+原生支持 Markdown、HTML 与 PDF

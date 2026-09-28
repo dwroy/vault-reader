@@ -1,1 +1,1 @@
-Agents organize. You read anywhere. Read, search and resume a GitHub or GitLab knowledge base on your iPhone or iPad. Try the built-in sample library without an account.
+An AI-native reader for your knowledge base. Native Markdown, HTML and PDF support. Connect GitHub or GitLab, then read, search and pick up where you left off.
