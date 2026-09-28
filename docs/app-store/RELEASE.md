@@ -54,3 +54,12 @@ Record current execution results in `docs/ACCEPTANCE.md`. Required release gates
 - https://developer.apple.com/documentation/bundleresources/app-privacy-configuration/nsprivacyaccessedapitypes/nsprivacyaccessedapitype
 - https://developer.apple.com/news/upcoming-requirements/?id=04282026a
 - https://developer.apple.com/help/app-store-connect/reference/app-information/app-information/
+
+## Prepared handoff artifacts
+
+- Final source: 372f8d4 (plus documentation-only status commits).
+- Local main archive: `build/app-store/VaultReader-1.0.0-14-final.xcarchive`.
+- Export options: `build/app-store/ExportOptions.plist`, automatic signing, verified personal team, destination `export` (not upload).
+- Selected raw screenshots: `build/app-store/screenshots/iphone-6.9/` and `build/app-store/screenshots/ipad-13/`; identical originals remain in the development worktree with the `.xcresult` evidence.
+- Archive and strict signature/bundle checks passed. App Store `.ipa` export failed because Xcode has no Apple Account configured and cannot obtain a distribution profile. Xcode's login dialog has been opened for the owner. The developer agreement still blocked App Store Connect at the final refresh. These are external account blockers, not a completed submission.
+- Required next actions: finish the individual-team agreement and Xcode login, authorize Git push to publish policy/support URLs, connect the phone for fresh real-device acceptance, then create the App Store record/export/upload and verify server-side processing. Price and territory changes must follow the confirmed free/non-mainland/non-EU plan. Use manual release.
