@@ -8,3 +8,4 @@
 - Relevant checks: `npm test`, `swift test --package-path packages/VaultCore`, Xcode simulator tests, and `node tests/resolve-links.mjs /path/to/vault --summary` when changing link resolution.
 - Real vault contents, link reports, screenshots and credentials must stay out of git. Store local evidence under ignored `build/`. Demo fixtures must be synthetic.
 - Use the personal Apple developer team for device builds. Do not select the company team or add a guessed team ID.
+- Freeze submitted App Store versions and their selected builds. The current submitted release is 1.0.0 (15); later features belong to the next unreleased batch in `docs/app-store/RELEASE.md`. Do not fold them into or replace that submission. Set the next public version when preparing its release, not for each feature. Local device-preview build numbers identify development packages only and do not authorize an upload or submission.

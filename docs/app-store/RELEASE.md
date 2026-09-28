@@ -2,9 +2,20 @@
 
 Owner decisions, 2026-09-28: release under Wei Dong's individual Apple Developer membership, free, outside China mainland and the European Union, with English as the default and 12 interface languages. The owner will handle the EU trader declaration before a later EU rollout. No paid features, subscriptions, ads, backend or new account system are introduced.
 
-Candidate: **Vault Reader 1.0.0 (15)**, bundle ID `com.dwroy.vaultreader`, iOS/iPadOS 18+, iPhone and iPad. English is the app development/fallback language. The interface follows iOS language preferences and supports English, Simplified/Traditional Chinese, Japanese, Korean, Spanish, Brazilian Portuguese, French, German, Arabic, Hindi and Indonesian. Unsupported languages fall back to English; repository contents retain their original language. Samples and complete help/privacy documents are English and Chinese. Translations are AI-assisted, without a claim of professional native-speaker review.
+Submitted release (frozen): **Vault Reader 1.0.0 (15)**, bundle ID `com.dwroy.vaultreader`, iOS/iPadOS 18+, iPhone and iPad. English is the app development/fallback language. The interface follows iOS language preferences and supports English, Simplified/Traditional Chinese, Japanese, Korean, Spanish, Brazilian Portuguese, French, German, Arabic, Hindi and Indonesian. Unsupported languages fall back to English; repository contents retain their original language. Samples and complete help/privacy documents are English and Chinese. Translations are AI-assisted, without a claim of professional native-speaker review.
 
 The owner requested AI Native positioning and native Markdown/HTML/PDF support. The app does not provide built-in AI chat, generation or editing. Dedicated iPad split navigation and large-screen layout improvements remain deferred to the next version; current iPad compatibility is retained.
+
+## Version policy and next release
+
+Owner instruction, 2026-09-28: **the submitted 1.0.0 (15) is fixed**. Its binary source is `975aa4e`; `e28bffd` records the submission. Preserve the build-15 archive/package and App Store selection. Do not replace, withdraw or resubmit it to include later feature work unless the owner explicitly reopens that release.
+
+Post-submission features accumulate together in the **next release — unreleased, version number not yet assigned**:
+
+- Search matching, ranking, snippets and in-document navigation (`abf4a5b`).
+- Compact title status, details/recovery controls and accessibility layout (`b1d7ca5`).
+
+The release boundary determines the next marketing version and upload build number after the batch is finalized. Individual feature changes do not each become a public release. Development builds 16 and 17 were installed locally for preview only; their `1.0.0` marketing label does not make their new code part of the frozen store release. Neither was uploaded. Future previews remain development artifacts; a device-build request is not permission to change the submitted release. Before archiving the next public candidate from main, explicitly set its new version and record the complete batch and source revision here.
 
 ## Source and public URLs
 
@@ -47,7 +58,7 @@ Free pricing and availability were saved for **147 countries/regions**, excludin
 
 Detailed evidence is in `docs/ACCEPTANCE.md`. Completed development checks include 202 resource keys in 12 languages, all metadata lengths, 9 Node tests, 24 Swift package tests, 15 hosted tests, 10 existing Chinese UI flows, and the 12-language public-sample flow on both iPhone and iPad. A further hosted glyph test verifies offline Arabic/Devanagari fonts, and 8 final Release UI executions passed on both devices after that fix, including visually verified Arabic/Hindi document glyphs.
 
-The owner's physical phone is currently unavailable. The last confirmed installed/launched app remains build 14; simulator coverage does not establish fresh private-repository synchronization, offline recovery, physical touch or attachment transfer. This limitation is carried into release acceptance rather than represented as a pass.
+At the build-15 release-validation checkpoint, the owner's physical phone was unavailable and build 14 was the last confirmed installed/launched app. Later development-device installations are recorded in `docs/ACCEPTANCE.md` and belong to the next-release batch; they do not extend the frozen build-15 acceptance. Simulator coverage and install/launch checks do not establish fresh private-repository synchronization, offline recovery, physical touch or attachment transfer.
 
 Final integration, archive/distribution checks, upload, processing and primary store language are complete. Build 15 is selected and the final App Review submission succeeded. Review approval and manual public release are still pending.
 
