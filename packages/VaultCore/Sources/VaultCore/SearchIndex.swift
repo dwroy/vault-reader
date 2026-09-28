@@ -48,46 +48,46 @@ public actor SearchIndex {
         let name: String
         let stem: String
     }
-    private struct Document {
-        let sha: String
-        let text: String
-        let folded: Data
-        let checkpoints: [(offset: Int, index: String.Index)]
-        init(sha: String, text: String) {
-            self.sha = sha; self.text = text
-            var folded = Data(), checkpoints: [(Int, String.Index)] = [], start = text.startIndex
-            // Sparse original-text checkpoints keep snippets faithful without rescanning a whole book.
-            while start < text.endIndex {
-                let end = text.index(start, offsetBy: 256, limitedBy: text.endIndex) ?? text.endIndex
-                checkpoints.append((folded.count, start))
-                folded.append(contentsOf: SearchQuery.fold(String(text[start..<end])).utf8); start = end
-            }
-            self.folded = folded; self.checkpoints = checkpoints
-        }
-        func checkpoint(after offset: Int) -> Int {
-            var lower = 0, upper = checkpoints.count
-            while lower < upper {
-                let middle = (lower + upper) / 2
-                if checkpoints[middle].offset <= offset { lower = middle + 1 } else { upper = middle }
-            }
-            return lower
-        }
+    /// Preparation counters contain no paths or text and help distinguish warm restore from rebuilding.
+    public struct Diagnostics: Sendable {
+        public fileprivate(set) var restoredDocuments = 0
+        public fileprivate(set) var builtDocuments = 0
+        public fileprivate(set) var cacheWriteFailures = 0
     }
+    public private(set) var diagnostics = Diagnostics()
+    private var cache: SearchTextCache?
     private var entries: [Entry] = []
     private var current: [String: String] = [:]
-    private var texts: [String: Document] = [:]
-    public init() {}
+    // SHA keys also reuse prepared text after a rename or for multiple paths with identical contents.
+    private var texts: [String: SearchDocument] = [:]
+    private var references: [String: Int] = [:]
+    public private(set) var count = 0
+    public init(cacheDirectory: URL? = nil) { cache = cacheDirectory.map { SearchTextCache(root: $0) } }
     public func update(_ files: [TreeEntry]) {
+        guard !Task.isCancelled else { return }
         entries = files.map { Entry(file: $0, path: Data(SearchQuery.fold($0.path).utf8), name: SearchQuery.fold($0.name), stem: SearchQuery.fold(($0.name as NSString).deletingPathExtension)) }
         current = Dictionary(files.map { ($0.path, $0.sha) }, uniquingKeysWith: { a, _ in a })
-        texts = texts.filter { current[$0.key] == $0.value.sha }
+        references = Dictionary(files.filter(\.isMarkdown).map { ($0.sha, 1) }, uniquingKeysWith: +)
+        texts = texts.filter { references[$0.key] != nil }
+        count = texts.keys.reduce(0) { $0 + (references[$1] ?? 0) }
+        cache?.prune(keeping: Set(references.keys))
+    }
+    /// Restore before opening a source blob. A miss is rebuilt through the ordinary ingestion path.
+    public func restoreCachedText(for entry: TreeEntry) -> Bool {
+        guard !Task.isCancelled, entry.isMarkdown, current[entry.path] == entry.sha else { return false }
+        if texts[entry.sha] != nil { return true }
+        guard let document = cache?.load(sha: entry.sha), !Task.isCancelled else { return false }
+        texts[entry.sha] = document; count += references[entry.sha] ?? 0; diagnostics.restoredDocuments += 1
+        return true
     }
     public func insert(_ markdown: String, for entry: TreeEntry) {
-        guard current[entry.path] == entry.sha, texts[entry.path]?.sha != entry.sha else { return }
-        let text = MarkdownSearchText.plain(markdown)
-        texts[entry.path] = Document(sha: entry.sha, text: text)
+        guard !Task.isCancelled, entry.isMarkdown, current[entry.path] == entry.sha, texts[entry.sha] == nil else { return }
+        let document = SearchDocument(text: MarkdownSearchText.plain(markdown))
+        guard !Task.isCancelled else { return }
+        texts[entry.sha] = document; count += references[entry.sha] ?? 0; diagnostics.builtDocuments += 1
+        do { try cache?.save(document, sha: entry.sha) }
+        catch { diagnostics.cacheWriteFailures += 1 } // Search stays available even if derived-cache storage fails.
     }
-    public var count: Int { texts.count }
     public func search(_ query: String, fullText: Bool = true) throws -> [SearchHit] {
         let terms = SearchQuery(query).terms
         guard !terms.isEmpty else { return [] }
@@ -96,7 +96,7 @@ public actor SearchIndex {
         var hits: [(hit: SearchHit, rank: Int, nameMatches: Int)] = []
         for entry in entries {
             try Task.checkCancellation()
-            let document = fullText ? texts[entry.file.path] : nil
+            let document = fullText && entry.file.isMarkdown ? texts[entry.file.sha] : nil
             var bodyTerms: [String] = [], nameMatches = 0, matched = true
             var firstMatch: (range: Range<Int>, term: String)?
             for (i, term) in bytes.enumerated() {
@@ -120,7 +120,7 @@ public actor SearchIndex {
             return $0.hit.path < $1.hit.path
         }.map(\.hit)
     }
-    private static func snippet(_ document: Document, match folded: Range<Int>, term: String) -> String? {
+    private static func snippet(_ document: SearchDocument, match folded: Range<Int>, term: String) -> String? {
         let text = document.text
         let lower = max(0, document.checkpoint(after: folded.lowerBound) - 1)
         let upper = document.checkpoint(after: folded.upperBound)

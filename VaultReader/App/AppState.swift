@@ -99,6 +99,7 @@ final class AppState {
         recentRequest = UUID(); loadingRecent = false; recentError = nil; recent = []
         let root = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
             .appendingPathComponent(demo ? "VaultReaderSamples" : "VaultReader").appendingPathComponent(MetaStore.key(config.identity))
+        searchIndex = SearchIndex(cacheDirectory: root.appendingPathComponent("search").appendingPathComponent(MetaStore.key(config.branch)))
         blobs = try BlobStore(root: root.appendingPathComponent("blobs"))
         meta = try MetaStore(root: root.appendingPathComponent("meta").appendingPathComponent(MetaStore.key(config.branch)))
         snapshot = try await meta?.read("branch", as: BranchSnapshot.self)
@@ -234,9 +235,15 @@ final class AppState {
     func stopPrefetch() {
         prefetchTask?.cancel(); prefetchTask = nil; isPrefetching = false
     }
+    private func publishSearchProgress(_ engine: SearchIndex, generation: UUID) async -> Bool {
+        let completed = await engine.count
+        guard generation == epoch, !Task.isCancelled else { return false }
+        prefetchCompleted = completed; searchRevision += 1
+        return true
+    }
     func startPrefetch() {
         guard !isPrefetching else { return }
-        let generation = epoch, entries = index.entries, engine = searchIndex
+        let generation = epoch, entries = index.entries, engine = searchIndex, sourceBlobs = blobs
         let markdown = entries.filter(\.isMarkdown).sorted { a, b in
             if (a.path == config.home) != (b.path == config.home) { return a.path == config.home }
             return a.path < b.path
@@ -245,27 +252,36 @@ final class AppState {
         prefetchTask = Task {
             defer { if generation == epoch && !Task.isCancelled { isPrefetching = false; prefetchTask = nil } }
             await engine.update(entries)
-            guard generation == epoch, !Task.isCancelled else { return }
-            prefetchCompleted = await engine.count; searchRevision += 1
-            var missing: [TreeEntry] = []
-            // Hydrate every available document before a failed network request can interrupt completion.
-            for entry in markdown {
+            guard await publishSearchProgress(engine, generation: generation) else { return }
+            var unprepared: [TreeEntry] = [], missing: [TreeEntry] = []
+            // Restore every reusable projection before reading/parsing blobs or making a network request.
+            for (offset, entry) in markdown.enumerated() {
                 guard generation == epoch, !Task.isCancelled else { return }
-                if let data = try? await blobs?.data(for: entry.sha), let text = String(data: data, encoding: .utf8) {
+                if !(await engine.restoreCachedText(for: entry)) { unprepared.append(entry) }
+                if offset % 32 == 31, !(await publishSearchProgress(engine, generation: generation)) { return }
+            }
+            guard await publishSearchProgress(engine, generation: generation) else { return }
+            // A cache miss, schema change or corrupt projection rebuilds from the verified local blob.
+            for (offset, entry) in unprepared.enumerated() {
+                guard generation == epoch, !Task.isCancelled else { return }
+                // Another path with the same SHA may have just prepared this document.
+                if await engine.restoreCachedText(for: entry) { continue }
+                if let data = try? await sourceBlobs?.data(for: entry.sha), let text = String(data: data, encoding: .utf8) {
                     await engine.insert(text, for: entry)
                 } else { missing.append(entry) }
+                if offset % 32 == 31, !(await publishSearchProgress(engine, generation: generation)) { return }
             }
-            guard generation == epoch, !Task.isCancelled else { return }
-            prefetchCompleted = await engine.count; searchRevision += 1
+            guard await publishSearchProgress(engine, generation: generation) else { return }
             for entry in missing {
                 do {
                     try Task.checkCancellation()
+                    if await engine.restoreCachedText(for: entry) { continue }
                     let data = try await file(entry.path)
                     try Task.checkCancellation()
                     guard generation == epoch else { return }
                     guard let text = String(data: data, encoding: .utf8) else { throw CocoaError(.fileReadInapplicableStringEncoding) }
                     await engine.insert(text, for: entry)
-                    prefetchCompleted = await engine.count; searchRevision += 1
+                    guard await publishSearchProgress(engine, generation: generation) else { return }
                 } catch is CancellationError { return }
                 catch {
                     guard generation == epoch, !Task.isCancelled else { return }

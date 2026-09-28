@@ -1,5 +1,16 @@
 # M1 acceptance — 2026-09-22
 
+## Persistent search preparation — 2026-09-28
+
+Implemented the owner-approved first step: durable prepared text with SHA-based incremental reuse. Each repository/branch has an isolated, versioned, checksummed derived cache. Startup restores prepared text before reading/parsing source blobs; new/changed text is rebuilt, renamed/duplicate content is reused, and removed SHA records are pruned. Bad or old-schema records fall back to verified original Markdown. Query behavior and renderer code are unchanged; this is part of the next unreleased batch, not the submitted 1.0.0 (15).
+
+- **34 Swift package tests passed**, including seven persistence tests for original-spelling/Unicode snippet round trips, duplicates, SHA changes and renames, deletion, repository/branch isolation, malformed/checksum/schema/SHA/offset failures, storage failure fallback, cancellation and a cold/warm preparation measurement.
+- On this Mac, the synthetic >5 MB / 400-document corpus took **3.74 s** to prepare and persist from scratch, versus **0.185 s** to restore, with **400 restored and zero rebuilt documents**. A two-term query took **15.7 ms**. Derived cache size was **15,716,070 bytes**. These are local Debug core measurements with OS filesystem caching, not complete app-launch times, a fresh-boot disk benchmark or an iPhone performance claim.
+- **14 distinct iPhone 17 / iOS 26.3 simulator checks passed** across `SearchPersistence.xcresult` and `SearchPersistenceNavigation.xcresult`: recreated app state and repository switching restore without reparsing, actual terminate/relaunch keeps full-text results, and existing cached-text deletion, failed-download continuation, status recovery, search navigation and reading position checks pass. The first combined run timed out in the existing search-navigation test while pushing/popping programmatically; waiting for the navigation animations before the next transition produced a passing targeted rerun. The initial failing run is retained, not presented as a passing suite.
+- **11 Node tests passed** and all 12 localization catalogs passed the generated-resource check. No JS/CSS/bridge changes were needed in this step.
+
+Evidence is under ignored `.worktrees/search-polish/build/search-persistence-*` and the named result bundles. No new physical-device installation, private-vault acceptance or real-vault memory measurement is claimed. The active corpus still lives in memory, and derived-cache disk usage is additional to the existing blob/attachment storage counter and eviction budget. No inverted-index work is included.
+
 ## Search usability — 2026-09-28
 
 Implemented the owner's requested search improvements: live filenames plus Markdown text, whitespace-separated AND terms, filename relevance ranking, original-spelling highlighted snippets, in-document highlighting/reveal, and explicit searchable/pending Markdown counts. Common Markdown formatting, link labels and Obsidian comments are projected before indexing; frontmatter and link destinations are excluded. A missing/corrupt/oversized/undecodable file no longer blocks the rest of the foreground download queue. Service-wide failures still stop for retry. PDF/HTML/image body indexing, fuzzy/semantic search, and full Obsidian syntax parity remain outside this change.

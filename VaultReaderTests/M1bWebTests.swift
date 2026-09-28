@@ -238,7 +238,10 @@ extension M1bWebTests {
                    web.accessibilityIdentifier == "reader-ready" { return web }
                 try await Task.sleep(for: .milliseconds(100))
             }
-            XCTFail("Search reader failed to appear")
+            let attached = ReaderWebViewRegistry.views.allObjects.map { web in
+                "\((web.navigationDelegate as? RendererWebView.Coordinator)?.parent.path ?? "released") ready=\(web.accessibilityIdentifier ?? "no") attached=\(web.window === window)"
+            }
+            XCTFail("Search reader failed to appear at \(expected): \(attached)")
             throw VaultError.missing
         }
         var web = try await settle(path)
@@ -259,12 +262,48 @@ extension M1bWebTests {
         try await Task.sleep(for: .milliseconds(500))
         XCTAssertEqual(web.scrollView.contentOffset.y, 1800, accuracy: 25)
         probe.path.append(.note(NoteRoute(path: "长文.md")))
+        try await Task.sleep(for: .milliseconds(400))
         _ = try await settle("长文.md")
         probe.path.removeAll()
+        try await Task.sleep(for: .milliseconds(500))
         web = try await settle(path)
         for _ in 0..<30 where abs(web.scrollView.contentOffset.y - 1800) > 25 { try await Task.sleep(for: .milliseconds(100)) }
         XCTAssertEqual(web.scrollView.contentOffset.y, 1800, accuracy: 25, "Returning restores the new position, not the first hit")
         let restoredHighlights = try await web.evaluateJavaScript("document.querySelectorAll('mark.search-hit').length")
         XCTAssertEqual(restoredHighlights as? Int, 3)
+    }
+}
+
+extension M1bWebTests {
+    @MainActor func testPersistentSearchRestoresWithoutParsingAfterStateRecreationAndVaultSwitch() async throws {
+        func prepared(_ state: AppState) async throws {
+            for _ in 0..<200 where state.isPrefetching { try await Task.sleep(for: .milliseconds(25)) }
+            XCTAssertFalse(state.isPrefetching)
+            XCTAssertEqual(state.prefetchCompleted, state.prefetchTotal)
+            XCTAssertGreaterThan(state.prefetchCompleted, 10)
+            XCTAssertNil(state.prefetchError)
+        }
+        let first = AppState(); try await first.startDemoForTesting(); try await prepared(first)
+        first.stopPrefetch()
+        let expected = try await first.searchIndex.search("银杏 慢慢")
+        let reopened = AppState(); try await reopened.startDemoForTesting()
+        defer { reopened.stopPrefetch() }
+        try await prepared(reopened)
+        let stats = await reopened.searchIndex.diagnostics
+        XCTAssertGreaterThan(stats.restoredDocuments, 10)
+        XCTAssertEqual(stats.builtDocuments, 0, "Restart uses the persisted projection, without reparsing Markdown")
+        XCTAssertEqual(stats.cacheWriteFailures, 0)
+        let results = try await reopened.searchIndex.search("银杏 慢慢")
+        XCTAssertEqual(results.map(\.path), expected.map(\.path)); XCTAssertEqual(results.map(\.snippet), expected.map(\.snippet))
+        let original = reopened.config, other = try XCTUnwrap(reopened.library.repositories.first { $0.storageKey != original.storageKey })
+        await reopened.selectRepository(other)
+        for _ in 0..<200 where reopened.isPrefetching { try await Task.sleep(for: .milliseconds(25)) }
+        let unrelated = try await reopened.searchIndex.search("慢慢")
+        XCTAssertTrue(unrelated.isEmpty)
+        await reopened.selectRepository(original); try await prepared(reopened)
+        let switched = await reopened.searchIndex.diagnostics
+        XCTAssertGreaterThan(switched.restoredDocuments, 10); XCTAssertEqual(switched.builtDocuments, 0)
+        let restored = try await reopened.searchIndex.search("银杏 慢慢")
+        XCTAssertEqual(restored.map(\.path), expected.map(\.path))
     }
 }

@@ -151,3 +151,20 @@ final class ReadingFlowTests: XCTestCase {
     }
 
 }
+
+extension ReadingFlowTests {
+    @MainActor func testSearchAfterRelaunchKeepsFullTextResults() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "--demo"]
+        for pass in 0..<2 {
+            app.launch()
+            XCTAssertTrue(app.tabBars.buttons["搜索"].waitForExistence(timeout: 15)); app.tabBars.buttons["搜索"].tap()
+            let field = app.searchFields.firstMatch
+            XCTAssertTrue(field.waitForExistence(timeout: 5)); field.tap(); field.typeText("银杏 慢慢")
+            let result = app.staticTexts["长文.md"].firstMatch
+            XCTAssertTrue(result.waitForExistence(timeout: 10), "Full-text result on launch \(pass)")
+            result.tap(); XCTAssertTrue(app.webViews["reader-ready"].waitForExistence(timeout: 15))
+            if pass == 0 { app.terminate() }
+        }
+    }
+}
