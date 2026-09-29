@@ -12,7 +12,7 @@ This checklist responds to Apple's 2026-09-29 Guideline 2.1 request. It concerns
 - Each video is a continuous excerpt with the original action order preserved. Main uses seconds 0–54 of the second recording; supplement uses seconds 50–160 of the first. No segments were reordered or fabricated.
 - The first raw capture later switches into unrelated private content. That tail and the second capture's unrelated system-settings tail are excluded. **Never upload either raw recording or private contact sheets.** Only the two named MP4 files are approved evidence candidates.
 - All media and device evidence remain under ignored main `build/app-store/`. The recordings do not establish a fresh live private-repository sync, share transfer, or PDF close/reopen resume pass. The paired iPad was unavailable; its new physical QA remains outstanding. Earlier simulator coverage is separate.
-- The owner requested richer English store screenshots after the reply was sent. Those are a separate public-facing preview task. Continued review/resubmission has not yet been requested; the submission still shows Unresolved Issues.
+- The owner requested richer English store screenshots after the reply was sent. Those are a separate public-facing preview task. The owner approved the public screenshot set and requested submission. On September 29 at 15:58 Asia/Shanghai, the same build-15 submission was visibly confirmed Waiting for Review after Update Review and Resubmit to App Review.
 
 ## Recording preparation
 

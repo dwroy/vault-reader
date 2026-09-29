@@ -311,3 +311,10 @@ At 15:16 Asia/Shanghai, the full six-part response and both videos were sent pri
 ### English store screenshot preview
 
 The owner requested richer English simulator screenshots. Eight 1320x2868 RGB PNGs were captured using a simulator build of frozen UI source `975aa4e`, with only original English document and PDF fixture data expanded. A tracked-file hash audit confirms no UI, renderer or feature source changes. The simulator Release build and App Store metadata checks passed. The directory, family/park Markdown links, embedded local image, long-form reading, HTML and native PDF were visually inspected. The gallery, image hashes, ZIP and fixture generators are preserved in main's ignored `build/app-store/english-screenshots-2026-09-29/`; see `docs/app-store/SCREENSHOTS.md`. The public store media and submitted binary remain unchanged while the owner reviews the candidate images. Existing iPad store images are unchanged.
+
+
+### Build 15 resubmitted with approved English screenshots
+
+The owner approved the English screenshot set and explicitly requested submission. All eight 1320x2868 RGB PNGs were hash-checked against the reviewed originals, uploaded to English (U.S.) iPhone 6.9-inch metadata, and reordered to the approved sequence. Returning to the version page confirmed all eight saved in order, build **15** selected, the complete 3,983-character Review Notes with both video references, and manual release selected. The existing sent review message visibly retains both MP4 attachments.
+
+Update Review completed, followed by Resubmit to App Review. At **2026-09-29 15:58 Asia/Shanghai**, both the submission and item visibly showed **Waiting for Review**, for the same submission ID `5cd6c637-8dfd-4771-a91d-2d6e93fe8bc5` and **1.0.0 (15)**. Evidence: main ignored `build/app-store/resubmission-15-2026-09-29.png` and `english-screenshots-uploaded-2026-09-29.png`. No new binary, source feature, private data or public App Preview video was uploaded. This confirms successful resubmission, not approval or public availability, and does not extend the previously recorded physical-device acceptance limits.

@@ -74,7 +74,7 @@ Final integration, archive/distribution checks, upload, processing and primary s
 ## Release artifacts
 
 - Development evidence: project-local `note-share` worktree, ignored `build/localization/`.
-- Current screenshots: `build/localization/screenshots/iphone-6.9/` (1320×2868) and `ipad-13/` (2064×2752), synthetic content only, RGB PNG.
+- Initial screenshots: `build/localization/screenshots/iphone-6.9/` (1320×2868) and `ipad-13/` (2064×2752), synthetic content only, RGB PNG. The approved September 29 English iPhone replacements are recorded below.
 - Source: 975aa4e, integrated and pushed to main. Final archive: main `build/app-store/VaultReader-1.0.0-15.xcarchive`; distribution package: `build/app-store/export-15/VaultReader.ipa`. Previous build 14 artifacts remain for traceability.
 - Export/upload options use automatic signing, personal team DPK7SSB889 and `manageAppVersionAndBuildNumber=false`.
 - Review submission succeeded on **2026-09-28 at 14:54 Asia/Shanghai**. Status: **Waiting for Review**. Submission ID: `5cd6c637-8dfd-4771-a91d-2d6e93fe8bc5`.
@@ -86,12 +86,19 @@ Final integration, archive/distribution checks, upload, processing and primary s
 
 Apple's message is “Guideline 2.1 — Information Needed — New App Submission.” The account has limited review history. The requested physical-device recording must begin with launching the app and show its typical flow on the latest OS. The other five items are purpose/audience, setup/access, external services, regional differences and relevant authorizations.
 
-The submitted binary and selected build remain frozen at **1.0.0 (15)**. Review Notes were expanded with the factual response, leaving the video explicitly pending. The unsent reply draft and recording checklist are `review-response-draft.txt` and `REVIEW-VIDEO.md`. The original build 15 was installed on the owner's connected iPhone. After the owner updated it, fresh queries confirm iOS 27.0.1 and app build 15. QuickTime screen capture is configured; the physical sample-only demonstration remains to be recorded. No new binary upload, replacement, complete response or resubmission is claimed. iPad physical QA is still outstanding.
+The submitted binary and selected build remain frozen at **1.0.0 (15)**. The original build was installed in place on the owner's iPhone, and fresh queries confirmed iOS 27.0.1 and build 15 after the OS update. The completed response text is retained in `review-response-draft.txt`; video provenance and acceptance limits are in `REVIEW-VIDEO.md`. Physical iPad QA remains outstanding.
 
 
 ### Supplemental response delivered
 
-On **2026-09-29 at 15:16 Asia/Shanghai**, the six-part response and two reviewed physical-iPhone clips were sent privately in App Review. Both attachment filenames were verified in the sent message. Review Notes were saved with the completed information. See `REVIEW-VIDEO.md` for clip provenance, demonstrated flows and acceptance limits. Raw recordings are not uploadable because they contain unrelated tails; only the reviewed MP4 excerpts were supplied. **Build 15 remains selected; no binary replacement or upload occurred.** The submission still shows Unresolved Issues, and review resubmission is not yet claimed. The owner has requested richer English store screenshot previews before the next metadata decision.
+On **2026-09-29 at 15:16 Asia/Shanghai**, the six-part response and two reviewed physical-iPhone clips were sent privately in App Review. Both attachment filenames were verified in the sent message. Review Notes were saved with the completed information. See `REVIEW-VIDEO.md` for clip provenance, demonstrated flows and acceptance limits. Raw recordings are not uploadable because they contain unrelated tails; only the reviewed MP4 excerpts were supplied. **Build 15 remains selected; no binary replacement or upload occurred.** At that checkpoint the submission still showed Unresolved Issues. The owner then requested richer English store screenshot previews.
 
 
-Eight richer English iPhone screenshot candidates are complete and available for owner review; see `SCREENSHOTS.md`. They show actual frozen-release UI with original local screenshot documents. The public store has not been updated with these candidates, and resubmission remains pending the image decision. No build replacement is authorized or required for this media work.
+The owner approved the eight richer English iPhone screenshots and explicitly requested submission; see `SCREENSHOTS.md`. They show actual frozen-release UI with original local screenshot documents. No build replacement was required or performed.
+
+
+### September 29 resubmission confirmed
+
+At **15:58 Asia/Shanghai on 2026-09-29**, App Store Connect visibly confirmed **Waiting for Review** for the existing submission `5cd6c637-8dfd-4771-a91d-2d6e93fe8bc5`, version **1.0.0 (15)**. The eight approved English (U.S.) iPhone 6.9-inch screenshots were uploaded and reordered to match the approved gallery; the saved version page showed all eight in order. Review Notes retained the complete 3,983-character response, and the sent review message retained both physical-device MP4 attachments. Update Review and Resubmit to App Review both completed successfully. No binary was uploaded or replaced.
+
+The manual-release setting was checked before resubmission and remains selected. Approval and public launch have not occurred. Existing iPad images and other locale-specific screenshot sets were not edited. Proof: main `build/app-store/resubmission-15-2026-09-29.png`; screenshot update proof: `english-screenshots-uploaded-2026-09-29.png` in the same ignored directory.

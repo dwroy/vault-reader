@@ -8,9 +8,9 @@ The owner requested richer English store screenshots showing life, family, child
 - A local ignored source snapshot was built for the simulator. Only `EnglishSamples.swift` and the synthetic PDF data in `BookDemoFixtures.swift` differ from that source; a complete tracked-file hash comparison verified this boundary. The simulator build succeeded.
 - The screenshot examples include original English Markdown, HTML, an original five-page PDF story and the existing original leaf illustration. They contain no private vault data or commercial book text. The expanded fixtures are not claimed to be bundled in the submitted app.
 - App interactions and links were checked in the simulator, and every final frame was visually inspected. Native screenshots were converted from opaque RGBA to RGB without retouching the UI, then packaged. This is screenshot preparation, not fresh physical-device acceptance.
-- No binary, feature or screenshot has been uploaded as part of this preview task. Existing iPad store images remain unchanged. The owner has been asked whether to use these eight images before updating the public listing and resubmitting build 15.
+- The owner approved all eight candidates and requested submission. They were uploaded to English (U.S.) iPhone 6.9-inch metadata, and the saved order below was verified after returning to the version page. Existing iPad and other locale-specific images were not edited. No binary or feature was uploaded. The existing build-15 submission was confirmed Waiting for Review on September 29 at 15:58 Asia/Shanghai.
 
-## Suggested gallery order
+## Saved gallery order
 
 1. Knowledge-library Markdown home.
 2. A day in the park: image, highlights and everyday notes.
@@ -29,7 +29,8 @@ All screenshots, previews and fixtures are ignored under main `build/app-store/e
 - `gallery.jpg`: comparison contact sheet only; not a store upload.
 - `index.html`: local interactive gallery with click-to-enlarge.
 - `VaultReader-English-iPhone-Screenshots.zip`: original images, README and manifest.
-- `manifest.json`: image hashes, dimensions and source boundary.
+- `manifest.json`: image hashes, dimensions, source boundary and upload status.
+- `upload/`: approved copies numbered 01 through 08 in the saved gallery order.
 - `fixtures/`: retained source generators and original English documents.
 
 Build log: `build/app-store/english-screenshot-build.log`. The submitted build remains 15. App Review videos are separate private attachments, not public store preview videos.
