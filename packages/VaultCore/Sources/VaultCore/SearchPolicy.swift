@@ -24,15 +24,19 @@ public struct SearchCoverage: Sendable {
 public struct VaultContentProfile: Sendable {
     public let totalFiles: Int
     public let textFiles: Int
-    public var isMostlyNonText: Bool { totalFiles > 0 && (textFiles == 0 || (totalFiles >= 5 && textFiles * 2 < totalFiles)) }
+    public let readableFiles: Int
+    /// A conservative suitability hint: attachments can outnumber the notes they illustrate.
+    public var needsSuitabilityNotice: Bool { totalFiles > 0 && (readableFiles == 0 || (totalFiles >= 5 && readableFiles * 4 < totalFiles)) }
     public init(_ entries: [TreeEntry]) {
         // Configuration folders do not describe the owner's reading material. Count files, not bytes.
         let files = entries.filter { !$0.path.split(separator: "/").contains { $0.hasPrefix(".") } }
         totalFiles = files.count; textFiles = files.filter { SearchFileMetadata.textExtensions.contains($0.ext) }.count
+        // PDF is a native reading format even though its body is not part of text search.
+        readableFiles = textFiles + files.filter { $0.ext == "pdf" }.count
     }
 }
 public struct SearchFileMetadata: Sendable {
-    static let textExtensions: Set<String> = ["md", "markdown", "txt", "text", "html", "htm", "json", "yaml", "yml", "csv", "tsv", "xml", "toml", "ini", "js", "ts", "jsx", "tsx", "swift", "c", "cpp", "h", "cs", "py", "go", "rs", "java", "kt", "lua", "sh", "css", "sql", "rst", "org", "adoc", "tex", "log"]
+    static let textExtensions: Set<String> = ["md", "markdown", "txt", "text", "html", "htm", "json", "yaml", "yml", "csv", "tsv", "xml", "toml", "ini", "js", "ts", "jsx", "tsx", "swift", "c", "cpp", "h", "cs", "py", "go", "rs", "java", "kt", "lua", "sh", "ps1", "psm1", "psd1", "css", "sql", "rst", "org", "adoc", "tex", "log"]
     public let typeLabel: String
     public let mimeType: String
     public let isText: Bool
@@ -51,7 +55,7 @@ public struct SearchFileMetadata: Sendable {
         case "mp3", "wav", "m4a", "aac", "flac", "ogg": category = ("Audio", "audio/" + (ext == "mp3" ? "mpeg" : ext), false)
         case "zip", "7z", "rar", "gz", "tar": category = ("Archive", "application/" + ext, false)
         case "json", "yaml", "yml", "csv", "tsv", "xml", "toml", "ini": category = ("Data file", "text/" + ext, true)
-        case "js", "ts", "jsx", "tsx", "swift", "c", "cpp", "h", "cs", "py", "go", "rs", "java", "kt", "lua", "sh", "css", "sql": category = ("Code", "text/plain", true)
+        case "js", "ts", "jsx", "tsx", "swift", "c", "cpp", "h", "cs", "py", "go", "rs", "java", "kt", "lua", "sh", "ps1", "psm1", "psd1", "css", "sql": category = ("Code", "text/plain", true)
         case "rst", "org", "adoc", "tex", "log": category = ("Text", "text/plain", true)
         default: category = ("File", "application/octet-stream", false)
         }

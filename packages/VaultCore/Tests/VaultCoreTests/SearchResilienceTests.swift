@@ -140,13 +140,27 @@ final class SearchResilienceTests: XCTestCase {
     func testLibraryProfileCountsDocumentsNotAttachmentBytesOrConfigurationFiles() {
         let one = TreeEntry(path: "README.md", sha: "a", size: 10)
         let movie = TreeEntry(path: "film.mp4", sha: "b", size: 10_000_000_000)
-        XCTAssertFalse(VaultContentProfile([one, movie]).isMostlyNonText)
+        XCTAssertFalse(VaultContentProfile([one, movie]).needsSuitabilityNotice)
         let config = (0..<20).map { TreeEntry(path: ".obsidian/\($0).png", sha: String($0), size: 1) }
-        XCTAssertFalse(VaultContentProfile([one] + config).isMostlyNonText)
+        XCTAssertFalse(VaultContentProfile([one] + config).needsSuitabilityNotice)
         let images = (0..<5).map { TreeEntry(path: "photos/\($0).png", sha: String($0), size: 1) }
-        XCTAssertTrue(VaultContentProfile([one] + images).isMostlyNonText)
-        XCTAssertTrue(VaultContentProfile([movie]).isMostlyNonText)
-        XCTAssertFalse(VaultContentProfile([]).isMostlyNonText)
+        XCTAssertTrue(VaultContentProfile([one] + images).needsSuitabilityNotice)
+        XCTAssertTrue(VaultContentProfile([movie]).needsSuitabilityNotice)
+        XCTAssertFalse(VaultContentProfile([]).needsSuitabilityNotice)
+    }
+    func testNoteLibrariesWithAttachmentsAndNativePDFDoNotNeedSuitabilityWarning() {
+        let notes = (0..<40).map { TreeEntry(path: "notes/\($0).md", sha: "note-\($0)", size: 100) }
+        let images = (0..<60).map { TreeEntry(path: "files/\($0).jpeg", sha: "image-\($0)", size: 1000) }
+        let profile = VaultContentProfile(notes + images)
+        XCTAssertFalse(profile.needsSuitabilityNotice, "Illustrations can outnumber notes in a suitable reading vault")
+        XCTAssertEqual(profile.readableFiles, 40)
+        let pdfs = (0..<10).map { TreeEntry(path: "papers/\($0).pdf", sha: "pdf-\($0)", size: 1000) }
+        XCTAssertFalse(VaultContentProfile(pdfs).needsSuitabilityNotice, "Native PDF reading is supported")
+        XCTAssertFalse(VaultContentProfile([notes[0]] + Array(images.prefix(3))).needsSuitabilityNotice, "25 percent is not a clear mismatch")
+        XCTAssertTrue(VaultContentProfile([notes[0]] + images).needsSuitabilityNotice, "A media archive with one README still receives guidance")
+        let script = TreeEntry(path: "scripts/task.PS1", sha: "script", size: 100)
+        XCTAssertEqual(VaultContentProfile([script]).textFiles, 1)
+        XCTAssertTrue(SearchFileMetadata(script).isText)
     }
     func testCachedBlobLimitChecksBeforeReturningOversizedSource() async throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)

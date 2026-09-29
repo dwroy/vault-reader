@@ -11,6 +11,7 @@ final class AppState {
     var library: RepositoryLibrary
     var reading: ReadingStore
     let fileDisplay = FileDisplayPreferences()
+    let vaultNotices = VaultNoticePreferences()
     var visibleEntries: [TreeEntry] { index.entries.filter { fileDisplay.includes($0.path) } }
     var addingRepository = false
     var switchingRepository = false
@@ -67,6 +68,7 @@ final class AppState {
             #if DEBUG
             if ProcessInfo.processInfo.arguments.contains("--demo") {
                 try await startSamples(persist: false)
+                if ProcessInfo.processInfo.arguments.contains("--reset-vault-notice") { vaultNotices.resetSample(for: config) }
                 if ProcessInfo.processInfo.arguments.contains("--reset-reading") { reading.clearDemoProgress() }
                 applyStatusPreview()
                 if ProcessInfo.processInfo.arguments.contains("--search-catalog-preview") { applySearchCatalogPreview() }
@@ -421,7 +423,8 @@ final class AppState {
         guard demo, let note = index.files["README.md"] else { return }
         stopPrefetch()
         let fixtures: [(String, Int)] = [("旅行照片.png", 4096), ("山间照片.jpg", 2048), ("报告.pdf", 9000), ("音乐.mp3", 7000), ("影片.mp4", 12_000), ("巨型笔记.md", 8 * 1024 * 1024)]
-        let entries = fixtures.map { path, size in TreeEntry(path: path, sha: BlobStore.hash(Data(path.utf8)), size: size) }
+        let media = (1...8).map { ("clip-\($0).mp4", 20_000) }
+        let entries = (fixtures + media).map { path, size in TreeEntry(path: path, sha: BlobStore.hash(Data(path.utf8)), size: size) }
         index = VaultIndex([note] + entries); treeSHA = "search-catalog-preview"; startPrefetch()
     }
     func startDemoForTesting(source: (any RepositorySource)? = nil) async throws {

@@ -4112,5 +4112,22 @@
       "zh-Hans": "阅读位置会自动保存在这台设备上。",
       "zh-Hant": "閱讀位置會自動保存在這台設備上。"
     }
+  },
+  "Dismiss for this library": {
+    "scope": "app",
+    "translations": {
+      "en": "Dismiss for this library",
+      "zh-Hans": "不再提示此库",
+      "zh-Hant": "不再提示此庫",
+      "ja": "このライブラリでは再表示しない",
+      "ko": "이 라이브러리에서 다시 표시하지 않기",
+      "es": "No volver a mostrar en esta biblioteca",
+      "pt-BR": "Não mostrar novamente nesta biblioteca",
+      "fr": "Ne plus afficher pour cette bibliothèque",
+      "de": "Für diese Bibliothek nicht mehr anzeigen",
+      "ar": "عدم الإظهار مجددًا لهذه المكتبة",
+      "hi": "इस लाइब्रेरी के लिए फिर न दिखाएँ",
+      "id": "Jangan tampilkan lagi untuk pustaka ini"
+    }
   }
 }

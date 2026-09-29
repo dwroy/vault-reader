@@ -21,7 +21,7 @@ struct SearchView: View {
     }
     var body: some View {
         List {
-            VaultSuitabilityNotice(profile: state.vaultContentProfile, compact: true)
+            VaultSuitabilityNotice(state: state, compact: true)
             Section {
                 DisclosureGroup {
                     Text(L10n.format("Searches names, paths, file types, sizes and SHA. Markdown/TXT up to %1$@ also include text. All words must match.", ByteCountFormatter.string(fromByteCount: Int64(state.searchIndex.limits.sourceBytes), countStyle: .binary)))

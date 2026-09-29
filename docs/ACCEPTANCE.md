@@ -1,5 +1,15 @@
 # M1 acceptance — 2026-09-22
 
+## Suitability guidance false positives and dismissal — 2026-09-29
+
+The owner reported an unsuitable-library notice on a normal notes vault and requested a close control. The previous 50% file-count threshold classified every attachment separately and omitted PowerShell extensions. A local tracked-path audit (no content reads) found **990 visible files, 492 previously recognized text files (49.7%), including 399 Markdown notes and many image attachments**. Sixteen `.ps1` files were also missed. This is the verified reason the old heuristic triggered; it does not mean the vault is unsuitable for reading.
+
+The hint now requires zero recognized readable files, or at least five files with **fewer than 25% readable files**. Recognized text includes PowerShell, and native PDF counts as reading material without enabling PDF body search. The same local path set now has **508 text + 15 PDF = 523 readable files (52.8%)**, so it no longer triggers. This remains an extension/count heuristic, not a content or attachment-reference analysis; the more conservative threshold reduces false positives for illustrated notes.
+
+Both Directory and Search have a 44-point **Dismiss for this library** close button. Dismissal takes effect in both places immediately and persists across refresh/relaunch for that repository/provider/branch on this device. Other vaults and sample mode have separate preferences. The debug reset hook only clears the current sample scope for deterministic UI tests. Closing guidance does not change file visibility, search coverage or connection settings.
+
+Validation: **47 core tests passed**, including an illustrated notes library, PDF-only library, PowerShell recognition, threshold boundary and a media library with one README. **4 hosted + 4 simulator UI checks passed** in `VaultNoticeDismissalFinal.xcresult`: preference persistence/isolation, cross-tab dismissal, restart persistence, closing the compact notice without expansion, and metadata/oversized-file search. **243 localization keys / 12 languages** passed generated-resource checks. Exported screenshots were inspected. The initial UI run exposed a Section identifier overriding the close button's accessibility identifier; removing that inherited identifier fixed the final runs. Evidence is in ignored `.worktrees/search-polish/build/vault-notice-*` and the result bundle. No fresh physical-device interaction is claimed for this fix; the phone was unavailable during delivery preparation.
+
 ## Bounded search and metadata coverage — 2026-09-29
 
 The owner approved separation of preparation from queries, bounded body work/memory and progress refresh that cannot starve typed queries, plus metadata-only search for unsupported/oversized files and suitability guidance. These changes belong to the next unreleased batch; submitted **1.0.0 (15)** is unchanged.

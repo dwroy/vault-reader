@@ -7,7 +7,7 @@ struct DirView: View {
     var body: some View {
         List {
             if path.isEmpty {
-                VaultSuitabilityNotice(profile: state.vaultContentProfile)
+                VaultSuitabilityNotice(state: state)
                 Section { Text("\(state.config.owner) / \(state.config.repo)").font(.subheadline).foregroundStyle(.secondary) } footer: { Text(L10n.format("Files: %1$ld · %2$@", state.visibleEntries.count, state.config.branch)) }
             }
             ForEach(state.index.children(of: path).filter { state.fileDisplay.includes($0.path) }) { item in
