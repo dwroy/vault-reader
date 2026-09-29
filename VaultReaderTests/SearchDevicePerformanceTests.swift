@@ -86,17 +86,17 @@ final class SearchDevicePerformanceTests: XCTestCase {
         let large = [1, 8].map { TreeEntry(path: "large-\($0)MiB.md", sha: "large-\($0)", size: $0 * 1024 * 1024) }
         return Corpus(entries: bodies.map(\.0) + images + large, bodies: bodies)
     }
-    @MainActor private func phase(_ name: String, engine: SearchIndex, work: @escaping @Sendable () async throws -> Void) async throws -> Phase {
+    @MainActor private func phase(_ name: String, engine: SearchIndex, requiresReadyMarker: Bool = true, work: @escaping @Sendable () async throws -> Void) async throws -> Phase {
         let sampler = Sampler(); sampler.start()
         let start = ContinuousClock.now, before = SearchDevicePerformanceTests.usage(), initialFootprint = SearchDevicePerformanceTests.footprint()
         let queries = Task.detached(priority: .userInitiated) { () throws -> [Double] in
             var values: [Double] = []
-            let terms = ["ready", "公园 慢慢", "图片", "absent-query-marker"]
+            let terms = requiresReadyMarker ? ["ready", "公园 慢慢", "图片", "absent-query-marker"] : ["md", "的", "text", "absent-query-marker"]
             while !Task.isCancelled {
                 let tick = ContinuousClock.now
                 do {
                     let hits = try await engine.searchResults(terms[values.count % terms.count])
-                    if values.count % terms.count == 0 && !hits.hits.contains(where: { $0.path == "ready.md" }) {
+                    if requiresReadyMarker && values.count % terms.count == 0 && !hits.hits.contains(where: { $0.path == "ready.md" }) {
                         throw NSError(domain: "SearchBenchmark", code: 1, userInfo: [NSLocalizedDescriptionKey: "Existing ready result disappeared during preparation"])
                     }
                     values.append(SearchDevicePerformanceTests.milliseconds(tick.duration(to: .now)))
@@ -186,6 +186,49 @@ final class SearchDevicePerformanceTests: XCTestCase {
         let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
         attachment.name = "device-search-performance"; attachment.lifetime = .keepAlways; add(attachment)
         print("SEARCH_DEVICE_PERFORMANCE " + String(decoding: data, as: UTF8.self))
+    }
+    /// Reads only already-cached source blobs. No credentials, network, source deletion or content output.
+    @MainActor func testExistingVaultCachedSourcePerformance() async throws {
+        guard ProcessInfo.processInfo.environment["VR_RUN_EXISTING_VAULT_BENCHMARK"] == "1" else {
+            throw XCTSkip("Opt in separately to benchmark the saved vault's existing local source cache")
+        }
+        guard let saved = UserDefaults.standard.data(forKey: "repository"),
+              let config = try? JSONDecoder().decode(RepositoryConfig.self, from: saved) else { throw XCTSkip("No saved repository") }
+        let sourceRoot = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("VaultReader").appendingPathComponent(MetaStore.key(config.identity))
+        let meta = try MetaStore(root: sourceRoot.appendingPathComponent("meta").appendingPathComponent(MetaStore.key(config.branch)))
+        guard let tree = try await meta.read("tree", as: GitTree.self), !tree.truncated else { throw XCTSkip("No complete cached tree") }
+        let files = VaultIndex(tree.tree).entries, blobs = try BlobStore(root: sourceRoot.appendingPathComponent("blobs"))
+        let derived = FileManager.default.temporaryDirectory.appendingPathComponent("ExistingVaultBenchmark-" + UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: derived) }
+        var phases: [Phase] = []
+        do {
+            let engine = SearchIndex(cacheDirectory: derived)
+            await engine.update(files, preferredPath: config.home)
+            let candidates = await engine.bodyCandidates(preferredPath: config.home)
+            phases.append(try await phase("existing-vault-cached-source-cold", engine: engine, requiresReadyMarker: false) {
+                for entry in candidates {
+                    guard await engine.needsBody(for: entry) else { continue }
+                    do {
+                        if let data = try await blobs.data(for: entry.sha, maximumBytes: engine.limits.sourceBytes) { await engine.insert(data: data, for: entry) }
+                    } catch VaultError.tooLarge { await engine.excludeOversized(entry) }
+                    catch { continue }
+                }
+            })
+        }
+        do {
+            let engine = SearchIndex(cacheDirectory: derived); await engine.update(files, preferredPath: config.home)
+            let candidates = await engine.bodyCandidates(preferredPath: config.home)
+            phases.append(try await phase("existing-vault-temporary-derived-restore", engine: engine, requiresReadyMarker: false) {
+                for entry in candidates { _ = await engine.restoreCachedText(for: entry) }
+            })
+            phases.append(try await phase("existing-vault-ready-search-3-seconds", engine: engine, requiresReadyMarker: false) { try await Task.sleep(for: .seconds(3)) })
+        }
+        let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        let data = try encoder.encode(phases)
+        let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        attachment.name = "existing-cached-vault-performance-counts-only"; attachment.lifetime = .keepAlways; add(attachment)
+        print("EXISTING_VAULT_PERFORMANCE " + String(decoding: data, as: UTF8.self))
     }
     private let initialThermalState = ProcessInfo.processInfo.thermalState.rawValue
 }
