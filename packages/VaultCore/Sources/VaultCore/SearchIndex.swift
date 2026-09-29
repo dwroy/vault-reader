@@ -78,7 +78,7 @@ public actor SearchIndex {
         self.limits = limits; worker = SearchPreparationWorker(cacheDirectory: cacheDirectory)
     }
     private nonisolated static func detached<T: Sendable>(_ operation: @escaping @Sendable () throws -> T) async throws -> T {
-        let task = Task.detached(priority: .userInitiated, operation: operation)
+        let task = Task.detached(priority: .userInitiated) { try autoreleasepool(invoking: operation) }
         return try await withTaskCancellationHandler { try await task.value } onCancel: { task.cancel() }
     }
     public func update(_ files: [TreeEntry], preferredPath: String = "") async {

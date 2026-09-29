@@ -13,6 +13,8 @@ final class SearchDevicePerformanceTests: XCTestCase {
         let wallMS: Double
         let cpuMS: Double
         let averageCPUPercent: Double
+        let startFootprintMiB: Double
+        let endFootprintMiB: Double
         let sampledPeakFootprintMiB: Double
         let processPeakRSSMiB: Double
         let mainActorGapP95MS: Double
@@ -86,7 +88,7 @@ final class SearchDevicePerformanceTests: XCTestCase {
     }
     @MainActor private func phase(_ name: String, engine: SearchIndex, work: @escaping @Sendable () async throws -> Void) async throws -> Phase {
         let sampler = Sampler(); sampler.start()
-        let start = ContinuousClock.now, before = SearchDevicePerformanceTests.usage()
+        let start = ContinuousClock.now, before = SearchDevicePerformanceTests.usage(), initialFootprint = SearchDevicePerformanceTests.footprint()
         let queries = Task.detached(priority: .userInitiated) { () throws -> [Double] in
             var values: [Double] = []
             let terms = ["ready", "公园 慢慢", "图片", "absent-query-marker"]
@@ -109,7 +111,7 @@ final class SearchDevicePerformanceTests: XCTestCase {
         let coverage = await engine.coverage, diagnostics = await engine.diagnostics
         return Phase(name: name, wallMS: wall, cpuMS: after.cpu - before.cpu,
                      averageCPUPercent: (after.cpu - before.cpu) / max(wall, 1) * 100,
-                     sampledPeakFootprintMiB: sampler.peak, processPeakRSSMiB: after.rss,
+                     startFootprintMiB: initialFootprint, endFootprintMiB: SearchDevicePerformanceTests.footprint(), sampledPeakFootprintMiB: sampler.peak, processPeakRSSMiB: after.rss,
                      mainActorGapP95MS: SearchDevicePerformanceTests.percentile(sampler.gaps, 0.95), mainActorGapMaxMS: sampler.gaps.max() ?? 0,
                      queries: latency.count, queryP50MS: SearchDevicePerformanceTests.percentile(latency, 0.5), queryP95MS: SearchDevicePerformanceTests.percentile(latency, 0.95), queryMaxMS: latency.max() ?? 0,
                      indexed: coverage.indexed, metadataOnly: coverage.metadataOnly, pending: coverage.pending,

@@ -18,9 +18,13 @@ actor SearchPreparationWorker {
     }
     func restore(_ entry: TreeEntry, limits: SearchLimits, revision: Int) -> SearchPreparationResult {
         guard !Task.isCancelled, revision == self.revision, let kind = entry.searchTextKind else { return .missing }
-        return cache?.restore(sha: entry.sha, kind: kind, limits: limits) ?? .missing
+        return autoreleasepool { cache?.restore(sha: entry.sha, kind: kind, limits: limits) ?? .missing }
     }
     func prepare(_ data: Data, entry: TreeEntry, limits: SearchLimits, revision: Int) -> SearchPreparationResult {
+        // Drain Foundation parser/plist temporaries at the document boundary, even on a busy executor.
+        autoreleasepool { prepareDocument(data, entry: entry, limits: limits, revision: revision) }
+    }
+    private func prepareDocument(_ data: Data, entry: TreeEntry, limits: SearchLimits, revision: Int) -> SearchPreparationResult {
         guard !Task.isCancelled, revision == self.revision, let kind = entry.searchTextKind else { return .missing }
         if data.count > limits.sourceBytes { return exclude(entry, reason: .tooLarge, limit: limits.sourceBytes, revision: revision) }
         guard let source = String(data: data, encoding: .utf8) else { return exclude(entry, reason: .encoding, limit: 0, revision: revision) }
