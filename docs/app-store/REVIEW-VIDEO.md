@@ -2,13 +2,17 @@
 
 This checklist responds to Apple's 2026-09-29 Guideline 2.1 request. It concerns the frozen **1.0.0 (15)** submission, binary source `975aa4e`, not later development features.
 
-## Current preparation
+## Recorded evidence and submission
 
-- The original main archive was signature-verified with Wei Dong's personal team DPK7SSB889 and installed in place on the connected iPhone 17. The installed-app query confirms 1.0.0 (15). No uninstall or data deletion was performed.
-- The connected phone reports iOS **26.6.1**. Apple's current release page lists iOS **27.0.1**, released September 28. Apple's rejection specifically requests the latest OS; the owner has been asked to complete the system update. No latest-OS compliance or finished recording is claimed yet.
-- The paired iPad is unavailable. Its new physical-device QA remains outstanding.
-- Review Notes cover items 2–6 and explicitly mark the video pending. `review-response-draft.txt` is not ready to send until the actual video and device details are added.
-- Private device logs, screenshots and videos belong under ignored `build/app-store/`, never in Git.
+- The original archive (source `975aa4e`) was signature-verified with Wei Dong's personal team DPK7SSB889 and installed in place, preserving app data. Fresh CoreDevice queries confirm **iPhone 17 / iOS 27.0.1 (24A446)** and **1.0.0 (15)**.
+- The owner performed all phone gestures. QuickTime captured the physical device through **Screen → Roy**. No simulator, synthetic animation or automated touch is represented as physical evidence.
+- Two reviewed clips were attached to the App Review reply sent **2026-09-29 at 15:16 Asia/Shanghai**. The sent message visibly lists both attachments. The six-part response was also saved in Review Notes (under 4,000 characters). Build 15 is still selected. No new binary was uploaded.
+- `VaultReader-15-physical-demo.mp4`: **54 seconds**, **720×1566**, H.264, 30 fps, **4,853,601 bytes**, no audio. It opens from the Home Screen and shows sample Markdown/wikilinks, interactive HTML and offline Privacy.
+- `VaultReader-15-reading-search-pdf.mp4`: **110 seconds**, same format, **7,327,448 bytes**, no audio. It shows sample library switching, reading list/contents, search, Markdown and its local image, relaunch, and native PDF page navigation.
+- Each video is a continuous excerpt with the original action order preserved. Main uses seconds 0–54 of the second recording; supplement uses seconds 50–160 of the first. No segments were reordered or fabricated.
+- The first raw capture later switches into unrelated private content. That tail and the second capture's unrelated system-settings tail are excluded. **Never upload either raw recording or private contact sheets.** Only the two named MP4 files are approved evidence candidates.
+- All media and device evidence remain under ignored main `build/app-store/`. The recordings do not establish a fresh live private-repository sync, share transfer, or PDF close/reopen resume pass. The paired iPad was unavailable; its new physical QA remains outstanding. Earlier simulator coverage is separate.
+- The owner requested richer English store screenshots after the reply was sent. Those are a separate public-facing preview task. Continued review/resubmission has not yet been requested; the submission still shows Unresolved Issues.
 
 ## Recording preparation
 

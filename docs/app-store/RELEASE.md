@@ -62,7 +62,7 @@ Detailed evidence is in `docs/ACCEPTANCE.md`. Completed development checks inclu
 
 At the build-15 release-validation checkpoint, the owner's physical phone was unavailable and build 14 was the last confirmed installed/launched app. Later development-device installations are recorded in `docs/ACCEPTANCE.md` and belong to the next-release batch; they do not extend the frozen build-15 acceptance. Simulator coverage and install/launch checks do not establish fresh private-repository synchronization, offline recovery, physical touch or attachment transfer.
 
-Final integration, archive/distribution checks, upload, processing and primary store language are complete. Build 15 remains selected. The first submission was rejected under Guideline 2.1 for supplemental information. The written explanation is prepared; the latest-OS physical-device video and QA remain pending. Review approval and manual public release have not occurred.
+Final integration, archive/distribution checks, upload, processing and primary store language are complete. Build 15 remains selected. The first submission was rejected under Guideline 2.1 for supplemental information. The six-part explanation and two latest-OS physical-device sample videos were delivered to Apple on September 29. Physical iPad and fresh private-network acceptance remain outstanding. Review approval and manual public release have not occurred.
 
 ## Official references checked
 
@@ -86,4 +86,12 @@ Final integration, archive/distribution checks, upload, processing and primary s
 
 Apple's message is “Guideline 2.1 — Information Needed — New App Submission.” The account has limited review history. The requested physical-device recording must begin with launching the app and show its typical flow on the latest OS. The other five items are purpose/audience, setup/access, external services, regional differences and relevant authorizations.
 
-The submitted binary and selected build remain frozen at **1.0.0 (15)**. Review Notes were expanded with the factual response, leaving the video explicitly pending. The unsent reply draft and recording checklist are `review-response-draft.txt` and `REVIEW-VIDEO.md`. The original build 15 was installed on the owner's connected iPhone; it currently reports iOS 26.6.1, while Apple's latest public release is 27.0.1. The owner has been asked to update before recording. No new binary upload, replacement, complete response or resubmission is claimed. iPad physical QA is still outstanding.
+The submitted binary and selected build remain frozen at **1.0.0 (15)**. Review Notes were expanded with the factual response, leaving the video explicitly pending. The unsent reply draft and recording checklist are `review-response-draft.txt` and `REVIEW-VIDEO.md`. The original build 15 was installed on the owner's connected iPhone. After the owner updated it, fresh queries confirm iOS 27.0.1 and app build 15. QuickTime screen capture is configured; the physical sample-only demonstration remains to be recorded. No new binary upload, replacement, complete response or resubmission is claimed. iPad physical QA is still outstanding.
+
+
+### Supplemental response delivered
+
+On **2026-09-29 at 15:16 Asia/Shanghai**, the six-part response and two reviewed physical-iPhone clips were sent privately in App Review. Both attachment filenames were verified in the sent message. Review Notes were saved with the completed information. See `REVIEW-VIDEO.md` for clip provenance, demonstrated flows and acceptance limits. Raw recordings are not uploadable because they contain unrelated tails; only the reviewed MP4 excerpts were supplied. **Build 15 remains selected; no binary replacement or upload occurred.** The submission still shows Unresolved Issues, and review resubmission is not yet claimed. The owner has requested richer English store screenshot previews before the next metadata decision.
+
+
+Eight richer English iPhone screenshot candidates are complete and available for owner review; see `SCREENSHOTS.md`. They show actual frozen-release UI with original local screenshot documents. The public store has not been updated with these candidates, and resubmission remains pending the image decision. No build replacement is authorized or required for this media work.

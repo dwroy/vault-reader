@@ -1,14 +1,17 @@
 Guideline 2.1 supplemental information — Vault Reader 1.0.0 (15)
 
 1. PHYSICAL-DEVICE RECORDING
-The requested recording is being prepared and has not yet been supplied. We will add the recording and actual device/OS details before requesting continued review. Physical-device QA is not yet claimed complete.
+Two attached recordings show physical iPhone 17 / iOS 27.0.1 (24A446), running 1.0.0 (15), with original samples:
+- VaultReader-15-physical-demo.mp4 (54s): Home Screen app launch, Markdown links, interactive HTML and Privacy.
+- VaultReader-15-reading-search-pdf.mp4 (110s): reading list, local search, Markdown/image and native PDF navigation.
+These are continuous excerpts, re-encoded without audio; no actions were reordered.
 
 2. PURPOSE AND AUDIENCE
-Vault Reader is a free, native, read-only iPhone/iPad reader for people who keep Markdown notes, HTML reports and PDF reading material in GitHub or GitLab. It serves students, researchers, developers and other knowledge workers, and is available to the general public. It provides mobile browsing, local search, offline access to cached files and on-device reading resume. It is not restricted to a business or organization.
+Vault Reader is a free, native, read-only iPhone/iPad reader for people who keep Markdown notes, HTML reports and PDF reading material in GitHub or GitLab. It serves students, researchers, developers and other knowledge workers in the general public. It provides mobile browsing, local search, offline access to cached files and on-device reading resume. It is not restricted to a business or organization.
 
 3. ACCESS AND MAIN FEATURES
-No Vault Reader account, registration, app login, purchase or subscription is required. The public sample library is included in the submitted Release build and uses original synthetic documents.
-English review steps:
+No app account, registration, login, purchase or subscription is required. Original synthetic samples are included in the submitted Release build.
+Review steps (English):
 - Launch and tap Try sample library. If a repository is already open, use Files > upper-right menu > Settings > Try sample library.
 - In Files, open README.md and follow links to Guide.md or Notes/A day in the park.md for Markdown, wikilinks and a local image.
 - Open Reader.html and tap Next page for interactive HTML and local page persistence.
@@ -17,13 +20,13 @@ English review steps:
 - Files > menu > Settings provides offline help/privacy and Leave sample library. The sample session persists after relaunch.
 Chinese labels: 体验示例知识库, 目录, 阅读, 夜航手记, 退出示例知识库.
 
-Optional live connection: enter GitHub owner/repository/branch and a read-only token in Settings, or a GitLab HTTPS server/namespace/project/branch with read_api access; tap Save & verify. Tokens stay in the device Keychain, outside web content. These are existing third-party accounts; Vault Reader does not create accounts or use OAuth. Remove local token disconnects app access while retaining local files; revoke access at the provider. No personal repository credentials are supplied to reviewers.
+Optional live connection: enter GitHub owner/repository/branch and a read-only token in Settings, or a GitLab HTTPS server/namespace/project/branch with read_api access; tap Save & verify. Tokens stay in the device Keychain, outside web content. These are existing third-party accounts; Vault Reader does not create accounts or use OAuth. Remove local token disconnects app access while retaining local files; revoke access at the provider. Review uses samples without credentials.
 
 4. EXTERNAL SERVICES AND AI
-Live connections use GitHub REST API or GitLab REST API, including a user-selected HTTPS GitLab server. No developer-operated backend, analytics, advertising, payment processor or AI API is used. AI Native describes reading files that external desktop tools such as Claude Code or Codex may help users organize; those tools are optional and not integrated services. Rendering libraries/fonts are bundled, not fetched from a CDN. User-selected HTML/external images may contact their own remote resources; explicit external links open the system browser.
+Live connections use GitHub REST API or GitLab REST API, including a user-selected HTTPS GitLab server. No developer-operated backend, analytics, advertising, payment processor or AI API is used. AI Native describes reading files that external desktop tools such as Claude Code or Codex may help users organize; those tools are optional and not integrated services. Rendering libraries/fonts are bundled. User-selected HTML/external images may contact their own remote resources; explicit external links open the system browser.
 
 5. REGIONS AND BUSINESS MODEL
 Core functionality is consistent across the 147 selected countries/regions. China mainland and the 27 EU countries are excluded initially. The interface follows iOS language preferences (12 languages, English fallback); documents retain their original language. Full help/privacy and examples are English/Chinese. No ads, paid features, purchases or subscriptions exist in any region.
 
 6. CONTENT AND AUTHORIZATION
-The app provides no regulated services or commercial book/media catalog. Bundled samples are original synthetic works. Users select repositories they are authorized to access. Documents can be user-authored, but the app has no hosted posting, public feed, chat or user interaction; it has no in-app reporting/blocking controls. Sharing uses the system share sheet. Bundled open-source components retain their licenses in renderer/vendor/THIRD-PARTY-NOTICES.txt. GitHub/GitLab/AI tool references do not imply affiliation.
+No regulated services or commercial book/media catalog are provided. Samples are original. Users select repositories they are authorized to access. Documents can be user-authored, but the app has no hosted posting, public feed, chat or user interaction; it has no in-app reporting/blocking controls. Sharing uses the system share sheet. Bundled open-source components retain their licenses in renderer/vendor/THIRD-PARTY-NOTICES.txt. GitHub/GitLab/AI tool references do not imply affiliation.
