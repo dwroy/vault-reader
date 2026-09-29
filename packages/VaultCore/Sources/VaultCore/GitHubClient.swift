@@ -7,11 +7,11 @@ public actor GitHubClient: RepositorySource {
     public init(config: RepositoryConfig, token: String, session: URLSession? = nil) {
         self.config = config; self.token = token; http = RepositoryHTTP(session: session)
     }
-    func request(_ components: [String], query: [URLQueryItem] = [], etag: String? = nil, raw: Bool = false, progress: (@Sendable (Double) -> Void)? = nil) async throws -> (Data, HTTPURLResponse) {
+    func request(_ components: [String], query: [URLQueryItem] = [], etag: String? = nil, raw: Bool = false, maximumBytes: Int = BlobStore.maximumFileBytes, progress: (@Sendable (Double) -> Void)? = nil) async throws -> (Data, HTTPURLResponse) {
         var url = URLComponents(string: "https://api.github.com")!
         url.percentEncodedPath = "/" + (["repos", config.owner, config.repo] + components).map(RepositoryHTTP.encode).joined(separator: "/")
         if !query.isEmpty { url.queryItems = query }
-        return try await http.get(url.url!, headers: ["Authorization": "Bearer " + token, "Accept": raw ? "application/vnd.github.raw+json" : "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"], etag: etag, raw: raw, progress: progress)
+        return try await http.get(url.url!, headers: ["Authorization": "Bearer " + token, "Accept": raw ? "application/vnd.github.raw+json" : "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"], etag: etag, raw: raw, maximumBytes: maximumBytes, progress: progress)
     }
     public func branch(etag: String?) async throws -> BranchSnapshot? {
         let (data, response) = try await request(["branches", config.branch], etag: etag)
@@ -27,11 +27,14 @@ public actor GitHubClient: RepositorySource {
         return tree
     }
     public func blob(_ entry: TreeEntry, progress: (@Sendable (Double) -> Void)? = nil) async throws -> Data {
-        guard (entry.size ?? 0) <= BlobStore.maximumFileBytes else { throw VaultError.tooLarge }
-        let (data, _) = try await request(["git", "blobs", entry.sha], raw: true, progress: progress)
-        guard data.count <= BlobStore.maximumFileBytes else { throw VaultError.tooLarge }
-        return data
+        try await blob(entry, maximumBytes: BlobStore.maximumFileBytes, progress: progress)
     }
+    public func blob(_ entry: TreeEntry, maximumBytes: Int, progress: (@Sendable (Double) -> Void)? = nil) async throws -> Data {
+        let limit = max(0, min(maximumBytes, BlobStore.maximumFileBytes))
+        guard (entry.size ?? 0) <= limit else { throw VaultError.tooLarge }
+        return try await request(["git", "blobs", entry.sha], raw: true, maximumBytes: limit, progress: progress).0
+    }
+
     public func recent(etag: String?) async throws -> RecentSnapshot? {
         let (data, response) = try await request(["commits"], query: [.init(name: "sha", value: config.branch), .init(name: "per_page", value: "30")], etag: etag)
         if response.statusCode == 304 { return nil }

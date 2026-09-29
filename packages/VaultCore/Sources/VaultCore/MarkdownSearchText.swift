@@ -15,31 +15,39 @@ enum MarkdownSearchText {
     private static func replace(_ regex: NSRegularExpression, in text: String, with value: String) -> String {
         regex.stringByReplacingMatches(in: text, range: NSRange(text.startIndex..., in: text), withTemplate: value)
     }
-    static func plain(_ markdown: String) -> String {
+    static func plain(_ markdown: String) -> String { (try? plainCancellable(markdown)) ?? "" }
+    static func plainCancellable(_ markdown: String) throws -> String {
+        try Task.checkCancellation()
         let source = replace(frontmatter, in: markdown, with: "")
         var prepared = "", cursor = source.startIndex
         for match in literalOrComment.matches(in: source, range: NSRange(source.startIndex..., in: source)) {
+            try Task.checkCancellation()
             guard let range = Range(match.range, in: source) else { continue }
-            prepared += prose(String(source[cursor..<range.lowerBound]))
+            prepared += try prose(String(source[cursor..<range.lowerBound]))
             if match.range(at: 1).location != NSNotFound || match.range(at: 2).location != NSNotFound { prepared += source[range] }
             cursor = range.upperBound
         }
-        prepared += prose(String(source[cursor...]))
+        prepared += try prose(String(source[cursor...]))
+        try Task.checkCancellation()
         guard let parsed = try? AttributedString(markdown: prepared) else { return prepared }
+        try Task.checkCancellation()
         var result = "", block: Int?
         for run in parsed.runs {
+            try Task.checkCancellation()
             let next = run.presentationIntent?.components.first?.identity
             if next != block, !result.isEmpty { result += "\n" }
             result += String(parsed[run.range].characters); block = next
         }
         return result.split(whereSeparator: \.isWhitespace).joined(separator: " ")
     }
-    private static func prose(_ source: String) -> String {
+    private static func prose(_ source: String) throws -> String {
+        try Task.checkCancellation()
         var text = replace(comments, in: source, with: "")
         text = replace(forbiddenHTML, in: text, with: "")
         text = replace(blockHTML, in: text, with: "\n")
         text = replace(html, in: text, with: "")
         for match in wiki.matches(in: text, range: NSRange(text.startIndex..., in: text)).reversed() {
+            try Task.checkCancellation()
             guard let range = Range(match.range, in: text), let inner = Range(match.range(at: 1), in: text) else { continue }
             let parts = text[inner].split(separator: "|", maxSplits: 1, omittingEmptySubsequences: false)
             let label = String(parts.count > 1 && !parts[1].isEmpty ? parts[1] : parts[0])

@@ -28,6 +28,8 @@ final class AppState {
     var recentError: String?
     var loadingRecent = false
     var searchRevision = 0
+    var searchCoverage = SearchCoverage()
+    var vaultContentProfile = VaultContentProfile([])
     var prefetchCompleted = 0
     var prefetchTotal = 0
     var isPrefetching = false
@@ -67,6 +69,7 @@ final class AppState {
                 try await startSamples(persist: false)
                 if ProcessInfo.processInfo.arguments.contains("--reset-reading") { reading.clearDemoProgress() }
                 applyStatusPreview()
+                if ProcessInfo.processInfo.arguments.contains("--search-catalog-preview") { applySearchCatalogPreview() }
                 return
             }
             #endif
@@ -95,7 +98,7 @@ final class AppState {
         stopPrefetch()
         epoch = UUID(); isRefreshing = false; libraryStatus = nil
         index = VaultIndex(); treeSHA = ""; blobs = nil; meta = nil; snapshot = nil
-        searchIndex = SearchIndex(); prefetchCompleted = 0; prefetchTotal = 0
+        searchIndex = SearchIndex(); searchCoverage = SearchCoverage(); vaultContentProfile = VaultContentProfile([]); prefetchCompleted = 0; prefetchTotal = 0
         recentRequest = UUID(); loadingRecent = false; recentError = nil; recent = []
         let root = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
             .appendingPathComponent(demo ? "VaultReaderSamples" : "VaultReader").appendingPathComponent(MetaStore.key(config.identity))
@@ -236,54 +239,74 @@ final class AppState {
         prefetchTask?.cancel(); prefetchTask = nil; isPrefetching = false
     }
     private func publishSearchProgress(_ engine: SearchIndex, generation: UUID) async -> Bool {
-        let completed = await engine.count
+        let coverage = await engine.coverage, profile = await engine.profile
         guard generation == epoch, !Task.isCancelled else { return false }
-        prefetchCompleted = completed; searchRevision += 1
+        searchCoverage = coverage; vaultContentProfile = profile; prefetchCompleted = coverage.indexed; prefetchTotal = coverage.indexed + coverage.pending; searchRevision += 1
         return true
     }
     func startPrefetch() {
         guard !isPrefetching else { return }
-        let generation = epoch, entries = index.entries, engine = searchIndex, sourceBlobs = blobs
-        let markdown = entries.filter(\.isMarkdown).sorted { a, b in
-            if (a.path == config.home) != (b.path == config.home) { return a.path == config.home }
-            return a.path < b.path
-        }
-        prefetchTotal = markdown.count; prefetchError = nil; isPrefetching = true
-        prefetchTask = Task {
+        let generation = epoch, entries = index.entries, engine = searchIndex, sourceBlobs = blobs, sourceClient = client
+        let preferredPath = config.home
+        prefetchError = nil; isPrefetching = true
+        prefetchTask = Task(priority: .utility) {
             defer { if generation == epoch && !Task.isCancelled { isPrefetching = false; prefetchTask = nil } }
-            await engine.update(entries)
+            await engine.update(entries, preferredPath: preferredPath)
             guard await publishSearchProgress(engine, generation: generation) else { return }
+            let markdown = await engine.bodyCandidates(preferredPath: preferredPath)
+            var lastProgress = ContinuousClock.now
             var unprepared: [TreeEntry] = [], missing: [TreeEntry] = []
             // Restore every reusable projection before reading/parsing blobs or making a network request.
             for (offset, entry) in markdown.enumerated() {
                 guard generation == epoch, !Task.isCancelled else { return }
-                if !(await engine.restoreCachedText(for: entry)) { unprepared.append(entry) }
-                if offset % 32 == 31, !(await publishSearchProgress(engine, generation: generation)) { return }
+                if !(await engine.restoreCachedText(for: entry)), await engine.needsBody(for: entry) { unprepared.append(entry) }
+                if offset % 32 == 31 || lastProgress.duration(to: .now) >= .milliseconds(150) {
+                    guard await publishSearchProgress(engine, generation: generation) else { return }
+                    lastProgress = .now
+                    if searchCoverage.pending == 0 { break }
+                }
             }
             guard await publishSearchProgress(engine, generation: generation) else { return }
             // A cache miss, schema change or corrupt projection rebuilds from the verified local blob.
             for (offset, entry) in unprepared.enumerated() {
                 guard generation == epoch, !Task.isCancelled else { return }
                 // Another path with the same SHA may have just prepared this document.
-                if await engine.restoreCachedText(for: entry) { continue }
-                if let data = try? await sourceBlobs?.data(for: entry.sha), let text = String(data: data, encoding: .utf8) {
-                    await engine.insert(text, for: entry)
-                } else { missing.append(entry) }
-                if offset % 32 == 31, !(await publishSearchProgress(engine, generation: generation)) { return }
+                if !(await engine.needsBody(for: entry)) {
+                    if await engine.coverage.pending == 0 { break }
+                    continue
+                }
+                do {
+                    if let data = try await sourceBlobs?.data(for: entry.sha, maximumBytes: engine.limits.sourceBytes) {
+                        await engine.insert(data: data, for: entry)
+                    } else { missing.append(entry) }
+                } catch VaultError.tooLarge { await engine.excludeOversized(entry) }
+                catch { missing.append(entry) }
+                if offset % 32 == 31 || lastProgress.duration(to: .now) >= .milliseconds(150) {
+                    guard await publishSearchProgress(engine, generation: generation) else { return }
+                    lastProgress = .now
+                    if searchCoverage.pending == 0 { break }
+                }
             }
             guard await publishSearchProgress(engine, generation: generation) else { return }
             for entry in missing {
                 do {
                     try Task.checkCancellation()
-                    if await engine.restoreCachedText(for: entry) { continue }
-                    let data = try await file(entry.path)
+                    if !(await engine.needsBody(for: entry)) {
+                        if await engine.coverage.pending == 0 { break }
+                        continue
+                    }
+                    guard let sourceClient, let sourceBlobs else { throw VaultError.noToken }
+                    let data = try await sourceClient.blob(entry, maximumBytes: engine.limits.sourceBytes, progress: nil)
                     try Task.checkCancellation()
                     guard generation == epoch else { return }
-                    guard let text = String(data: data, encoding: .utf8) else { throw CocoaError(.fileReadInapplicableStringEncoding) }
-                    await engine.insert(text, for: entry)
+                    try await sourceBlobs.put(data, entry: entry)
+                    await engine.insert(data: data, for: entry)
                     guard await publishSearchProgress(engine, generation: generation) else { return }
                 } catch is CancellationError { return }
-                catch {
+                catch VaultError.tooLarge {
+                    await engine.excludeOversized(entry)
+                    guard await publishSearchProgress(engine, generation: generation) else { return }
+                } catch {
                     guard generation == epoch, !Task.isCancelled else { return }
                     prefetchError = error.localizedDescription
                     // File-specific failures must not prevent the remaining documents from being indexed.
@@ -291,12 +314,17 @@ final class AppState {
                     if let failure = error as? VaultError {
                         switch failure {
                         case .missing, .tooLarge, .corruptBlob: continue
-                        default: return
+                        default:
+                            handle(failure)
+                            _ = await publishSearchProgress(engine, generation: generation)
+                            return
                         }
                     }
                     if (error as NSError).domain != NSCocoaErrorDomain { return }
                 }
             }
+            _ = await publishSearchProgress(engine, generation: generation)
+            if generation == epoch, !Task.isCancelled { await updateUsage() }
         }
     }
     func loadRecent() async {
@@ -387,6 +415,14 @@ final class AppState {
         case "healthy": libraryStatus = nil
         default: break
         }
+    }
+    /// Synthetic tree-only entries exercise metadata search without downloading attachments.
+    private func applySearchCatalogPreview() {
+        guard demo, let note = index.files["README.md"] else { return }
+        stopPrefetch()
+        let fixtures: [(String, Int)] = [("旅行照片.png", 4096), ("山间照片.jpg", 2048), ("报告.pdf", 9000), ("音乐.mp3", 7000), ("影片.mp4", 12_000), ("巨型笔记.md", 8 * 1024 * 1024)]
+        let entries = fixtures.map { path, size in TreeEntry(path: path, sha: BlobStore.hash(Data(path.utf8)), size: size) }
+        index = VaultIndex([note] + entries); treeSHA = "search-catalog-preview"; startPrefetch()
     }
     func startDemoForTesting(source: (any RepositorySource)? = nil) async throws {
         try await startSamples(persist: false, sampleLanguage: "zh-Hans")

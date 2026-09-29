@@ -186,6 +186,23 @@
       "zh-Hant": "紙張"
     }
   },
+  "Archive": {
+    "scope": "app",
+    "translations": {
+      "ar": "أرشيف",
+      "de": "Archiv",
+      "en": "Archive",
+      "es": "Archivo comprimido",
+      "fr": "Archive",
+      "hi": "संग्रह",
+      "id": "Arsip",
+      "ja": "アーカイブ",
+      "ko": "압축 파일",
+      "pt-BR": "Arquivo compactado",
+      "zh-Hans": "压缩包",
+      "zh-Hant": "壓縮檔"
+    }
+  },
   "Articles & book lists": {
     "scope": "app",
     "translations": {
@@ -218,6 +235,23 @@
       "pt-BR": "Atenção",
       "zh-Hans": "异常",
       "zh-Hant": "異常"
+    }
+  },
+  "Audio": {
+    "scope": "app",
+    "translations": {
+      "ar": "صوت",
+      "de": "Audio",
+      "en": "Audio",
+      "es": "Audio",
+      "fr": "Audio",
+      "hi": "ऑडियो",
+      "id": "Audio",
+      "ja": "音声",
+      "ko": "오디오",
+      "pt-BR": "Áudio",
+      "zh-Hans": "音频",
+      "zh-Hant": "音訊"
     }
   },
   "Books": {
@@ -354,6 +388,23 @@
       "pt-BR": "Limpar cache de anexos",
       "zh-Hans": "清理附件缓存",
       "zh-Hant": "清理附件快取"
+    }
+  },
+  "Code": {
+    "scope": "app",
+    "translations": {
+      "ar": "شفرة",
+      "de": "Code",
+      "en": "Code",
+      "es": "Código",
+      "fr": "Code",
+      "hi": "कोड",
+      "id": "Kode",
+      "ja": "コード",
+      "ko": "코드",
+      "pt-BR": "Código",
+      "zh-Hans": "代码",
+      "zh-Hant": "程式碼"
     }
   },
   "Connect library": {
@@ -645,6 +696,23 @@
       "zh-Hant": "深色"
     }
   },
+  "Data file": {
+    "scope": "app",
+    "translations": {
+      "ar": "ملف بيانات",
+      "de": "Datendatei",
+      "en": "Data file",
+      "es": "Archivo de datos",
+      "fr": "Fichier de données",
+      "hi": "डेटा फ़ाइल",
+      "id": "Berkas data",
+      "ja": "データファイル",
+      "ko": "데이터 파일",
+      "pt-BR": "Arquivo de dados",
+      "zh-Hans": "数据文件",
+      "zh-Hant": "資料檔案"
+    }
+  },
   "Directory actions": {
     "scope": "app",
     "translations": {
@@ -762,6 +830,23 @@
       "pt-BR": "Informe URL do servidor, proprietário, repositório e branch válidos.",
       "zh-Hans": "请填写有效的平台地址、Owner、仓库和分支。",
       "zh-Hant": "請填寫有效的平台地址、Owner、倉庫和分支。"
+    }
+  },
+  "File": {
+    "scope": "app",
+    "translations": {
+      "ar": "ملف",
+      "de": "Datei",
+      "en": "File",
+      "es": "Archivo",
+      "fr": "Fichier",
+      "hi": "फ़ाइल",
+      "id": "Berkas",
+      "ja": "ファイル",
+      "ko": "파일",
+      "pt-BR": "Arquivo",
+      "zh-Hans": "文件",
+      "zh-Hant": "檔案"
     }
   },
   "File exceeds 100 MB": {
@@ -1019,6 +1104,23 @@
       "zh-Hant": "只授權對應倉庫，Contents 選擇 Read-only。每個倉庫的 Token 分別保存在本機 Keychain，不會交給網頁。留空沿用該倉庫已有憑據。"
     }
   },
+  "HTML": {
+    "scope": "app",
+    "translations": {
+      "ar": "HTML",
+      "de": "HTML",
+      "en": "HTML",
+      "es": "HTML",
+      "fr": "HTML",
+      "hi": "HTML",
+      "id": "HTML",
+      "ja": "HTML",
+      "ko": "HTML",
+      "pt-BR": "HTML",
+      "zh-Hans": "HTML",
+      "zh-Hant": "HTML"
+    }
+  },
   "Help": {
     "scope": "app",
     "translations": {
@@ -1087,6 +1189,23 @@
       "zh-Hant": "同時隱藏 .obsidian 等以點開頭的資料夾及其內容。適用於所有倉庫的目錄、閱讀、搜索和最近檔案列表，修改立即生效。"
     }
   },
+  "Image": {
+    "scope": "app",
+    "translations": {
+      "ar": "صورة",
+      "de": "Bild",
+      "en": "Image",
+      "es": "Imagen",
+      "fr": "Image",
+      "hi": "छवि",
+      "id": "Gambar",
+      "ja": "画像",
+      "ko": "이미지",
+      "pt-BR": "Imagem",
+      "zh-Hans": "图片",
+      "zh-Hant": "圖片"
+    }
+  },
   "Image not found": {
     "scope": "app",
     "translations": {
@@ -1119,6 +1238,23 @@
       "pt-BR": "Imagem indisponível. Conecte-se e atualize para tentar novamente.",
       "zh-Hans": "图片暂不可用，联网后刷新重试。",
       "zh-Hant": "圖片暫不可用，聯網後刷新重試。"
+    }
+  },
+  "Index capacity reached. Some files are searchable by metadata only.": {
+    "scope": "app",
+    "translations": {
+      "ar": "تم بلوغ سعة الفهرس. يمكن البحث في بعض الملفات عبر بياناتها الوصفية فقط.",
+      "de": "Die Indexkapazität ist erreicht. Einige Dateien sind nur über Metadaten durchsuchbar.",
+      "en": "Index capacity reached. Some files are searchable by metadata only.",
+      "es": "Se alcanzó la capacidad del índice. Algunos archivos solo permiten buscar metadatos.",
+      "fr": "La capacité de l’index est atteinte. Certains fichiers ne sont recherchés que par leurs métadonnées.",
+      "hi": "अनुक्रमण क्षमता पूरी हो गई है। कुछ फ़ाइलों में केवल मेटाडेटा खोजा जा सकता है।",
+      "id": "Kapasitas indeks tercapai. Beberapa berkas hanya dapat dicari melalui metadata.",
+      "ja": "索引の容量上限に達しました。一部のファイルはメタデータのみ検索できます。",
+      "ko": "색인 용량 한도에 도달했습니다. 일부 파일은 메타데이터만 검색할 수 있습니다.",
+      "pt-BR": "A capacidade do índice foi atingida. Alguns arquivos só podem ser buscados pelos metadados.",
+      "zh-Hans": "已达到正文索引容量限制，部分文件仅可搜索元信息。",
+      "zh-Hant": "已達到正文索引容量限制，部分檔案僅可搜尋中繼資料。"
     }
   },
   "Jump to page": {
@@ -1427,6 +1563,23 @@
       "zh-Hant": "管理 GitLab Token"
     }
   },
+  "Markdown": {
+    "scope": "app",
+    "translations": {
+      "ar": "Markdown",
+      "de": "Markdown",
+      "en": "Markdown",
+      "es": "Markdown",
+      "fr": "Markdown",
+      "hi": "Markdown",
+      "id": "Markdown",
+      "ja": "Markdown",
+      "ko": "Markdown",
+      "pt-BR": "Markdown",
+      "zh-Hans": "Markdown",
+      "zh-Hant": "Markdown"
+    }
+  },
   "Markdown and SVG stay cached. Other attachments are removed by last access time. Text is cached while the app is open for offline search.": {
     "scope": "app",
     "translations": {
@@ -1459,6 +1612,91 @@
       "pt-BR": "Markdown pesquisável: %1$ld/%2$ld",
       "zh-Hans": "可搜索正文：%1$ld/%2$ld 篇",
       "zh-Hant": "可搜尋正文：%1$ld/%2$ld 篇"
+    }
+  },
+  "Metadata only · File too large": {
+    "scope": "app",
+    "translations": {
+      "ar": "بيانات وصفية فقط · الملف كبير جدًا",
+      "de": "Nur Metadaten · Datei zu groß",
+      "en": "Metadata only · File too large",
+      "es": "Solo metadatos · Archivo demasiado grande",
+      "fr": "Métadonnées seules · Fichier trop volumineux",
+      "hi": "केवल मेटाडेटा · फ़ाइल बहुत बड़ी है",
+      "id": "Hanya metadata · Berkas terlalu besar",
+      "ja": "メタデータのみ · 大きすぎるファイル",
+      "ko": "메타데이터만 · 파일이 너무 큼",
+      "pt-BR": "Somente metadados · Arquivo muito grande",
+      "zh-Hans": "仅元信息 · 文件过大",
+      "zh-Hant": "僅中繼資料 · 檔案過大"
+    }
+  },
+  "Metadata only · File type": {
+    "scope": "app",
+    "translations": {
+      "ar": "بيانات وصفية فقط · نوع الملف",
+      "de": "Nur Metadaten · Dateityp",
+      "en": "Metadata only · File type",
+      "es": "Solo metadatos · Tipo de archivo",
+      "fr": "Métadonnées seules · Type de fichier",
+      "hi": "केवल मेटाडेटा · फ़ाइल प्रकार",
+      "id": "Hanya metadata · Jenis berkas",
+      "ja": "メタデータのみ · ファイル種類",
+      "ko": "메타데이터만 · 파일 유형",
+      "pt-BR": "Somente metadados · Tipo de arquivo",
+      "zh-Hans": "仅元信息 · 文件类型限制",
+      "zh-Hant": "僅中繼資料 · 檔案類型限制"
+    }
+  },
+  "Metadata only · Index limit": {
+    "scope": "app",
+    "translations": {
+      "ar": "بيانات وصفية فقط · حد الفهرس",
+      "de": "Nur Metadaten · Indexgrenze",
+      "en": "Metadata only · Index limit",
+      "es": "Solo metadatos · Límite del índice",
+      "fr": "Métadonnées seules · Limite de l’index",
+      "hi": "केवल मेटाडेटा · अनुक्रमण सीमा",
+      "id": "Hanya metadata · Batas indeks",
+      "ja": "メタデータのみ · 索引の上限",
+      "ko": "메타데이터만 · 색인 한도",
+      "pt-BR": "Somente metadados · Limite do índice",
+      "zh-Hans": "仅元信息 · 达到索引限额",
+      "zh-Hant": "僅中繼資料 · 達到索引限額"
+    }
+  },
+  "Metadata only · Text encoding": {
+    "scope": "app",
+    "translations": {
+      "ar": "بيانات وصفية فقط · ترميز النص",
+      "de": "Nur Metadaten · Textkodierung",
+      "en": "Metadata only · Text encoding",
+      "es": "Solo metadatos · Codificación de texto",
+      "fr": "Métadonnées seules · Encodage du texte",
+      "hi": "केवल मेटाडेटा · पाठ एन्कोडिंग",
+      "id": "Hanya metadata · Pengodean teks",
+      "ja": "メタデータのみ · 文字コード",
+      "ko": "메타데이터만 · 텍스트 인코딩",
+      "pt-BR": "Somente metadados · Codificação de texto",
+      "zh-Hans": "仅元信息 · 文本编码不支持",
+      "zh-Hant": "僅中繼資料 · 文字編碼不支援"
+    }
+  },
+  "Metadata only: %1$ld": {
+    "scope": "app",
+    "translations": {
+      "ar": "بيانات وصفية فقط: %1$ld",
+      "de": "Nur Metadaten: %1$ld",
+      "en": "Metadata only: %1$ld",
+      "es": "Solo metadatos: %1$ld",
+      "fr": "Métadonnées seules : %1$ld",
+      "hi": "केवल मेटाडेटा: %1$ld",
+      "id": "Hanya metadata: %1$ld",
+      "ja": "メタデータのみ：%1$ld",
+      "ko": "메타데이터만: %1$ld",
+      "pt-BR": "Somente metadados: %1$ld",
+      "zh-Hans": "仅元信息：%1$ld 个文件",
+      "zh-Hant": "僅中繼資料：%1$ld 個檔案"
     }
   },
   "Namespace": {
@@ -2037,6 +2275,23 @@
       "pt-BR": "Proprietário",
       "zh-Hans": "Owner",
       "zh-Hant": "Owner"
+    }
+  },
+  "PDF": {
+    "scope": "app",
+    "translations": {
+      "ar": "PDF",
+      "de": "PDF",
+      "en": "PDF",
+      "es": "PDF",
+      "fr": "PDF",
+      "hi": "PDF",
+      "id": "PDF",
+      "ja": "PDF",
+      "ko": "PDF",
+      "pt-BR": "PDF",
+      "zh-Hans": "PDF",
+      "zh-Hant": "PDF"
     }
   },
   "PDF contents": {
@@ -2787,6 +3042,23 @@
       "zh-Hant": "搜尋檔案名稱與正文"
     }
   },
+  "Search names, text or file types": {
+    "scope": "app",
+    "translations": {
+      "ar": "البحث في الأسماء أو النصوص أو الأنواع",
+      "de": "Namen, Text oder Dateitypen suchen",
+      "en": "Search names, text or file types",
+      "es": "Buscar nombres, texto o tipos",
+      "fr": "Rechercher noms, texte ou types",
+      "hi": "नाम, पाठ या फ़ाइल प्रकार खोजें",
+      "id": "Cari nama, teks, atau jenis berkas",
+      "ja": "名前・本文・ファイル種類を検索",
+      "ko": "이름, 본문, 파일 유형 검색",
+      "pt-BR": "Buscar nomes, texto ou tipos",
+      "zh-Hans": "搜索名称、正文或文件类型",
+      "zh-Hant": "搜尋名稱、正文或檔案類型"
+    }
+  },
   "Search text": {
     "scope": "app",
     "translations": {
@@ -2802,6 +3074,23 @@
       "pt-BR": "Buscar no texto",
       "zh-Hans": "搜索正文",
       "zh-Hant": "搜索正文"
+    }
+  },
+  "Searches names, paths, file types, sizes and SHA. Markdown/TXT up to %1$@ also include text. All words must match.": {
+    "scope": "app",
+    "translations": {
+      "ar": "يبحث في الأسماء والمسارات والأنواع والأحجام وSHA. يشمل نص Markdown/TXT حتى %1$@. يجب أن تتطابق جميع الكلمات.",
+      "de": "Sucht Namen, Pfade, Dateitypen, Größen und SHA. Markdown/TXT bis %1$@ werden auch im Text durchsucht. Alle Wörter müssen vorkommen.",
+      "en": "Searches names, paths, file types, sizes and SHA. Markdown/TXT up to %1$@ also include text. All words must match.",
+      "es": "Busca nombres, rutas, tipos, tamaños y SHA. Incluye el texto de Markdown/TXT de hasta %1$@. Deben coincidir todas las palabras.",
+      "fr": "Recherche les noms, chemins, types, tailles et SHA. Inclut le texte des Markdown/TXT jusqu’à %1$@. Tous les mots doivent correspondre.",
+      "hi": "नाम, पाथ, प्रकार, आकार और SHA खोजता है। %1$@ तक के Markdown/TXT का पाठ भी शामिल है। सभी शब्द मिलने चाहिए।",
+      "id": "Mencari nama, jalur, jenis, ukuran, dan SHA. Teks Markdown/TXT hingga %1$@ juga dicari. Semua kata harus cocok.",
+      "ja": "名前・パス・種類・サイズ・SHAを検索します。%1$@以下のMarkdown/TXTは本文も対象です。すべての語が一致する必要があります。",
+      "ko": "이름, 경로, 유형, 크기, SHA를 검색합니다. %1$@ 이하 Markdown/TXT는 본문도 포함합니다. 모든 검색어가 일치해야 합니다.",
+      "pt-BR": "Busca nomes, caminhos, tipos, tamanhos e SHA. Inclui texto de Markdown/TXT de até %1$@. Todas as palavras devem corresponder.",
+      "zh-Hans": "可搜索名称、路径、类型、大小和 SHA。不超过 %1$@ 的 Markdown/TXT 还会索引正文；多个词需全部匹配。",
+      "zh-Hant": "可搜尋名稱、路徑、類型、大小與 SHA。不超過 %1$@ 的 Markdown/TXT 也會索引正文；多個詞需全部符合。"
     }
   },
   "Searches this library. All words must match. PDF, HTML and images are searched by filename only.": {
@@ -2923,6 +3212,23 @@
       "zh-Hant": "分享"
     }
   },
+  "Showing %1$ld of %2$ld matches. Add keywords to narrow the results.": {
+    "scope": "app",
+    "translations": {
+      "ar": "عرض %1$ld من %2$ld نتيجة. أضف كلمات لتضييق البحث.",
+      "de": "%1$ld von %2$ld Treffern. Mit weiteren Wörtern eingrenzen.",
+      "en": "Showing %1$ld of %2$ld matches. Add keywords to narrow the results.",
+      "es": "Se muestran %1$ld de %2$ld resultados. Añade palabras para acotar la búsqueda.",
+      "fr": "Affichage de %1$ld résultats sur %2$ld. Ajoutez des mots pour affiner.",
+      "hi": "%2$ld में से %1$ld परिणाम दिख रहे हैं। खोज सीमित करने के लिए शब्द जोड़ें।",
+      "id": "Menampilkan %1$ld dari %2$ld hasil. Tambahkan kata untuk mempersempit.",
+      "ja": "%2$ld件中%1$ld件を表示。語を追加して絞り込めます。",
+      "ko": "%2$ld개 중 %1$ld개 표시. 검색어를 추가해 범위를 좁히세요.",
+      "pt-BR": "Mostrando %1$ld de %2$ld resultados. Adicione palavras para refinar.",
+      "zh-Hans": "显示 %1$ld/%2$ld 条结果，请增加关键词缩小范围。",
+      "zh-Hant": "顯示 %1$ld/%2$ld 筆結果，請增加關鍵詞縮小範圍。"
+    }
+  },
   "Sign in": {
     "scope": "app",
     "translations": {
@@ -2989,6 +3295,23 @@
       "pt-BR": "Não foi possível carregar algumas listas: %1$@",
       "zh-Hans": "部分书单暂未载入：%1$@",
       "zh-Hant": "部分書單暫未載入：%1$@"
+    }
+  },
+  "Some text is not available yet. Results may be incomplete.": {
+    "scope": "app",
+    "translations": {
+      "ar": "بعض النصوص غير متاحة بعد. قد تكون النتائج غير مكتملة.",
+      "de": "Einige Texte sind noch nicht verfügbar. Die Ergebnisse können unvollständig sein.",
+      "en": "Some text is not available yet. Results may be incomplete.",
+      "es": "Parte del texto aún no está disponible. Los resultados pueden estar incompletos.",
+      "fr": "Certains textes ne sont pas encore disponibles. Les résultats peuvent être incomplets.",
+      "hi": "कुछ पाठ अभी उपलब्ध नहीं हैं। परिणाम अधूरे हो सकते हैं।",
+      "id": "Sebagian teks belum tersedia. Hasil mungkin belum lengkap.",
+      "ja": "一部の本文はまだ準備中です。検索結果が不完全な場合があります。",
+      "ko": "일부 본문이 아직 준비되지 않아 결과가 불완전할 수 있습니다.",
+      "pt-BR": "Parte do texto ainda não está disponível. Os resultados podem estar incompletos.",
+      "zh-Hans": "部分正文尚未就绪，结果可能不完整。",
+      "zh-Hant": "部分正文尚未就緒，結果可能不完整。"
     }
   },
   "Stops online sync but keeps cached files and reading progress. To revoke access completely, also revoke the token on GitHub or GitLab.": {
@@ -3076,6 +3399,23 @@
       "zh-Hant": "跟隨系統"
     }
   },
+  "Text": {
+    "scope": "app",
+    "translations": {
+      "ar": "نص",
+      "de": "Text",
+      "en": "Text",
+      "es": "Texto",
+      "fr": "Texte",
+      "hi": "पाठ",
+      "id": "Teks",
+      "ja": "テキスト",
+      "ko": "텍스트",
+      "pt-BR": "Texto",
+      "zh-Hans": "文本",
+      "zh-Hant": "文字"
+    }
+  },
   "Text cached": {
     "scope": "app",
     "translations": {
@@ -3108,6 +3448,23 @@
       "pt-BR": "Texto em cache: %1$ld/%2$ld",
       "zh-Hans": "正文已补全 %1$ld/%2$ld",
       "zh-Hant": "正文已補全 %1$ld/%2$ld"
+    }
+  },
+  "Text searchable: %1$ld/%2$ld": {
+    "scope": "app",
+    "translations": {
+      "ar": "النصوص القابلة للبحث: %1$ld/%2$ld",
+      "de": "Durchsuchbare Texte: %1$ld/%2$ld",
+      "en": "Text searchable: %1$ld/%2$ld",
+      "es": "Texto disponible: %1$ld/%2$ld",
+      "fr": "Textes consultables : %1$ld/%2$ld",
+      "hi": "खोजने योग्य पाठ: %1$ld/%2$ld",
+      "id": "Teks yang dapat dicari: %1$ld/%2$ld",
+      "ja": "検索可能な本文：%1$ld/%2$ld",
+      "ko": "검색 가능한 본문: %1$ld/%2$ld",
+      "pt-BR": "Texto pesquisável: %1$ld/%2$ld",
+      "zh-Hans": "可搜索正文：%1$ld/%2$ld 篇",
+      "zh-Hant": "可搜尋正文：%1$ld/%2$ld 篇"
     }
   },
   "Text size": {
@@ -3399,6 +3756,23 @@
       "zh-Hant": "本文檔提供英語和簡體中文版本。"
     }
   },
+  "This library is mostly non-text files": {
+    "scope": "app",
+    "translations": {
+      "ar": "تحتوي هذه المكتبة أساسًا على ملفات غير نصية",
+      "de": "Diese Bibliothek enthält überwiegend andere Dateitypen als Text",
+      "en": "This library is mostly non-text files",
+      "es": "Esta biblioteca contiene sobre todo archivos no textuales",
+      "fr": "Cette bibliothèque contient surtout des fichiers non textuels",
+      "hi": "इस लाइब्रेरी में मुख्यतः गैर-पाठ फ़ाइलें हैं",
+      "id": "Pustaka ini sebagian besar berisi berkas nonteks",
+      "ja": "このライブラリは主にテキスト以外のファイルです",
+      "ko": "이 라이브러리는 비텍스트 파일이 대부분입니다",
+      "pt-BR": "Esta biblioteca contém principalmente arquivos não textuais",
+      "zh-Hans": "此库以非文本文件为主",
+      "zh-Hant": "此庫以非文字檔案為主"
+    }
+  },
   "This note could not be found.": {
     "scope": "app",
     "translations": {
@@ -3535,6 +3909,23 @@
       "zh-Hant": "GitLab 使用 read_api 只讀權限；如可用，優先使用僅授權此項目的 Access Token。命名空間可含多級 group/subgroup。自建地址需使用 HTTPS。憑據按服務與項目獨立保存在 Keychain。"
     }
   },
+  "Vault Reader works best with Markdown notes and text-based reading. You can still browse this library and search file names, types and available metadata; attachment contents are not indexed.": {
+    "scope": "app",
+    "translations": {
+      "ar": "يناسب Vault Reader ملاحظات Markdown وقراءة النصوص. يمكنك تصفح هذه المكتبة والبحث بالأسماء والأنواع والبيانات الوصفية المتاحة؛ لا تُفهرس محتويات المرفقات.",
+      "de": "Vault Reader eignet sich besonders für Markdown-Notizen und Texte. Diese Bibliothek lässt sich weiterhin durchsuchen, nach Dateinamen, Typen und verfügbaren Metadaten. Inhalte von Anhängen werden nicht indexiert.",
+      "en": "Vault Reader works best with Markdown notes and text-based reading. You can still browse this library and search file names, types and available metadata; attachment contents are not indexed.",
+      "es": "Vault Reader es ideal para notas Markdown y lectura de texto. Puedes explorar esta biblioteca y buscar nombres, tipos y metadatos disponibles; el contenido de los adjuntos no se indexa.",
+      "fr": "Vault Reader convient surtout aux notes Markdown et à la lecture de textes. Vous pouvez parcourir cette bibliothèque et rechercher noms, types et métadonnées disponibles ; le contenu des pièces jointes n’est pas indexé.",
+      "hi": "Vault Reader Markdown नोट्स और पाठ पढ़ने के लिए उपयुक्त है। आप इस लाइब्रेरी को देख सकते हैं और नाम, प्रकार व उपलब्ध मेटाडेटा खोज सकते हैं; अटैचमेंट की सामग्री अनुक्रमित नहीं होती।",
+      "id": "Vault Reader cocok untuk catatan Markdown dan bacaan teks. Anda tetap dapat menjelajahi pustaka ini dan mencari nama, jenis, serta metadata yang tersedia; isi lampiran tidak diindeks.",
+      "ja": "Vault ReaderはMarkdownノートや文章の閲覧に適しています。このライブラリも閲覧でき、名前・種類・利用可能なメタデータで検索できます。添付ファイルの内容は索引化されません。",
+      "ko": "Vault Reader는 Markdown 노트와 텍스트 읽기에 적합합니다. 이 라이브러리도 탐색하고 이름, 유형, 제공된 메타데이터로 검색할 수 있지만 첨부 파일 내용은 색인하지 않습니다.",
+      "pt-BR": "Vault Reader é ideal para notas Markdown e leitura de texto. Você pode explorar esta biblioteca e buscar nomes, tipos e metadados disponíveis; o conteúdo dos anexos não é indexado.",
+      "zh-Hans": "Vault Reader 更适合 Markdown 笔记和文本阅读。你仍可浏览此库，按文件名、类型和已有元信息搜索；附件正文不会自动索引。",
+      "zh-Hant": "Vault Reader 更適合 Markdown 筆記與文字閱讀。你仍可瀏覽此庫，依檔案名稱、類型與既有中繼資料搜尋；附件正文不會自動索引。"
+    }
+  },
   "Version": {
     "scope": "app",
     "translations": {
@@ -3550,6 +3941,23 @@
       "pt-BR": "Versão",
       "zh-Hans": "版本",
       "zh-Hant": "版本"
+    }
+  },
+  "Video": {
+    "scope": "app",
+    "translations": {
+      "ar": "فيديو",
+      "de": "Video",
+      "en": "Video",
+      "es": "Vídeo",
+      "fr": "Vidéo",
+      "hi": "वीडियो",
+      "id": "Video",
+      "ja": "動画",
+      "ko": "동영상",
+      "pt-BR": "Vídeo",
+      "zh-Hans": "视频",
+      "zh-Hant": "影片"
     }
   },
   "View commit on %1$@": {

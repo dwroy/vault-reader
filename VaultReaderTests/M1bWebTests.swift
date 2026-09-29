@@ -209,7 +209,8 @@ extension M1bWebTests {
         defer { state.stopPrefetch() }
         for _ in 0..<100 where state.isPrefetching { try await Task.sleep(for: .milliseconds(30)) }
         XCTAssertFalse(state.isPrefetching)
-        XCTAssertEqual(state.prefetchTotal, 3); XCTAssertEqual(state.prefetchCompleted, 1)
+        XCTAssertEqual(state.prefetchTotal, 2); XCTAssertEqual(state.prefetchCompleted, 1)
+        XCTAssertEqual(state.searchCoverage.metadataOnly, 1, "Invalid UTF-8 keeps metadata instead of remaining in the retry queue")
         XCTAssertNotNil(state.prefetchError)
         let requests = await source.requested
         XCTAssertTrue(requests.contains(missing.path)); XCTAssertTrue(requests.contains(valid.path))

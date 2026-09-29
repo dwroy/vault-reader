@@ -20,10 +20,13 @@ public actor BlobStore {
         guard sha.count == 40 && sha.allSatisfy({ $0.isHexDigit && $0.isASCII }) else { throw VaultError.corruptBlob }
         return root.appendingPathComponent(sha)
     }
-    public func data(for sha: String) throws -> Data? {
+    public func data(for sha: String, maximumBytes: Int = BlobStore.maximumFileBytes) throws -> Data? {
         let url = try url(sha)
         guard FileManager.default.fileExists(atPath: url.path) else { return nil }
+        let size = try url.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? 0
+        guard size <= maximumBytes else { throw VaultError.tooLarge }
         let data = try Data(contentsOf: url)
+        guard data.count <= maximumBytes else { throw VaultError.tooLarge }
         guard Self.hash(data) == sha else { try FileManager.default.removeItem(at: url); return nil }
         try? FileManager.default.setAttributes([.modificationDate: Date()], ofItemAtPath: url.path)
         return data

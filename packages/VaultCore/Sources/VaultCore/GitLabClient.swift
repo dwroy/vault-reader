@@ -7,13 +7,13 @@ public actor GitLabClient: RepositorySource {
     public init(config: RepositoryConfig, token: String, session: URLSession? = nil) {
         self.config = config; self.token = token; http = RepositoryHTTP(session: session)
     }
-    private func request(_ path: [String], query: [URLQueryItem] = [], etag: String? = nil, raw: Bool = false, progress: (@Sendable (Double) -> Void)? = nil) async throws -> (Data, HTTPURLResponse) {
+    private func request(_ path: [String], query: [URLQueryItem] = [], etag: String? = nil, raw: Bool = false, maximumBytes: Int = BlobStore.maximumFileBytes, progress: (@Sendable (Double) -> Void)? = nil) async throws -> (Data, HTTPURLResponse) {
         guard config.isValid, let base = config.serverURL, var url = URLComponents(url: base, resolvingAgainstBaseURL: false) else { throw VaultError.invalidConfiguration }
         url.percentEncodedPath += "/api/v4/projects/" + RepositoryHTTP.encode(config.owner + "/" + config.repo) + "/repository/" + path.map(RepositoryHTTP.encode).joined(separator: "/")
         if !query.isEmpty { url.queryItems = query }
         var headers = ["Accept": raw ? "application/octet-stream" : "application/json"]
         if !token.isEmpty { headers["PRIVATE-TOKEN"] = token }
-        return try await http.get(url.url!, headers: headers, etag: etag, raw: raw, progress: progress)
+        return try await http.get(url.url!, headers: headers, etag: etag, raw: raw, maximumBytes: maximumBytes, progress: progress)
     }
     private struct Branch: Decodable { struct Commit: Decodable { let id: String }; let commit: Commit }
     public func branch(etag: String?) async throws -> BranchSnapshot? {
@@ -40,9 +40,14 @@ public actor GitLabClient: RepositorySource {
         throw VaultError.invalidTree // Never replace a complete cache with a capped tree.
     }
     public func blob(_ entry: TreeEntry, progress: (@Sendable (Double) -> Void)? = nil) async throws -> Data {
-        guard (entry.size ?? 0) <= BlobStore.maximumFileBytes else { throw VaultError.tooLarge }
-        return try await request(["blobs", entry.sha, "raw"], raw: true, progress: progress).0
+        try await blob(entry, maximumBytes: BlobStore.maximumFileBytes, progress: progress)
     }
+    public func blob(_ entry: TreeEntry, maximumBytes: Int, progress: (@Sendable (Double) -> Void)? = nil) async throws -> Data {
+        let limit = max(0, min(maximumBytes, BlobStore.maximumFileBytes))
+        guard (entry.size ?? 0) <= limit else { throw VaultError.tooLarge }
+        return try await request(["blobs", entry.sha, "raw"], raw: true, maximumBytes: limit, progress: progress).0
+    }
+
     private struct Commit: Decodable {
         let id: String; let message: String; let author_name: String?; let committed_date: String?
         var summary: CommitSummary { CommitSummary(sha: id, commit: .init(message: message, author: .init(name: author_name, date: committed_date), committer: nil)) }

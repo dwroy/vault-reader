@@ -35,7 +35,7 @@ actor RepositoryHTTP {
         var allowed = CharacterSet.urlPathAllowed; allowed.remove(charactersIn: "/?#%")
         return value.addingPercentEncoding(withAllowedCharacters: allowed)!
     }
-    func get(_ url: URL, headers: [String: String], etag: String? = nil, raw: Bool = false, progress: (@Sendable (Double) -> Void)? = nil) async throws -> (Data, HTTPURLResponse) {
+    func get(_ url: URL, headers: [String: String], etag: String? = nil, raw: Bool = false, maximumBytes: Int = BlobStore.maximumFileBytes, progress: (@Sendable (Double) -> Void)? = nil) async throws -> (Data, HTTPURLResponse) {
         try await Self.gate.acquire()
         do {
             try Task.checkCancellation()
@@ -44,14 +44,14 @@ actor RepositoryHTTP {
             if let etag { request.setValue(etag, forHTTPHeaderField: "If-None-Match") }
             let data: Data, response: URLResponse
             if raw {
-                let delegate = DownloadProgress(report: progress ?? { _ in })
+                let delegate = DownloadProgress(maximumBytes: maximumBytes, report: progress ?? { _ in })
                 let temporary: URL, result: URLResponse
                 do { (temporary, result) = try await session.download(for: request, delegate: delegate) }
                 catch { if delegate.exceeded { throw VaultError.tooLarge }; throw error }
                 defer { try? FileManager.default.removeItem(at: temporary) }
                 response = result
                 let bytes = try temporary.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? 0
-                guard bytes <= BlobStore.maximumFileBytes else { throw VaultError.tooLarge }
+                guard bytes <= maximumBytes else { throw VaultError.tooLarge }
                 data = try Data(contentsOf: temporary)
             } else { (data, response) = try await session.data(for: request) }
             try Task.checkCancellation()
@@ -82,14 +82,15 @@ private final class RejectRedirects: NSObject, URLSessionTaskDelegate, Sendable 
 }
 private final class DownloadProgress: NSObject, URLSessionDownloadDelegate, @unchecked Sendable {
     let report: @Sendable (Double) -> Void
+    let maximumBytes: Int
     private let lock = NSLock()
     private var exceededLimit = false
     var exceeded: Bool { lock.withLock { exceededLimit } }
-    init(report: @escaping @Sendable (Double) -> Void) { self.report = report }
+    init(maximumBytes: Int, report: @escaping @Sendable (Double) -> Void) { self.maximumBytes = maximumBytes; self.report = report }
     func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse, newRequest request: URLRequest, completionHandler: @escaping @Sendable (URLRequest?) -> Void) { completionHandler(nil) }
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {}
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-        if totalBytesWritten > BlobStore.maximumFileBytes || totalBytesExpectedToWrite > BlobStore.maximumFileBytes {
+        if totalBytesWritten > maximumBytes || totalBytesExpectedToWrite > maximumBytes {
             lock.withLock { exceededLimit = true }; downloadTask.cancel(); return
         }
         if totalBytesExpectedToWrite > 0 { report(min(1, Double(totalBytesWritten) / Double(totalBytesExpectedToWrite))) }

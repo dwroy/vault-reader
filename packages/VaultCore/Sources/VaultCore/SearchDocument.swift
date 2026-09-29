@@ -17,11 +17,13 @@ struct SearchDocument: Sendable {
     let checkpoints: [(offset: Int, index: String.Index)]
     private let storedCheckpoints: [Checkpoint]
 
-    init(text: String) {
+    init(text: String) { self = try! SearchDocument(cancellableText: text, checkCancellation: false) }
+    init(cancellableText text: String, checkCancellation: Bool = true) throws {
         self.text = text
         var folded = Data(), checkpoints: [(Int, String.Index)] = [], stored: [Checkpoint] = []
         var start = text.startIndex, originalOffset = 0
         while start < text.endIndex {
+            if checkCancellation { try Task.checkCancellation() }
             let end = text.index(start, offsetBy: 256, limitedBy: text.endIndex) ?? text.endIndex
             checkpoints.append((folded.count, start))
             stored.append(Checkpoint(foldedOffset: folded.count, originalOffset: originalOffset))
@@ -52,6 +54,8 @@ struct SearchDocument: Sendable {
         }
         self.text = text; folded = stored.folded; self.checkpoints = checkpoints; storedCheckpoints = stored.checkpoints
     }
+    /// Conservative retained-payload accounting; excludes parser temporaries and the host/renderer.
+    var memoryCost: Int { text.utf8.count * 2 + folded.count + checkpoints.count * 96 + 1024 }
     var stored: Stored { Stored(text: text, folded: folded, checkpoints: storedCheckpoints) }
     func checkpoint(after offset: Int) -> Int {
         var lower = 0, upper = checkpoints.count
