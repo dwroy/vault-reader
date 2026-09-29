@@ -269,3 +269,12 @@ At the owner's request, main source `b1d7ca5` produced development **1.0.0 (17)*
 The app was installed over the existing reader on the USB-connected **iPhone 17**, without uninstalling. A fresh device query confirms **1.0.0 (17)**. Normal launch (no demo/status-preview arguments) succeeded, and a later process query confirmed it remained running. Evidence is in main's ignored `build/compact-status/device/` (`build.log`, `build-summary.json`, `signature-check.log`, `install.json`, `launch.json`, `app-installed.json`, `running-process.json`); the app is `build/CompactStatusDevice/Build/Products/Debug-iphoneos/VaultReader.app`.
 
 This confirms build/sign/install/launch, not a fresh physical status-tap or private-network recovery pass. Builds 16/17 and their post-submission features belong to the next unreleased batch per `docs/app-store/RELEASE.md`; neither development package was uploaded or selected for App Review.
+
+
+## Guideline 2.1 supplemental information — 2026-09-29
+
+Apple rejected submitted **1.0.0 (15)** with “Information Needed — New App Submission,” citing the account's limited review history. The message requests a physical-device recording on the latest OS plus purpose/audience, access instructions, external services, regional differences and relevant authorization information. It identifies no specific reproduced crash. Original feedback is stored only under main's ignored `build/app-store/rejection-2026-09-29.txt`.
+
+The release worktree was fast-forwarded to current main before documentation work, preserving the next-release batch. Expanded `review-notes.txt` addresses all six headings while explicitly marking video and physical QA pending; `review-response-draft.txt` remains unsent until video evidence exists. `REVIEW-VIDEO.md` gives a build-15-only sample-data recording checklist.
+
+After the owner connected and unlocked the iPhone, the original build-15 archive passed strict signature verification with personal team DPK7SSB889 and was installed in place. The fresh app query confirms **1.0.0 (15)**. No uninstall or data deletion occurred. CoreDevice reports iPhone 17 / iOS **26.6.1**; Apple's current release page lists **27.0.1**, so the owner was asked to complete the OS update before final recording. The iPad remains unavailable. Installation is not a physical interaction, latest-OS QA or video acceptance pass. Logs remain in main's ignored `build/app-store/review-*.json` / `.log`.

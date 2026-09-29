@@ -47,7 +47,7 @@ Required-reason API declarations shipped in `PrivacyInfo.xcprivacy`:
 
 ## Account and distribution checks
 
-The owner completed the individual-team agreement. Build 14 was successfully exported, uploaded and processed under the verified Wei Dong personal team, **DPK7SSB889**. App Store Connect record **6816816892** has SKU `vault-reader-ios`, Productivity category and version **1.0.0**, with manual release selected. Build 15 replaces build 14 for the multilingual launch. Its personal-team archive, export and upload succeeded; server processing reports Complete / Ready to Submit. **1.0.0 (15) was submitted and is Waiting for Review**, as recorded below.
+The owner completed the individual-team agreement. Build 14 was successfully exported, uploaded and processed under the verified Wei Dong personal team, **DPK7SSB889**. App Store Connect record **6816816892** has SKU `vault-reader-ios`, Productivity category and version **1.0.0**, with manual release selected. Build 15 replaces build 14 for the multilingual launch. Its personal-team archive, export and upload succeeded; server processing reports Complete / Ready to Submit. **1.0.0 (15) was submitted on September 28 and rejected for supplemental information on September 29**, as recorded below.
 
 All 12 localized names/subtitles and version descriptions, promotional text, keywords and support links have been saved. English-specific iPhone 6.9-inch and iPad 13-inch screenshots are uploaded, and the store primary language is now English (U.S.). Chinese screenshots retain their own set with the updated AI Native welcome screen; other locales inherit English screenshots. All saved descriptions/promotional text/keywords were checked against source. The global age rating is 4+ (with Apple's regional equivalents), not Made for Kids. No broad user-content feed, chat, advertisements, unrestricted in-app web browser or app-supplied restricted content exists. HTML navigation only allows the current repository document; explicit external links open the system browser.
 
@@ -61,7 +61,7 @@ Detailed evidence is in `docs/ACCEPTANCE.md`. Completed development checks inclu
 
 At the build-15 release-validation checkpoint, the owner's physical phone was unavailable and build 14 was the last confirmed installed/launched app. Later development-device installations are recorded in `docs/ACCEPTANCE.md` and belong to the next-release batch; they do not extend the frozen build-15 acceptance. Simulator coverage and install/launch checks do not establish fresh private-repository synchronization, offline recovery, physical touch or attachment transfer.
 
-Final integration, archive/distribution checks, upload, processing and primary store language are complete. Build 15 is selected and the final App Review submission succeeded. Review approval and manual public release are still pending.
+Final integration, archive/distribution checks, upload, processing and primary store language are complete. Build 15 remains selected. The first submission was rejected under Guideline 2.1 for supplemental information. The written explanation is prepared; the latest-OS physical-device video and QA remain pending. Review approval and manual public release have not occurred.
 
 ## Official references checked
 
@@ -80,3 +80,9 @@ Final integration, archive/distribution checks, upload, processing and primary s
 - Review record: https://appstoreconnect.apple.com/apps/6816816892/distribution/reviewsubmissions/details/5cd6c637-8dfd-4771-a91d-2d6e93fe8bc5
 - Main evidence: `build/app-store/submission-15.png`. All 10 newly added store locales now have their own policy URL; the completeness check passed after these were filled.
 - Apple approval and public launch remain pending. **Manual release** is selected; approval alone does not publish the app.
+
+## September 29 information request
+
+Apple's message is “Guideline 2.1 — Information Needed — New App Submission.” The account has limited review history. The requested physical-device recording must begin with launching the app and show its typical flow on the latest OS. The other five items are purpose/audience, setup/access, external services, regional differences and relevant authorizations.
+
+The submitted binary and selected build remain frozen at **1.0.0 (15)**. Review Notes were expanded with the factual response, leaving the video explicitly pending. The unsent reply draft and recording checklist are `review-response-draft.txt` and `REVIEW-VIDEO.md`. The original build 15 was installed on the owner's connected iPhone; it currently reports iOS 26.6.1, while Apple's latest public release is 27.0.1. The owner has been asked to update before recording. No new binary upload, replacement, complete response or resubmission is claimed. iPad physical QA is still outstanding.
