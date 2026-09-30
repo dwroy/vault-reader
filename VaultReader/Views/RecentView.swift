@@ -24,7 +24,7 @@ struct RecentView: View {
                 Text(L10n.text("No cached commits. Connect to load the 30 most recent commits.")).foregroundStyle(.secondary)
             }
         }
-        .libraryNavigationTitle(L10n.text("Recent"), state: state, retry: { await state.refresh(); await state.loadRecent() })
+        .libraryNavigationTitle(state.config.repo, state: state, retry: { await state.refresh(); await state.loadRecent() })
         .task { await state.loadRecent() }
         .refreshable { await state.refresh(); await state.loadRecent() }
     }

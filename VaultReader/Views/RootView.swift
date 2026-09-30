@@ -10,7 +10,8 @@ struct RootView: View {
     @State private var readingPath: [ReaderRoute] = []
     @State private var readingProject: String?
     @State private var recentPath: [ReaderRoute] = []
-    @State private var searchPath: [ReaderRoute] = []
+    @State private var searchPath: [SearchReaderRoute] = []
+    @State private var searchScope = SearchScopeModel()
     @State private var directoryPath: [ReaderRoute] = []
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.colorScheme) private var colorScheme
@@ -58,8 +59,20 @@ struct RootView: View {
                             .navigationDestination(for: ReaderRoute.self) { route in destination(route, path: $recentPath) }
                     }.tabItem { Label(L10n.text("Recent"), systemImage: "clock") }.tag(ReaderTab.recent)
                     NavigationStack(path: $searchPath) {
-                        SearchView(state: state)
-                            .navigationDestination(for: ReaderRoute.self) { route in destination(route, path: $searchPath) }
+                        SearchView(state: state, scope: searchScope)
+                            .navigationDestination(for: SearchReaderRoute.self) { route in
+                                if let context = searchScope.contexts[route.repository] {
+                                    destination(route.route, in: context) { next in
+                                        searchPath.append(SearchReaderRoute(repository: route.repository, route: next))
+                                    }
+                                    .onChange(of: context.showSettings) { _, showing in
+                                        if showing && context !== state {
+                                            context.showSettings = false
+                                            Task { await state.selectRepository(context.config); state.showSettings = true }
+                                        }
+                                    }
+                                }
+                            }
                     }.tabItem { Label(L10n.text("Search"), systemImage: "magnifyingglass") }.tag(ReaderTab.search)
                 }.id(state.config.identity + "#" + state.config.branch)
 
@@ -77,17 +90,20 @@ struct RootView: View {
             }
             #endif
         }
-        .onChange(of: scenePhase) { _, phase in if phase == .active && state.ready { if !state.needsSetup { state.startPrefetch() }; Task { await state.refresh() } } else if phase == .background { state.stopPrefetch(); state.reading.flush() } }
-        .onChange(of: state.config) { _, _ in directoryPath = []; recentPath = []; searchPath = []; readingPath = []; selectedTab = readingProject == state.config.storageKey ? .reading : .directory }
+        .onChange(of: scenePhase) { _, phase in if phase == .active && state.ready { if !state.needsSetup { state.startPrefetch() }; searchScope.resume(); Task { await state.refresh() } } else if phase == .background { state.stopPrefetch(); searchScope.stop(); state.reading.flush(); for context in searchScope.contexts.values { context.reading.flush() } } }
+        .onChange(of: state.config) { _, _ in searchScope.followCurrent(state); directoryPath = []; recentPath = []; searchPath = []; readingPath = []; selectedTab = readingProject == state.config.storageKey ? .reading : .directory }
     }
-    @ViewBuilder private func destination(_ route: ReaderRoute, path: Binding<[ReaderRoute]>) -> some View {
+    private func destination(_ route: ReaderRoute, path: Binding<[ReaderRoute]>) -> some View {
+        destination(route, in: state) { path.wrappedValue.append($0) }
+    }
+    @ViewBuilder private func destination(_ route: ReaderRoute, in state: AppState, navigate: @escaping (ReaderRoute) -> Void) -> some View {
         switch route {
-        case .note(let note): NoteView(state: state, route: note, navigate: { path.wrappedValue.append($0) }, readingBook: note.reading || BookCatalog.root(for: note.path) != nil)
+        case .note(let note): NoteView(state: state, route: note, navigate: navigate, readingBook: note.reading || BookCatalog.root(for: note.path) != nil)
         case .file(let file):
             if state.index.files[file]?.isMarkdown == true {
-                NoteView(state: state, route: NoteRoute(path: file), navigate: { path.wrappedValue.append($0) }, readingBook: BookCatalog.root(for: file) != nil)
+                NoteView(state: state, route: NoteRoute(path: file), navigate: navigate, readingBook: BookCatalog.root(for: file) != nil)
             } else if state.index.files[file]?.isHTML == true {
-                HTMLReaderView(state: state, path: file, navigate: { path.wrappedValue.append(.file($0)) })
+                HTMLReaderView(state: state, path: file, navigate: { navigate(.file($0)) })
             } else if state.index.files[file]?.ext == "pdf" { PDFReaderView(state: state, path: file) }
             else { AttachmentView(state: state, path: file) }
         case .directory(let directory): DirView(state: state, path: directory)

@@ -105,7 +105,7 @@ struct ReadingLibraryView: View {
                 ContentUnavailableView(L10n.text("No reading content yet"), systemImage: "books.vertical", description: Text(L10n.text("Add “booklist: path/to/booklist.md” to README frontmatter, or create booklist.md. You can also open any article from Files and choose Open in reader.")))
             }
         }
-        .libraryNavigationTitle(L10n.text("Books & articles"), state: state, retry: { await state.refresh(); await discoverLists() })
+        .libraryNavigationTitle(state.config.repo, state: state, retry: { await state.refresh(); await discoverLists() })
         .searchable(text: $query, prompt: L10n.text("Find books, papers and articles"))
         .task(id: state.config.storageKey + state.treeSHA + String(state.fileDisplay.hideDotFiles)) { await discoverLists() }
     }

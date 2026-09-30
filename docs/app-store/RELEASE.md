@@ -17,6 +17,7 @@ Post-submission features accumulate together in the **next release — unrelease
 - Compact title status, details/recovery controls and accessibility layout (`b1d7ca5`).
 - Search/query preparation separation, bounded Markdown/TXT indexing, attachment/oversize metadata search and guidance for primarily non-text vaults (see `docs/ACCEPTANCE.md`).
 - More conservative suitability guidance for note/PDF libraries and a persistent close button scoped to each vault.
+- Project names in vault-specific navigation titles and selectable multi-vault local search, defaulting to the active vault with isolated result readers (owner request, September 30).
 
 The release boundary determines the next marketing version and upload build number after the batch is finalized. Individual feature changes do not each become a public release. Development builds 16, 17, 18 and 19 were installed locally for preview only; their `1.0.0` marketing label does not make their new code part of the frozen store release. None was uploaded. Future previews remain development artifacts; a device-build request is not permission to change the submitted release. Before archiving the next public candidate from main, explicitly set its new version and record the complete batch and source revision here.
 

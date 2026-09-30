@@ -4129,5 +4129,107 @@
       "hi": "इस लाइब्रेरी के लिए फिर न दिखाएँ",
       "id": "Jangan tampilkan lagi untuk pustaka ini"
     }
+  },
+  "No saved files. Open and refresh this vault first.": {
+    "scope": "app",
+    "translations": {
+      "ar": "لا توجد ملفات محفوظة. افتح هذه المكتبة وحدّثها أولاً.",
+      "de": "Keine gespeicherten Dateien. Öffne und aktualisiere zuerst diese Bibliothek.",
+      "en": "No saved files. Open and refresh this vault first.",
+      "es": "No hay archivos guardados. Abre y actualiza esta biblioteca primero.",
+      "fr": "Aucun fichier enregistré. Ouvrez et actualisez cette bibliothèque d’abord.",
+      "hi": "कोई सहेजी गई फ़ाइल नहीं है। पहले इस लाइब्रेरी को खोलें और रीफ़्रेश करें।",
+      "id": "Tidak ada berkas tersimpan. Buka dan segarkan pustaka ini terlebih dahulu.",
+      "ja": "保存されたファイルがありません。先にこの保管庫を開いて更新してください。",
+      "ko": "저장된 파일이 없습니다. 먼저 이 저장소를 열고 새로 고침하세요.",
+      "pt-BR": "Nenhum arquivo salvo. Abra e atualize esta biblioteca primeiro.",
+      "zh-Hans": "没有已保存的文件，请先打开并刷新这个 vault。",
+      "zh-Hant": "沒有已儲存的檔案，請先開啟並重新整理這個 vault。"
+    }
+  },
+  "Not selected": {
+    "scope": "app",
+    "translations": {
+      "ar": "غير محددة",
+      "de": "Nicht ausgewählt",
+      "en": "Not selected",
+      "es": "No seleccionada",
+      "fr": "Non sélectionnée",
+      "hi": "चयनित नहीं",
+      "id": "Tidak dipilih",
+      "ja": "未選択",
+      "ko": "선택 안 됨",
+      "pt-BR": "Não selecionada",
+      "zh-Hans": "未勾选",
+      "zh-Hant": "未勾選"
+    }
+  },
+  "Search uses saved vault files. Open and refresh a vault to update its file list.": {
+    "scope": "app",
+    "translations": {
+      "ar": "يستخدم البحث ملفات المكتبات المحفوظة. افتح المكتبة وحدّثها لتحديث قائمة ملفاتها.",
+      "de": "Die Suche nutzt gespeicherte Dateien. Öffne und aktualisiere eine Bibliothek, um ihre Dateiliste zu erneuern.",
+      "en": "Search uses saved vault files. Open and refresh a vault to update its file list.",
+      "es": "Se buscan los archivos guardados. Abre y actualiza una biblioteca para renovar su lista de archivos.",
+      "fr": "La recherche utilise les fichiers enregistrés. Ouvrez et actualisez une bibliothèque pour mettre à jour sa liste.",
+      "hi": "खोज सहेजी गई लाइब्रेरी फ़ाइलों का उपयोग करती है। फ़ाइल सूची अपडेट करने के लिए लाइब्रेरी खोलें और रीफ़्रेश करें।",
+      "id": "Pencarian memakai berkas pustaka tersimpan. Buka dan segarkan pustaka untuk memperbarui daftar berkasnya.",
+      "ja": "保存済みの保管庫ファイルを検索します。ファイル一覧を更新するには保管庫を開いて更新してください。",
+      "ko": "저장된 저장소 파일을 검색합니다. 파일 목록을 갱신하려면 저장소를 열고 새로 고침하세요.",
+      "pt-BR": "A busca usa os arquivos salvos. Abra e atualize uma biblioteca para renovar sua lista de arquivos.",
+      "zh-Hans": "搜索使用各 vault 已保存的文件列表。打开并刷新 vault 可更新列表。",
+      "zh-Hant": "搜尋使用各 vault 已儲存的檔案清單。開啟並重新整理 vault 可更新清單。"
+    }
+  },
+  "Search vaults": {
+    "scope": "app",
+    "translations": {
+      "ar": "مكتبات البحث",
+      "de": "Bibliotheken durchsuchen",
+      "en": "Search vaults",
+      "es": "Bibliotecas de búsqueda",
+      "fr": "Bibliothèques à rechercher",
+      "hi": "खोज की लाइब्रेरी",
+      "id": "Pustaka pencarian",
+      "ja": "検索する保管庫",
+      "ko": "검색할 저장소",
+      "pt-BR": "Bibliotecas da busca",
+      "zh-Hans": "搜索 vault",
+      "zh-Hant": "搜尋 vault"
+    }
+  },
+  "Select at least one vault": {
+    "scope": "app",
+    "translations": {
+      "ar": "اختر مكتبة واحدة على الأقل",
+      "de": "Wähle mindestens eine Bibliothek",
+      "en": "Select at least one vault",
+      "es": "Selecciona al menos una biblioteca",
+      "fr": "Sélectionnez au moins une bibliothèque",
+      "hi": "कम से कम एक लाइब्रेरी चुनें",
+      "id": "Pilih setidaknya satu pustaka",
+      "ja": "保管庫を1つ以上選択してください",
+      "ko": "저장소를 하나 이상 선택하세요",
+      "pt-BR": "Selecione ao menos uma biblioteca",
+      "zh-Hans": "请至少勾选一个 vault",
+      "zh-Hant": "請至少勾選一個 vault"
+    }
+  },
+  "Selected": {
+    "scope": "app",
+    "translations": {
+      "ar": "محددة",
+      "de": "Ausgewählt",
+      "en": "Selected",
+      "es": "Seleccionada",
+      "fr": "Sélectionnée",
+      "hi": "चयनित",
+      "id": "Dipilih",
+      "ja": "選択済み",
+      "ko": "선택됨",
+      "pt-BR": "Selecionada",
+      "zh-Hans": "已勾选",
+      "zh-Hant": "已勾選"
+    }
   }
 }

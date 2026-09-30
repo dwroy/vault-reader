@@ -18,7 +18,7 @@ struct DirView: View {
                 }
             }
         }
-        .libraryNavigationTitle(path.isEmpty ? L10n.text("Files") : (path as NSString).lastPathComponent, state: state)
+        .libraryNavigationTitle(path.isEmpty ? state.config.repo : (path as NSString).lastPathComponent, state: state)
         .refreshable { await state.refresh() }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {

@@ -10,7 +10,7 @@ final class AppState {
     var config: RepositoryConfig
     var library: RepositoryLibrary
     var reading: ReadingStore
-    let fileDisplay = FileDisplayPreferences()
+    let fileDisplay: FileDisplayPreferences
     let vaultNotices = VaultNoticePreferences()
     var visibleEntries: [TreeEntry] { index.entries.filter { fileDisplay.includes($0.path) } }
     var addingRepository = false
@@ -48,8 +48,31 @@ final class AppState {
     @ObservationIgnored private var client: (any RepositorySource)?
     @ObservationIgnored private var snapshot: BranchSnapshot?
     @ObservationIgnored private var epoch = UUID()
+    @ObservationIgnored private var searchOnly = false
+    @ObservationIgnored private var searchLimits = SearchLimits()
+
+    /// An independent host for a search-selected vault; never changes the saved active profile.
+    init(searchConfig: RepositoryConfig, sample: Bool, limits: SearchLimits, fileDisplay: FileDisplayPreferences) {
+        config = searchConfig; demo = sample; searchOnly = true; searchLimits = limits
+        self.fileDisplay = fileDisplay
+        library = RepositoryLibrary([searchConfig])
+        reading = ReadingStore(config: searchConfig, isSample: sample)
+    }
+    func loadForSearch() async {
+        do {
+            try await prepare()
+            try Task.checkCancellation()
+            if demo { needsSetup = false; libraryStatus = LibraryStatus(kind: .sample, message: LibraryStatus.sample.message, action: .none) }
+            else if let token = try Keychain.read(config.identity) {
+                client = source(config, token: token); needsSetup = false
+            } else { libraryStatus = LibraryStatus(kind: .authorization, message: LibraryStatus.missingCredential.message, action: .none) }
+            ready = true; startPrefetch()
+        } catch is CancellationError { stopPrefetch() }
+        catch { ready = true; self.error = error.localizedDescription; handle(error) }
+    }
 
     init() {
+        fileDisplay = FileDisplayPreferences()
         let saved = UserDefaults.standard.data(forKey: "repository").flatMap { try? JSONDecoder().decode(RepositoryConfig.self, from: $0) }
         let initial = saved ?? Self.emptyConnection()
         config = initial
@@ -104,7 +127,7 @@ final class AppState {
         recentRequest = UUID(); loadingRecent = false; recentError = nil; recent = []
         let root = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
             .appendingPathComponent(demo ? "VaultReaderSamples" : "VaultReader").appendingPathComponent(MetaStore.key(config.identity))
-        searchIndex = SearchIndex(cacheDirectory: root.appendingPathComponent("search").appendingPathComponent(MetaStore.key(config.branch)))
+        searchIndex = SearchIndex(cacheDirectory: root.appendingPathComponent("search").appendingPathComponent(MetaStore.key(config.branch)), limits: searchLimits)
         blobs = try BlobStore(root: root.appendingPathComponent("blobs"))
         meta = try MetaStore(root: root.appendingPathComponent("meta").appendingPathComponent(MetaStore.key(config.branch)))
         snapshot = try await meta?.read("branch", as: BranchSnapshot.self)
@@ -366,6 +389,11 @@ final class AppState {
         }
     }
     private func handle(_ error: Error) {
+        if searchOnly {
+            let failure = LibraryStatus.failure(error)
+            libraryStatus = LibraryStatus(kind: failure.kind, message: failure.message, action: failure.action == .settings ? .none : failure.action)
+            return
+        }
         if (error as? VaultError) == .unauthorized {
             do { try Keychain.delete(config.identity) } catch { self.error = error.localizedDescription; libraryStatus = .failure(error); return }
             client = nil; needsSetup = true; showSettings = true
