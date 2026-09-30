@@ -15,7 +15,14 @@ final class AppState {
     var visibleEntries: [TreeEntry] { index.entries.filter { fileDisplay.includes($0.path) } }
     var addingRepository = false
     var switchingRepository = false
-    var index = VaultIndex()
+    var index = VaultIndex() {
+        didSet {
+            vaultStatistics = VaultStatistics(index: index)
+            vaultStatisticsHidingDotFiles = VaultStatistics(index: index, hideDotFiles: true)
+        }
+    }
+    private(set) var vaultStatistics = VaultStatistics(index: VaultIndex())
+    private(set) var vaultStatisticsHidingDotFiles = VaultStatistics(index: VaultIndex())
     var treeSHA = ""
     var libraryStatus: LibraryStatus?
     var canRefresh: Bool { client != nil && !demo && !isRefreshing && !switchingRepository }

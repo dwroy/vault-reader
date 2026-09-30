@@ -4231,5 +4231,209 @@
       "zh-Hans": "已勾选",
       "zh-Hant": "已勾選"
     }
+  },
+  "Folders": {
+    "scope": "app",
+    "translations": {
+      "en": "Folders",
+      "zh-Hans": "文件夹",
+      "zh-Hant": "資料夾",
+      "ja": "フォルダ",
+      "ko": "폴더",
+      "es": "Carpetas",
+      "pt-BR": "Pastas",
+      "fr": "Dossiers",
+      "de": "Ordner",
+      "ar": "المجلدات",
+      "hi": "फ़ोल्डर",
+      "id": "Folder"
+    }
+  },
+  "Total size": {
+    "scope": "app",
+    "translations": {
+      "en": "Total size",
+      "zh-Hans": "总大小",
+      "zh-Hant": "總大小",
+      "ja": "合計サイズ",
+      "ko": "전체 크기",
+      "es": "Tamaño total",
+      "pt-BR": "Tamanho total",
+      "fr": "Taille totale",
+      "de": "Gesamtgröße",
+      "ar": "الحجم الإجمالي",
+      "hi": "कुल आकार",
+      "id": "Ukuran total"
+    }
+  },
+  "Known size": {
+    "scope": "app",
+    "translations": {
+      "en": "Known size",
+      "zh-Hans": "已知大小",
+      "zh-Hant": "已知大小",
+      "ja": "確認済みサイズ",
+      "ko": "확인된 크기",
+      "es": "Tamaño conocido",
+      "pt-BR": "Tamanho conhecido",
+      "fr": "Taille connue",
+      "de": "Bekannte Größe",
+      "ar": "الحجم المعروف",
+      "hi": "ज्ञात आकार",
+      "id": "Ukuran diketahui"
+    }
+  },
+  "Vault statistics": {
+    "scope": "app",
+    "translations": {
+      "en": "Vault statistics",
+      "zh-Hans": "Vault 统计",
+      "zh-Hant": "Vault 統計",
+      "ja": "Vault の統計",
+      "ko": "Vault 통계",
+      "es": "Estadísticas del vault",
+      "pt-BR": "Estatísticas do vault",
+      "fr": "Statistiques du vault",
+      "de": "Vault-Statistik",
+      "ar": "إحصاءات الخزنة",
+      "hi": "Vault के आँकड़े",
+      "id": "Statistik vault"
+    }
+  },
+  "Hidden dotfiles are excluded.": {
+    "scope": "app",
+    "translations": {
+      "en": "Hidden dotfiles are excluded.",
+      "zh-Hans": "不包含已隐藏的点文件。",
+      "zh-Hant": "不包含已隱藏的點檔案。",
+      "ja": "非表示のドットファイルは含みません。",
+      "ko": "숨겨진 점 파일은 제외됩니다.",
+      "es": "Se excluyen los archivos de punto ocultos.",
+      "pt-BR": "Arquivos de ponto ocultos são excluídos.",
+      "fr": "Les fichiers cachés commençant par un point sont exclus.",
+      "de": "Ausgeblendete Punktdateien sind ausgeschlossen.",
+      "ar": "لا تشمل الملفات المخفية التي تبدأ بنقطة.",
+      "hi": "छिपी हुई डॉट फ़ाइलें शामिल नहीं हैं।",
+      "id": "File tersembunyi yang diawali titik tidak disertakan."
+    }
+  },
+  "Includes hidden dotfiles.": {
+    "scope": "app",
+    "translations": {
+      "en": "Includes hidden dotfiles.",
+      "zh-Hans": "包含点文件。",
+      "zh-Hant": "包含點檔案。",
+      "ja": "ドットファイルを含みます。",
+      "ko": "점 파일이 포함됩니다.",
+      "es": "Incluye archivos de punto ocultos.",
+      "pt-BR": "Inclui arquivos de ponto ocultos.",
+      "fr": "Inclut les fichiers cachés commençant par un point.",
+      "de": "Enthält versteckte Punktdateien.",
+      "ar": "تشمل الملفات المخفية التي تبدأ بنقطة.",
+      "hi": "छिपी हुई डॉट फ़ाइलें शामिल हैं।",
+      "id": "Termasuk file tersembunyi yang diawali titik."
+    }
+  },
+  "Sizes unavailable for %1$ld files.": {
+    "scope": "app",
+    "translations": {
+      "en": "Sizes unavailable for %1$ld files.",
+      "zh-Hans": "%1$ld 个文件的大小未知。",
+      "zh-Hant": "%1$ld 個檔案的大小未知。",
+      "ja": "%1$ld 個のファイルのサイズは不明です。",
+      "ko": "파일 %1$ld개의 크기를 알 수 없습니다.",
+      "es": "No se conoce el tamaño de %1$ld archivos.",
+      "pt-BR": "Tamanho indisponível para %1$ld arquivos.",
+      "fr": "Taille indisponible pour %1$ld fichiers.",
+      "de": "Größe für %1$ld Dateien nicht verfügbar.",
+      "ar": "حجم %1$ld ملفات غير متاح.",
+      "hi": "%1$ld फ़ाइलों के आकार उपलब्ध नहीं हैं।",
+      "id": "Ukuran %1$ld file tidak tersedia."
+    }
+  },
+  "Files by type": {
+    "scope": "app",
+    "translations": {
+      "en": "Files by type",
+      "zh-Hans": "按文件类型统计",
+      "zh-Hant": "依檔案類型統計",
+      "ja": "種類別のファイル",
+      "ko": "유형별 파일",
+      "es": "Archivos por tipo",
+      "pt-BR": "Arquivos por tipo",
+      "fr": "Fichiers par type",
+      "de": "Dateien nach Typ",
+      "ar": "الملفات حسب النوع",
+      "hi": "प्रकार के अनुसार फ़ाइलें",
+      "id": "File menurut jenis"
+    }
+  },
+  "No extension": {
+    "scope": "app",
+    "translations": {
+      "en": "No extension",
+      "zh-Hans": "无扩展名",
+      "zh-Hant": "無副檔名",
+      "ja": "拡張子なし",
+      "ko": "확장자 없음",
+      "es": "Sin extensión",
+      "pt-BR": "Sem extensão",
+      "fr": "Sans extension",
+      "de": "Ohne Erweiterung",
+      "ar": "بلا امتداد",
+      "hi": "कोई एक्सटेंशन नहीं",
+      "id": "Tanpa ekstensi"
+    }
+  },
+  "Size unavailable": {
+    "scope": "app",
+    "translations": {
+      "en": "Size unavailable",
+      "zh-Hans": "大小未知",
+      "zh-Hant": "大小未知",
+      "ja": "サイズ不明",
+      "ko": "크기 알 수 없음",
+      "es": "Tamaño desconocido",
+      "pt-BR": "Tamanho indisponível",
+      "fr": "Taille indisponible",
+      "de": "Größe unbekannt",
+      "ar": "الحجم غير متاح",
+      "hi": "आकार उपलब्ध नहीं",
+      "id": "Ukuran tidak tersedia"
+    }
+  },
+  "%1$@ known": {
+    "scope": "app",
+    "translations": {
+      "en": "%1$@ known",
+      "zh-Hans": "已知 %1$@",
+      "zh-Hant": "已知 %1$@",
+      "ja": "確認済み %1$@",
+      "ko": "확인된 크기 %1$@",
+      "es": "%1$@ conocidos",
+      "pt-BR": "%1$@ conhecidos",
+      "fr": "%1$@ connus",
+      "de": "%1$@ bekannt",
+      "ar": "%1$@ معروف",
+      "hi": "%1$@ ज्ञात",
+      "id": "%1$@ diketahui"
+    }
+  },
+  "Total files": {
+    "scope": "app",
+    "translations": {
+      "en": "Total files",
+      "zh-Hans": "文件总数",
+      "zh-Hant": "檔案總數",
+      "ja": "ファイル総数",
+      "ko": "총 파일 수",
+      "es": "Total de archivos",
+      "pt-BR": "Total de arquivos",
+      "fr": "Nombre total de fichiers",
+      "de": "Dateien insgesamt",
+      "ar": "إجمالي الملفات",
+      "hi": "कुल फ़ाइलें",
+      "id": "Total file"
+    }
   }
 }

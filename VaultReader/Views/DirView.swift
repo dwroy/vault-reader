@@ -8,7 +8,6 @@ struct DirView: View {
         List {
             if path.isEmpty {
                 VaultSuitabilityNotice(state: state)
-                Section { Text("\(state.config.owner) / \(state.config.repo)").font(.subheadline).foregroundStyle(.secondary) } footer: { Text(L10n.format("Files: %1$ld · %2$@", state.visibleEntries.count, state.config.branch)) }
             }
             ForEach(state.index.children(of: path).filter { state.fileDisplay.includes($0.path) }) { item in
                 if item.isDirectory { NavigationLink(value: ReaderRoute.directory(item.path)) { row(item) } }
@@ -17,6 +16,7 @@ struct DirView: View {
                     NavigationLink(value: ReaderRoute.file(item.path)) { row(item) }
                 }
             }
+            if path.isEmpty { VaultStatisticsSection(state: state) }
         }
         .libraryNavigationTitle(path.isEmpty ? state.config.repo : (path as NSString).lastPathComponent, state: state)
         .refreshable { await state.refresh() }
