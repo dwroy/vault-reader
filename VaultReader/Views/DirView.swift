@@ -18,6 +18,7 @@ struct DirView: View {
             }
             if path.isEmpty { VaultStatisticsSection(state: state) }
         }
+        .contentMargins(.top, 8, for: .scrollContent)
         .libraryNavigationTitle(path.isEmpty ? state.config.repo : (path as NSString).lastPathComponent, state: state)
         .refreshable { await state.refresh() }
         .toolbar {
