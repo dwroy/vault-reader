@@ -370,3 +370,11 @@ Owner request: show the project name at the vault root and comparable vault-spec
 - Localization: six added app strings have translations in all 12 locales; generation and `--check` passed for 249 keys. No JS/CSS, bridge or link-resolution changes were needed. XcodeGen project generation and `git diff --check` passed. Final synthetic Directory, checkbox sheet and two-vault result screenshots were visually inspected; evidence is archived locally under `build/acceptance/vault-search-scope/`. Feature commit `70f575f` was integrated into local main; its final Debug iPhone 17 simulator build succeeded (see the same directory’s `main-build.log`). No push occurred.
 
 Limits: synthetic simulator coverage does not establish physical touch, private-vault synchronization, unavailable/corrupt real-vault cache recovery, multi-vault device-memory behavior, or real-device search performance. No device install, App Store upload, submission change or public-version assignment was performed. Frozen 1.0.0 (15) remains outside this next-release work.
+
+### Development device preview 21 — 2026-09-30
+
+At the owner's request, main source `4b1958a` produced development **1.0.0 (21)** from the main checkout (`Debug`, `SWIFT_OPTIMIZATION_LEVEL=-O`). The build succeeded with **Wei Dong / personal team DPK7SSB889**; strict code-signature verification passed, the embedded development profile authorizes the connected iPhone, and all **108** bundled renderer files match source. Artifact: ignored `build/SearchScopeDevice/Build/Products/Debug-iphoneos/VaultReader.app`.
+
+CoreDevice freshly reports wired iPhone 17 / iOS 27.0.1. Preview 21 was installed **in place**, with no uninstall or reset of its data, and the installed-app query confirms **1.0.0 (21)**. The phone still requires its passcode in the immediate prelaunch and follow-up lock checks; the owner was asked to unlock and keep it awake. Launch/running verification remains pending unlock. No new physical title/search/touch, private-sync or multi-vault memory acceptance is claimed. Evidence: `build/acceptance/vault-search-scope/device-*-21.json`, `device-build-21-summary.json` and `device-build-21.log`.
+
+This is a local development preview. Tracked `project.yml` remains build 15; no public-version change, App Store upload, submission replacement or push occurred.
